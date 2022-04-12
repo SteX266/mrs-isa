@@ -1,9 +1,9 @@
 
 import "./Header.css";
 
-import vacation from "../images/koliba1.jpg";
-import vessel from "../images/brod1.jpg";
-import fishing from "../images/avantura1.jpg";
+import vacation from "../images/333.png";
+import vessel from "../images/111.png";
+import fishing from "../images/222.png";
 import business from "../images/biznis1.png";
 
 
