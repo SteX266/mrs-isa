@@ -5,14 +5,14 @@ import com.mrsisa.tim22.model.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VacationDTO extends Service {
+public class ServiceDTO extends Service {
 
-    private int numberOfRooms;
-    private List<Integer> numberOfBedsPerRoom;
-    String myAddress;
-    String firstImage;
+    public int numberOfRooms;
+    public List<Integer> numberOfBedsPerRoom;
+    public String myAddress;
+    public String firstImage;
 
-    public VacationDTO(String image, String name, double price, double rating, String address){
+    public ServiceDTO(String image, String name, double price, double rating, String address){
         this.photos = new ArrayList<String>();
         this.photos.add(image);
         this.name = name;

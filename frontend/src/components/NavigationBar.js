@@ -8,7 +8,7 @@ import React, {useEffect, useState} from 'react';
 
 
 const NavigationBar = () =>{
-
+    const [showModal, setShowModal] = useState(false)
 return <>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -32,7 +32,7 @@ return <>
                         <a class="nav-link" href="#">Avanture</a>
                     </li>
                 </ul>
-                    <a class="btn btn-warning"  data-toggle="modal" data-target=".login-register-form">Prijava</a>
+                    <button onClick={()=>setShowModal(true)} class="btn btn-warning"  data-toggle="modal" data-target=".login-register-form">Prijava</button>
                     <a data-toggle="modal" data-target=".login-register-form" style={{"marginLeft":"5px"}}class="btn btn-warning" >Registracija</a>
                 
             </div>

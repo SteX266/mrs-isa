@@ -22,5 +22,6 @@ public abstract class Service {
     protected double cancellationFee;
     protected double averageScore;
     protected List<Review> reviews;
+    protected double price;
 
 }
