@@ -3,11 +3,11 @@ import "../node_modules/bootstrap/dist/js/bootstrap";
 import './App.css';
 
 
-import HomePageUnregistered from "./components/HomePageUnregistered";
+import HostPage from "./components/HostPage";
 function App() {
   return <>
   
-    <HomePageUnregistered></HomePageUnregistered>
+    <HostPage></HostPage>
 
   
   </>;
