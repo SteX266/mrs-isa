@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import React,{Component} from 'react'
 import NavigationBar from "./NavigationBar";
 import EntityList from "./EntityList";
+import LoginForm from "./LoginForm";
 
 class HomePageUnregistered extends Component{
     render(){
@@ -13,7 +14,7 @@ class HomePageUnregistered extends Component{
 
     <div class="album py-5 bg-light">
     <div class="container">
-    <EntityList/>
+    <LoginForm/>
     </div>
     </div>
     <Footer/>

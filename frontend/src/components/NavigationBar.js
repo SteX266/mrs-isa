@@ -12,7 +12,7 @@ const NavigationBar = () =>{
 return <>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><h2 class="text-warning">LOGO</h2></a>
+            <a class="navbar-brand" href="#"><h2 class="text-warning">Fish'n'Ships</h2></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle" >
             <span class="navbar-toggler-icon"></span>
             </button>
