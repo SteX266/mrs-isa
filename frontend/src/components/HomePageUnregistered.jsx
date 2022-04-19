@@ -4,6 +4,7 @@ import React,{Component} from 'react'
 import NavigationBar from "./NavigationBar";
 import EntityList from "./EntityList";
 import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 class HomePageUnregistered extends Component{
     render(){
@@ -14,7 +15,7 @@ class HomePageUnregistered extends Component{
 
     <div class="album py-5 bg-light">
     <div class="container">
-    <LoginForm/>
+    <RegisterForm/>
     </div>
     </div>
     <Footer/>
