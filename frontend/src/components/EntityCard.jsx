@@ -1,21 +1,21 @@
 import {useEffect, useState} from 'react'
 
 import vikendica from "../images/vikendica.jpeg"
-import "./EntityCard.css"
+import "../style/EntityCard.css"
 
 
 
-const EntityCard = () =>  {  
+const EntityCard = (props) =>  {  
     return <>
-    <div class="col-md-4">
+    <div class="col-md-3">
   <div className="card align-self-stretch entityCard" styleProp="width: 18rem;">
-     <img  height="200px" src={vikendica} alt="Apoteka"/>
+     <img  height="200px" src={props.image} alt="Nesto"/>
      <hr/>
      <div className="card-body">
-       <h3 className="card-title">Naaslov</h3>
-       <span className="lokacija">Neka adresa</span>
-       <p className="card-text">Cena</p>
-       <div className="row justify-content-around align-items-center"><span className="ocena">4/5</span>
+       <h3 className="card-title">{props.title}</h3>
+       <span className="lokacija">{props.address}</span>
+       <p className="card-text">{props.price}$</p>
+       <div className="row justify-content-around align-items-center"><span className="ocena">{props.rating}/5</span>
        
      </div></div>
    </div>

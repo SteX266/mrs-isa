@@ -13,7 +13,7 @@ return <>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><h2 class="text-warning">LOGO</h2></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mob-navbar" aria-label="Toggle" >
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mob-navbar">
@@ -32,12 +32,9 @@ return <>
                         <a class="nav-link" href="#">Avanture</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="text" placeholder="Email" />
-                    <input class="form-control me-2" type="password" placeholder="Password" />
-                    <button class="btn btn-warning" type="submit">Prijava</button>
-                    <button style={{"marginLeft":"5px"}}class="btn btn-warning" type="submit">Registracija</button>
-                </form>
+                    <a class="btn btn-warning"  data-toggle="modal" data-target=".login-register-form">Prijava</a>
+                    <a data-toggle="modal" data-target=".login-register-form" style={{"marginLeft":"5px"}}class="btn btn-warning" >Registracija</a>
+                
             </div>
         </div>
     </nav>

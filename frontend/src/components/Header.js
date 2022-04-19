@@ -1,10 +1,10 @@
 
-import "./Header.css";
+import "../style/Header.css";
 
 import vacation from "../images/333.png";
 import vessel from "../images/111.png";
 import fishing from "../images/222.png";
-import business from "../images/biznis1.png";
+import business from "../images/ljudi.png";
 
 
 const Header = () => {
