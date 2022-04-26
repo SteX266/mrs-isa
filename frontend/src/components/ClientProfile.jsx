@@ -1,3 +1,4 @@
+import SearchForm from "./SearchForm";
 
 
 
@@ -5,6 +6,7 @@
 
 const ClientProfile = (props) =>  {  
     return <>
+    
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">

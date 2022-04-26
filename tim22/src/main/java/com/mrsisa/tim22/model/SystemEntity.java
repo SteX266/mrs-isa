@@ -56,6 +56,11 @@ public abstract class SystemEntity {
     protected Set<AvailabilityPeriod> availabilityPeriod = new HashSet<AvailabilityPeriod>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
     protected Set<Reservation> reservations = new HashSet<Reservation>();
+    @Column
     protected double price;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    protected SystemEntityType entityType;
 
 }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import EntityCard from "./EntityCard";
+import SearchForm from './SearchForm';
 
 
 class EntityList extends Component  {  
@@ -33,7 +34,7 @@ class EntityList extends Component  {
    }
    render(){
     return <>
-
+      <SearchForm/>
      <div class="row">
 
          {this.state.allEntities.map(this.renderAllEntities)}
