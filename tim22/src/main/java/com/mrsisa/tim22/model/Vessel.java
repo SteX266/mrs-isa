@@ -5,18 +5,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Vessel extends Service{
+@Entity
+public class Vessel extends SystemEntity {
+    @Id
+    private Integer id;
+    @Column
     private VesselType vesselType;
+    @Column
     private int engineNumber;
+    @Column
     private int enginePower;
+    @Column
     private int maxSpeed;
+    @ElementCollection(targetClass=VesselEquipement.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="vessel_equipement")
+    @Column(name="ship_vessel_equipement")
     private List<VesselEquipement> vesselEquipement;
-    private int capacity;
+    @ElementCollection(targetClass=FishingEquipement.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="fishing_equipement")
+    @Column(name="ship_fishing_equipement")
     private List<FishingEquipement> fishingEquipement;
 
 }

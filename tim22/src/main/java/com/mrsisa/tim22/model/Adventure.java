@@ -5,14 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Adventure extends Service{
-    private int capacity;
-    private List<FishingEquipement> equipement;
+@Entity
+public class Adventure extends SystemEntity {
+    @Id
+    private Integer id;
+    @ElementCollection(targetClass=FishingEquipement.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="fishing_equipement")
+    @Column(name="adventure_equipement")
+    private Set<FishingEquipement> equipement;
 
 
 }
