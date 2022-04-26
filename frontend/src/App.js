@@ -5,7 +5,11 @@ import InstructorPage from "./components/InstructorPage";
 function App() {
   return <>
   
+
+
+
     <InstructorPage/>
+
 
   
   </>;
