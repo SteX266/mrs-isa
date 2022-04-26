@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.ServiceDTO;
-import com.mrsisa.tim22.model.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

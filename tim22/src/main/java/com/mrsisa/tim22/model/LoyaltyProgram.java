@@ -1,5 +1,14 @@
 package com.mrsisa.tim22.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class LoyaltyProgram {
     private int pointsPerReservation;
     private int pointsForBusiness;

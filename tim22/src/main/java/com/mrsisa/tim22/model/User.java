@@ -1,5 +1,14 @@
 package com.mrsisa.tim22.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class User {
 
     protected String email;
@@ -13,8 +22,7 @@ public class User {
     protected boolean isDeleted;
     protected int loyaltyPoints;
 
-    public User() {
-    }
+
 
 
 }
