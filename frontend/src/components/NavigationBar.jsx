@@ -26,7 +26,8 @@ return <>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Plovila</a>
+
+                       <link to="/clientProfile"> <a class="nav-link" href="/clientProfile">Plovila</a> </link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Avanture</a>
