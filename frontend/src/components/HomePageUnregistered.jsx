@@ -5,6 +5,7 @@ import NavigationBar from "./NavigationBar";
 import EntityList from "./EntityList";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import ClientProfile from "./ClientProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 class HomePageUnregistered extends Component{
@@ -22,6 +23,7 @@ class HomePageUnregistered extends Component{
       <Route path="/" element={<EntityList/>}/>
       <Route path="registration" element={<RegisterForm/>}/>    
       <Route path="login" element={<LoginForm/>}/>    
+      <Route path="clientProfile" element={<ClientProfile/>}/>
     </Routes>
 
     </BrowserRouter>
