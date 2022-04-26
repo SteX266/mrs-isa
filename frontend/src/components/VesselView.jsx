@@ -1,6 +1,7 @@
 
 import React, {Component} from "react";
 import { Container, Nav, Navbar, Button, Table, Form, FormControl } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class VesselView extends Component {
     constructor(props) {
@@ -105,7 +106,8 @@ class EditableTableRow extends Component {
                 <td>{this.props.vessel.length}</td>
                 <td>{this.props.vessel.capacity}</td>
                 <td>{this.props.vessel.price}€</td>
-                <td><Button href={`/vessels/${this.props.vessel.id}`} variant="outline-dark">Edit</Button></td>
+                <td><Link to={`/edit-vessel/${this.props.vessel.id}`}><Button variant="outline-dark">Edit</Button></Link></td>
+                <td><Link to={`/delete-vessel/${this.props.vessel.id}`}><Button variant="outline-dark">Delete</Button></Link></td>
             </tr>
         );
     }
