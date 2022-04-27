@@ -5,7 +5,8 @@ import "bootstrap";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import InstructorNavbar from './InstructorNavBar';
 import InstructorAdvantureView from  './InstructorAdvantureView';
-import InstructorAdvantureEdit from './InstructorAdvantureEdit';
+import EditAdventure from './EditAdventure';
+import CreateAdventure from './CreateAdventure';
 
 class InstructorPage extends Component {
     state = { 
@@ -14,17 +15,17 @@ class InstructorPage extends Component {
     } 
     render() { 
         return (
+       
         <BrowserRouter>
+         <InstructorNavbar/>
             <Routes>
-              <Route path='/' element={<InstructorNavbar/>}>
-                <Route path='advantures' element={<InstructorAdvantureView/>}></Route>
-                <Route path='advantures/:Id' element={<InstructorAdvantureEdit/>}/>
-                <Route path='reservations' element={<h1>Reservations page</h1>}/>
-                <Route path='create-Advanture' element={<h1>Create Advanture</h1>}/>
-            <Route path='profile' element={<h1>Profile</h1>}/>
-            <Route path='account' element={<h1>Account</h1>}/>
-            <Route path='edit' element={<h1>Account</h1>}/>
-          </Route>
+              <Route exact path='/advantures' element={<InstructorAdvantureView/>}></Route>
+              <Route exact path='/advantures/:Id' element={<EditAdventure></EditAdventure>}/>
+              <Route  exact path='/reservations' element={<h1>Reservations page</h1>}/>
+              <Route  exact path='/advantures/create-adventure' element={<CreateAdventure></CreateAdventure>}/>
+              <Route exact path='/profile' element={<h1>Profile</h1>}/>
+              <Route exact path='/account' element={<h1>Account</h1>}/>
+              <Route exact path='/edit' element={<h1>Account</h1>}/>
         </Routes>
       </BrowserRouter>
     );
