@@ -33,7 +33,7 @@ class InstructorAdvantureView extends Component {
             </Navbar>
 
             <Table striped hover className="rounded" >
-                <TableHeader headers={["Name", "Location", "People", "Price"]}></TableHeader>
+                <TableHeader headers={["Name", "Location", "People", "Price", "Edit" , "Delete"]}></TableHeader>
                 <TableBody listings={this.state.listings}></TableBody>
             </Table>
         </Container>);
@@ -50,7 +50,12 @@ class SearchForm extends Component {
     }
 }
 
+
 class EditableTableRow extends Component {
+    
+    DeleteButtonHendler(){
+        alert("aaaa")
+    }
     render() {
         return (
             <tr id={this.props.listing.id}>
@@ -59,6 +64,7 @@ class EditableTableRow extends Component {
                 <td>{this.props.listing.people}</td>
                 <td>{this.props.listing.price}€</td>
                 <td><Button href={`/advantures/${this.props.listing.id}`} variant="outline-dark">Edit</Button></td>
+                <td><Button id = {this.props.listing.id} onClick={this.DeleteButtonHendlr} variant="outline-dark">Delete</Button></td>
             </tr>
         );
     }
