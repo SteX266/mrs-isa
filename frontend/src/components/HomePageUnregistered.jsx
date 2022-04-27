@@ -17,7 +17,7 @@ class HomePageUnregistered extends Component{
     
     <div class="album py-5 bg-light">
     <div class="container">
-
+    
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<EntityList/>}/>
