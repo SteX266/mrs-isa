@@ -89,7 +89,7 @@ function VesselEdit({match}) {
                     <DropdownCheckbox name='Fishing equipment' list={['Stap', 'Bolji stap']}></DropdownCheckbox>
                 </Form.Group>
 
-                <Button variant='secondary' type='submit'>Edit</Button>
+                <Button variant='outline-dark' type='submit'>Edit</Button>
             </Form>
         </Container>
         );
