@@ -10,10 +10,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class SystemEntity {
 
     @Id
+    @SequenceGenerator(name = "entitySequenceGenerator", sequenceName = "entityIds", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entitySequenceGenerator")
     protected Integer id;
     @Column
     protected String name;

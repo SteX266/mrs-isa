@@ -13,9 +13,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
+@Entity(name="user_table")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
+    @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userIds", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequenceGenerator")
     private Long id;
     @Column
     private String email;

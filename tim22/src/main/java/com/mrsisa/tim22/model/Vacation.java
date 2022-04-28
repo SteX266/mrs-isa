@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+
 
 @Getter
 @Setter
+@Entity
 public class Vacation extends SystemEntity {
 
 }
