@@ -1,10 +1,23 @@
+import Dialog from "./Dialog";
+import React,{useState} from 'react';
 
-const ClientProfile = (props) =>  {  
-    return <>
-
-
-
+function ClientProfile ()  {  
     
+    const [showTaskDialog,setShowTaskDialog] = useState(false);
+
+    const confirmDeleteProfile = () => {
+        setShowTaskDialog(false)
+    }
+
+    const cancelDeleteProfile = () => {
+        setShowTaskDialog(false)
+
+    }
+
+
+
+    return (
+    <>
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -37,7 +50,7 @@ const ClientProfile = (props) =>  {
                 <div class="d-flex justify-content-between align-items-center experience"><span>Loyalty points</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;15</span></div><br/>
                 <div class="d-flex justify-content-between align-items-center experience"><span>Client tier</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;PLATINUM</span></div><br/>
                 <div class="d-flex justify-content-between align-items-center experience"><span>Benefits</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;15% off on all reservations</span></div><br/>
-                <div class="d-flex justify-content-end align-items-center experience"><button class="btn btn-danger delete-button" type="button" data-toggle="modal" data-target="#exampleModal">Delete Profile</button></div><br/>
+                <div class="d-flex justify-content-end align-items-center experience"><button onClick={() => {setShowTaskDialog(true)}} class="btn btn-danger delete-button" type="button" data-toggle="modal" data-target="#exampleModal">Delete Profile</button></div><br/>
                 
             </div>
         </div>
@@ -45,8 +58,10 @@ const ClientProfile = (props) =>  {
 </div>
 
 
+<Dialog show={showTaskDialog} title="Delete a profile?" description="Are you sure you want to delete your profile?" confirmed={confirmDeleteProfile} canceled={cancelDeleteProfile}/>
 
 </>
+    );
 }
 
 export default ClientProfile;
