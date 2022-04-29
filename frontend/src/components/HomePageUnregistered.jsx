@@ -9,8 +9,10 @@ import ClientProfile from "./ClientProfile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 class HomePageUnregistered extends Component{
+  
     render(){
     return <>
+
 
     <Header/>
     <NavigationBar/>

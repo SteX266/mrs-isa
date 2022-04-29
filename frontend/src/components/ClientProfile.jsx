@@ -1,11 +1,9 @@
-import SearchForm from "./SearchForm";
-
-
-
-
 
 const ClientProfile = (props) =>  {  
     return <>
+
+
+
     
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
@@ -39,12 +37,14 @@ const ClientProfile = (props) =>  {
                 <div class="d-flex justify-content-between align-items-center experience"><span>Loyalty points</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;15</span></div><br/>
                 <div class="d-flex justify-content-between align-items-center experience"><span>Client tier</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;PLATINUM</span></div><br/>
                 <div class="d-flex justify-content-between align-items-center experience"><span>Benefits</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;15% off on all reservations</span></div><br/>
-
+                <div class="d-flex justify-content-end align-items-center experience"><button class="btn btn-danger delete-button" type="button" data-toggle="modal" data-target="#exampleModal">Delete Profile</button></div><br/>
                 
             </div>
         </div>
     </div>
 </div>
+
+
 
 </>
 }
