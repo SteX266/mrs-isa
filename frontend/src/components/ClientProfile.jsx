@@ -1,12 +1,27 @@
 import Dialog from "./Dialog";
 import React,{useState} from 'react';
+import axios from 'axios';
 
 function ClientProfile ()  {  
     
     const [showTaskDialog,setShowTaskDialog] = useState(false);
 
     const confirmDeleteProfile = () => {
-        setShowTaskDialog(false)
+        const requestOptions = {
+            headers: {
+               Accept: 'application/json',
+             'Content-Type': 'application/json',
+             'Access-Control-Allow-Origin': '*',
+               
+               },
+            params:{
+                "user":"stex"
+            }
+   
+        };
+
+        axios.get("http://localhost:8080/api/user/createCancellationRequest", requestOptions);
+        setShowTaskDialog(false);
     }
 
     const cancelDeleteProfile = () => {
@@ -58,7 +73,7 @@ function ClientProfile ()  {
 </div>
 
 
-<Dialog show={showTaskDialog} title="Delete a profile?" description="Are you sure you want to delete your profile?" confirmed={confirmDeleteProfile} canceled={cancelDeleteProfile}/>
+<Dialog show={showTaskDialog} title="Delete profile?" description="Are you sure you want to delete your profile?" confirmed={confirmDeleteProfile} canceled={cancelDeleteProfile}/>
 
 </>
     );
