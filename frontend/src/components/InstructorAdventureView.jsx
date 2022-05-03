@@ -17,6 +17,17 @@ export default function  InstructorAdventureView () {
                     {id: 11, name: "a Avantura", location : "Serbia", people: 4,  price: 34},
                     {id: 12, name: " Avatura", location : "Bosnia", people: 3,price: 45}]);
     const [searchAdventures ,setSearchAdventures] = React.useState([
+                {id: 1, name: "Prva Avantura", location : "Serbia", people: 4,  price: 34},
+                {id: 2, name: "Druga Avantura", location : "Bosnia", people: 3,price: 45},
+                {id: 3, name: "Prva Avantura", location : "Serbia", people: 4,  price: 34},
+                {id: 4, name: "treca Avantura", location : "Bosnia", people: 3,price: 45},
+                {id: 5, name: "cetvrta Avantura", location : "Serbia", people: 4,  price: 34},
+                {id: 6, name: "Dda Avantura", location : "Bosnia", people: 3,price: 45},
+                {id: 7, name: " Avantura", location : "Serbia", people: 4,  price: 34},
+                {id: 8, name: "Dru", location : "Bosnia", people: 3,price: 45},
+                {id: 9, name: "Pa Avantura", location : "Serbia", people: 4,  price: 34},
+                {id: 10, name: " Avantura", location : "Bosnia", people: 3,price: 45},
+                {id: 11, name: "a Avantura", location : "Serbia", people: 4,  price: 34},
                 {id: 12, name: " Avatura", location : "Bosnia", people: 3,price: 45}]);
                 
     function searchFieldChanged(event){
