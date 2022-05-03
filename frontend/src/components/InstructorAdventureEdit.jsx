@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Container} from 'react-bootstrap';
-class InstructorAdvantureEdit extends Component {
+class InstructorAdventureEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {listingId : ''}
@@ -14,4 +14,4 @@ class InstructorAdvantureEdit extends Component {
     }
 }
  
-export default InstructorAdvantureEdit;
+export default InstructorAdventureEdit;

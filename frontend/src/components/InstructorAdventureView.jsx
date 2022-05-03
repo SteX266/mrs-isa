@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import { Container, Nav, Navbar, Button, Table, Form, FormControl } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-class InstructorAdvantureView extends Component {
+class InstructorAdventureView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,15 +20,17 @@ class InstructorAdvantureView extends Component {
         return (
         <Container style={{maxWidth: '100%'}}>
             <Navbar collapseOnSelect className="rounded border border-dark">
-                <Container><Navbar.Text className="text-dark">{this.state.listings.length} Advantures</Navbar.Text></Container>
+                <Container><Navbar.Text className="text-dark">{this.state.listings.length} Adventures</Navbar.Text></Container>
 
                 <Container><SearchForm searchFieldChanged={this.searchFieldChanged}/></Container>
 
                 <Container>
                     <Nav className="ms-auto">
+                        <Link to="create-adventure">
                         <Button variant="outline-dark">
-                            Create New Advanture
+                            Create New Adventure
                         </Button>
+                        </Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -63,7 +66,7 @@ class EditableTableRow extends Component {
                 <td>{this.props.listing.location}</td>
                 <td>{this.props.listing.people}</td>
                 <td>{this.props.listing.price}€</td>
-                <td><Button href={`/advantures/${this.props.listing.id}`} variant="outline-dark">Edit</Button></td>
+                <td><Button href={`/adventures/${this.props.listing.id}`} variant="outline-dark">Edit</Button></td>
                 <td><Button id = {this.props.listing.id} onClick={this.DeleteButtonHendlr} variant="outline-dark">Delete</Button></td>
             </tr>
         );
@@ -96,4 +99,4 @@ class TableBody extends Component {
     }
 }
  
-export default InstructorAdvantureView;
+export default InstructorAdventureView;

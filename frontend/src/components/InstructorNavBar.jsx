@@ -11,7 +11,7 @@ class InstructorNavbar extends Component {
           </Container>
           <Container>
             <Nav className="mx-auto">
-              <Nav.Link href="/advantures">Advantures</Nav.Link>
+              <Nav.Link href="/adventures">Adventures</Nav.Link>
               <Nav.Link href="/reservations">Reservations</Nav.Link>
             </Nav>
           </Container>
