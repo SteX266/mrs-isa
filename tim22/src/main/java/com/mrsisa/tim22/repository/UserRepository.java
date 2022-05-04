@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    public User findOneById(String index);
+    public User findOneById(String id);
+
+    public User findOneByEmail(String email);
 
     public Page<User> findAll(Pageable pageable);
 

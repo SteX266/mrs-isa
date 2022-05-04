@@ -33,7 +33,7 @@ public abstract class SystemEntity {
     protected int capacity;
 
     @ElementCollection
-    @CollectionTable(name="photos", joinColumns = @JoinColumn(name="id"))
+    @CollectionTable(name="photos", joinColumns = @JoinColumn(name="entity_id"))
     @Column
     protected List<String> photos;
     @Column

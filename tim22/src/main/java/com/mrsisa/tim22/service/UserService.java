@@ -30,10 +30,9 @@ public class UserService {
         User u = new User();
         System.out.println("Kreiran account delete request, user: " +  user);
         AccountCancellationRequest acr = new AccountCancellationRequest(1, "blabla",false, u);
-        List<User> users= userRepository.findAll();
-        for(User us:users){
-            System.out.println(us.getName());
-        }
+        User us = userRepository.findOneByEmail("stex266@gmail.com");
+
+        System.out.println(us.getName());
 
         return acr;
     }

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SystemEntityRepository extends JpaRepository<SystemEntity, Integer> {
-    public SystemEntity findOneById(String index);
+    public SystemEntity findOneById(Integer id);
 
 
     public Page<SystemEntity> findAll(Pageable pageable);
