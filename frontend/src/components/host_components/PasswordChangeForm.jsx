@@ -21,7 +21,7 @@ export default function PasswordChangeForm() {
              'Access-Control-Allow-Origin': '*',
                
                },
-            params:{
+            data:{
                 "passwords": passwords
             }
         };

@@ -45,13 +45,13 @@ export default function ProfileEditForm (props){
              'Access-Control-Allow-Origin': '*',
                
                },
-            params:{
+            data:{
                 "user": user
             }
    
         };
   
-        // axios.get("http://localhost:8080/api/user/change-profile", requestOptions);
+        axios.post("http://localhost:8080/api/user/change-profile", requestOptions);
     }
         return (
         <Form>
