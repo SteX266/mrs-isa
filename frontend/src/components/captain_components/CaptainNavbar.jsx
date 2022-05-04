@@ -20,7 +20,7 @@ class CaptainNavbar extends Component {
             <Nav className="ms-auto">
                 <NavDropdown title={<ProfileImage/>}>
                     <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+                    <NavDropdown.Item href="/change-password">Change password</NavDropdown.Item>
                     <NavDropdown.Item href="/log-out">Log Out</NavDropdown.Item>
                 </NavDropdown>
               <NavDropdown title={<NotificationImage/>}>

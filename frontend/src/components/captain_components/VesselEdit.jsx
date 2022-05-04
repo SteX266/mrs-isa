@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Container, Form} from 'react-bootstrap';
-import DropdownCheckbox from './DropdownCheckbox';
+import DropdownCheckbox from '../DropdownCheckbox';
 
 function VesselEdit({match}) {
     return (
