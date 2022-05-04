@@ -2,27 +2,40 @@ import React, {Component} from "react";
 import { Container, Nav, Navbar, Button, Table, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-class InstructorAdventureView extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-                searchField : '',
-                listings : [
+export default function  InstructorAdventureView () {
+    const [adventures,setAdventures] = React.useState([
                     {id: 1, name: "Prva Avantura", location : "Serbia", people: 4,  price: 34},
-                    {id: 2, name: "Druga Avantura", location : "Bosnia", people: 3,price: 45}
-                ]
-        };
+                    {id: 2, name: "Druga Avantura", location : "Bosnia", people: 3,price: 45},
+                    {id: 3, name: "Prva Avantura", location : "Serbia", people: 4,  price: 34},
+                    {id: 4, name: "treca Avantura", location : "Bosnia", people: 3,price: 45},
+                    {id: 5, name: "cetvrta Avantura", location : "Serbia", people: 4,  price: 34},
+                    {id: 6, name: "Dda Avantura", location : "Bosnia", people: 3,price: 45},
+                    {id: 7, name: " Avantura", location : "Serbia", people: 4,  price: 34},
+                    {id: 8, name: "Dru", location : "Bosnia", people: 3,price: 45},
+                    {id: 9, name: "Pa Avantura", location : "Serbia", people: 4,  price: 34},
+                    {id: 10, name: " Avantura", location : "Bosnia", people: 3,price: 45},
+                    {id: 11, name: "a Avantura", location : "Serbia", people: 4,  price: 34},
+                    {id: 12, name: " Avatura", location : "Bosnia", people: 3,price: 45}]);
+    const [searchAdventures ,setSearchAdventures] = React.useState(adventures);
+                
+    function searchFieldChanged(event){
+        const filtering = [];
+        const searchParam = event.target.value.toLowerCase();
+        for (let index = 0; index < adventures.length; index++) {
+            const adventure = adventures[index];
+            if (adventure.name.toLowerCase().includes(searchParam) || adventure.location.toLowerCase().includes(searchParam)) {
+                filtering.push(adventure);
+            }
+        }
+        setSearchAdventures(filtering);
     }
-    searchFieldChanged = (e) => {
-        this.setState({ searchField : e.target.value });
-    }
-    render() { 
+     
         return (
         <Container style={{maxWidth: '100%'}}>
             <Navbar collapseOnSelect className="rounded border border-dark">
-                <Container><Navbar.Text className="text-dark">{this.state.listings.length} Adventures</Navbar.Text></Container>
+                <Container><Navbar.Text className="text-dark">{searchAdventures.length} Adventures</Navbar.Text></Container>
 
-                <Container><SearchForm searchFieldChanged={this.searchFieldChanged}/></Container>
+                <Container><SearchForm searchFieldChanged={searchFieldChanged}/></Container>
 
                 <Container>
                     <Nav className="ms-auto">
@@ -37,11 +50,9 @@ class InstructorAdventureView extends Component {
 
             <Table striped hover className="rounded" >
                 <TableHeader headers={["Name", "Location", "People", "Price", "Edit" , "Delete"]}></TableHeader>
-                <TableBody listings={this.state.listings}></TableBody>
+                <TableBody adventures={searchAdventures}></TableBody>
             </Table>
-        </Container>);
-    }
-}
+        </Container>);}
 
 class SearchForm extends Component {
     render() {
@@ -61,13 +72,13 @@ class EditableTableRow extends Component {
     }
     render() {
         return (
-            <tr id={this.props.listing.id}>
-                <td>{this.props.listing.name}</td>
-                <td>{this.props.listing.location}</td>
-                <td>{this.props.listing.people}</td>
-                <td>{this.props.listing.price}€</td>
-                <td><Button href={`/adventures/${this.props.listing.id}`} variant="outline-dark">Edit</Button></td>
-                <td><Button id = {this.props.listing.id} onClick={this.DeleteButtonHendlr} variant="outline-dark">Delete</Button></td>
+            <tr id={this.props.adventure.id}>
+                <td>{this.props.adventure.name}</td>
+                <td>{this.props.adventure.location}</td>
+                <td>{this.props.adventure.people}</td>
+                <td>{this.props.adventure.price}€</td>
+                <td><Button href={`/adventures/${this.props.adventure.id}`} variant="outline-dark">Edit</Button></td>
+                <td><Button id = {this.props.adventure.id} onClick={this.DeleteButtonHendlr} variant="outline-dark">Delete</Button></td>
             </tr>
         );
     }
@@ -91,12 +102,10 @@ class TableBody extends Component {
     render() {
         return (
             <tbody>
-                {this.props.listings.map((listing =>
-                    <EditableTableRow key={listing.id} listing={listing}></EditableTableRow>
+                {this.props.adventures.map((adventure =>
+                    <EditableTableRow key={adventure.id} adventure={adventure}></EditableTableRow>
                     ))}
             </tbody>
         );
     }
 }
- 
-export default InstructorAdventureView;
