@@ -20,4 +20,10 @@ public class UserService {
         return new UserDTO("stefan.milosevic.e14@gmail.com","Stefan", "Milosevic","066240610", "Petra Kocica", "38", "Jagodina" , "Srbija", "Pomoravlje");
 
     }
+    public AccountCancellationRequest createNewCancellationRequest(String user) {
+        User u = new User();
+        System.out.println("Kreiran account delete request, user: " +  user);
+        AccountCancellationRequest acr = new AccountCancellationRequest(1, "blabla",false, u);
+        return acr;
+    }
 }

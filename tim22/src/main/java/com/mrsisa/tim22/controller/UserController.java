@@ -30,5 +30,11 @@ public class UserController {
         return new ResponseEntity<UserDTO>(userService.getCurrentUserData(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/api/user/createCancellationRequest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AccountCancellationRequest> createCancellationRequest(@RequestParam String user){
+
+        return new ResponseEntity<AccountCancellationRequest>(userService.createNewCancellationRequest(user), HttpStatus.OK);
+    }
+
 
 }
