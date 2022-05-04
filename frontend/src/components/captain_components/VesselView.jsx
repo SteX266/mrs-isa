@@ -64,7 +64,7 @@ class VesselView extends Component {
     }
     render() { 
         return (
-        <Container style={{maxWidth: '100%'}}>
+        <Container style={{maxWidth: '95%'}}>
             <Navbar collapseOnSelect className="rounded border border-dark">
                 <Container><Navbar.Text className="text-dark">{this.state.vessels.length} Vessels </Navbar.Text></Container>
 

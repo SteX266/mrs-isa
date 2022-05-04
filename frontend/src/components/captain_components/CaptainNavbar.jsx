@@ -1,8 +1,38 @@
+import axios from "axios";
 import React, {Component} from "react";
 import { Container, NavDropdown, Nav, Navbar, Image } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
+import Dialog from "../Dialog";
 
 class CaptainNavbar extends Component {
+    state = {showDeleteDialogue: false}
+
+    setShowDialogue = () => {
+      this.setState({showDeleteDialogue: true});
+    }
+
+    confirmDeleteProfile = () => {
+      const requestOptions = {
+          headers: {
+             Accept: 'application/json',
+           'Content-Type': 'application/json',
+           'Access-Control-Allow-Origin': '*',
+             
+             },
+          params:{
+              "user":"stex"
+          }
+ 
+      };
+
+      axios.get("http://localhost:8080/api/user/createCancellationRequest", requestOptions);
+      this.setState({showDeleteDialogue: false});
+  }
+
+  cancelDeleteProfile = () => {
+    this.setState({showDeleteDialogue: false});
+
+  }
     render() { 
         return (
         <>
@@ -20,8 +50,9 @@ class CaptainNavbar extends Component {
             <Nav className="ms-auto">
                 <NavDropdown title={<ProfileImage/>}>
                     <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                    <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+                    <NavDropdown.Item href="/change-password">Change password</NavDropdown.Item>
                     <NavDropdown.Item href="/log-out">Log Out</NavDropdown.Item>
+                    <NavDropdown.Item onClick={this.setShowDialogue}>Delete profile</NavDropdown.Item>
                 </NavDropdown>
               <NavDropdown title={<NotificationImage/>}>
               </NavDropdown>
@@ -29,6 +60,7 @@ class CaptainNavbar extends Component {
           </Container>
         </Navbar>
         <Outlet></Outlet>
+        <Dialog show={this.state.showDeleteDialogue} title="Delete profile?" description="Are you sure you want to delete your profile?" confirmed={this.confirmDeleteProfile} canceled={this.cancelDeleteProfile}/>
         </>
       );
     }
