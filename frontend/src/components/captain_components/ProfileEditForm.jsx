@@ -51,7 +51,11 @@ export default function ProfileEditForm (props){
    
         };
   
-        axios.post("http://localhost:8080/api/user/change-profile", requestOptions);
+        axios.post("http://localhost:8080/api/user/change-profile", requestOptions).then(function (response) {
+            console.log(response.data);
+        }).catch(function (response) {
+            console.log(response.status);
+        });
     }
         return (
         <Form>

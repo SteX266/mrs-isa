@@ -25,7 +25,9 @@ export default function PasswordChangeForm() {
                 "passwords": passwords
             }
         };
-        axios.post("http://localhost:8080/api/user/change-password", requestOptions).then();
+        axios.post("http://localhost:8080/api/user/change-password", requestOptions).then(function (response) {
+            console.log(response.data);
+        });
 
     }
     function handleChange(event) {
