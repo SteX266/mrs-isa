@@ -29,7 +29,18 @@ export default function  InstructorAdventureView () {
         }
         setSearchAdventures(filtering);
     }
-     
+         
+    function DeleteButtonHendler(id){
+        const filtering = [];
+        for (let index = 0; index < adventures.length; index++) {
+            const adventure = adventures[index];
+            if (adventure.id != id) {
+                filtering.push(adventure);
+            }
+        }
+        setSearchAdventures(filtering);
+        setAdventures(filtering);
+    }
         return (
         <Container style={{maxWidth: '100%'}}>
             <Navbar collapseOnSelect className="rounded border border-dark">
@@ -50,7 +61,7 @@ export default function  InstructorAdventureView () {
 
             <Table striped hover className="rounded" >
                 <TableHeader headers={["Name", "Location", "People", "Price", "Edit" , "Delete"]}></TableHeader>
-                <TableBody adventures={searchAdventures}></TableBody>
+                <TableBody onDelete= {DeleteButtonHendler} adventures={searchAdventures}></TableBody>
             </Table>
         </Container>);}
 
@@ -64,48 +75,39 @@ class SearchForm extends Component {
     }
 }
 
-
-class EditableTableRow extends Component {
-    
-    DeleteButtonHendler(){
-        alert("aaaa")
-    }
-    render() {
-        return (
-            <tr id={this.props.adventure.id}>
-                <td>{this.props.adventure.name}</td>
-                <td>{this.props.adventure.location}</td>
-                <td>{this.props.adventure.people}</td>
-                <td>{this.props.adventure.price}€</td>
-                <td><Button href={`/adventures/${this.props.adventure.id}`} variant="outline-dark">Edit</Button></td>
-                <td><Button id = {this.props.adventure.id} onClick={this.DeleteButtonHendlr} variant="outline-dark">Delete</Button></td>
-            </tr>
-        );
-    }
-}
-
-class TableHeader extends Component {
-    render() {
+function  TableHeader(props){
         return (
             <thead>
                 <tr>
-                    {this.props.headers.map(header => 
+                    {props.headers.map(header => 
                         <th>{header}</th>
                     )}
                 </tr>
             </thead>
         );
-    }
 }
 
-class TableBody extends Component {
-    render() {
+function TableBody(props) {
         return (
             <tbody>
-                {this.props.adventures.map((adventure =>
-                    <EditableTableRow key={adventure.id} adventure={adventure}></EditableTableRow>
+                {props.adventures.map((adventure =>
+                    <EditableTableRow onDelete = {props.onDelete} key={adventure.id} adventure={adventure}></EditableTableRow>
                     ))}
             </tbody>
         );
     }
-}
+
+
+    function EditableTableRow(props) {
+
+        return (
+            <tr id={props.adventure.id}>
+                <td>{props.adventure.name}</td>
+                <td>{props.adventure.location}</td>
+                <td>{props.adventure.people}</td>
+                <td>{props.adventure.price}€</td>
+                <td><Button href={`/adventures/${props.adventure.id}`} variant="outline-dark">Edit</Button></td>
+                <td><Button id = {props.adventure.id} onClick={()=> props.onDelete(props.adventure.id)} variant="outline-dark">Delete</Button></td>
+            </tr>
+        );
+    }
