@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class EntityService {
+public class SystemEntityService {
 
     public ArrayList<SystemEntityDTO> getEntities(){
         System.out.println("Prosao zahtev");

@@ -25,9 +25,6 @@ public class User {
     @Column
     private String password;
     @Column
-    @Enumerated
-    private Role role;
-    @Column
     private String name;
     @Column
     private String surname;
