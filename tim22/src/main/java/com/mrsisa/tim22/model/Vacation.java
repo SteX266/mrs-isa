@@ -1,16 +1,8 @@
 package com.mrsisa.tim22.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
-import javax.persistence.Entity;
-
-
-@Getter
-@Setter
-@Entity
-public class Vacation extends SystemEntity {
-
+public class Vacation {
+    private int numberOfRooms;
+    private List<Integer> numberOfBedsPerRoom;
 }
