@@ -16,6 +16,45 @@ function ClientProfile ()  {
     const[country,setCountry] = useState("");
     const[state,setState] = useState("");
 
+
+
+    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if(validateForm()) {
+
+
+            const requestOptions = {
+                headers: {
+                   Accept: 'application/json',
+                 'Content-Type': 'application/json',
+                 'Access-Control-Allow-Origin': '*',
+                   
+                   },
+                params:{
+                    "email":"stefan.milosevic.e14@gmail.com",
+                    "name" : name,
+                    "surname":surname,
+                    "phoneNumber":phoneNumber,
+                    "addressLine": addressLine,
+                    "streetNumber":streetNumber,
+                    "city":city,
+                    "country":country,
+                    "state":state
+                }
+
+       
+            };
+            axios.get("http://localhost:8080/api/user/editUserData", requestOptions);
+
+
+
+          console.log('Podaci uspesno izmenjeni!');
+        }else{
+          console.log('Invalid Form')
+        }
+      }
+
     const confirmDeleteProfile = () => {
         const requestOptions = {
             headers: {
@@ -104,18 +143,6 @@ function ClientProfile ()  {
         return valid;
       };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if(validateForm()) {
-
-
-            const userData = {}
-
-          console.log('Podaci uspesno izmenjeni!');
-        }else{
-          console.log('Invalid Form')
-        }
-      }
 
     const handleChange = (event) => {
 
