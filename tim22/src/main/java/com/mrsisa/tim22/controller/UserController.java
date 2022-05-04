@@ -24,4 +24,11 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/api/user/getCurrentUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getCurrentUser(){
+
+        return new ResponseEntity<UserDTO>(userService.getCurrentUserData(), HttpStatus.OK);
+    }
+
+
 }

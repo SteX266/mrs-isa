@@ -14,4 +14,10 @@ public class UserService {
         System.out.println("Izmenjeni podaci za "+ email + " Name: " + name+ " Surname: "+surname+" Phone number: " + phoneNumber);
         return new UserDTO();
     }
+
+    public UserDTO getCurrentUserData(){
+        System.out.println("Uspesno primljen zahtev");
+        return new UserDTO("stefan.milosevic.e14@gmail.com","Stefan", "Milosevic","066240610", "Petra Kocica", "38", "Jagodina" , "Srbija", "Pomoravlje");
+
+    }
 }

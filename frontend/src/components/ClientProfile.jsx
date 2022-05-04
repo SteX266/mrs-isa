@@ -1,5 +1,5 @@
 import Dialog from "./Dialog";
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import axios from 'axios';
 import "../style/Errors.css"
 function ClientProfile ()  {  
@@ -15,6 +15,8 @@ function ClientProfile ()  {
     const[city, setCity] = useState("");
     const[country,setCountry] = useState("");
     const[state,setState] = useState("");
+
+    const[email,setEmail] = useState("");
 
 
 
@@ -32,7 +34,7 @@ function ClientProfile ()  {
                    
                    },
                 params:{
-                    "email":"stefan.milosevic.e14@gmail.com",
+                    "email":email,
                     "name" : name,
                     "surname":surname,
                     "phoneNumber":phoneNumber,
@@ -180,6 +182,43 @@ function ClientProfile ()  {
 
     }
 
+    useEffect(() => {
+        const requestOptions = {
+            headers: {
+               Accept: 'application/json',
+             'Content-Type': 'application/json',
+             'Access-Control-Allow-Origin': '*',
+               
+               }
+   
+        };
+        axios.get("http://localhost:8080/api/user/getCurrentUser", requestOptions)
+        .then(res => {
+            
+            
+            
+            console.log(res.data.name);
+            setName(res.data.name);
+            setSurname(res.data.surname);
+            setEmail(res.data.email);
+            setPhoneNumber(res.data.phoneNumber);
+            setAddressLine(res.data.addressLine);
+            setStreetNumber(res.data.streetNumber);
+            setCity(res.data.city);
+            setCountry(res.data.country);
+            setState(res.data.state);
+            
+            console.log(name);
+            console.log(surname);
+        
+        
+        });
+
+
+
+
+
+    }, []);
 
 
     return (
@@ -187,7 +226,7 @@ function ClientProfile ()  {
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/><span class="font-weight-bold">{name} {surname}</span><span class="text-black-50">{email}</span><span> </span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -195,33 +234,33 @@ function ClientProfile ()  {
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input onChange={handleChange} name="name" type="text" class="form-control" placeholder="first name" defaultValue="" required/>
+                    <div class="col-md-6"><label class="labels">Name</label><input onChange={handleChange} name="name" type="text" class="form-control" placeholder="first name" value={name} />
                 {errors.name.length > 0 && <span className='error'>{errors.name}</span>}
                 </div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input onChange={handleChange} name="surname" type="text" class="form-control" defaultValue="" placeholder="surname"/>
+                    <div class="col-md-6"><label class="labels">Surname</label><input onChange={handleChange} name="surname" type="text" class="form-control"  placeholder="surname" value={surname}/>
                     {errors.surname.length > 0 && <span className='error'>{errors.surname}</span>}
                     
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Phone Number</label><input onChange={handleChange} name="phoneNumber" type="text" class="form-control" placeholder="enter phone number" defaultValue=""/>
+                    <div class="col-md-12"><label class="labels">Phone Number</label><input onChange={handleChange} name="phoneNumber" type="text" class="form-control" placeholder="enter phone number" value={phoneNumber}/>
                     {errors.phoneNumber.length > 0 && <span className='error'>{errors.phoneNumber}</span>}
                     </div>
-                    <div class="col-md-12"><label class="labels">Address Line</label><input onChange={handleChange}  name="addressLine" type="text" class="form-control" placeholder="enter address line" defaultValue=""/>
+                    <div class="col-md-12"><label class="labels">Address Line</label><input onChange={handleChange}  name="addressLine" type="text" class="form-control" placeholder="enter address line" value={addressLine} />
                     {errors.addressLine.length > 0 && <span className='error'>{errors.addressLine}</span>}
                     </div>
-                    <div class="col-md-12"><label class="labels">Street number</label><input onChange={handleChange}  name="streetNumber" type="text" class="form-control" placeholder="enter street number" defaultValue=""/>
+                    <div class="col-md-12"><label class="labels">Street number</label><input onChange={handleChange}  name="streetNumber" type="text" class="form-control" placeholder="enter street number" value ={streetNumber}/>
                     {errors.streetNumber.length > 0 && <span className='error'>{errors.streetNumber}</span>}
                     </div>
-                    <div class="col-md-12"><label class="labels">City</label><input onChange={handleChange}  name="city" type="text" class="form-control" placeholder="enter city" defaultValue=""/>
+                    <div class="col-md-12"><label class="labels">City</label><input onChange={handleChange}  name="city" type="text" class="form-control" placeholder="enter city" value={city} />
                     {errors.city.length > 0 && <span className='error'>{errors.city}</span>}
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input onChange={handleChange}  name="country" type="text" class="form-control" placeholder="country" defaultValue=""/>
+                    <div class="col-md-6"><label class="labels">Country</label><input onChange={handleChange}  name="country" type="text" class="form-control" placeholder="country" value={country} />
                     {errors.country.length > 0 && <span className='error'>{errors.country}</span>}
                     </div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input onChange={handleChange}  name="state" type="text" class="form-control" defaultValue="" placeholder="state"/>
+                    <div class="col-md-6"><label class="labels">State/Region</label><input onChange={handleChange}  name="state" type="text" class="form-control" placeholder="state" value ={state}/>
                     {errors.state.length > 0 && <span className='error'>{errors.state}</span>}
                     </div>
                 </div>

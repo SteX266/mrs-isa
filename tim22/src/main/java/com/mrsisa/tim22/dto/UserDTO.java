@@ -8,11 +8,18 @@ import lombok.*;
 @Setter
 public class UserDTO {
 
+    String email;
     String name;
-
     String surname;
+    String phoneNumber;
+    String addressLine;
+    String streetNumber;
+    String city;
+    String country;
+    String state;
 
-    
+
+
 
 
 }
