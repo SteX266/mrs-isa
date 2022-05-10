@@ -1,14 +1,26 @@
 package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.SystemEntityDTO;
+import com.mrsisa.tim22.model.Address;
+import com.mrsisa.tim22.model.SystemEntity;
+import com.mrsisa.tim22.repository.SystemEntityRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class EntityService {
+public class SystemEntityService {
+
+    @Autowired
+    private SystemEntityRepository systemEntityRepository;
 
     public ArrayList<SystemEntityDTO> getEntities(){
+
+
+
         System.out.println("Prosao zahtev");
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         entities.add(new SystemEntityDTO("https://www.gradnja.rs/wp-content/uploads/2022/02/luksuzne-vikendice-srbija-izajmljivanje-gradnja.rs_.jpg", "Puz", 500, 3, "Njegoseva 22"));
@@ -20,7 +32,44 @@ public class EntityService {
         entities.add(new SystemEntityDTO("https://img.halooglasi.com/slike/oglasi/Thumbs/200904/l/prodaje-se-vikendica-25-m2-g-goracici-prijepo-5425635877817-71792611911.jpg", "Nesto", 200, 5, "Milos"));
         entities.add(new SystemEntityDTO("http://sveoosiguranju.rs/wp-content/uploads/2015/11/bjr09xv43ev38ei8feec.jpg", "Nesto", 200, 5, "Milos"));
 
+        /*
+        List<SystemEntity> allEntities = systemEntityRepository.findAll();
+
+        for (SystemEntity entity : allEntities){
+            if (!entity.isDeleted()){
+                entities.add(createEntityDTO(entity));
+            }
+        }
+        */
+
         return entities;
 
+    }
+
+    private SystemEntityDTO createEntityDTO(SystemEntity entity) {
+
+        String photo;
+        String address = "";
+        if (entity.getPhotos().size() > 0){
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            photo = entity.getPhotos().get(0);
+            System.out.println(photo);
+
+        }
+        else{
+            photo = "";
+        }
+
+        Address a = entity.getAddress();
+
+        address += a.getStreetName();
+        address += " ";
+        address += String.valueOf(a.getStreetNumber());
+        address += ", ";
+        address += a.getCity();
+        address += ", ";
+        address += a.getCountry();
+
+        return new SystemEntityDTO(photo, entity.getName(), entity.getPrice(), entity.getAverageScore(), address);
     }
 }
