@@ -1,5 +1,7 @@
 
 import VesselCreate from '../captain_components/VesselCreate';
+
+import ListingCreate from '../host_components/ListingCreate';
 import CreateAdventure from '../CreateAdventure';
 export default function BussinessUserCreatePage(props) {
 
@@ -7,7 +9,7 @@ export default function BussinessUserCreatePage(props) {
     let component = '';
     switch (props.type) {
       case 'host':
-        component = <></>;
+        component = <ListingCreate></ListingCreate>;
         break;
       case 'captain':
         component = <VesselCreate></VesselCreate>;

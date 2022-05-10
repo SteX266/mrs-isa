@@ -3,10 +3,10 @@ import axios from 'axios';
 import React, {useState} from 'react';
 import { Button, Container, Form, FormSelect} from 'react-bootstrap';
 import DropdownCheckbox from '../DropdownCheckbox';
-import LabeledInput from './LabeledInput';
-import LabeledTextAreaInput from './LabeledTextAreaInput';
+import LabeledInput from '../captain_components/LabeledInput';
+import LabeledTextAreaInput from '../captain_components/LabeledTextAreaInput';
 export default function VesselCreate() {
-    const [formData, setFormData] = useState({vesselName:'',
+    const [formData, setFormData] = useState({listingName:'',
                                               description:'',
                                               address:'',
                                               rules:'', 
@@ -16,14 +16,9 @@ export default function VesselCreate() {
                                               from: '',
                                               to: '',
                                               capacity: '',
-                                              vesselLength: '',
-                                              type: "",
-                                              maxSpeed: '',
-                                              engineNumber: '',
-                                              enginePower: '',
-                                              navigationEquipment: [],
-                                              fishingEquipment: [],
-                                              photos: []});
+                                              photos: [],
+                                              rooms: '',
+                                              beds:''});
     const [errors, setErrors] = useState({vesselName:'',
                                         description:'',
                                         address:'',
@@ -33,15 +28,9 @@ export default function VesselCreate() {
                                         rentalPrice: '',
                                         from: '',
                                         to: '',
-                                        capacity: '',
-                                        vesselLength: '',
-                                        type: '',
-                                        maxSpeed: '',
-                                        engineNumber: '',
-                                        enginePower: '',
-                                        navigationEquipment: '',
-                                        fishingEquipment: '',
-                                        photos: ''});
+                                        photos: '',
+                                        rooms: '',
+                                        beds: ''});
 
     const [valid, setValid] = useState(true);
 
@@ -141,10 +130,10 @@ export default function VesselCreate() {
                
                },
             data:{
-                "vesselDto": formData
+                "listingDTO": formData
             }
         };
-        axios.post("http://localhost:8080/api/vessel/create", requestOptions).then(function (response) {
+        axios.post("http://localhost:8080/api/listing/create", requestOptions).then(function (response) {
             console.log(response.data);
         }).catch(function (response) {
             console.log(response.status);
@@ -153,10 +142,7 @@ export default function VesselCreate() {
     return (
     <Container>
         <Form>
-            <GeneralInformationForm onChange={onChange} onCheck={onCheck} errors={errors} valid={valid}/>
-
-            <VesselInformationForm onChange={onChange} onUpload={onUpload} errors={errors} valid={valid}/>
-
+            <GeneralInformationForm onChange={onChange} onCheck={onCheck} onUpload={onUpload} errors={errors} valid={valid}/>
         </Form>
         <Button variant='outline-dark' onClick={onCreateButtonClicked}>Create</Button>
     </Container>
@@ -167,7 +153,7 @@ function GeneralInformationForm(props) {
     return (
     <>
     <Container>
-        <LabeledInput label='Name' name='vesselName' placeholder='Enter name of vessel' onChange={props.onChange}/>
+        <LabeledInput label='Name' name='name' placeholder='Enter name of listing' onChange={props.onChange}/>
         {!props.valid && <Form.Text muted style={{color: 'red'}}>
                             <p style={{color: 'red'}}>{props.errors.vesselName}</p>
                         </Form.Text>
@@ -197,64 +183,30 @@ function GeneralInformationForm(props) {
                         </Form.Text>
         }
 
+        <LabeledInput label='Rooms' name='rooms' placeholder='Enter room number' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.rooms}</p>
+                        </Form.Text>
+        }
+        <LabeledInput label='Beds' name='beds' placeholder='Enter bed number' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.beds}</p>
+                        </Form.Text>
+        }
+
         <AvailabilityPeriodForm onChange={props.onChange} errors={props.errors} valid={props.valid}/>
 
-    </Container>
-    </>);
-}
-
-function VesselInformationForm(props) {
-    return (
-    <Container>
-        <LabeledInput label='Capacity' name='capacity' placeholder='Enter vessel capacity' type='number' onChange={props.onChange}/>
-        {!props.valid && <Form.Text muted style={{color: 'red'}}>
-                            <p style={{color: 'red'}}>{props.errors.capacity}</p>
-                        </Form.Text>
-        }
-        <LabeledInput label='Vessel length' name='vesselLength' placeholder='Enter vessel length' type='number' onChange={props.onChange}/>
-        {!props.valid && <Form.Text muted>
-                            <p style={{color: 'red'}}>{props.errors.vesselLength}</p>
-                        </Form.Text>
-        }
-        
-        <VesselCheckbox onChange={props.onChange}/>
-
-        <EngineForm onChange={props.onChange}/>
-
-        <EquipmentCheckbox label='Fishing equipment' name='fishingEquipment' list={['Stap', 'Bolji stap']} onCheck={props.onCheck}/>
-        <EquipmentCheckbox label='Navigation equipment' name='navigationEquipment' list={['Radar', 'Policijski radar']} onCheck={props.onCheck}/>
-        
         <PhotoUploadForm onUpload={props.onUpload}/>
         {!props.valid && <Form.Text muted>
                             <p style={{color: 'red'}}>{props.errors.photos}</p>
                         </Form.Text>
         }
 
-    </Container>);
-}
-
-function EngineForm(props) {
-    return (
-    <Container>
-            <LabeledInput label='Max speed' name='maxSpeed' placeholder='Enter max speed(km/h)' type='number' onChange={props.onChange}/>
-            <LabeledInput label='Engine number' name='engineNumber' placeholder='Enter engine number' type='number' onChange={props.onChange}/>
-            <LabeledInput label='Engine power' name='enginePower' placeholder='Enter engine power' type='number' onChange={props.onChange}/>
     </Container>
-    );
+    </>);
 }
 
-function VesselCheckbox(props) {
-    return (
-    <Form.Group className='mb3'>
-        <FormSelect onChange={props.onChange} name='type'>
-            <option value='Short boat'>Short boat</option>
-            <option value='Long boat'>Long boat</option>
-            <option value='Fast ship'>Fast ship</option>
-            <option value='Even faster ship'>Even faster ship</option>
-        </FormSelect>
-    </Form.Group>
-    );
-}
+
 
 function EquipmentCheckbox(props) {
     return (

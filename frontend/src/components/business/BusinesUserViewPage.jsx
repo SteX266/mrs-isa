@@ -10,21 +10,22 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ServiceTable from "./ServiceTable";
+import Dialog from "../Dialog";
 
 export default function BusinessUserViewServicesPage(props) {
   const [user, setUser] = React.useState({ type: "", headers: [] });
   const [services, setServices] = React.useState([]);
 
   const [searchServices, setSearchServices] = React.useState([]);
-
+  const [showDeleteDialogue, setDeleteDialogue] = React.useState(false);
   React.useEffect(() => {
     let func = "";
     switch (props.type) {
       case "host":
-        func = "getAllAdventures";
+        func = "getAllListings";
         setUser({
           type: "listings",
-          headers: ["Name", "Location", "Available spots", "Price"],
+          headers: ["Name", "Location", "Rooms", "Beds", "Price"],
         });
         break;
       case "instructor":
@@ -36,10 +37,10 @@ export default function BusinessUserViewServicesPage(props) {
         break;
 
       case "captain":
-        func = "getAllAdventures";
+        func = "getAllVessels";
         setUser({
           type: "vessels",
-          headers: ["Name", "Location", "Available spots", "Price"],
+          headers: ["Name", "Location", "Length", "Capacity", "Price"],
         });
     }
     getServiceData(func);
@@ -86,6 +87,14 @@ export default function BusinessUserViewServicesPage(props) {
     }
     setSearchServices(filtering);
     setServices(filtering);
+    
+  }
+  function cancelButtonHandler() {
+    setDeleteDialogue(false);
+  }
+
+  function deleteConfirmedHandler(id) {
+    
   }
   return (
     <div style={{ padding: "55px" }}>
