@@ -21,29 +21,34 @@ function RegisterForm()  {
       event.preventDefault();
       if(validateForm()){
 
-        const requestOptions = {
-          headers: {
-             Accept: 'application/json',
-           'Content-Type': 'application/json',
-           'Access-Control-Allow-Origin': '*',
-             
-             },
-          params:{
-              "email":email,
-              "name" : name,
-              "surname":surname,
-              "phoneNumber":phoneNumber,
-              "addressLine": addressLine,
-              "password":password
-          }
 
- 
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json'  },
+          body:JSON.stringify({
+            email,name,surname,phoneNumber,addressLine,password
+
+          })
       };
-  //    axios.get("http://localhost:8080/api/user/registerUser", requestOptions);
-    console.log('Korisnik uspesno registrovan');
+
+
+
+      fetch("http://localhost:8080/api/user/signup", requestOptions).then(async response=>{
+        const data = await response.json();
+
+        if(data.email !== null){
+          console.log("Uspesna registracija!");
+        }
+        else{
+          console.log("Neuspesna registracija!");
+        }
+    
+      });
+    
+      }
 
       }
-    }
+    
   
   const emailValidation = (email) => {
       const regex =

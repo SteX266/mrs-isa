@@ -49,7 +49,8 @@ public class UserController {
         return ResponseEntity.ok(new UserTokenState());
     }
 
-    @PostMapping("/signup")
+
+    @RequestMapping(value="api/user/signup", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder){
         User existUser = this.userService.findByEmail(userRequest.getEmail());
         if(existUser != null){
@@ -57,7 +58,8 @@ public class UserController {
         }
         User user = new User();
    //     User user = this.userService.save(userRequest);
-
+        user.setEmail("blyat");
+        System.out.println(userRequest.getEmail());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
