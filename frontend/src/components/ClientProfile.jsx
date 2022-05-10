@@ -15,11 +15,7 @@ function ClientProfile ()  {
     const[city, setCity] = useState("");
     const[country,setCountry] = useState("");
     const[state,setState] = useState("");
-
     const[email,setEmail] = useState("");
-
-
-
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -213,14 +209,8 @@ function ClientProfile ()  {
         
         
         });
-
-
-
-
-
     }, []);
-
-
+    
     return (
     <>
 <div class="container rounded bg-white mt-5 mb-5">
