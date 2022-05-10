@@ -57,12 +57,18 @@ class EntityList extends Component  {
 
    render(){
     return <>
-          <MDBCol md="12">
-      <MDBInput onChange={this.searchFieldChanged} hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
-    </MDBCol>
-     <div class="row" id="entities">
-         {this.state.searchList.map(this.renderAllEntities)}
-     </div>
+
+      <div class="album py-5 bg-light">
+      <div class="container">
+            <MDBCol md="12">
+         <MDBInput onChange={this.searchFieldChanged} hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
+      </MDBCol>
+      <div class="row" id="entities">
+            {this.state.searchList.map(this.renderAllEntities)}
+      </div>
+
+      </div>
+      </div>
 
 
 </>

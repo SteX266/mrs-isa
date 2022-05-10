@@ -1,6 +1,3 @@
-import {useEffect, useState} from 'react'
-
-import vikendica from "../images/vikendica.jpeg"
 import "../style/EntityCard.css"
 
 

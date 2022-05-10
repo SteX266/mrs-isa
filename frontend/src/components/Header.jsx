@@ -20,31 +20,31 @@ const Header = () => {
             <div className="carousel-item active">
                         <img className="d-block w-100" src={vacation} alt="First slide"/>
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>Vikendice</h3>
-                            <p>Brzo i lako rezervišite boravak u vikendicama</p>
+                            <h3>Vacations</h3>
+                            <p>Reserve your stay at weekend cottages</p>
                         </div>
                 </div>
 
                 <div className="carousel-item">
                     <img className="d-block w-100" src={vessel} alt="Second slide"/>
                     <div class="carousel-caption d-none d-md-block">
-                            <h3>Brodovi i čamci</h3>
-                            <p>Na dva klika od palube</p>
+                            <h3>Vessels</h3>
+                            <p>Two clicks away from shipboard</p>
                         </div>
                 </div>
                 <div className="carousel-item">
                     <img className="d-block w-100" src={fishing} alt="Third slide"/>
                     <div class="carousel-caption d-none d-md-block">
-                            <h3>Avanture i časovi pecanja</h3>
-                            <p>Najbolji instruktori u regionu. Avanture od kojih ostajete bez daha!</p>
+                            <h3>Adventures and fishing classes</h3>
+                            <p>Best instructors in region. Adventures that will take your breath away</p>
                         </div>
                 </div>
                 
                 <div className="carousel-item">
-                        <img className="d-block w-100" src={business} alt="Forth slide"/>
+                        <img className="d-block w-100" src={business} alt="Fourth slide"/>
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>Biznis</h3>
-                            <p>Registracija za vlasnike vikendica, plovila i avantura</p>
+                            <h3>Business</h3>
+                            <p>Registration for home and vessel owners, as well as instructors</p>
                         </div>
                 </div>
             </div>
