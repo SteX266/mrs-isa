@@ -1,6 +1,12 @@
 const LoginForm = (props) =>  {  
     return <>
+
+<div class="album py-5 bg-light">
+<div class="container">
 <form>
+
+
+
   <div class="mb-6">
     <label for="exampleInputEmail1" class="form-label">Email adresa</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
@@ -13,6 +19,8 @@ const LoginForm = (props) =>  {
 
   <button type="submit" class="btn btn-primary">Prijavi se</button>
 </form>
+</div>
+</div>
 </>}
 
 export default LoginForm;
