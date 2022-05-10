@@ -64,8 +64,8 @@ export default function RegistrationRequest() {
     ]);
   }, []);
 
-  async function getRequestsData(func) {
-    /*let path = "http://localhost:8080/api/entity/" + func;
+  async function getRequestsData() {
+    let path = "http://localhost:8080/api/entity/getReservationRequests";
     const res = axios.get(path, {
       headers: {
         Accept: "application/json",
@@ -73,8 +73,7 @@ export default function RegistrationRequest() {
         "Access-Control-Allow-Origin": "*",
       },
     });
-    return res.data;*/
-    return [];
+    return res.data;
   }
 
   function searchFieldChanged(event) {
