@@ -12,7 +12,9 @@ public class SystemEntityDTO extends SystemEntity {
     public String myAddress;
     public String firstImage;
 
-    public SystemEntityDTO(String image, String name, double price, double rating, String address){
+    public String type;
+
+    public SystemEntityDTO(String image, String name, double price, double rating, String address, String type){
         this.photos = new ArrayList<String>();
         this.photos.add(image);
         this.name = name;
@@ -20,6 +22,7 @@ public class SystemEntityDTO extends SystemEntity {
         this.myAddress = address;
         this.averageScore = rating;
         this.firstImage = image;
+        this.type = type;
     }
 
 }

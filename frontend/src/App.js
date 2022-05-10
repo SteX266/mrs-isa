@@ -5,6 +5,7 @@ import HomePageUnregistered from "./components/HomePageUnregistered"
 import BussinessUserRouter from "./components/business/BusinessUserRouter"
 
 import InstructorPage from "./components/InstructorPage";
+import BusinesssUserRouter from "./components/business/BusinessUserRouter";
 
 function App() {
   return <>
@@ -12,7 +13,7 @@ function App() {
 
 
 
-    <BussinessUserRouter/>
+    <HomePageUnregistered/>
 
 
   

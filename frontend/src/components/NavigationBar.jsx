@@ -18,15 +18,15 @@ return <>
                         <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Vacations</a>
+                     <Link to="/vacations">   <a class="nav-link" href="/vacations">Vacations</a></Link>
                     </li>
 
                     <li class="nav-item">
 
-                       <Link to="/clientProfile"> <a class="nav-link" href="/clientProfile">Vessels</a> </Link>
+                       <Link to="/vessels"> <a class="nav-link" href="/clientProfile">Vessels</a> </Link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Adventures</a>
+                       <Link to="/adventures"> <a class="nav-link" href="/adventures">Adventures</a></Link>
                     </li>
                 </ul>
                     <a href="/login"  class="btn btn-warning" >Login</a>
