@@ -9,7 +9,7 @@ export default function DropdownCheckbox(props) {
         </Dropdown.Toggle>
         <Dropdown.Menu>
             {props.list?.map((item =>
-                <div key={item} name={props.name}>{item}    <input type='checkbox' name={item} onChange={props.onCheck}></input></div>
+                <div key={item} id={props.name}>{item}    <input type='checkbox' name={item} onChange={props.onCheck}></input></div>
                 ))}
         </Dropdown.Menu>
     </Dropdown>);

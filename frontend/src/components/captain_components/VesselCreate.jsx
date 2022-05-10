@@ -11,33 +11,53 @@ export default function VesselCreate() {
                                               address:'',
                                               rules:'', 
                                               amenities:[],
-                                              cancelationFee: -1000,
-                                              rentalPrice: -1000,
-                                              from: {},
-                                              to: {},
-                                              capacity: -1000,
-                                              vesselLength: -1000,
+                                              cancelationFee: '',
+                                              rentalPrice: '',
+                                              from: '',
+                                              to: '',
+                                              capacity: '',
+                                              vesselLength: '',
                                               type: "",
-                                              maxSpeed: 0,
-                                              engineNumber: 0,
-                                              enginePower: 0,
+                                              maxSpeed: '',
+                                              engineNumber: '',
+                                              enginePower: '',
                                               navigationEquipment: [],
                                               fishingEquipment: [],
                                               photos: []});
+    const [errors, setErrors] = useState({vesselName:'',
+                                        description:'',
+                                        address:'',
+                                        rules:'', 
+                                        amenities:'',
+                                        cancelationFee: '',
+                                        rentalPrice: '',
+                                        from: '',
+                                        to: '',
+                                        capacity: '',
+                                        vesselLength: '',
+                                        type: '',
+                                        maxSpeed: '',
+                                        engineNumber: '',
+                                        enginePower: '',
+                                        navigationEquipment: '',
+                                        fishingEquipment: '',
+                                        photos: ''});
+
+    const [valid, setValid] = useState(true);
+
     function onCreateButtonClicked(event) {
         event.preventDefault();
+        validateForm();
         console.log(formData);
-        if(isFormDataValid()) {
-            console.log(formData);
+        if(valid) {
+            createVessel();
         }
-        console.log(formData);
         
         
     }
 
     function onChange(event) {
         setFormData(prevFormData => {
-            console.log(event.target.name, event.target.value);
             return {
                 ...prevFormData,
                 [event.target.name]: event.target.value
@@ -57,31 +77,62 @@ export default function VesselCreate() {
     
     function onCheck(event) {
         setFormData(prevFormData => {
-            console.log(event.target.name);
-            console.log(event.target.parentNode);
-            let checkList = formData[event.target.parentNode.name];
-            if(!checkList) {
-                checkList = [];
-            }
+            let checkSet = formData[event.target.parentNode.id];
             if(event.target.checked) {
-                checkList.push(event.target.name);
+                checkSet.push(event.target.name);
             } else {
-                checkList = checkList.filter(e => e !== event.target.name);
+                checkSet = checkSet.filter( e => e !== event.target.name);
             }
             return {
                 ...prevFormData,
-                [event.target.parentNode.name]: checkList
+                [event.target.parentNode.id]: checkSet
             }
         })
     }
 
 
-    function isFormDataValid() {
-        for(const item in formData ) {
-            if (item < 0 || item === '' || item === [] || item === {})
-                return false;
+    function validateForm() {
+        let valid = true;
+        let currentErrors = errors;
+        if (!formData.address) {
+            currentErrors.address = "Address required!";
+            valid = false;
         }
-        return true;
+        if(!formData.cancelationFee) {
+            currentErrors.cancelationFee = "Cancelation fee required!";
+            valid = false;
+        }
+        if(!formData.capacity) {
+            currentErrors.capacity = "Capacity required!";
+            valid = false;
+        }
+        if(!formData.photos || formData.photos.length < 3) {
+            currentErrors.photos = "Must contain at least 3 photos!";
+            valid = false;
+        }
+        if(!formData.rentalPrice) {
+            currentErrors.rentalPrice = "Rental fee required!";
+            valid = false;
+        }
+        if(!formData.vesselLength) {
+            currentErrors.vesselLength = "Length required!";
+            valid = false;
+        }
+        if(!formData.vesselName) {
+            currentErrors.vesselName = "Name required!";
+            valid = false;
+        }
+        if(!formData.from) {
+            currentErrors.from = "No date selected!";
+            valid = false;
+        }
+        if(!formData.to) {
+            currentErrors.to = "No date selected!";
+            valid = false;
+        }
+        setValid(valid);
+        setErrors(currentErrors);
+
     }
 
     function createVessel() {
@@ -105,9 +156,9 @@ export default function VesselCreate() {
     return (
     <Container>
         <Form>
-            <GeneralInformationForm onChange={onChange} onCheck={onCheck}/>
+            <GeneralInformationForm onChange={onChange} onCheck={onCheck} errors={errors} valid={valid}/>
 
-            <VesselInformationForm onChange={onChange} onUpload={onUpload}/>
+            <VesselInformationForm onChange={onChange} onUpload={onUpload} errors={errors} valid={valid}/>
 
         </Form>
         <Button variant='outline-dark' onClick={onCreateButtonClicked}>Create</Button>
@@ -120,20 +171,36 @@ function GeneralInformationForm(props) {
     <>
     <Container>
         <LabeledInput label='Name' name='vesselName' placeholder='Enter name of vessel' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.vesselName}</p>
+                        </Form.Text>
+        }
 
         <LabeledTextAreaInput label='Description' name='description' placeholder='Enter description' onChange={props.onChange}/>
 
         <LabeledInput label='Address' name='address' placeholder='Enter address' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.address}</p>
+                        </Form.Text>
+        }
 
         <LabeledTextAreaInput label='Rules of conduct' name='rules' placeholder='Enter rules of conduct' onChange={props.onChange}/>
 
         <EquipmentCheckbox label='Amenities' name='amenities' list={['WIFI', 'TOILET']} onCheck={props.onCheck}/>
 
         <LabeledInput label='Cancelation fee' name='cancelationFee' placeholder='Enter cancelation fee' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.cancelationFee}</p>
+                        </Form.Text>
+        }
 
         <LabeledInput label='Rental price' name='rentalPrice' placeholder='Enter rental price' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted>
+                            <p style={{color: 'red'}}>{props.errors.rentalPrice}</p>
+                        </Form.Text>
+        }
 
-        <AvailabilityPeriodForm onChange={props.onChange}/>
+        <AvailabilityPeriodForm onChange={props.onChange} errors={props.errors} valid={props.valid}/>
 
     </Container>
     </>);
@@ -143,7 +210,15 @@ function VesselInformationForm(props) {
     return (
     <Container>
         <LabeledInput label='Capacity' name='capacity' placeholder='Enter vessel capacity' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                            <p style={{color: 'red'}}>{props.errors.capacity}</p>
+                        </Form.Text>
+        }
         <LabeledInput label='Vessel length' name='vesselLength' placeholder='Enter vessel length' type='number' onChange={props.onChange}/>
+        {!props.valid && <Form.Text muted>
+                            <p style={{color: 'red'}}>{props.errors.vesselLength}</p>
+                        </Form.Text>
+        }
         
         <VesselCheckbox onChange={props.onChange}/>
 
@@ -153,6 +228,10 @@ function VesselInformationForm(props) {
         <EquipmentCheckbox label='Navigation equipment' name='navigationEquipment' list={['Radar', 'Policijski radar']} onCheck={props.onCheck}/>
         
         <PhotoUploadForm onUpload={props.onUpload}/>
+        {!props.valid && <Form.Text muted>
+                            <p style={{color: 'red'}}>{props.errors.photos}</p>
+                        </Form.Text>
+        }
 
     </Container>);
 }
@@ -202,8 +281,16 @@ function AvailabilityPeriodForm(props) {
         <Form.Group className='mb3'>
             <Form.Label>From</Form.Label>
             <Form.Control type='date' name='from' onChange={props.onChange}/>
+            {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                                <p style={{color: 'red'}}>{props.errors.from}</p>
+                            </Form.Text>
+            }
             <Form.Label>To</Form.Label>
             <Form.Control type='date' name='to' onChange={props.onChange}/>
+            {!props.valid && <Form.Text muted style={{color: 'red'}}>
+                                <p style={{color: 'red'}}>{props.errors.to}</p>
+                            </Form.Text>
+            }
         </Form.Group>
     );
 }
