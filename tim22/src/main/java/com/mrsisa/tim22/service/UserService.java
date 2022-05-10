@@ -36,4 +36,8 @@ public class UserService {
 
         return acr;
     }
+    public User findByEmail(String email){
+        return userRepository.findOneByEmail(email);
+
+    }
 }

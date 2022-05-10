@@ -12,14 +12,30 @@ const[password, setPassword] = useState("");
 const handleSubmit = (event) =>{
   event.preventDefault();
   if(validateForm()){
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'  },
+      body: JSON.stringify({
+          email,
+          password
+      })
+  };
+  fetch("http://localhost:8080/api/user/login", requestOptions).then(async response=>{
+    const data = await response.json();
+    if(!response.ok){
 
+      console.log("Kredencijali nisu validni");
+    }
+    if(data.username !== null){
+      console.log("Uspesan login");
+    }
+    else{
+      console.log("Neuspesan login");
+    }
 
-    console.log("Uspesan login");
+  });
+
   }
-  else{
-    console.log("");
-  }
-
 
 }
 
