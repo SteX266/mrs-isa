@@ -1,5 +1,6 @@
 package com.mrsisa.tim22.service;
 
+import com.mrsisa.tim22.dto.AdventureDTO;
 import com.mrsisa.tim22.dto.SystemEntityDTO;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,21 @@ public class EntityService {
 
         return entities;
 
+    }
+
+    public ArrayList<AdventureDTO> getAllAdventures() {
+        System.out.println("Prosao zahtev");
+        ArrayList<AdventureDTO> adventures = new ArrayList<>();
+        adventures.add(new AdventureDTO(1,"Prva Avantura","NS,Serbia",4,34));
+        adventures.add(new AdventureDTO( 2,"Druga Avantura","Banjaluka,Bosnia",3,45));
+        adventures.add(new AdventureDTO( 3,"Treca","Mostar,Bosnia",3,32));
+        adventures.add(new AdventureDTO(4,"D Avantura","Mostar,Bosnia",2,54));
+        adventures.add(new AdventureDTO( 5,"Dadadal","Zrenjanin,Serbia",2,56));
+        adventures.add(new AdventureDTO( 6,"ne znaaaam","Sremska Mitrovia, Serbia",3,312));
+        adventures.add(new AdventureDTO( 7,"DMozeee","Kikinda,Serbia",5,45));
+        adventures.add(new AdventureDTO( 8,"Beogradd","Jagodina,Serbia",1,12));
+        adventures.add(new AdventureDTO( 9,"Drudadsa","Jajce,Bosnia",3,213));
+        adventures.add(new AdventureDTO( 10,"Druadasd","Bjeljina,Bosnia",4,11));
+        return adventures;
     }
 }
