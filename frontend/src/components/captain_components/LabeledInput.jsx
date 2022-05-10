@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-class LabeledInput extends Component {
-    render() { 
-        return (
-        <>
-        <Form.Group className='mb3' controlId={this.props.controlId}>
-            <Form.Label>{this.props.name}</Form.Label>
-            <Form.Control placeholder={this.props.placeholder} type={this.props.type} defaultValue={this.props.defaultValue} disabled={this.props.disabled}/>
-        </Form.Group>
-        </>);
-    }
+
+export default function LabeledInput(props){
+    return (
+    <>
+    <Form.Group className='mb3' controlId={props.controlId}>
+        <Form.Label>{props.label}</Form.Label>
+        <Form.Control placeholder={props.placeholder} type={props.type} value={props.value} disabled={props.disabled} onChange={props.onChange} name={props.name}/>
+    </Form.Group>
+    </>);
 }
- 
-export default LabeledInput;

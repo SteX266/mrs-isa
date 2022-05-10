@@ -1,19 +1,14 @@
-import React, { Component } from 'react';
+import React, { } from 'react';
 import { Form } from 'react-bootstrap';
 
-class LabeledTextAreaInput extends Component {
-    state = {  } 
-    render() { 
-        return (
-        <>
-        <Form.Group className='mb3' controlId={this.props.controlId}>
-            <Form.Label>{this.props.name}</Form.Label>
-            <Form.Control as='textarea' rows={3} placeholder={this.props.placeholder}/>
-        </Form.Group>
-        
-        
-        </>);
-    }
+export default function LabeledTextAreaInput(props) {
+    return (
+    <>
+    <Form.Group className='mb3' controlId={props.controlId}>
+        <Form.Label>{props.label}</Form.Label>
+        <Form.Control as='textarea' rows={3} placeholder={props.placeholder} name={props.name} onChange={props.onChange}/>
+    </Form.Group>
+    
+    
+    </>);
 }
- 
-export default LabeledTextAreaInput;
