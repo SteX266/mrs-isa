@@ -114,10 +114,7 @@ export default function VesselCreate() {
             currentErrors.rentalPrice = "Rental fee required!";
             valid = false;
         }
-        if(!formData.vesselLength) {
-            currentErrors.vesselLength = "Length required!";
-            valid = false;
-        }
+
         if(!formData.vesselName) {
             currentErrors.vesselName = "Name required!";
             valid = false;
