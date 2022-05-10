@@ -10,7 +10,7 @@ export default function VesselCreate() {
                                               description:'',
                                               address:'',
                                               rules:'', 
-                                              amenities:{},
+                                              amenities:[],
                                               cancelationFee: -1000,
                                               rentalPrice: -1000,
                                               from: {},
@@ -21,11 +21,12 @@ export default function VesselCreate() {
                                               maxSpeed: 0,
                                               engineNumber: 0,
                                               enginePower: 0,
-                                              navigationEquipment: {},
-                                              fishingEquipment: {},
+                                              navigationEquipment: [],
+                                              fishingEquipment: [],
                                               photos: []});
     function onCreateButtonClicked(event) {
         event.preventDefault();
+        console.log(formData);
         if(isFormDataValid()) {
             console.log(formData);
         }
@@ -56,13 +57,24 @@ export default function VesselCreate() {
     
     function onCheck(event) {
         setFormData(prevFormData => {
-            console.log(event.target.checked);
+            console.log(event.target.name);
+            console.log(event.target.parentNode);
+            let checkList = formData[event.target.parentNode.name];
+            if(!checkList) {
+                checkList = [];
+            }
+            if(event.target.checked) {
+                checkList.push(event.target.name);
+            } else {
+                checkList = checkList.filter(e => e !== event.target.name);
+            }
             return {
                 ...prevFormData,
-                [event.target.parent.name]: event.target.checked
+                [event.target.parentNode.name]: checkList
             }
         })
     }
+
 
     function isFormDataValid() {
         for(const item in formData ) {
