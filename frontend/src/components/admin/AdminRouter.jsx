@@ -2,6 +2,7 @@ import React from "react";
 import AdminNavbar from "./AdminNavbar";
 import RegistrationRequest from "./RegistrationRequest";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AdminProfile from "./AdminProfile";
 
 export default function AdminRouter() {
   return (
@@ -13,6 +14,7 @@ export default function AdminRouter() {
           path="/admin/registration-request"
           element={<RegistrationRequest />}
         />
+        <Route path="/admin/profile" element={<AdminProfile />} />
       </Routes>
     </BrowserRouter>
   );
