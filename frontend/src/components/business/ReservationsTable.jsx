@@ -10,7 +10,7 @@ export default function ReservationsTable(props) {
 
     useEffect(() => {
         getReservations(userId);
-    });
+    },[]);
     function getReservations(userId) {
         axios.get("http://localhost:8080/api/reservation/getAllReservations", {
         headers: {
