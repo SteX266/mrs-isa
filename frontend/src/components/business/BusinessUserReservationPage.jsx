@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import ReservationsTable from "./ReservationsTable";
 export default function BusinessUserReservationPage(props) {
+  const [userId, setUserId] = useState("1");
   return (
-    <div>
-      <h1> {props.type}</h1>
-    </div>
+    <>
+    <ReservationsTable userId={userId}></ReservationsTable>
+    </>
   );
 }
