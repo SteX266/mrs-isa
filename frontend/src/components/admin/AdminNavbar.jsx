@@ -22,9 +22,7 @@ export default function BusinessUserNavbar(props) {
             <Nav.Link href={`/admin/registration-request`}>
               Registration Requests
             </Nav.Link>
-            <Nav.Link href={`/${props.type}/reservations`}>
-              Reservations
-            </Nav.Link>
+            <Nav.Link href={`/admin/registerAdmin`}>Register Admin</Nav.Link>
           </Nav>
         </Container>
         <Container>
