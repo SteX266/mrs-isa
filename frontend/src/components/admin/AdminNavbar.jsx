@@ -30,7 +30,7 @@ export default function BusinessUserNavbar(props) {
         <Container>
           <Nav className="ms-auto">
             <NavDropdown title={<ProfileImage />}>
-              <NavDropdown.Item href={`/${props.type}/profile`}>
+              <NavDropdown.Item href={"/admin/profile"}>
                 Profile
               </NavDropdown.Item>
               <NavDropdown.Item href={`/${props.type}/change-password`}>
