@@ -11,7 +11,7 @@ import AdminRouter from "./components/admin/AdminRouter";
 function App() {
   return (
     <>
-      <AdminRouter />
+      <HomePageUnregistered />
     </>
   );
 }

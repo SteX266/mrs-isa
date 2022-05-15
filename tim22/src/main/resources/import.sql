@@ -13,11 +13,6 @@ INSERT INTO public.user_table(
 VALUES (4, 'zumzumzum@gmail.com', true, false, 0, 'Aleksa', 'brkatiii', 0642270707, 'Stevanovic', 'SHIP_OWNER', null);
 
 
-
-
-
-
-
 INSERT INTO public.vacation(
     id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
 VALUES (1, 4,100, 4, 'top vikendica najjaca', 'VACATION', false, 'Raj za mlade babe', 500, 'Iskljucivo za mlade babe ispod 53 godine',null);
@@ -33,12 +28,6 @@ VALUES (4, 1,75, 3, 'Ubosni je top dodjite jarani da se napijete za sitne pare',
 INSERT INTO public.vacation(
     id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
 VALUES (5, 3,80, 2, 'Gajba u centru Bg jako je skupo ', 'VACATION', false, 'Dedinje goriiii matorii', 500, 'Za nafurane majmuncine sa beogradskog asfalta i mlade gaserke iskljucivo',null);
-
-
-
-
-
-
 
 
 INSERT INTO public.address(

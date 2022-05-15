@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserTokenState {
 
     private String accessToken;
-    private Long expiresIn;
+    private int expiresIn;
 
 
 

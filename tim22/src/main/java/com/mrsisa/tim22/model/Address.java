@@ -26,8 +26,6 @@ public class Address {
     @Column
     private int streetNumber;
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "address")
-    private Set<User> users = new HashSet<User>();
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "address")
     private Set<SystemEntity> systemEntities = new HashSet<>();
 
 
