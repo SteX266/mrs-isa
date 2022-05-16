@@ -48,6 +48,9 @@ public class UserService {
         return userRepository.findOneByUsername(email);
 
     }
+    public User findOneById(Integer id){
+        return userRepository.findOneById(id);
+    }
 
     public User save(UserRequest userRequest) {
         User u = new User();
@@ -59,14 +62,18 @@ public class UserService {
 
         u.setName(userRequest.getName());
         u.setSurname(userRequest.getSurname());
-        u.setEnabled(true);
+        u.setEnabled(false);
         u.setAddress(userRequest.getAddressLine());
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setPhoneNumber(userRequest.getPhoneNumber());
         // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
-        List<Role> roles = roleService.findByName("ROLE_USER");
+        List<Role> roles = roleService.findByName("CLIENT");
         u.setRoles(roles);
 
         return this.userRepository.save(u);
+    }
+
+    public User saveUser(User user){
+        return this.userRepository.save(user);
     }
 }

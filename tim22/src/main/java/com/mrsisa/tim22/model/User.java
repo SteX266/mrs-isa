@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @Id
     @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userIds", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequenceGenerator")
-    private Long id;
+    private Integer id;
     @Column
     private String username;
     @JsonIgnore
@@ -47,9 +47,6 @@ public class User implements UserDetails {
     private boolean isEnabled;
     @Column
     private int loyaltyPoints;
-    @Column
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<AccountCancellationRequest> accountCancellationRequests = new HashSet<AccountCancellationRequest>();
     @ManyToMany(fetch = FetchType.EAGER)

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    public User findOneById(String id);
+    public User findOneById(Integer id);
 
     public User findOneByUsername(String username);
 

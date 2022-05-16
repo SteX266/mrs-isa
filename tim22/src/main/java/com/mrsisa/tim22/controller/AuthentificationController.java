@@ -5,6 +5,7 @@ import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.dto.UserTokenState;
 import com.mrsisa.tim22.exception.ResourceConflictException;
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.service.EmailService;
 import com.mrsisa.tim22.service.UserService;
 import com.mrsisa.tim22.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthentificationController {
 
@@ -34,6 +35,9 @@ public class AuthentificationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -69,7 +73,23 @@ public class AuthentificationController {
             throw new ResourceConflictException(userRequest.getId(), "Username already exists");
         }
         User user = this.userService.save(userRequest);
+        emailService.sendActivationEmail(user);
+
         System.out.println("Registrovan " + user.getUsername());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+    @GetMapping("/activate/{id}")
+    public ResponseEntity<?> activateUser(@PathVariable Integer id){
+        User user = userService.findOneById(id);
+
+        if(!user.isEnabled()){
+            user.setEnabled(true);
+            userService.saveUser(user);
+            System.out.println("USPESNA AKTIVACIJA NALOGA!");
+            return new ResponseEntity<>(user, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+
+    }
+
 }
