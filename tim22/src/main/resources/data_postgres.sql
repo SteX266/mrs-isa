@@ -1,44 +1,9 @@
-INSERT INTO public.client(
-    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
-VALUES (1, 'katarinadjordjevic0702@gmail.com', true, false, 0, 'Katarina', 'kdj0702', 0642270707, 'Djordjevic', 'CLIENT', null);
 
-INSERT INTO public.client(
-    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
-VALUES (2, 'stex266@gmail.com', true, false, 10, 'Stefan', 'debilCupavi', 0661172343, 'Milosevic', 'CLIENT', null);
-INSERT INTO public.user_table(
-    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
-VALUES (3, 'vserfeze@gmail.com', true, false, 0, 'Vanja', '222222', 0665241322, 'Serfeze', 'INSTRUCTOR', null);
-INSERT INTO public.user_table(
-    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
-VALUES (4, 'zumzumzum@gmail.com', true, false, 0, 'Aleksa', 'brkatiii', 0642270707, 'Stevanovic', 'SHIP_OWNER', null);
-
-
-
-
-
-
-
-INSERT INTO public.vacation(
-    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
-VALUES (1, 4,100, 4, 'top vikendica najjaca', 'VACATION', false, 'Raj za mlade babe', 500, 'Iskljucivo za mlade babe ispod 53 godine',null);
-INSERT INTO public.vacation(
-    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
-VALUES (2, 4,200, 6, 'ugodna kolibica blizu Jagodine,Daleko od sveta,ljudi smesno pricaju, ali je bar jeftino.Bre ', 'VACATION', false, 'Bogu iza nogu', 10, 'Ako nisi srbijanac i pricas sporo nisi dobrodosao',null);
-INSERT INTO public.vacation(
-    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
-VALUES (3, 5,220, 4, 'Vila u melencima najjaci deo Srbije ', 'VACATION', false, 'Vila Melenci', 500, 'Za bogate lale gospodu ako si iz bg izboscemo te nozem',null);
-INSERT INTO public.vacation(
-    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
-VALUES (4, 1,75, 3, 'Ubosni je top dodjite jarani da se napijete za sitne pare', 'VACATION', false, 'Dje ste', 50, 'Volim popit volim zagalamit ',null);
-INSERT INTO public.vacation(
-    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
-VALUES (5, 3,80, 2, 'Gajba u centru Bg jako je skupo ', 'VACATION', false, 'Dedinje goriiii matorii', 500, 'Za nafurane majmuncine sa beogradskog asfalta i mlade gaserke iskljucivo',null);
-
-
-
-
-
-
+CASCADE public.client;
+CASCADE public.user_table;
+CASCADE public.public.vacation;
+CASCADE public.public.photos;
+CASCADE public.address;
 
 
 INSERT INTO public.address(
@@ -56,6 +21,50 @@ VALUES (3, 'Planina', 'Bosnia', 'Na vrh brda', 13);
 INSERT INTO public.address(
     id, city, country, street_name, street_number)
 VALUES (4, 'Amsterdam', 'Netherlands', 'Robina van Persija', 18);
+
+
+
+INSERT INTO public.client(
+    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
+VALUES (1, 'katarinadjordjevic0702@gmail.com', true, false, 0, 'Katarina', 'kdj0702', 0642270707, 'Djordjevic', 'CLIENT', 1);
+
+INSERT INTO public.client(
+    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
+VALUES (2, 'stex266@gmail.com', true, false, 10, 'Stefan', 'debilCupavi', 0661172343, 'Milosevic', 'CLIENT', 2);
+INSERT INTO public.user_table(
+    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
+VALUES (3, 'vserfeze@gmail.com', true, false, 0, 'Vanja', '222222', 0665241322, 'Serfeze', 'INSTRUCTOR', 3);
+INSERT INTO public.user_table(
+    id, email, is_activated, is_deleted, loyalty_points, name, password, phone_number, surname, user_type, addres_id)
+VALUES (4, 'zumzumzum@gmail.com', true, false, 0, 'Aleksa', 'brkatiii', 0642270707, 'Stevanovic', 'SHIP_OWNER', 3);
+
+
+
+
+
+
+
+INSERT INTO public.vacation(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
+VALUES (1, 4,100, 4, 'top vikendica najjaca', 'VACATION', false, 'Raj za mlade babe', 500, 'Iskljucivo za mlade babe ispod 53 godine',1);
+INSERT INTO public.vacation(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
+VALUES (2, 4,200, 6, 'ugodna kolibica blizu Jagodine,Daleko od sveta,ljudi smesno pricaju, ali je bar jeftino.Bre ', 'VACATION', false, 'Bogu iza nogu', 10, 'Ako nisi srbijanac i pricas sporo nisi dobrodosao',2);
+INSERT INTO public.vacation(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
+VALUES (3, 5,220, 4, 'Vila u melencima najjaci deo Srbije ', 'VACATION', false, 'Vila Melenci', 500, 'Za bogate lale gospodu ako si iz bg izboscemo te nozem',2);
+INSERT INTO public.vacation(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
+VALUES (4, 1,75, 3, 'Ubosni je top dodjite jarani da se napijete za sitne pare', 'VACATION', false, 'Dje ste', 50, 'Volim popit volim zagalamit ',3);
+INSERT INTO public.vacation(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id)
+VALUES (5, 3,80, 2, 'Gajba u centru Bg jako je skupo ', 'VACATION', false, 'Dedinje goriiii matorii', 500, 'Za nafurane majmuncine sa beogradskog asfalta i mlade gaserke iskljucivo',3);
+
+
+
+
+
+
 
 
 INSERT INTO public.photos(entity_id, photos)
