@@ -21,7 +21,7 @@ public class Complaint {
     private String text;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="sender_id")
-    private Client sender;
+    private User sender;
     @ManyToOne
     @JoinColumn(name="system_entity_id")
     private SystemEntity systemEntity;

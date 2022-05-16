@@ -59,6 +59,17 @@ public class User implements UserDetails {
     private List<Role> roles;
 
 
+    @ManyToMany
+    @JoinTable(name="subscribtions", joinColumns = @JoinColumn(name="client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name="system_entity_id", referencedColumnName = "id"))
+    private Set<SystemEntity> subscribtions = new HashSet<SystemEntity>();
+
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Complaint> complaints = new HashSet<Complaint>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<Reservation>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Review> reviews = new HashSet<Review>();
 
 
     @Override

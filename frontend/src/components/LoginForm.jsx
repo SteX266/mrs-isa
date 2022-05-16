@@ -6,7 +6,7 @@ function LoginForm()   {
   const [errors, setErrors] = useState({email:'', password:''});
 
 
-const[email,setEmail] = useState("");
+const[username,setUsername] = useState("");
 const[password, setPassword] = useState("");
 
 const handleSubmit = (event) =>{
@@ -16,11 +16,11 @@ const handleSubmit = (event) =>{
       method: 'POST',
       headers: { 'Content-Type': 'application/json'  },
       body: JSON.stringify({
-          email,
+          username,
           password
       })
   };
-  fetch("http://localhost:8080/api/user/login", requestOptions).then(async response=>{
+  fetch("http://localhost:8080/auth/login", requestOptions).then(async response=>{
     const data = await response.json();
     if(!response.ok){
 
@@ -44,7 +44,7 @@ const validateForm = () => {
 
   let valid = true;
 
-  if (email === ""){
+  if (username === ""){
       currentErrors.email = "Email field must be filled";
       valid = false;
   }
@@ -71,7 +71,7 @@ const handleChange = (event) => {
 
   switch (name) {
   case 'email':
-      setEmail(value);
+      setUsername(value);
       break;
   case 'password':
       setPassword(value);

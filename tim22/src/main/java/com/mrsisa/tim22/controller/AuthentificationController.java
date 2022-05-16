@@ -53,6 +53,8 @@ public class AuthentificationController {
         String jwt = tokenUtils.generateToken(user.getUsername());
         int expiresIn = tokenUtils.getExpiredIn();
 
+        System.out.println("ULOGOVAN" + user.getUsername());
+
         // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
     }
@@ -67,6 +69,7 @@ public class AuthentificationController {
             throw new ResourceConflictException(userRequest.getId(), "Username already exists");
         }
         User user = this.userService.save(userRequest);
+        System.out.println("Registrovan " + user.getUsername());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }

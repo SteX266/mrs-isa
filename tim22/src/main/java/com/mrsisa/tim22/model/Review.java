@@ -25,7 +25,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="sender_id")
-    private Client client;
+    private User client;
     @ManyToOne
     @JoinColumn(name="system_entity_id")
     private SystemEntity systemEntity;

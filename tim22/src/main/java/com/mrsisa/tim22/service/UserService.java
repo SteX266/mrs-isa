@@ -59,7 +59,7 @@ public class UserService {
 
         u.setName(userRequest.getName());
         u.setSurname(userRequest.getSurname());
-        u.setEnabled(false);
+        u.setEnabled(true);
         u.setAddress(userRequest.getAddressLine());
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setPhoneNumber(userRequest.getPhoneNumber());
