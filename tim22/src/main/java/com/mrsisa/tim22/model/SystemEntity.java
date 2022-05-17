@@ -70,4 +70,9 @@ public abstract class SystemEntity {
     @Enumerated(EnumType.STRING)
     protected SystemEntityType entityType;
 
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
 }

@@ -68,6 +68,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<Review>();
 
+    @OneToMany(mappedBy ="owner", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<SystemEntity> entities = new HashSet<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

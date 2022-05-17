@@ -54,44 +54,80 @@ export default function Router() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/captain/*"
-            element={<BusinessUserNavbar type="captain" />}
-          >
+          <Route path="/captain/*" element={<BusinessUserNavbar type="captain" />} >
             {Nested("captain")}
           </Route>
 
           <Route path="/host/*" element={<BusinessUserNavbar type="host" />}>
             {Nested("host")}
           </Route>
-          <Route
-            path="/instructor/*"
-            element={<BusinessUserNavbar type="instructor" />}
-          >
+          <Route path="/instructor/*" element={<BusinessUserNavbar type="instructor" />}>
             {Nested("instructor")}
           </Route>
 
           <Route path="/admin/*" element={<AdminNavbar></AdminNavbar>}>
-            <Route
-              path="registration-request"
-              element={<RegistrationRequest />}
-            />
+            <Route path="registration-request" element={<RegistrationRequest />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
           </Route>
 
-          <Route path="/client/*" element={<NavigationBarClient></NavigationBarClient>}>
-            <Route path ="home" element ={<EntityList/>} />
-            <Route path="clientProfile" element={<AdminProfile/>}/>
-          </Route>
 
           
 
         </Routes>
         <Routes>
-          <Route
-            path="/"
+
+        <Route path="/client" element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <EntityList type="ALL_ENTITIES" />
+              </>
+            }
+          />
+          <Route path="/client/clientProfile"
             element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <ClientProfile />
+              </>
+            }
+          />
+          <Route path="/client/vacations"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <EntityList type="VACATION" />
+              </>
+            }
+          />
+          <Route path="/client/vessels"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <EntityList type="VESSEL" />
+              </>
+            }
+          />
+          <Route path="/client/adventures"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <EntityList type="ADVENTURE" />
+              </>
+            }
+          />
+        </Routes>
+
+
+
+
+        <Routes>
+          <Route path="/" element={
               <>
                 <Header></Header>
                 <NavigationBar />
@@ -99,8 +135,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/registration"
+          <Route path="/registration"
             element={
               <>
                 <Header></Header>
@@ -109,8 +144,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/login"
+          <Route path="/login"
             element={
               <>
                 <Header></Header>
@@ -119,18 +153,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/clientProfile"
-            element={
-              <>
-                <Header></Header>
-                <NavigationBar />
-                <ClientProfile />
-              </>
-            }
-          />
-          <Route
-            path="/vacations"
+          <Route path="/vacations"
             element={
               <>
                 <Header></Header>
@@ -139,8 +162,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/vessels"
+          <Route path="/vessels"
             element={
               <>
                 <Header></Header>
@@ -149,8 +171,7 @@ export default function Router() {
               </>
             }
           />
-          <Route
-            path="/adventures"
+          <Route path="/adventures"
             element={
               <>
                 <Header></Header>

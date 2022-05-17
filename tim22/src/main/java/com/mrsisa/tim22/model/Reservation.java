@@ -25,5 +25,6 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private User client;
+    @Column
     private boolean isApproved;
 }
