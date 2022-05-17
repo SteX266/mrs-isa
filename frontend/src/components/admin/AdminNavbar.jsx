@@ -23,6 +23,7 @@ export default function BusinessUserNavbar(props) {
               Registration Requests
             </Nav.Link>
             <Nav.Link href={`/admin/registerAdmin`}>Register Admin</Nav.Link>
+            <Nav.Link href={`/admin/viewEntities`}>Entities</Nav.Link>
           </Nav>
         </Container>
         <Container>
