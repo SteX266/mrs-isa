@@ -15,53 +15,34 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000"})
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     @Autowired
     private UserService userService;
 
 
-    @RequestMapping(value = "/api/user/editUserData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/editUserData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> editUserData(@RequestParam String email, @RequestParam String name, @RequestParam String surname, @RequestParam String phoneNumber, @RequestParam String addressLine, @RequestParam String streetNumber, @RequestParam String city, @RequestParam String country, @RequestParam String state){
 
         return new ResponseEntity<UserDTO>(userService.editUserData(email, name, surname, phoneNumber, addressLine, streetNumber, city, country, state), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/api/user/getCurrentUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getCurrentUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getCurrentUser(){
 
         return new ResponseEntity<UserDTO>(userService.getCurrentUserData(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/user/createCancellationRequest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/createCancellationRequest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountCancellationRequest> createCancellationRequest(@RequestParam String user){
 
         return new ResponseEntity<AccountCancellationRequest>(userService.createNewCancellationRequest(user), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/api/user/login", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserTokenState> loginUser(@RequestBody UserCredentialsDTO userCredentials){
-        /*AUTENTIFIKACIJA*/
 
-        System.out.println(userCredentials.getEmail()+userCredentials.getPassword());
-        return ResponseEntity.ok(new UserTokenState());
-    }
-
-
-    @RequestMapping(value="api/user/signup", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder){
-        User existUser = this.userService.findByEmail(userRequest.getEmail());
-        if(existUser != null){
-            System.out.println("Already exists");
-        }
-        User user = new User();
-   //     User user = this.userService.save(userRequest);
-        user.setEmail("blyat");
-        System.out.println(userRequest.getEmail());
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
 
 
 }

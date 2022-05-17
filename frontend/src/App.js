@@ -1,14 +1,12 @@
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap";
 import "./App.css";
-import AdminRouter from "./components/admin/AdminRouter";
+
+import Router from "./components/Router";
+
 
 function App() {
-  return (
-    <>
-      <AdminRouter />
-    </>
-  );
+  return <Router></Router>;
 }
 
 export default App;

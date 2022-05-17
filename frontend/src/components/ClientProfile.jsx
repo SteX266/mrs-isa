@@ -19,16 +19,14 @@ function ClientProfile ()  {
     
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        
         if(validateForm()) {
 
+            const token = JSON.parse(localStorage.getItem('userToken'));
 
             const requestOptions = {
-                headers: {
-                   Accept: 'application/json',
-                 'Content-Type': 'application/json',
-                 'Access-Control-Allow-Origin': '*',
-                   
-                   },
+                headers: {'Content-type':'application/json', Authorization:'Bearer ' + token.accessToken},
                 params:{
                     "email":email,
                     "name" : name,
@@ -43,7 +41,7 @@ function ClientProfile ()  {
 
        
             };
-            axios.get("http://localhost:8080/api/user/editUserData", requestOptions);
+            axios.get("http://localhost:8080/user/editUserData", requestOptions);
 
 
 
@@ -67,7 +65,7 @@ function ClientProfile ()  {
    
         };
 
-        axios.get("http://localhost:8080/api/user/createCancellationRequest", requestOptions);
+        axios.get("http://localhost:8080/user/createCancellationRequest", requestOptions);
         setShowTaskDialog(false);
     }
 
@@ -179,16 +177,12 @@ function ClientProfile ()  {
     }
 
     useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('userToken'));
         const requestOptions = {
-            headers: {
-               Accept: 'application/json',
-             'Content-Type': 'application/json',
-             'Access-Control-Allow-Origin': '*',
-               
-               }
+            headers: { Authorization:'Bearer ' + token.accessToken}
    
         };
-        axios.get("http://localhost:8080/api/user/getCurrentUser", requestOptions)
+        axios.get("http://localhost:8080/user/getCurrentUser", requestOptions)
         .then(res => {
             
             

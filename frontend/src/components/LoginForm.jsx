@@ -1,13 +1,23 @@
 import React,{useEffect, useState} from 'react';
+import {Navigate} from 'react-router-dom';
 import axios from 'axios';
+
 
 function LoginForm()   {  
 
   const [errors, setErrors] = useState({email:'', password:''});
 
 
-const[email,setEmail] = useState("");
+const[username,setUsername] = useState("");
 const[password, setPassword] = useState("");
+const[link, setLink] = useState("");
+
+if (link !== ""){
+return <Navigate to={link}/>;
+
+}
+
+
 
 const handleSubmit = (event) =>{
   event.preventDefault();
@@ -16,18 +26,46 @@ const handleSubmit = (event) =>{
       method: 'POST',
       headers: { 'Content-Type': 'application/json'  },
       body: JSON.stringify({
-          email,
+          username,
           password
       })
   };
-  fetch("http://localhost:8080/api/user/login", requestOptions).then(async response=>{
+  fetch("http://localhost:8080/auth/login", requestOptions).then(async response=>{
     const data = await response.json();
     if(!response.ok){
 
       console.log("Kredencijali nisu validni");
     }
     if(data.username !== null){
-      console.log("Uspesan login");
+      console.log("Uspesan login!");
+      localStorage.setItem('userToken', JSON.stringify(data));
+      localStorage.setItem('username', username);
+      let role = data.userRole;
+
+
+
+      
+      if (role == "CLIENT"){
+        setLink("/client/home");
+      }
+      else if (role === "ADMIN"){
+        setLink("/admin/home");
+      }
+      else if (role === "VACATION_OWNER"){
+        setLink("/host/home");
+
+      }
+      else if (role === "SHIP_OWNER"){
+        setLink("/captain/home");
+
+      }
+      else if (role === "INSTRUCTOR"){
+        setLink("/instructor/home");
+
+      }
+
+      
+      
     }
     else{
       console.log("Neuspesan login");
@@ -44,7 +82,7 @@ const validateForm = () => {
 
   let valid = true;
 
-  if (email === ""){
+  if (username === ""){
       currentErrors.email = "Email field must be filled";
       valid = false;
   }
@@ -71,7 +109,7 @@ const handleChange = (event) => {
 
   switch (name) {
   case 'email':
-      setEmail(value);
+      setUsername(value);
       break;
   case 'password':
       setPassword(value);

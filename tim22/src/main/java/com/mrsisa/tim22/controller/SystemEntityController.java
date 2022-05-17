@@ -18,28 +18,29 @@ import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(value = "/entity", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SystemEntityController {
 
     @Autowired
     private SystemEntityService systemEntityService;
 
-    @RequestMapping(value = "/api/entity/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/entity/getAllAdventures", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllAdventures", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<AdventureDTO>> getAllAdventures(){
         return new ResponseEntity<ArrayList<AdventureDTO>>(systemEntityService.getAllAdventures(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/entity/getAllVessels", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllVessels", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<VesselDTO>> getAllVessels(){
 
         return new ResponseEntity<ArrayList<VesselDTO>>(systemEntityService.getAllVessels(), HttpStatus.OK);
     }
-    @RequestMapping(value = "/api/entity/getAllListings", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getAllListings", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ListingDTO>> getAllListings(){
 
         return new ResponseEntity<ArrayList<ListingDTO>>(systemEntityService.getAllListings(), HttpStatus.OK);

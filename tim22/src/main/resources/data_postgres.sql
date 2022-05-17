@@ -6,6 +6,23 @@ CASCADE public.public.photos;
 CASCADE public.address;
 
 
+INSERT INTO public.role(
+    id, name)
+VALUES (1, 'ADMIN');
+INSERT INTO public.role(
+    id, name)
+VALUES (2, 'CLIENT');
+INSERT INTO public.role(
+    id, name)
+VALUES (3, 'VACATION_OWNER');
+INSERT INTO public.role(
+    id, name)
+VALUES (4, 'SHIP_OWNER');
+INSERT INTO public.role(
+    id, name)
+VALUES (5, 'INSTRUCTOR');
+
+
 INSERT INTO public.address(
     id, city, country, street_name, street_number)
 VALUES (1, 'Novi Sad', 'Serbia ', 'Alekse Santica', 4);

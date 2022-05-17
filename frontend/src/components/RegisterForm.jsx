@@ -4,14 +4,14 @@ import "../style/Errors.css";
 
 function RegisterForm()  {  
 
-  const [errors, setErrors] = useState({name:'',surname:'',phoneNumber:'', addressLine:'', email:'', repeatedPassword:'', password:''});
+  const [errors, setErrors] = useState({name:'',surname:'',phoneNumber:'', addressLine:'', username:'', repeatedPassword:'', password:''});
 
 
   const[name, setName] = useState("");
   const[surname,setSurname] = useState("");
   const[phoneNumber,setPhoneNumber] = useState("");
   const[addressLine, setAddressLine] = useState("");
-  const[email,setEmail] = useState("");
+  const[username,setUsername] = useState("");
   const[password, setPassword] = useState("");
   const[repeatedPassword, setRepeatedPassword] = useState("");
 
@@ -26,17 +26,17 @@ function RegisterForm()  {
           method: 'POST',
           headers: { 'Content-Type': 'application/json'  },
           body:JSON.stringify({
-            email,name,surname,phoneNumber,addressLine,password
+            username,name,surname,phoneNumber,addressLine,password
 
           })
       };
 
 
 
-      fetch("http://localhost:8080/api/user/signup", requestOptions).then(async response=>{
+      fetch("http://localhost:8080/auth/usersignup", requestOptions).then(async response=>{
         const data = await response.json();
 
-        if(data.email !== null){
+        if(data.username !== null){
           console.log("Uspesna registracija!");
         }
         else{
@@ -91,12 +91,12 @@ function RegisterForm()  {
     else{
         currentErrors.addressLine = "";
     }
-    if (emailValidation(email)){
+    if (emailValidation(username)){
 
-      currentErrors.email = "Email is not valid!";
+      currentErrors.username = "Email is not valid!";
     }
     else{
-      currentErrors.email = "";
+      currentErrors.username = "";
     }
     if (password ==="" || password.length < 5){
       currentErrors.password = "Password must be at least 5 characters long";
@@ -115,7 +115,7 @@ function RegisterForm()  {
 
 
 
-    setErrors({name:currentErrors.name, surname:currentErrors.surname, phoneNumber:currentErrors.phoneNumber, addressLine:currentErrors.addressLine, email:currentErrors.email, password:currentErrors.password, repeatedPassword:currentErrors.repeatedPassword});
+    setErrors({name:currentErrors.name, surname:currentErrors.surname, phoneNumber:currentErrors.phoneNumber, addressLine:currentErrors.addressLine, username:currentErrors.username, password:currentErrors.password, repeatedPassword:currentErrors.repeatedPassword});
     return valid;
   }
 
@@ -141,7 +141,7 @@ function RegisterForm()  {
         setAddressLine(value);
         break;
     case 'email':
-        setEmail(value);
+        setUsername(value);
         break;
     case 'password':
         setPassword(value);
@@ -165,7 +165,7 @@ function RegisterForm()  {
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input name="email" onChange={handleChange} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
     <div id="emailHelp" class="form-text">Your email address will not be shared with anyone.</div>
-    {errors.email.length > 0 && <span className='error'>{errors.email}</span>}
+    {errors.username.length > 0 && <span className='error'>{errors.username}</span>}
 
   </div>
   <div class="mb-6">

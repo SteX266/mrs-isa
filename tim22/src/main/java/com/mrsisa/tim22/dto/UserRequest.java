@@ -10,7 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequest {
-    private String email;
+    private Long id;
+    private String username;
     private String name;
     private String surname;
     private String addressLine;

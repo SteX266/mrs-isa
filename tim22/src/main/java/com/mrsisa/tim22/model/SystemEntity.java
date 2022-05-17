@@ -54,7 +54,7 @@ public abstract class SystemEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
     protected Set<Review> reviews = new HashSet<Review>();
     @ManyToMany(mappedBy = "subscribtions")
-    protected Set<Client> subscribers = new HashSet<>();
+    protected Set<User> subscribers = new HashSet<>();
 
     @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Set<Complaint> complaints = new HashSet<Complaint>();
@@ -69,5 +69,10 @@ public abstract class SystemEntity {
     @Column
     @Enumerated(EnumType.STRING)
     protected SystemEntityType entityType;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
 }
