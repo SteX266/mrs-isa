@@ -177,9 +177,7 @@ function ClientProfile ()  {
     }
 
     useEffect(() => {
-
-        console.log(localStorage.getItem('username'));
-        const token = JSON.parse(localStorage.getItem('userToken'))
+        const token = JSON.parse(localStorage.getItem('userToken'));
         const requestOptions = {
             headers: { Authorization:'Bearer ' + token.accessToken}
    

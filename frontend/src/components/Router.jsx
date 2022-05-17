@@ -20,6 +20,7 @@ import AdminNavbar from "./admin/AdminNavbar";
 import RegistrationRequest from "./admin/RegistrationRequest";
 import AdminProfile from "./admin/AdminProfile";
 import AdminRegistration from "./admin/AdminRegistration";
+import NavigationBarClient from "./NavigationBarClient"; 
 
 export default function Router() {
   function Nested(type) {
@@ -77,19 +78,17 @@ export default function Router() {
             />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
-            /admin/registerAdmin`
           </Route>
+
+          <Route path="/client/*" element={<NavigationBarClient></NavigationBarClient>}>
+            <Route path ="home" element ={<EntityList/>} />
+            <Route path="clientProfile" element={<AdminProfile/>}/>
+          </Route>
+
+          
+
         </Routes>
         <Routes>
-          <Route
-            path="/*"
-            element={
-              <>
-                <Header></Header>
-                <NavigationBar />
-              </>
-            }
-          ></Route>
           <Route
             path="/"
             element={

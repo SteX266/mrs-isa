@@ -65,8 +65,9 @@ public class AuthentificationController {
 
         System.out.println("ULOGOVAN" + user.getUsername());
 
+        String role = user.getRoles().get(0).getName();
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
+        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, role));
     }
 
 

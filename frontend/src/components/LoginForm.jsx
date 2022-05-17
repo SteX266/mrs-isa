@@ -1,5 +1,7 @@
 import React,{useEffect, useState} from 'react';
+import {Navigate} from 'react-router-dom';
 import axios from 'axios';
+
 
 function LoginForm()   {  
 
@@ -8,6 +10,14 @@ function LoginForm()   {
 
 const[username,setUsername] = useState("");
 const[password, setPassword] = useState("");
+const[link, setLink] = useState("");
+
+if (link !== ""){
+return <Navigate to={link}/>;
+
+}
+
+
 
 const handleSubmit = (event) =>{
   event.preventDefault();
@@ -30,8 +40,32 @@ const handleSubmit = (event) =>{
       console.log("Uspesan login!");
       localStorage.setItem('userToken', JSON.stringify(data));
       localStorage.setItem('username', username);
+      let role = data.userRole;
 
-      console.log(localStorage.getItem('username'));
+
+
+      
+      if (role == "CLIENT"){
+        setLink("/client/home");
+      }
+      else if (role === "ADMIN"){
+        setLink("/admin/home");
+      }
+      else if (role === "VACATION_OWNER"){
+        setLink("/host/home");
+
+      }
+      else if (role === "SHIP_OWNER"){
+        setLink("/captain/home");
+
+      }
+      else if (role === "INSTRUCTOR"){
+        setLink("/instructor/home");
+
+      }
+
+      
+      
     }
     else{
       console.log("Neuspesan login");

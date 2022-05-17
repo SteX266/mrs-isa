@@ -13,7 +13,5 @@ public class UserTokenState {
 
     private String accessToken;
     private int expiresIn;
-
-
-
+    private String userRole;
 }
