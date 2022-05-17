@@ -7,18 +7,13 @@ import AdminRegistration from "./AdminRegistration";
 
 export default function AdminRouter() {
   return (
-    <BrowserRouter>
-      <AdminNavbar></AdminNavbar>
-      <Routes>
-        <Route path="/admin" element={<h1>Admin home page </h1>} />
-        <Route
-          path="/admin/registration-request"
-          element={<RegistrationRequest />}
-        />
-        <Route path="/admin/profile" element={<AdminProfile />} />
-        <Route path="/admin/registerAdmin" element={<AdminRegistration />} />
+    <Routes>
+      <Route path="/admin" element={<AdminNavbar></AdminNavbar>}>
+        <Route path="registration-request" element={<RegistrationRequest />} />
+        <Route path="profile" element={<AdminProfile />} />
+        <Route path="registerAdmin" element={<AdminRegistration />} />
         /admin/registerAdmin`
-      </Routes>
-    </BrowserRouter>
+      </Route>
+    </Routes>
   );
 }
