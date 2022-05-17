@@ -25,6 +25,10 @@ function EntityList(props) {
   }
 
   async function filtering() {
+    console.log("TOKENCINAAA");
+    console.log(localStorage.getItem("userToken"));
+    console.log(localStorage.getItem("username"));
+
     const requestOptions = {
       headers: {
         Accept: "application/json",
@@ -33,7 +37,7 @@ function EntityList(props) {
       },
     };
     let res = await axios.get(
-      "http://localhost:8080/api/entity/getAllEntities",
+      "http://localhost:8080/auth/getAllEntities",
       requestOptions
     );
 

@@ -27,7 +27,11 @@ const handleSubmit = (event) =>{
       console.log("Kredencijali nisu validni");
     }
     if(data.username !== null){
-      console.log("Uspesan login");
+      console.log("Uspesan login!");
+      localStorage.setItem('userToken', JSON.stringify(data));
+      localStorage.setItem('username', username);
+
+      console.log(localStorage.getItem('username'));
     }
     else{
       console.log("Neuspesan login");

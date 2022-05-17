@@ -1,11 +1,13 @@
 package com.mrsisa.tim22.controller;
 
+import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserCredentialsDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.dto.UserTokenState;
 import com.mrsisa.tim22.exception.ResourceConflictException;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.EmailService;
+import com.mrsisa.tim22.service.SystemEntityService;
 import com.mrsisa.tim22.service.UserService;
 import com.mrsisa.tim22.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthentificationController {
 
@@ -38,6 +41,9 @@ public class AuthentificationController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private SystemEntityService systemEntityService;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -90,6 +96,12 @@ public class AuthentificationController {
         }
         return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
 
+    }
+
+    @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(), HttpStatus.OK);
     }
 
 }
