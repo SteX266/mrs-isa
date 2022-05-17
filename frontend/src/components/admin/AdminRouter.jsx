@@ -4,6 +4,7 @@ import RegistrationRequest from "./RegistrationRequest";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminProfile from "./AdminProfile";
 import AdminRegistration from "./AdminRegistration";
+import AdminViewEntities from "./AdminViewEntities";
 
 export default function AdminRouter() {
   return (
@@ -16,6 +17,10 @@ export default function AdminRouter() {
           element={<RegistrationRequest />}
         />
         <Route path="/admin/profile" element={<AdminProfile />} />
+        <Route
+          path="/admin/viewEntities"
+          element={<AdminViewEntities type="ALL_ENTITIES" />}
+        />
         <Route path="/admin/registerAdmin" element={<AdminRegistration />} />
         /admin/registerAdmin`
       </Routes>
