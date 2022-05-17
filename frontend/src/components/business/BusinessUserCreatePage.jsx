@@ -1,8 +1,7 @@
 
-import VesselCreate from '../captain_components/VesselCreate';
-
 import ListingCreate from '../host_components/ListingCreate';
 import CreateAdventure from '../CreateAdventure';
+import CreateVessel from '../captain_components/CreateVessel';
 export default function BussinessUserCreatePage(props) {
 
 
@@ -12,7 +11,7 @@ export default function BussinessUserCreatePage(props) {
         component = <ListingCreate></ListingCreate>;
         break;
       case 'captain':
-        component = <VesselCreate></VesselCreate>;
+        component = <CreateVessel></CreateVessel>;
         break;
       case 'instructor':
         component = <CreateAdventure></CreateAdventure>;
