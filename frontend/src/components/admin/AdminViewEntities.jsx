@@ -20,12 +20,20 @@ export default function AdminViewEntities(props) {
         price={entity.price}
         rating={entity.averageScore}
         image={entity.firstImage}
-        clickHandler={onClick}
+        clickHandler={DeleteButtonHendler}
       />
     );
   }
-  function onClick(id) {
-    alert(id);
+  function DeleteButtonHendler(id) {
+    const filtering = [];
+    for (let index = 0; index < allEntities.length; index++) {
+      const entity = allEntities[index];
+      if (entity.id !== id) {
+        filtering.push(entity);
+      }
+    }
+    setAllEntities(filtering);
+    setSearchList(filtering);
   }
   async function filtering() {
     const requestOptions = {
