@@ -2,24 +2,26 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Table, Form, FormControl, Nav, Button } from 'react-bootstrap';
 
-export default function ReservationsTable(props) {
+export default function ClientReservationsTable(props) {
     const [reservations, setReservations] = useState([]);
     const [searchReservations, setSearchReservations] = useState(reservations);
     const userId = props.userId;
-    const clientEmail = props.clientEmail;
-    const headers = ["Location", "Start of reservation", "Duration", "Number of visitors", "Total fee", "Reservation holder", "Status"];
+    const headers = ["Name","Location", "Start of reservation", "Duration", "Number of visitors", "Total fee", "Owner", "Status"];
 
     useEffect(() => {
-        getReservations(userId);
+        getReservations(props.clientEmail);
     });
-    function getReservations(userId) {
-        axios.get("http://localhost:8080/api/reservation/getAllReservations", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+    function getReservations(clientEmail) {
+
+        const token = JSON.parse(localStorage.getItem('userToken'));
+        const requestOptions = {
+            headers: {'Content-type':'application/json', Authorization:'Bearer ' + token.accessToken},
+            params:{
+                "email":clientEmail,
+            }
+        };
+
+        axios.get("http://localhost:8080/api/reservation/getClientReservations", requestOptions)
       .then((res) => {
         setReservations(res.data);
         setSearchReservations(res.data);
@@ -130,6 +132,7 @@ function Reservation(props) {
     
     return (
         <tr id={reservation.id}>
+            <td> {reservation.entityName}</td>
             <td>{reservation.location}</td>
             <td>{reservation.start}</td>
             <td>{reservation.duration}</td>
