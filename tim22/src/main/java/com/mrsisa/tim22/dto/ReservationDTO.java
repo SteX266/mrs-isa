@@ -15,7 +15,8 @@ public class ReservationDTO {
     public String start;
     public int duration;
     public int visitors;
-    public int fee;
+    public double fee;
     public String client;
     public String status;
+    public String entityName;
 }

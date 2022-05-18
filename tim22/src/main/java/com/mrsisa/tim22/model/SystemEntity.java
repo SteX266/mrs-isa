@@ -72,7 +72,7 @@ public abstract class SystemEntity {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner")
     private User owner;
 
 }
