@@ -27,4 +27,6 @@ public class Reservation {
     private User client;
     @Column
     private boolean isApproved;
+    @Column
+    private boolean isCanceled;
 }

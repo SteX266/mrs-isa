@@ -46,7 +46,7 @@ const handleSubmit = (event) =>{
 
       
       if (role == "CLIENT"){
-        setLink("/client/home");
+        setLink("/client");
       }
       else if (role === "ADMIN"){
         setLink("/admin/home");

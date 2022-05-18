@@ -52,7 +52,6 @@ public class SystemEntityService {
     private SystemEntityDTO createEntityDTO(SystemEntity entity) {
 
         String photo;
-        String address = "";
         if (entity.getPhotos().size() > 0){
             System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             photo = entity.getPhotos().get(0);
@@ -63,8 +62,9 @@ public class SystemEntityService {
             photo = "";
         }
 
-        Address a = entity.getAddress();
 
+        String address = "";
+        Address a = entity.getAddress();
         address += a.getStreetName();
         address += " ";
         address += String.valueOf(a.getStreetNumber());

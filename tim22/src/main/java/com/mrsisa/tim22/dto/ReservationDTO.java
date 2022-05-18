@@ -12,11 +12,13 @@ import lombok.Setter;
 public class ReservationDTO {
     public int id;
     public String location;
-    public String start;
-    public int duration;
+    public String startDate;
+    public String endDate;
     public int visitors;
     public double fee;
+    public String owner;
     public String client;
+
     public String status;
     public String entityName;
 }

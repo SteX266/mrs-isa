@@ -73,6 +73,9 @@ const NavigationBarClient = () => {
                 </Link>
               </li>
             </ul>
+            <Link to="/">
+              <a class="btn btn-warning">Logout</a>
+            </Link>
           </div>
         </div>
       </nav>
