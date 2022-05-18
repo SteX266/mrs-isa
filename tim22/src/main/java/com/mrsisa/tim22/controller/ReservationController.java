@@ -29,13 +29,19 @@ public class ReservationController {
     public ResponseEntity<ArrayList<ReservationDTO>> getClientReservations(@RequestParam String email){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getClientReservations(email), HttpStatus.OK);
     }
+    @RequestMapping(value = "/getOwnerReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<ReservationDTO>> getOwnerReservations(@RequestParam String email){
+        return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getOwnerReservations(email), HttpStatus.OK);
+    }
     @RequestMapping(value = "/cancelReservation", method=RequestMethod.GET)
     public void cancelReservation(@RequestParam int entityId){
         reservationService.cancelReservation(entityId);
     }
 
-    @PostMapping(value = "/approveReservation")
+    @RequestMapping(value = "/approveReservation", method=RequestMethod.GET)
     public void approveReservation(@RequestParam int entityId){
         reservationService.approveReservation(entityId);
     }
+
+
 }

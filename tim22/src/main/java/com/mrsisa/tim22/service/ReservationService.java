@@ -41,7 +41,7 @@ public class ReservationService {
         for(Reservation r:clientReservations){
             if (r.isApproved()) {
                 String address = createAddressString(r.getSystemEntity().getAddress());
-                String status = createStatusString(r.isCanceled());
+                String status = createStatusString(r.isCanceled(), r.isApproved());
                 ReservationDTO reservation = new ReservationDTO(r.getId(), address, String.valueOf(r.getDateFrom()), String.valueOf(r.getDateTo()), r.getSystemEntity().getCapacity(), r.getSystemEntity().getCancellationFee(), r.getSystemEntity().getOwner().getName() + " " + r.getSystemEntity().getOwner().getSurname(), r.getClient().getName() + " " + r.getClient().getSurname(), status, r.getSystemEntity().getName());
                 reservations.add(reservation);
             }
@@ -50,9 +50,12 @@ public class ReservationService {
         return reservations;
     }
 
-    private String createStatusString(boolean canceled) {
+    private String createStatusString(boolean canceled, boolean isApproved) {
         if (canceled){
             return "CANCELED";
+        }
+        else if(isApproved){
+            return "APPROVED";
         }
         else{
             return "WAITING";
@@ -79,8 +82,27 @@ public class ReservationService {
     }
 
     public void approveReservation(int entityId) {
+        System.out.println("Odobravanje rezervacije");
         Reservation r = reservationRepository.findOneById(entityId);
         r.setApproved(true);
         reservationRepository.save(r);
+    }
+
+    public ArrayList<ReservationDTO> getOwnerReservations(String username){
+
+        ArrayList<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+
+        User u = userRepository.findOneByUsername(username);
+        int ownerId = userRepository.findOneByUsername(username).getId();
+        ArrayList<Reservation> ownerReservations = (ArrayList<Reservation>) reservationRepository.findByOwner(ownerId);
+
+        for(Reservation r:ownerReservations){
+            String address = createAddressString(r.getSystemEntity().getAddress());
+            String status = createStatusString(r.isCanceled(), r.isApproved());
+            ReservationDTO reservation = new ReservationDTO(r.getId(), address, String.valueOf(r.getDateFrom()), String.valueOf(r.getDateTo()), r.getSystemEntity().getCapacity(), r.getSystemEntity().getCancellationFee(), r.getSystemEntity().getOwner().getName() + " " + r.getSystemEntity().getOwner().getSurname(), r.getClient().getName() + " " + r.getClient().getSurname(), status, r.getSystemEntity().getName());
+            reservations.add(reservation);
+        }
+
+        return reservations;
     }
 }

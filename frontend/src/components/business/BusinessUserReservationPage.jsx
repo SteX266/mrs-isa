@@ -4,7 +4,7 @@ export default function BusinessUserReservationPage(props) {
   const [userId, setUserId] = useState("1");
   return (
     <>
-    <ReservationsTable userId={userId}></ReservationsTable>
+    <ReservationsTable ownerEmail={localStorage.getItem("username")}></ReservationsTable>
     </>
   );
 }

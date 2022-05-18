@@ -2,24 +2,27 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Table, Form, FormControl, Nav, Button } from 'react-bootstrap';
 
-export default function ReservationsTable(props) {
+export default function ClientReservationsTable(props) {
     const [reservations, setReservations] = useState([]);
     const [searchReservations, setSearchReservations] = useState(reservations);
     const userId = props.userId;
-    const clientEmail = props.clientEmail;
-    const headers = ["Location", "Start of reservation", "Duration", "Number of visitors", "Total fee", "Reservation holder", "Status"];
+    const headers = ["Name","Location", "Start of reservation", "End of reservation", "Number of visitors", "Cancelation fee", "Client", "Status"];
 
     useEffect(() => {
-        getReservations(userId);
-    });
-    function getReservations(userId) {
-        axios.get("http://localhost:8080/api/reservation/getAllReservations", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+        getReservations(props.ownerEmail);
+    },[]);
+    function getReservations(ownerEmail) {
+
+        const token = JSON.parse(localStorage.getItem('userToken'));
+        const requestOptions = {
+            method:'POST',
+            headers: {'Content-type':'application/json', Authorization:'Bearer ' + token.accessToken},
+            params:{
+                "email":ownerEmail,
+            }
+        };
+
+        axios.get("http://localhost:8080/reservation/getOwnerReservations", requestOptions)
       .then((res) => {
         setReservations(res.data);
         setSearchReservations(res.data);
@@ -85,6 +88,7 @@ function TableBody(props) {
 function Reservation(props) {
     const [reservation, setReservation] = useState(props.reservation);
     const [button, setButton] = useState(getButton());
+
     function confirmReservation() {
         let newReservation = reservation;
         newReservation.status = "confirmed";
@@ -94,35 +98,31 @@ function Reservation(props) {
     }
     function cancelReservation() {
         let newReservation = reservation;
-        newReservation.status = "canceled";
+        newReservation.status = "CANCELED";
         setReservation(newReservation);
         setButton(getButton());
-        // saveReservation();
+        saveReservation(newReservation.id);
     }
 
-    function saveReservation() {
+    function saveReservation(reservationId) {
+        const token = JSON.parse(localStorage.getItem('userToken'));
         const requestOptions = {
-            headers: {
-               Accept: 'application/json',
-             'Content-Type': 'application/json',
-             'Access-Control-Allow-Origin': '*',
-               
-               },
-            data:{
-                "reservation": reservation
+            method:'POST',
+            headers: {'Content-type':'application/json', Authorization:'Bearer ' + token.accessToken},
+            params:{
+                "entityId":reservationId,
             }
         };
-        axios.post("http://localhost:8080/api/reservation/saveReservation", requestOptions).then(function (response) {
-            console.log(response.data);
-        }).catch(function (response) {
-            console.log(response.status);
-        });
+
+        axios.get("http://localhost:8080/reservation/cancelReservation", requestOptions)
     }
+    function createReport(){
+
+    }
+
     function getButton() {
-        if(reservation.status === "waiting") {
-            return <Button onClick={confirmReservation} variant="outline-dark">Confirm reservation</Button>;
-        } else if(reservation.status === "confirmed") {
-            return <Button onClick={cancelReservation} variant="outline-dark">Cancel reservation</Button>;
+        if(reservation.status == "APPROVED") {
+            return <Button onClick={createReport} variant="outline-dark">Report</Button>;
         } else {
             return <></>;
         }
@@ -130,11 +130,12 @@ function Reservation(props) {
     
     return (
         <tr id={reservation.id}>
+            <td> {reservation.entityName}</td>
             <td>{reservation.location}</td>
-            <td>{reservation.start}</td>
-            <td>{reservation.duration}</td>
+            <td>{reservation.startDate}</td>
+            <td>{reservation.endDate}</td>
             <td>{reservation.visitors}</td>
-            <td>{reservation.fee}€</td>
+            <td>{reservation.fee}%</td>
             <td>{reservation.client}</td>
             <td>{reservation.status}</td>
             <td>{button}</td>

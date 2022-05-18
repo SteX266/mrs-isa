@@ -104,8 +104,6 @@ function Reservation(props) {
     }
 
     function saveReservation(reservationId) {
-        console.log("CUVAAAAAJ");
-        console.log(reservationId);
         const token = JSON.parse(localStorage.getItem('userToken'));
         const requestOptions = {
             method:'POST',
@@ -118,7 +116,7 @@ function Reservation(props) {
         axios.get("http://localhost:8080/reservation/cancelReservation", requestOptions)
     }
     function getButton() {
-        if(reservation.status == "WAITING") {
+        if(reservation.status == "APPROVED") {
             return <Button onClick={cancelReservation} variant="outline-dark">Cancel reservation</Button>;
         } else {
             return <></>;
