@@ -77,9 +77,6 @@ function ClientProfile() {
     setShowTaskDialog(false);
   };
 
-  const validEmailRegex = RegExp(
-    /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-  );
   const validateForm = () => {
     let currentErrors = errors;
 
@@ -207,36 +204,36 @@ function ClientProfile() {
 
   return (
     <>
-      <div class="container rounded bg-white mt-5 mb-5">
-        <div class="row">
-          <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+      <div className="container rounded bg-white mt-5 mb-5">
+        <div className="row">
+          <div className="col-md-3 border-right">
+            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
               <img
-                class="rounded-circle mt-5"
+                className="rounded-circle mt-5"
                 width="150px"
                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                 alt=""
               />
-              <span class="font-weight-bold">
+              <span className="font-weight-bold">
                 {name} {surname}
               </span>
-              <span class="text-black-50">{email}</span>
+              <span className="text-black-50">{email}</span>
               <span> </span>
             </div>
           </div>
-          <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="text-right">Profile Settings</h4>
+          <div className="col-md-5 border-right">
+            <div className="p-3 py-5">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h4 className="text-right">Profile Settings</h4>
               </div>
-              <div class="row mt-2">
-                <div class="col-md-6">
-                  <label class="labels">Name</label>
+              <div className="row mt-2">
+                <div className="col-md-6">
+                  <label className="labels">Name</label>
                   <input
                     onChange={handleChange}
                     name="name"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="first name"
                     value={name}
                   />
@@ -244,13 +241,13 @@ function ClientProfile() {
                     <span className="error">{errors.name}</span>
                   )}
                 </div>
-                <div class="col-md-6">
-                  <label class="labels">Surname</label>
+                <div className="col-md-6">
+                  <label className="labels">Surname</label>
                   <input
                     onChange={handleChange}
                     name="surname"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="surname"
                     value={surname}
                   />
@@ -259,14 +256,14 @@ function ClientProfile() {
                   )}
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-12">
-                  <label class="labels">Phone Number</label>
+              <div className="row mt-3">
+                <div className="col-md-12">
+                  <label className="labels">Phone Number</label>
                   <input
                     onChange={handleChange}
                     name="phoneNumber"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="enter phone number"
                     value={phoneNumber}
                   />
@@ -274,13 +271,13 @@ function ClientProfile() {
                     <span className="error">{errors.phoneNumber}</span>
                   )}
                 </div>
-                <div class="col-md-12">
-                  <label class="labels">Address Line</label>
+                <div className="col-md-12">
+                  <label className="labels">Address Line</label>
                   <input
                     onChange={handleChange}
                     name="addressLine"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="enter address line"
                     value={addressLine}
                   />
@@ -288,13 +285,13 @@ function ClientProfile() {
                     <span className="error">{errors.addressLine}</span>
                   )}
                 </div>
-                <div class="col-md-12">
-                  <label class="labels">Street number</label>
+                <div className="col-md-12">
+                  <label className="labels">Street number</label>
                   <input
                     onChange={handleChange}
                     name="streetNumber"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="enter street number"
                     value={streetNumber}
                   />
@@ -302,13 +299,13 @@ function ClientProfile() {
                     <span className="error">{errors.streetNumber}</span>
                   )}
                 </div>
-                <div class="col-md-12">
-                  <label class="labels">City</label>
+                <div className="col-md-12">
+                  <label className="labels">City</label>
                   <input
                     onChange={handleChange}
                     name="city"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="enter city"
                     value={city}
                   />
@@ -317,14 +314,14 @@ function ClientProfile() {
                   )}
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <label class="labels">Country</label>
+              <div className="row mt-3">
+                <div className="col-md-6">
+                  <label className="labels">Country</label>
                   <input
                     onChange={handleChange}
                     name="country"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="country"
                     value={country}
                   />
@@ -332,13 +329,13 @@ function ClientProfile() {
                     <span className="error">{errors.country}</span>
                   )}
                 </div>
-                <div class="col-md-6">
-                  <label class="labels">State/Region</label>
+                <div className="col-md-6">
+                  <label className="labels">State/Region</label>
                   <input
                     onChange={handleChange}
                     name="state"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     placeholder="state"
                     value={state}
                   />
@@ -347,10 +344,10 @@ function ClientProfile() {
                   )}
                 </div>
               </div>
-              <div class="mt-5 text-center">
+              <div className="mt-5 text-center">
                 <button
                   onClick={handleSubmit}
-                  class="btn btn-primary profile-button"
+                  className="btn btn-primary profile-button"
                   type="button"
                 >
                   Save Profile

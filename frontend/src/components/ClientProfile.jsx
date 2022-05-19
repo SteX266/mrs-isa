@@ -66,9 +66,6 @@ function ClientProfile ()  {
 
     }
 
-    const validEmailRegex = RegExp(
-        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-      );
     const validateForm = () => {
         let currentErrors = errors;
 
@@ -154,50 +151,50 @@ function ClientProfile ()  {
     
     return (
     <>
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt=""/><span class="font-weight-bold">{name} {surname}</span><span class="text-black-50">{email}</span><span> </span></div>
+<div className="container rounded bg-white mt-5 mb-5">
+    <div className="row">
+        <div className="col-md-3 border-right">
+            <div className="d-flex flex-column align-items-center text-center p-3 py-5"><img className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt=""/><span className="font-weight-bold">{name} {surname}</span><span className="text-black-50">{email}</span><span> </span></div>
         </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+        <div className="col-md-5 border-right">
+            <div className="p-3 py-5">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="text-right">Profile Settings</h4>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input onChange={handleChange} name="name" type="text" class="form-control" placeholder="first name" value={name} />
-                {errors.name.length > 0 && <span className='error'>{errors.name}</span>}
+                <div className="row mt-2">
+                    <div className="col-md-6"><label className="labels">Name</label><input onChange={handleChange} name="name" type="text" className="form-control" placeholder="first name" value={name} />
+                {errors.name.length > 0 && <span classNameName='error'>{errors.name}</span>}
                 </div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input onChange={handleChange} name="surname" type="text" class="form-control"  placeholder="surname" value={surname}/>
-                    {errors.surname.length > 0 && <span className='error'>{errors.surname}</span>}
+                    <div className="col-md-6"><label className="labels">Surname</label><input onChange={handleChange} name="surname" type="text" className="form-control"  placeholder="surname" value={surname}/>
+                    {errors.surname.length > 0 && <span classNameName='error'>{errors.surname}</span>}
                     
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Phone Number</label><input onChange={handleChange} name="phoneNumber" type="text" class="form-control" placeholder="enter phone number" value={phoneNumber}/>
-                    {errors.phoneNumber.length > 0 && <span className='error'>{errors.phoneNumber}</span>}
+                <div className="row mt-3">
+                    <div className="col-md-12"><label className="labels">Phone Number</label><input onChange={handleChange} name="phoneNumber" type="text" className="form-control" placeholder="enter phone number" value={phoneNumber}/>
+                    {errors.phoneNumber.length > 0 && <span classNameName='error'>{errors.phoneNumber}</span>}
                     </div>
 
 
                 </div>
-                <div class= "row mt-3">
-                <div class="col-md-12"><label class="labels">Address Line</label><input onChange={handleChange}  name="addressLine" type="text" class="form-control" placeholder="enter address line" value={addressLine} />
-                    {errors.addressLine.length > 0 && <span className='error'>{errors.addressLine}</span>}
+                <div className= "row mt-3">
+                <div className="col-md-12"><label className="labels">Address Line</label><input onChange={handleChange}  name="addressLine" type="text" className="form-control" placeholder="enter address line" value={addressLine} />
+                    {errors.addressLine.length > 0 && <span classNameName='error'>{errors.addressLine}</span>}
                     </div>
                 </div>
 
-                <div class="mt-5 text-center"><button onClick={handleSubmit} class="btn btn-primary profile-button" type="button">Save Profile</button>
+                <div className="mt-5 text-center"><button onClick={handleSubmit} className="btn btn-primary profile-button" type="button">Save Profile</button>
                 
                 
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center experience"><span>Loyalty points</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;{loyaltyPoints}</span></div><br/>
-                <div class="d-flex justify-content-between align-items-center experience"><span>Client tier</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;PLATINUM</span></div><br/>
-                <div class="d-flex justify-content-between align-items-center experience"><span>Benefits</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;15% off on all reservations</span></div><br/>
-                <div class="d-flex justify-content-end align-items-center experience"><button onClick={() => {setShowTaskDialog(true)}} class="btn btn-danger delete-button" type="button" data-toggle="modal" data-target="#exampleModal">Delete Profile</button></div><br/>
+        <div className="col-md-4">
+            <div className="p-3 py-5">
+                <div className="d-flex justify-content-between align-items-center experience"><span>Loyalty points</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;{loyaltyPoints}</span></div><br/>
+                <div className="d-flex justify-content-between align-items-center experience"><span>Client tier</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;PLATINUM</span></div><br/>
+                <div className="d-flex justify-content-between align-items-center experience"><span>Benefits</span><span className="border px-3 p-1 add-experience"><i className="fa fa-plus"></i>&nbsp;15% off on all reservations</span></div><br/>
+                <div className="d-flex justify-content-end align-items-center experience"><button onClick={() => {setShowTaskDialog(true)}} className="btn btn-danger delete-button" type="button" data-toggle="modal" data-target="#exampleModal">Delete Profile</button></div><br/>
                 
             </div>
         </div>

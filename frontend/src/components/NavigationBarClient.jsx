@@ -6,75 +6,75 @@ import { Link } from "react-router-dom";
 const NavigationBarClient = () => {
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/client">
-            <h2 class="text-warning">Fish'n'Ships</h2>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="/client">
+            <h2 className="text-warning">Fish&Ships</h2>
           </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#mob-navbar"
             aria-label="Toggle"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="mob-navbar">
-            <ul class="navbar-nav mb-2 mb-lg-0 mx-auto">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/client">
+          <div className="collapse navbar-collapse" id="mob-navbar">
+            <ul className="navbar-nav mb-2 mb-lg-0 mx-auto">
+              <li className="nav-item">
+                <a className="nav-link" aria-current="page" href="/client">
                   Home
                 </a>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/client/vacations">
                   {" "}
-                  <a class="nav-link" href="/vacations">
+                  <a className="nav-link" href="/vacations">
                     Vacations
                   </a>
                 </Link>
               </li>
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/client/vessels">
                   {" "}
-                  <a class="nav-link" href="/clientProfile">
+                  <a className="nav-link" href="/clientProfile">
                     Vessels
                   </a>{" "}
                 </Link>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/client/adventures">
                   {" "}
-                  <a class="nav-link" href="/adventures">
+                  <a className="nav-link" href="/adventures">
                     Adventures
                   </a>
                 </Link>
               </li>
 
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/client/reservations">
                   {" "}
-                  <a class="nav-link" >
+                  <a className="nav-link" >
                     Reservations
                   </a>
                 </Link>
               </li>
 
 
-              <li class="nav-item">
+              <li className="nav-item">
                 <Link to="/client/clientProfile">
                   {" "}
-                  <a class="nav-link" >
+                  <a className="nav-link" >
                     Profile
                   </a>
                 </Link>
               </li>
             </ul>
             <Link to="/">
-              <a class="btn btn-warning">Logout</a>
+              <a className="btn btn-warning">Logout</a>
             </Link>
           </div>
         </div>

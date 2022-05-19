@@ -1,6 +1,5 @@
-import React,{useEffect, useState} from 'react';
+import React,{useState} from 'react';
 import {Navigate} from 'react-router-dom';
-import axios from 'axios';
 
 
 function LoginForm()   {  
@@ -122,26 +121,22 @@ const handleChange = (event) => {
 
     return <>
 
-<div class="album py-5 bg-light">
-<div class="container">
+<div className="album py-5 bg-light">
+<div className="container">
 <form>
-
-
-
-
-  <div class="mb-6">
-    <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input onChange={handleChange} name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <div   id="emailHelp" class="form-text">Your email address will never be shared with anyone.</div>
+  <div className="mb-6">
+    <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+    <input onChange={handleChange} name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <div   id="emailHelp" className="form-text">Your email address will never be shared with anyone.</div>
     {errors.email.length > 0 && <span className='error'>{errors.email}</span>}
   </div>
-  <div class="mb-6">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input onChange={handleChange} name="password" type="password" class="form-control" id="exampleInputPassword1"/>
+  <div className="mb-6">
+    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+    <input onChange={handleChange} name="password" type="password" className="form-control" id="exampleInputPassword1"/>
     {errors.password.length > 0 && <span className='error'>{errors.password}</span>}
   </div>
 
-  <button onClick={handleSubmit} type="submit" class="btn btn-primary">Login</button>
+  <button onClick={handleSubmit} type="submit" className="btn btn-primary">Login</button>
 </form>
 </div>
 </div>

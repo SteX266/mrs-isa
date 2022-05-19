@@ -1,4 +1,4 @@
-
+/*
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import { Button, Container, Form, Navbar, Stack, CloseButton, FormGroup} from 'react-bootstrap';
@@ -156,7 +156,7 @@ function NavigationButtons(props) {
 }
 
 
-function Type({type, setType}) {
+function Type({setType}) {
     const types = ["Trawler", "Tug Boat", "Deck Boat", "Dingy", "Life Boat", "Sail Boat", "Yacht", "Houseboat", "Catamaran Boat"];
     const buttons = types.map(type => <Button key={type} name={type} variant='outline-dark' className="mx-auto" onClick={selectType} style={{width: 350, height: 100}}>
         {type} <br/><Form.Text id="passwordHelpBlock" muted>This is a description.</Form.Text></Button>
@@ -420,28 +420,29 @@ function Fees({cancelation, rental, setCancelation, setRental}) {
         <FormGroup>
             <Stack direction='horizontal'>
                 <Form.Label style={{width: 180}}>Rental Fee</Form.Label>
-                0$<input style={{width:300}} type="range" class="form-range" min={0} max={250} step={5} id="customRange3" onChange={onRentalFeeChanged}></input>{rental}$
+                0$<input style={{width:300}} type="range" className="form-range" min={0} max={250} step={5} id="customRange3" onChange={onRentalFeeChanged}></input>{rental}$
                 </Stack>
             <Stack direction='horizontal'>
                 <Form.Label style={{width: 180}}>Cancelation Fee</Form.Label>
-                0$<input style={{width:300}} type="range" class="form-range" min={0} max={250} step={5} id="customRange3" onChange={onCancelationFeeChanged}></input>{cancelation}$
+                0$<input style={{width:300}} type="range" className="form-range" min={0} max={250} step={5} id="customRange3" onChange={onCancelationFeeChanged}></input>{cancelation}$
             </Stack>     
         </FormGroup>
     </>
     )
 }
 
-function Create(props) {
+function Create() {
     return (
         <>
             <Preview></Preview>
         </>
     )
 }
-function Preview(props) {
+function Preview() {
     return (
         <>
         </>
     );
 
 }
+*/

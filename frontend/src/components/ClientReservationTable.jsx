@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Container, Navbar, Table, Form, FormControl, Nav, Button } from 'react-bootstrap';
+import { Container, Navbar, Table, Form, FormControl, Button } from 'react-bootstrap';
 
 export default function ClientReservationsTable(props) {
     const [upcomingReservations, setUpcomingReservations] = useState([]);
@@ -8,7 +8,6 @@ export default function ClientReservationsTable(props) {
     const [searchUpcomingReservations, setSearchUpcomingReservations] = useState([]);
     const [searchPastReservations, setSearchPastReservations] = useState([]);
 
-    const userId = props.userId;
     const headers = ["Name","Location", "Start of reservation", "End of reservation", "Number of visitors", "Cancelation fee", "Owner", "Status"];
 
     useEffect(() => {
@@ -41,6 +40,7 @@ export default function ClientReservationsTable(props) {
         res.data.forEach(element => {
             var startDate = new Date(element.startDate);
             if (startDate < todayDate){
+                element.status = "EXPIRED";
                 past.push(element);
             }
             else{
@@ -55,6 +55,8 @@ export default function ClientReservationsTable(props) {
       });
     }
     function onSearchFieldChange(event) {
+        console.log(pastReservations);
+
         const searchResult = [];
         const searchParam = event.target.value.toLowerCase();
         for (let index = 0; index < upcomingReservations.length; index++) {
@@ -107,8 +109,8 @@ function TableHeader(props) {
     return (
         <thead>
             <tr>
-                {props.headers.map(header => 
-                    <th>{header}</th>
+                {props.headers.map((header,index) => 
+                    <th key={index}>{header}</th>
                 )}
             </tr>
         </thead>
@@ -128,13 +130,7 @@ function TableBody(props) {
 function Reservation(props) {
     const [reservation, setReservation] = useState(props.reservation);
     const [button, setButton] = useState(getButton());
-    function confirmReservation() {
-        let newReservation = reservation;
-        newReservation.status = "confirmed";
-        setReservation(newReservation);
-        setButton(getButton())
-        // saveReservation();
-    }
+
     function cancelReservation() {
         let newReservation = reservation;
         newReservation.status = "CANCELED";
