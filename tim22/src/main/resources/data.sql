@@ -88,3 +88,6 @@ INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, s
 VALUES (1, '2022-07-20', '2022-07-22', true, 1, 6, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES (2, '2022-07-25', '2022-07-28', true, 1, 7, false);
+
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (3, '2022-04-25', '2022-04-28', true, 1, 7, false);

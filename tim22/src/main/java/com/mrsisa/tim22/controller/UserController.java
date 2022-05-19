@@ -23,24 +23,19 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/editUserData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> editUserData(@RequestParam String email, @RequestParam String name, @RequestParam String surname, @RequestParam String phoneNumber, @RequestParam String addressLine, @RequestParam String streetNumber, @RequestParam String city, @RequestParam String country, @RequestParam String state){
-
-        return new ResponseEntity<UserDTO>(userService.editUserData(email, name, surname, phoneNumber, addressLine, streetNumber, city, country, state), HttpStatus.OK);
+    @RequestMapping(value = "/editUserData", method = RequestMethod.GET)
+    public void editUserData(@RequestParam String email, @RequestParam String name, @RequestParam String surname, @RequestParam String phoneNumber, @RequestParam String addressLine){
+        userService.editUserData(email,name,surname,phoneNumber,addressLine);
     }
 
 
-    @RequestMapping(value = "/getCurrentUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getCurrentUser(){
+    @RequestMapping(value = "/getUserByUsername", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> getCurrentUser(@RequestParam String username){
 
-        return new ResponseEntity<UserDTO>(userService.getCurrentUserData(), HttpStatus.OK);
+        return new ResponseEntity<UserDTO>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/createCancellationRequest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccountCancellationRequest> createCancellationRequest(@RequestParam String user){
 
-        return new ResponseEntity<AccountCancellationRequest>(userService.createNewCancellationRequest(user), HttpStatus.OK);
-    }
 
 
 

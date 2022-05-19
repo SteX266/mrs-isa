@@ -21,14 +21,6 @@ public class ReservationService {
     @Autowired
     private UserRepository userRepository;
 
-
-    public ArrayList<ReservationDTO> getAllReservations() {
-        ArrayList<ReservationDTO> reservations = new ArrayList<>();
-        reservations.add(new ReservationDTO(1, "NS,Serbia", "12.5.2022.","",  5, 400, "Nikola Nikolic", "Stefan Milosevic","waiting","Neka kuca"));
-        reservations.add(new ReservationDTO(2, "NS,Serbia", "12.5.2022.", "", 5, 400, "Boba Kikic","Stefan Milosevic", "confirmed","Neka druga kuca"));
-        reservations.add(new ReservationDTO(3, "NS,Serbia", "12.5.2022.","",  5, 400, "Brka Zemljanica","Stefan Milosevic", "canceled","Neka treca kuca"));
-        return reservations;
-    }
     public ArrayList<ReservationDTO> getClientReservations(String username){
 
         ArrayList<ReservationDTO> reservations = new ArrayList<ReservationDTO>();

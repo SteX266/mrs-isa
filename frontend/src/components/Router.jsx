@@ -129,7 +129,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ClientReservationsTable clientEmail="stefan.milosevic.e14@gmail.com"/>
+                <ClientReservationsTable clientEmail={localStorage.getItem("username")}/>
               </>
             }
           />

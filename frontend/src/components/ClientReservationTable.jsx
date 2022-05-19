@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Table, Form, FormControl, Nav, Button } from 'react-bootstrap';
 
 export default function ClientReservationsTable(props) {
-    const [reservations, setReservations] = useState([]);
-    const [searchReservations, setSearchReservations] = useState(reservations);
+    const [upcomingReservations, setUpcomingReservations] = useState([]);
+    const [pastReservations, setPastReservations] = useState([]);
+    const [searchUpcomingReservations, setSearchUpcomingReservations] = useState([]);
+    const [searchPastReservations, setSearchPastReservations] = useState([]);
+
     const userId = props.userId;
     const headers = ["Name","Location", "Start of reservation", "End of reservation", "Number of visitors", "Cancelation fee", "Owner", "Status"];
 
@@ -24,32 +27,69 @@ export default function ClientReservationsTable(props) {
 
         axios.get("http://localhost:8080/reservation/getClientReservations", requestOptions)
       .then((res) => {
-        setReservations(res.data);
-        setSearchReservations(res.data);
+
+        let future = [];
+        let past = [];
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
+        var todayDate = new Date(dateTime);
+        
+        res.data.forEach(element => {
+            var startDate = new Date(element.startDate);
+            if (startDate < todayDate){
+                past.push(element);
+            }
+            else{
+                future.push(element);
+            }
+        });
+        setUpcomingReservations(future);
+        setPastReservations(past);
+        setSearchPastReservations(past);
+        setSearchUpcomingReservations(future);
+
       });
     }
     function onSearchFieldChange(event) {
         const searchResult = [];
         const searchParam = event.target.value.toLowerCase();
-        for (let index = 0; index < this.state.vessels.length; index++) {
-            const reservation = reservations[index];
-            if (reservation.name.toLowerCase().includes(searchParam) || reservation.client.toLowerCase().includes(searchParam)) {
+        for (let index = 0; index < upcomingReservations.length; index++) {
+            const reservation = upcomingReservations[index];
+            if (reservation.entityName.toLowerCase().includes(searchParam) || reservation.owner.toLowerCase().includes(searchParam) || reservation.location.toLowerCase().includes(searchParam)) {
                 searchResult.push(reservation);
             }
         }
-        setSearchReservations(searchResult);
+        setSearchUpcomingReservations(searchResult);
     }
     return (
     <Container style={{maxWidth: '95%'}}>
     <Navbar collapseOnSelect className="rounded border border-dark">
-                <Container><Navbar.Text className="text-dark">{reservations.length} Vessels </Navbar.Text></Container>
+                <Container><Navbar.Text className="text-dark"> Upcoming reservations </Navbar.Text></Container>
 
                 <SearchForm onSearchFieldChange={onSearchFieldChange}/>
 
             </Navbar>
     <Table striped hover className='rounded'>
         <TableHeader headers={headers}/>
-        <TableBody reservations={searchReservations}/>
+        <TableBody reservations={searchUpcomingReservations}/>
+    </Table>
+
+
+    <Navbar collapseOnSelect className="rounded border border-dark">
+                <Container><Navbar.Text className="text-dark"> Reservation history </Navbar.Text></Container>
+
+                <SearchForm onSearchFieldChange={onSearchFieldChange}/>
+
+            </Navbar>
+
+
+            <Table striped hover className='rounded'>
+        <TableHeader headers={headers}/>
+        <TableBody reservations={searchPastReservations}/>
     </Table>
 
     </Container>);
