@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Container, Navbar, Table, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Navbar, Table, Form, FormControl, Button, Dropdown } from 'react-bootstrap';
 
 export default function ClientReservationsTable(props) {
     const [upcomingReservations, setUpcomingReservations] = useState([]);
@@ -41,9 +41,13 @@ export default function ClientReservationsTable(props) {
             var startDate = new Date(element.startDate);
             if (startDate < todayDate){
                 element.status = "EXPIRED";
+                element.startDate = element.startDate.replace("T", " ");
+                element.endDate = element.endDate.replace("T", " ");
                 past.push(element);
             }
             else{
+                element.startDate = element.startDate.replace("T", " ");
+                element.endDate = element.endDate.replace("T", " ");
                 future.push(element);
             }
         });
@@ -67,10 +71,88 @@ export default function ClientReservationsTable(props) {
         }
         setSearchUpcomingReservations(searchResult);
     }
+    function filterPastEntities(event){
+
+        var filterType = event.target.name;
+        if (filterType === "SHOW_ALL"){
+            setSearchPastReservations(pastReservations);
+            return;
+        }
+        else{
+            const filterResult = [];
+
+            for (let index = 0; index<pastReservations.length;index++){
+                const reservation = pastReservations[index];
+                if(reservation.entityType == filterType){
+                    filterResult.push(reservation);
+                }
+            }
+
+            setSearchPastReservations(filterResult);
+        }
+
+        
+        console.log(event.target.name);
+    }
+
+
+    function filterUpcomingEntities(event){
+
+        var filterType = event.target.name;
+        if (filterType === "SHOW_ALL"){
+            setSearchUpcomingReservations(upcomingReservations);
+            return;
+        }
+        else{
+            const filterResult = [];
+
+            for (let index = 0; index<upcomingReservations.length;index++){
+                const reservation = upcomingReservations[index];
+                if(reservation.entityType == filterType){
+                    filterResult.push(reservation);
+                }
+            }
+
+            setSearchUpcomingReservations(filterResult);
+        }
+
+        
+        console.log(event.target.name);
+    }
+
+
     return (
     <Container style={{maxWidth: '95%'}}>
     <Navbar collapseOnSelect className="rounded border border-dark">
-                <Container><Navbar.Text className="text-dark"> Upcoming reservations </Navbar.Text></Container>
+                <Container><Navbar.Text className="text-dark"> Upcoming reservations </Navbar.Text>
+                
+                </Container>
+
+                <Dropdown style={{padding:'5px'}}>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                    Entities
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                <Dropdown.Item  as="button" onClick={filterUpcomingEntities} name="SHOW_ALL">Show all</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterUpcomingEntities} name="VACATION" >Vacations</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterUpcomingEntities} name = "VESSEL">Vessels</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterUpcomingEntities} name ="ADVENTURE">Adventures</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
+
+                <Dropdown style={{padding:'5px'}}>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                    Sort by
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Start date</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Price</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">Duration</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
+
 
                 <SearchForm onSearchFieldChange={onSearchFieldChange}/>
 
@@ -84,12 +166,35 @@ export default function ClientReservationsTable(props) {
     <Navbar collapseOnSelect className="rounded border border-dark">
                 <Container><Navbar.Text className="text-dark"> Reservation history </Navbar.Text></Container>
 
+                
+                <Dropdown style={{padding:'5px'}}>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                    Entities
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                <Dropdown.Item  as="button" onClick={filterPastEntities} name="SHOW_ALL">Show all</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterPastEntities} name="VACATION" >Vacations</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterPastEntities} name = "VESSEL">Vessels</Dropdown.Item>
+                    <Dropdown.Item as="button" onClick={filterPastEntities} name ="ADVENTURE">Adventures</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
+
+                <Dropdown style={{padding:'5px'}}>
+                <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                    Sort by
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item as="button">Start date</Dropdown.Item>
+                    <Dropdown.Item as="button">Price</Dropdown.Item>
+                    <Dropdown.Item as="button">Duration</Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
+
                 <SearchForm onSearchFieldChange={onSearchFieldChange}/>
-
             </Navbar>
-
-
-            <Table striped hover className='rounded'>
+            <Table striped hover className='rounded' style={{paddingTop:'25px'}}>
         <TableHeader headers={headers}/>
         <TableBody reservations={searchPastReservations}/>
     </Table>
@@ -99,6 +204,7 @@ export default function ClientReservationsTable(props) {
 function SearchForm(props){
     return (
         <Form>
+
             <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" onChange={props.onSearchFieldChange}/>
         </Form>
     );
