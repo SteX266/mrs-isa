@@ -33,7 +33,7 @@ public class ReservationDTO {
         this.setStartDate(String.valueOf(r.getDateFrom()));
         this.setEndDate(String.valueOf(r.getDateTo()));
         this.setVisitors(r.getSystemEntity().getCapacity());
-        this.setFee(r.getSystemEntity().getCancellationFee());
+        this.setFee(r.getSystemEntity().getPrice());
         this.setOwner(r.getSystemEntity().getOwner().getName() + " " + r.getSystemEntity().getOwner().getSurname());
         this.setClient(r.getClient().getName() + " " + r.getClient().getSurname());
         this.setStatus(status);

@@ -11,6 +11,10 @@ import {
 } from "react-bootstrap";
 
 export default function ClientReservationsTable(props) {
+  const [sortedByPrice, setSortedByPrice] = useState(false);
+  const [sortedByDate, setSortedByDate] = useState(false);
+  const [sortedByDuration, setSortedByDuration] = useState(false);
+
   const [upcomingReservations, setUpcomingReservations] = useState([]);
   const [pastReservations, setPastReservations] = useState([]);
   const [searchUpcomingReservations, setSearchUpcomingReservations] = useState(
@@ -19,12 +23,12 @@ export default function ClientReservationsTable(props) {
   const [searchPastReservations, setSearchPastReservations] = useState([]);
 
   const headers = [
+    "Type",
     "Name",
     "Location",
     "Start of reservation",
     "End of reservation",
-    "Number of visitors",
-    "Cancelation fee",
+    "Price",
     "Owner",
     "Status",
   ];
@@ -124,8 +128,6 @@ export default function ClientReservationsTable(props) {
 
       setSearchPastReservations(filterResult);
     }
-
-    console.log(event.target.name);
   }
 
   function filterUpcomingEntities(event) {
@@ -145,8 +147,62 @@ export default function ClientReservationsTable(props) {
 
       setSearchUpcomingReservations(filterResult);
     }
+  }
 
-    console.log(event.target.name);
+  function sortPastReservations(event) {
+    var sortParam = event.target.name;
+    const sortResult = [];
+    for (let index = 0; index < searchPastReservations.length; index++) {
+      const reservation = searchPastReservations[index];
+      sortResult.push(reservation);
+    }
+
+    console.log(sortResult);
+
+    if (sortParam == "PRICE") {
+      if (sortedByPrice) {
+        sortResult.reverse();
+      } else {
+        sortResult.sort((a, b) => {
+          return a.fee - b.fee;
+        });
+        setSortedByPrice(true);
+        setSortedByDuration(false);
+        setSortedByDate(false);
+      }
+    } else if (sortParam == "START_DATE") {
+      if (sortedByDate) {
+        sortResult.reverse();
+      } else {
+        sortResult.sort((a, b) => {
+          return a.startDate < b.startDate;
+        });
+        setSortedByPrice(false);
+        setSortedByDuration(false);
+        setSortedByDate(true);
+      }
+    } else if (sortParam == "DURATION") {
+      if (sortedByDuration) {
+        sortResult.reverse();
+      } else {
+        sortResult.sort((a, b) => {
+          const startDateA = new Date(a.startDate);
+          const endDateA = new Date(a.endDate);
+          const resultA = Math.abs(startDateA - endDateA);
+
+          const startDateB = new Date(b.startDate);
+          const endDateB = new Date(b.endDate);
+          const resultB = Math.abs(startDateB - endDateB);
+
+          return resultA - resultB;
+        });
+        setSortedByPrice(false);
+        setSortedByDuration(true);
+        setSortedByDate(false);
+      }
+    }
+
+    setSearchPastReservations(sortResult);
   }
 
   return (
@@ -210,7 +266,7 @@ export default function ClientReservationsTable(props) {
 
         <SearchForm onSearchFieldChange={onSearchFieldChange} />
       </Navbar>
-      <Table striped hover className="rounded">
+      <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
         <TableHeader headers={headers} />
         <TableBody reservations={searchUpcomingReservations} />
       </Table>
@@ -263,21 +319,40 @@ export default function ClientReservationsTable(props) {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item as="button">Start date</Dropdown.Item>
-            <Dropdown.Item as="button">Price</Dropdown.Item>
-            <Dropdown.Item as="button">Duration</Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={sortPastReservations}
+              name="START_DATE"
+            >
+              Start date
+            </Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={sortPastReservations}
+              name="PRICE"
+            >
+              Price
+            </Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={sortPastReservations}
+              name="DURATION"
+            >
+              Duration
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
         <SearchForm onSearchFieldChange={onSearchFieldChange} />
       </Navbar>
-      <Table striped hover className="rounded" style={{ paddingTop: "25px" }}>
+      <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
         <TableHeader headers={headers} />
         <TableBody reservations={searchPastReservations} />
       </Table>
     </Container>
   );
 }
+
 function SearchForm(props) {
   return (
     <Form>
@@ -351,6 +426,21 @@ function Reservation(props) {
           Cancel reservation
         </Button>
       );
+    } else if (reservation.status == "EXPIRED") {
+      return (
+        <>
+          <Button
+            onClick={cancelReservation}
+            variant="outline-dark"
+            style={{ marginRight: "5px" }}
+          >
+            Review
+          </Button>
+          <Button onClick={cancelReservation} variant="outline-dark">
+            Complaint
+          </Button>
+        </>
+      );
     } else {
       return <></>;
     }
@@ -358,12 +448,12 @@ function Reservation(props) {
 
   return (
     <tr id={reservation.id}>
+      <td>{reservation.entityType}</td>
       <td> {reservation.entityName}</td>
       <td>{reservation.location}</td>
       <td>{reservation.startDate}</td>
       <td>{reservation.endDate}</td>
-      <td>{reservation.visitors}</td>
-      <td>{reservation.fee}%</td>
+      <td>{reservation.fee}$</td>
       <td>{reservation.owner}</td>
       <td>{reservation.status}</td>
       <td>{button}</td>
