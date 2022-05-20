@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ReservationsTable from "./ReservationsTable";
-export default function BusinessUserReservationPage(props) {
-  const [userId, setUserId] = useState("1");
+export default function BusinessUserReservationPage() {
   return (
     <>
     <ReservationsTable ownerEmail={localStorage.getItem("username")}></ReservationsTable>

@@ -1,9 +1,7 @@
 import React from "react";
 import {
   Container,
-  Nav,
   Navbar,
-  Button,
   Form,
   FormControl,
 } from "react-bootstrap";
@@ -20,6 +18,7 @@ export default function RegistrationRequest() {
 
   React.useEffect(() => {
     let data = getRequestsData();
+    console.log(data);
     setRequests([
       {
         id: 1,

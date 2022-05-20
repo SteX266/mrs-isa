@@ -4,7 +4,7 @@ import "../style/EntityCard.css"
 
 const EntityCard = (props) =>  {  
     return <>
-    <div class="col-md-3">
+    <div className="col-md-3">
   <div className="card align-self-stretch entityCard" styleProp="width: 18rem;">
      <img  height="200px" src={props.image} alt="Nesto"/>
      <hr/>

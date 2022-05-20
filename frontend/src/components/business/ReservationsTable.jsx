@@ -1,55 +1,97 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Container, Navbar, Table, Form, FormControl, Nav, Button } from 'react-bootstrap';
+import { Container, Navbar, Table, Form, FormControl, Button } from 'react-bootstrap';
 
-export default function ClientReservationsTable(props) {
-    const [reservations, setReservations] = useState([]);
-    const [searchReservations, setSearchReservations] = useState(reservations);
-    const userId = props.userId;
+export default function ReservationTable() {
+    const [upcomingReservations, setUpcomingReservations] = useState([]);
+    const [pastReservations, setPastReservations] = useState([]);
+    const [searchUpcomingReservations, setSearchUpcomingReservations] = useState([]);
+    const [searchPastReservations, setSearchPastReservations] = useState([]);
+
     const headers = ["Name","Location", "Start of reservation", "End of reservation", "Number of visitors", "Cancelation fee", "Client", "Status"];
 
     useEffect(() => {
-        getReservations(props.ownerEmail);
+        getReservations();
     },[]);
-    function getReservations(ownerEmail) {
+    function getReservations() {
 
         const token = JSON.parse(localStorage.getItem('userToken'));
         const requestOptions = {
             method:'POST',
             headers: {'Content-type':'application/json', Authorization:'Bearer ' + token.accessToken},
             params:{
-                "email":ownerEmail,
+                "email":localStorage.getItem("username")
             }
         };
 
         axios.get("http://localhost:8080/reservation/getOwnerReservations", requestOptions)
       .then((res) => {
-        setReservations(res.data);
-        setSearchReservations(res.data);
+
+        let future = [];
+        let past = [];
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+
+        var todayDate = new Date(dateTime);
+        
+        res.data.forEach(element => {
+            var startDate = new Date(element.startDate);
+            if (startDate < todayDate){
+                element.status = "EXPIRED";
+                past.push(element);
+            }
+            else{
+                future.push(element);
+            }
+        });
+        setUpcomingReservations(future);
+        setPastReservations(past);
+        setSearchPastReservations(past);
+        setSearchUpcomingReservations(future);
+
       });
     }
     function onSearchFieldChange(event) {
+        console.log(pastReservations);
+
         const searchResult = [];
         const searchParam = event.target.value.toLowerCase();
-        for (let index = 0; index < this.state.vessels.length; index++) {
-            const reservation = reservations[index];
-            if (reservation.name.toLowerCase().includes(searchParam) || reservation.client.toLowerCase().includes(searchParam)) {
+        for (let index = 0; index < upcomingReservations.length; index++) {
+            const reservation = upcomingReservations[index];
+            if (reservation.entityName.toLowerCase().includes(searchParam) || reservation.owner.toLowerCase().includes(searchParam) || reservation.location.toLowerCase().includes(searchParam)) {
                 searchResult.push(reservation);
             }
         }
-        setSearchReservations(searchResult);
+        setSearchUpcomingReservations(searchResult);
     }
     return (
     <Container style={{maxWidth: '95%'}}>
     <Navbar collapseOnSelect className="rounded border border-dark">
-                <Container><Navbar.Text className="text-dark">{reservations.length} Vessels </Navbar.Text></Container>
+                <Container><Navbar.Text className="text-dark"> Upcoming reservations </Navbar.Text></Container>
 
                 <SearchForm onSearchFieldChange={onSearchFieldChange}/>
 
             </Navbar>
     <Table striped hover className='rounded'>
         <TableHeader headers={headers}/>
-        <TableBody reservations={searchReservations}/>
+        <TableBody reservations={searchUpcomingReservations}/>
+    </Table>
+
+
+    <Navbar collapseOnSelect className="rounded border border-dark">
+                <Container><Navbar.Text className="text-dark"> Reservation history </Navbar.Text></Container>
+
+                <SearchForm onSearchFieldChange={onSearchFieldChange}/>
+
+            </Navbar>
+
+
+            <Table striped hover className='rounded'>
+        <TableHeader headers={headers}/>
+        <TableBody reservations={searchPastReservations}/>
     </Table>
 
     </Container>);
@@ -67,8 +109,8 @@ function TableHeader(props) {
     return (
         <thead>
             <tr>
-                {props.headers.map(header => 
-                    <th>{header}</th>
+                {props.headers.map((header,index) => 
+                    <th key={index}>{header}</th>
                 )}
             </tr>
         </thead>
@@ -89,13 +131,6 @@ function Reservation(props) {
     const [reservation, setReservation] = useState(props.reservation);
     const [button, setButton] = useState(getButton());
 
-    function confirmReservation() {
-        let newReservation = reservation;
-        newReservation.status = "confirmed";
-        setReservation(newReservation);
-        setButton(getButton())
-        // saveReservation();
-    }
     function cancelReservation() {
         let newReservation = reservation;
         newReservation.status = "CANCELED";
@@ -116,13 +151,9 @@ function Reservation(props) {
 
         axios.get("http://localhost:8080/reservation/cancelReservation", requestOptions)
     }
-    function createReport(){
-
-    }
-
     function getButton() {
         if(reservation.status == "APPROVED") {
-            return <Button onClick={createReport} variant="outline-dark">Report</Button>;
+            return <Button onClick={cancelReservation} variant="outline-dark">Cancel reservation</Button>;
         } else {
             return <></>;
         }

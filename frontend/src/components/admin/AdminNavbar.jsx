@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, NavDropdown, Nav, Navbar, Image } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
-import Dialog from "../Dialog";
 
 export default function BusinessUserNavbar(props) {
   const name = "Fish & Ships";

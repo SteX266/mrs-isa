@@ -47,36 +47,36 @@ VALUES (4,5);
 
 
 INSERT INTO public.adventure(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (1, 3,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Nesto', 150,'None', 4,4);
+VALUES (1, 3,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Top avantura', 150,'None', 4,4);
 
-INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (2, 3,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Nesto', 120,'None', 3,3);
+INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
+VALUES (2, 3,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Jahta', 120,'None', 3,3, 1, 150, 50, 'YACHT');
 
 INSERT INTO public.adventure(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (3, 4,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Nesto', 120,'None', 3,4);
+VALUES (3, 4,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Avantura', 120,'None', 3,4);
 
-INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (4, 1,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Nesto', 120,'None', 3,3);
+INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
+VALUES (4, 1,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brodic', 120,'None', 3,3, 1, 150, 50, 'YACHT');
 
-INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (5, 5,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Nesto', 120,'None', 3,3);
-
-INSERT INTO public.vacation(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (6, 4, 20 , 3,'Bad Place to stay','VACATION',false,'Kuzis', 300, 'None', 2,2);
+INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
+VALUES (5, 5,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brod', 120,'None', 3,3, 1, 150, 50, 'YACHT');
 
 INSERT INTO public.vacation(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (7, 3, 20, 4, 'Great Place', 'VACATION', false, 'Puz', 500, 'None', 1, 2);
+VALUES (6, 4, 20 , 3,'Bad Place to stay','VACATION',false,'Fina kuca', 300, 'None', 2,2);
+
+INSERT INTO public.vacation(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (7, 3, 20, 4, 'Great Place', 'VACATION', false, 'Drvena kuca', 500, 'None', 1, 2);
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://www.gradnja.rs/wp-content/uploads/2022/02/luksuzne-vikendice-srbija-izajmljivanje-gradnja.rs_.jpg');
+VALUES (1, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (2, 'https://www.gradnja.rs/wp-content/uploads/2021/01/balaton-vikendica.jpg');
+VALUES (2, 'https://cdn.boatinternational.com/files/2021/01/b2c5a350-5998-11eb-beb1-e5b23185a864-avanti-profile.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (3, 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/187868702.jpg?k=4368f5637f7ff4c79e5c7f993e37c48850d3e9d7d514486c15e971a4aa45ed38&o=&hp=1');
+VALUES (3, 'https://sgbonline.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-31-at-8.54.57-AM-copy.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (4, 'https://www.gdenaplaninu.com/uploads/images/objekti/200/vikendicA.jpg');
+VALUES (4, 'https://sailtraininginternational.org/app/uploads/2016/06/vessel-shtandart-1.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (5, 'https://media.mojtrg.rs/Image/ce9e459c7a9e46bdb35cd246288f903b/20150907/false/false/1280/960/Vikendica-od-65m2--Kopaonik.jpeg');
+VALUES (5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Amerigo_vespucci_1976_nyc_aufgetakelt.jpg/800px-Amerigo_vespucci_1976_nyc_aufgetakelt.jpg');
 INSERT INTO public.photos(entity_id, photos)
 VALUES (6, 'https://www.mojenterijer.rs/storage/posts/gallery/2017/Dec/115648/sarmantna-vikendica-u-kanadi.jpg');
 INSERT INTO public.photos(entity_id, photos)
@@ -88,3 +88,17 @@ INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, s
 VALUES (1, '2022-07-20', '2022-07-22', true, 1, 6, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES (2, '2022-07-25', '2022-07-28', true, 1, 7, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (3, '2022-04-25', '2022-04-28', true, 1, 7, false);
+
+
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (4, '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (5, '2022-03-15', '2022-03-20', true, 1, 4, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (6, '2022-03-22', '2022-03-23', true, 1, 2, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (7, '2021-09-26', '2021-10-01', true, 1, 1, false);
+
+

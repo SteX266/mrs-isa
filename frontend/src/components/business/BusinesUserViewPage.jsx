@@ -10,14 +10,12 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ServiceTable from "./ServiceTable";
-import Dialog from "../Dialog";
 
 export default function BusinessUserViewServicesPage(props) {
   const [user, setUser] = React.useState({ type: "", headers: [] });
   const [services, setServices] = React.useState([]);
 
   const [searchServices, setSearchServices] = React.useState([]);
-  const [showDeleteDialogue, setDeleteDialogue] = React.useState(false);
   React.useEffect(() => {
     let func = "";
     switch (props.type) {
@@ -89,13 +87,7 @@ export default function BusinessUserViewServicesPage(props) {
     setServices(filtering);
     
   }
-  function cancelButtonHandler() {
-    setDeleteDialogue(false);
-  }
 
-  function deleteConfirmedHandler(id) {
-    
-  }
   return (
     <div style={{ padding: "55px" }}>
       <Container

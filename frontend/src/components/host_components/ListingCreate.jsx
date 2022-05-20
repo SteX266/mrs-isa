@@ -1,7 +1,5 @@
-
-import axios from 'axios';
 import React, {useState} from 'react';
-import { Button, Container, Form, FormSelect} from 'react-bootstrap';
+import { Button, Container, Form} from 'react-bootstrap';
 import DropdownCheckbox from '../DropdownCheckbox';
 import LabeledInput from '../captain_components/LabeledInput';
 import LabeledTextAreaInput from '../captain_components/LabeledTextAreaInput';
@@ -120,7 +118,7 @@ export default function VesselCreate() {
         setErrors(currentErrors);
 
     }
-
+/*
     function createVessel() {
         const requestOptions = {
             headers: {
@@ -138,7 +136,7 @@ export default function VesselCreate() {
         }).catch(function (response) {
             console.log(response.status);
         });
-    }
+    }*/
     return (
     <Container>
         <Form>

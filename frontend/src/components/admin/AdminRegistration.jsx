@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import "../../style/Errors.css";
 
 export default function AdminRegistration() {
@@ -53,7 +52,7 @@ export default function AdminRegistration() {
 
   const emailValidation = (email) => {
     const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     return !email || regex.test(email) === false;
   };
 
@@ -151,67 +150,67 @@ export default function AdminRegistration() {
 
   return (
     <>
-      <div class="album py-5 bg-light">
-        <div class="container">
+      <div className="album py-5 bg-light">
+        <div className="container">
           <form>
-            <div class="mb-6">
-              <label for="exampleInputEmail1" class="form-label">
+            <div className="mb-6">
+              <label htmlhtmlFor="exampleInputEmail1" className="form-label">
                 Email address
               </label>
               <input
                 name="email"
                 onChange={handleChange}
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
-              <div id="emailHelp" class="form-text">
+              <div id="emailHelp" className="form-text">
                 Your email address will not be shared with anyone.
               </div>
               {errors.email.length > 0 && (
                 <span className="error">{errors.email}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputPassword1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputPassword1" className="form-label">
                 Password
               </label>
               <input
                 name="password"
                 onChange={handleChange}
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="exampleInputPassword1"
               />
               {errors.password.length > 0 && (
                 <span className="error">{errors.password}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputPassword1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputPassword1" className="form-label">
                 Repeat passwrod
               </label>
               <input
                 name="repeatedPassword"
                 onChange={handleChange}
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="exampleInputPassword1"
               />
               {errors.repeatedPassword.length > 0 && (
                 <span className="error">{errors.repeatedPassword}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputEmail1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Name
               </label>
               <input
                 name="name"
                 onChange={handleChange}
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
@@ -219,15 +218,15 @@ export default function AdminRegistration() {
                 <span className="error">{errors.name}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputEmail1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Surname
               </label>
               <input
                 name="surname"
                 onChange={handleChange}
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
@@ -235,15 +234,15 @@ export default function AdminRegistration() {
                 <span className="error">{errors.surname}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputEmail1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Home address
               </label>
               <input
                 name="addressLine"
                 onChange={handleChange}
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
@@ -251,15 +250,15 @@ export default function AdminRegistration() {
                 <span className="error">{errors.addressLine}</span>
               )}
             </div>
-            <div class="mb-6">
-              <label for="exampleInputEmail1" class="form-label">
+            <div className="mb-6">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Phone number
               </label>
               <input
                 name="phoneNumber"
                 onChange={handleChange}
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
               />
@@ -271,7 +270,7 @@ export default function AdminRegistration() {
             <button
               type="submit"
               onClick={handleSubmit}
-              class="btn btn-primary"
+              className="btn btn-primary"
             >
               Register
             </button>

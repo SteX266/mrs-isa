@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EntityCard from "./EntityCard";
-import SearchForm from "./SearchForm";
 import { MDBCol, MDBInput } from "mdbreact";
 
 function EntityList(props) {
@@ -12,7 +11,7 @@ function EntityList(props) {
     filtering();
   }, [props.type]);
 
-  function renderAllEntities(entity, index) {
+  function renderAllEntities(entity) {
     return (
       <EntityCard
         title={entity.name}
@@ -79,8 +78,8 @@ function EntityList(props) {
 
   return (
     <>
-      <div class="album py-5 bg-light">
-        <div class="container">
+      <div className="album py-5 bg-light">
+        <div className="container">
           <MDBCol md="12">
             <MDBInput
               onChange={searchFieldChanged}
@@ -89,7 +88,7 @@ function EntityList(props) {
               containerClass="active-pink active-pink-2 mt-0 mb-3"
             />
           </MDBCol>
-          <div class="row" id="entities">
+          <div className="row" id="entities">
             {searchList.map(renderAllEntities)}
           </div>
         </div>

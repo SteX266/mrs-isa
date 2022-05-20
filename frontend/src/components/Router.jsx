@@ -21,7 +21,6 @@ import RegistrationRequest from "./admin/RegistrationRequest";
 import AdminProfile from "./admin/AdminProfile";
 import AdminRegistration from "./admin/AdminRegistration";
 import NavigationBarClient from "./NavigationBarClient"; 
-import ReservationsTable from "./business/ReservationsTable";
 import ClientReservationsTable from "./ClientReservationTable";
 
 export default function Router() {
@@ -129,7 +128,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ClientReservationsTable clientEmail="stefan.milosevic.e14@gmail.com"/>
+                <ClientReservationsTable clientEmail={localStorage.getItem("username")}/>
               </>
             }
           />

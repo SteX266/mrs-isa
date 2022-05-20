@@ -13,13 +13,5 @@ public class UserDTO {
     String surname;
     String phoneNumber;
     String addressLine;
-    String streetNumber;
-    String city;
-    String country;
-    String state;
-
-
-
-
-
+    int loyaltyPoints;
 }

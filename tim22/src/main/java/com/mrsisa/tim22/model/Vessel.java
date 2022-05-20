@@ -15,7 +15,9 @@ import java.util.List;
 public class Vessel extends SystemEntity {
     @Id
     private Integer id;
+
     @Column
+    @Enumerated(EnumType.STRING)
     private VesselType vesselType;
     @Column
     private int engineNumber;

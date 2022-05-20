@@ -24,25 +24,21 @@ public class UserService {
     @Autowired
     private RoleService roleService;
 
-    public UserDTO editUserData(String email,String name, String surname, String phoneNumber, String addressLine, String streetNumber, String city, String country, String state) {
-        System.out.println("Izmenjeni podaci za "+ email + " Name: " + name+ " Surname: "+surname+" Phone number: " + phoneNumber);
-        return new UserDTO();
+    public User editUserData(String email,String name, String surname, String phoneNumber, String addressLine) {
+        User u = userRepository.findOneByUsername(email);
+        u.setName(name);
+        u.setSurname(surname);
+        u.setPhoneNumber(phoneNumber);
+        u.setAddress(addressLine);
+        userRepository.save(u);
+        System.out.println("Podaci za " + email + " uspesno izmenjeni");
+        return u;
     }
 
-    public UserDTO getCurrentUserData(){
-        System.out.println("Uspesno primljen zahtev");
-        return new UserDTO("stefan.milosevic.e14@gmail.com","Stefan", "Milosevic","066240610", "Petra Kocica", "38", "Jagodina" , "Srbija", "Pomoravlje");
+    public UserDTO getUserByUsername(String username){
+        User u = userRepository.findOneByUsername(username);
+        return new UserDTO(u.getUsername(),u.getName(), u.getSurname(),u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints());
 
-    }
-    public AccountCancellationRequest createNewCancellationRequest(String user) {
-        User u = new User();
-        System.out.println("Kreiran account delete request, user: " +  user);
-        AccountCancellationRequest acr = new AccountCancellationRequest(1, "blabla",false, u);
-        User us = userRepository.findOneByUsername("stex266@gmail.com");
-
-        System.out.println(us.getName());
-
-        return acr;
     }
     public User findByUsername(String email){
         return userRepository.findOneByUsername(email);

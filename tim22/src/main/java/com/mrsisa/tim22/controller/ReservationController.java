@@ -20,11 +20,6 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @RequestMapping(value = "/getAllReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<ReservationDTO>> getAllReservations(){
-        return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getAllReservations(), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/getClientReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<ReservationDTO>> getClientReservations(@RequestParam String email){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getClientReservations(email), HttpStatus.OK);
