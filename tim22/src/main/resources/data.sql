@@ -47,7 +47,7 @@ VALUES (4,5);
 
 
 INSERT INTO public.adventure(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
-VALUES (1, 3,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Top avantura', 150,'None', 4,4);
+VALUES (1, 3,20,2,'TOOOOOOP!!!! Adrenalinska avantura u kojoj ćete iskusiti skakanje sa padobranom, planinarenje i svašta nešto. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','ADVENTURE',false, 'Top avantura', 150,'Zabranjeno pušenje! Zabranjeni kućni ljubimci!', 1,4);
 
 INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
 VALUES (2, 3,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Jahta', 120,'None', 3,3, 1, 150, 50, 'YACHT');
@@ -69,6 +69,11 @@ VALUES (7, 3, 20, 4, 'Great Place', 'VACATION', false, 'Drvena kuca', 500, 'None
 
 INSERT INTO public.photos(entity_id, photos)
 VALUES (1, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (1, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (1, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+
 INSERT INTO public.photos(entity_id, photos)
 VALUES (2, 'https://cdn.boatinternational.com/files/2021/01/b2c5a350-5998-11eb-beb1-e5b23185a864-avanti-profile.jpg');
 INSERT INTO public.photos(entity_id, photos)

@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -44,6 +41,13 @@ public class SystemEntityController {
     public ResponseEntity<ArrayList<ListingDTO>> getAllListings(){
 
         return new ResponseEntity<ArrayList<ListingDTO>>(systemEntityService.getAllListings(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value ="getEntityById", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SystemEntityDTO> getEntityById(@RequestParam int id){
+
+
+        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getEntityById(id), HttpStatus.OK);
     }
 
 

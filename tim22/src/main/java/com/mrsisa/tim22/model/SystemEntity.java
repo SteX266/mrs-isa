@@ -24,7 +24,7 @@ public abstract class SystemEntity {
     protected Integer id;
     @Column
     protected String name;
-    @Column
+    @Column(length = 2000)
     protected String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="addres_id")

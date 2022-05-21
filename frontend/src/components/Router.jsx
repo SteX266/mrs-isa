@@ -22,6 +22,8 @@ import AdminProfile from "./admin/AdminProfile";
 import AdminRegistration from "./admin/AdminRegistration";
 import NavigationBarClient from "./NavigationBarClient"; 
 import ClientReservationsTable from "./ClientReservationTable";
+import ListingProfilePage from "./ListingProfilePage";
+import Map from "./Map";
 
 export default function Router() {
   function Nested(type) {
@@ -182,6 +184,28 @@ export default function Router() {
               </>
             }
           />
+
+
+          <Route path="/profile"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBar />
+                <ListingProfilePage></ListingProfilePage>
+              </>
+            }
+          />
+
+<Route path="/map"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBar />
+                <Map></Map>
+              </>
+            }
+          />
+
           <Route path="/adventures"
             element={
               <>

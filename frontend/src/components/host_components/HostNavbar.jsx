@@ -7,7 +7,7 @@ class HostNavbar extends Component {
         return (<>
           <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="rounded border border-light">
           <Container>
-            <Navbar.Brand href="/">Fish'N'Ships</Navbar.Brand>
+            <Navbar.Brand href="/">Fish&Ships</Navbar.Brand>
           </Container>
           <Container>
             <Nav className="mx-auto">

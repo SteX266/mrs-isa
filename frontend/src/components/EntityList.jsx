@@ -15,7 +15,7 @@ function EntityList(props) {
     return (
       <EntityCard
         title={entity.name}
-        address={entity.myAddress}
+        address={entity.address}
         price={entity.price}
         rating={entity.averageScore}
         image={entity.firstImage}
