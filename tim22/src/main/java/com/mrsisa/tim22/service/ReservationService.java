@@ -6,11 +6,13 @@ import com.mrsisa.tim22.model.Address;
 import com.mrsisa.tim22.model.Reservation;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.repository.ReservationRepository;
+import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -20,6 +22,10 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SystemEntityRepository systemEntityRepository;
+
 
     public ArrayList<ReservationDTO> getClientReservations(String username){
 
@@ -31,6 +37,26 @@ public class ReservationService {
 
         for(Reservation r:clientReservations){
             if (r.isApproved()) {
+                ReservationDTO reservation = new ReservationDTO(r);
+                reservations.add(reservation);
+            }
+        }
+
+        return reservations;
+    }
+
+    public ArrayList<ReservationDTO> getEntityReservations(int id){
+
+        ArrayList<ReservationDTO> reservations = new ArrayList<ReservationDTO>();
+
+        int entityId = systemEntityRepository.findOneById(id).getId();
+        ArrayList<Reservation> entityReservations = (ArrayList<Reservation>) reservationRepository.findByEntity(entityId);
+
+        for(Reservation r:entityReservations){
+            if (r.isApproved()&& r.getDateTo().isAfter(LocalDateTime.now())) {
+                if( r.getDateFrom().isBefore(LocalDateTime.now())) {
+                    r.setDateFrom(LocalDateTime.now());
+                }
                 ReservationDTO reservation = new ReservationDTO(r);
                 reservations.add(reservation);
             }
