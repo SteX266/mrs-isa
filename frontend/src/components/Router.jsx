@@ -20,10 +20,11 @@ import AdminNavbar from "./admin/AdminNavbar";
 import RegistrationRequest from "./admin/RegistrationRequest";
 import AdminProfile from "./admin/AdminProfile";
 import AdminRegistration from "./admin/AdminRegistration";
-import NavigationBarClient from "./NavigationBarClient"; 
+import NavigationBarClient from "./NavigationBarClient";
 import ClientReservationsTable from "./ClientReservationTable";
 import ListingProfilePage from "./ListingProfilePage";
 import Map from "./Map";
+import ClientCalendar from "./ClientCalendar";
 
 export default function Router() {
   function Nested(type) {
@@ -57,30 +58,36 @@ export default function Router() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/captain/*" element={<BusinessUserNavbar type="captain" />} >
+          <Route
+            path="/captain/*"
+            element={<BusinessUserNavbar type="captain" />}
+          >
             {Nested("captain")}
           </Route>
 
           <Route path="/host/*" element={<BusinessUserNavbar type="host" />}>
             {Nested("host")}
           </Route>
-          <Route path="/instructor/*" element={<BusinessUserNavbar type="instructor" />}>
+          <Route
+            path="/instructor/*"
+            element={<BusinessUserNavbar type="instructor" />}
+          >
             {Nested("instructor")}
           </Route>
 
           <Route path="/admin/*" element={<AdminNavbar></AdminNavbar>}>
-            <Route path="registration-request" element={<RegistrationRequest />} />
+            <Route
+              path="registration-request"
+              element={<RegistrationRequest />}
+            />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
           </Route>
-
-
-          
-
         </Routes>
         <Routes>
-
-        <Route path="/client" element={
+          <Route
+            path="/client"
+            element={
               <>
                 <Header></Header>
                 <NavigationBarClient />
@@ -88,7 +95,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/client/clientProfile"
+          <Route
+            path="/client/clientProfile"
             element={
               <>
                 <Header></Header>
@@ -97,7 +105,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/client/vacations"
+          <Route
+            path="/client/vacations"
             element={
               <>
                 <Header></Header>
@@ -106,7 +115,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/client/vessels"
+          <Route
+            path="/client/vessels"
             element={
               <>
                 <Header></Header>
@@ -115,7 +125,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/client/adventures"
+          <Route
+            path="/client/adventures"
             element={
               <>
                 <Header></Header>
@@ -125,22 +136,24 @@ export default function Router() {
             }
           />
 
-          <Route path="/client/reservations"
+          <Route
+            path="/client/reservations"
             element={
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ClientReservationsTable clientEmail={localStorage.getItem("username")}/>
+                <ClientReservationsTable
+                  clientEmail={localStorage.getItem("username")}
+                />
               </>
             }
           />
         </Routes>
 
-
-
-
         <Routes>
-          <Route path="/" element={
+          <Route
+            path="/"
+            element={
               <>
                 <Header></Header>
                 <NavigationBar />
@@ -148,7 +161,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/registration"
+          <Route
+            path="/registration"
             element={
               <>
                 <Header></Header>
@@ -157,7 +171,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/login"
+          <Route
+            path="/login"
             element={
               <>
                 <Header></Header>
@@ -166,7 +181,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/vacations"
+          <Route
+            path="/vacations"
             element={
               <>
                 <Header></Header>
@@ -175,7 +191,8 @@ export default function Router() {
               </>
             }
           />
-          <Route path="/vessels"
+          <Route
+            path="/vessels"
             element={
               <>
                 <Header></Header>
@@ -185,8 +202,8 @@ export default function Router() {
             }
           />
 
-
-          <Route path="/profile"
+          <Route
+            path="/profile"
             element={
               <>
                 <Header></Header>
@@ -195,8 +212,19 @@ export default function Router() {
               </>
             }
           />
+          <Route
+            path="/calendar/:id"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBar />
+                <ClientCalendar></ClientCalendar>
+              </>
+            }
+          />
 
-<Route path="/map"
+          <Route
+            path="/map"
             element={
               <>
                 <Header></Header>
@@ -206,7 +234,8 @@ export default function Router() {
             }
           />
 
-          <Route path="/adventures"
+          <Route
+            path="/adventures"
             element={
               <>
                 <Header></Header>
