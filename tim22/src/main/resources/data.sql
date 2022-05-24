@@ -107,3 +107,11 @@ INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, s
 VALUES (7, '2021-09-26', '2021-10-01', true, 1, 1, false);
 
 
+INSERT INTO public.promo(
+    id, capacity, date_from, date_to, description, price, system_entity_id)
+VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+
+INSERT INTO public.promo(
+    id, capacity, date_from, date_to, description, price, system_entity_id)
+VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+

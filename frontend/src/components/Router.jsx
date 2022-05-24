@@ -186,7 +186,7 @@ export default function Router() {
           />
 
 
-          <Route path="/profile"
+          <Route path="/profile/:id"
             element={
               <>
                 <Header></Header>

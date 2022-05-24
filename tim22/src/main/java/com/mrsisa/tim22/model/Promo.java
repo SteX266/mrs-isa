@@ -25,7 +25,7 @@ public class Promo {
     @JoinColumn(name="system_entity_id")
     private SystemEntity systemEntity;
     @Column
-    private int numberOfPeople;
+    private int capacity;
     @Column
     private double price;
 }

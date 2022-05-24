@@ -28,6 +28,8 @@ export default function ListingProfilePage(){
         ownersPhoneNumber:"",
         amenities:""
       });
+    
+    const [promos, setPromos] = useState([]);
 
     function renderAllPhotos(photo){
       if (photo == listing.firstImage){
@@ -71,8 +73,26 @@ export default function ListingProfilePage(){
             
             
           });
+        getEntityPromos();
       }, []);
 
+
+    function getEntityPromos(){
+
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const entityId = 1;
+      const requestOptions = {
+        headers: { Authorization: "Bearer " + token.accessToken },
+        params: { id: entityId },
+      };
+      axios
+        .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
+        .then((res) => {
+          setPromos(res.data);
+          console.log(res.data);
+        });
+
+    }
     function subscribe(){
 
         console.log(listing);
@@ -227,3 +247,5 @@ export default function ListingProfilePage(){
     );
 
 }
+
+function Promo(props)

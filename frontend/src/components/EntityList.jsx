@@ -14,6 +14,7 @@ function EntityList(props) {
   function renderAllEntities(entity) {
     return (
       <EntityCard
+        id={entity.id}
         title={entity.name}
         address={entity.address}
         price={entity.price}
