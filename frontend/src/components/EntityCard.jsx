@@ -1,12 +1,14 @@
 import "../style/EntityCard.css"
+import { Link } from "react-router-dom";
 
 
 
 const EntityCard = (props) =>  {  
-    var link = "/profile/" + props.id;
+    var link = "/client/profile/" + props.id;
     return <>
-    <Link to={link}>
     <div className="col-md-3">
+    <Link to={link}>
+
   <div className="card align-self-stretch entityCard" styleProp="width: 18rem;">
      <img  height="200px" src={props.image} alt="Nesto"/>
      <hr/>
@@ -18,8 +20,9 @@ const EntityCard = (props) =>  {
        
      </div></div>
    </div>
-   </div>
    </Link>
+
+   </div>
 </>}
 
 export default EntityCard;

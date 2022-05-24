@@ -4,13 +4,15 @@ import "../style/ListingProfilePage.css";
 import axios from "axios";
 import Map from "./Map";
 import CarouselItem from "./CarouselItem";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 
 
 export default function ListingProfilePage(){
 
 
-
+    const params = useParams();
 
     const [listing, setListing] = useState({
         id: -1,
@@ -29,6 +31,7 @@ export default function ListingProfilePage(){
         amenities:""
       });
     
+    const [calendar,setCalendar] = useState("");
     const [promos, setPromos] = useState([]);
 
     function renderAllPhotos(photo){
@@ -46,7 +49,7 @@ export default function ListingProfilePage(){
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem("userToken"));
-        const entityId = 1;
+        const entityId = params.id;
         const requestOptions = {
           headers: { Authorization: "Bearer " + token.accessToken },
           params: { id: entityId },
@@ -69,7 +72,11 @@ export default function ListingProfilePage(){
             owner:res.data.owner,
             ownersPhoneNumber:res.data.ownersPhoneNumber,
             amenities:res.data.amenities
-            })
+
+
+            });
+            var link = "/client/calendar/" + res.data.id;
+            setCalendar(link);
             
             
           });
@@ -89,6 +96,7 @@ export default function ListingProfilePage(){
         .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
         .then((res) => {
           setPromos(res.data);
+          console.log(promos);
           console.log(res.data);
         });
 
@@ -118,7 +126,7 @@ export default function ListingProfilePage(){
                       <p className="text-secondary mb-1">{listing.type}</p>
                       <p className="text-muted font-size-sm">{listing.address}</p>
                       <button onClick={subscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Subscribe</button>
-                      <button className="btn btn-outline-warning" style={{marginRight:"10px", marginTop:"15px"}}>Reserve</button>
+                      <Link to={calendar}><button className="btn btn-outline-warning" style={{marginRight:"10px", marginTop:"15px"}}>Reserve</button></Link>
                     </div>
                   </div>
                 </div>
@@ -248,4 +256,4 @@ export default function ListingProfilePage(){
 
 }
 
-function Promo(props)
+

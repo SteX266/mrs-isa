@@ -8,17 +8,18 @@ import Geocode from "react-geocode";
 
 
 export default function Map(props) {
-  console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
   });
 
-  if (!isLoaded) return <div>Loading...</div>;
-  return <GMap address={props.address} />;
+  if (!isLoaded)
+   {return <div>Loading...</div>}
+  else{
+  return <GMap address={props.address} />}
 }
 
-function GMap(props) {
+const GMap = (props) =>{
   const[coords, setCords]=useState({lat:0,lng:0});
   const[coordsLoaded, setCoordsLoaded] = useState(false);
 

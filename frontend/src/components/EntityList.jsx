@@ -68,7 +68,7 @@ function EntityList(props) {
       const entity = allEntities[i];
       if (
         entity.name.toLowerCase().includes(searchParam) ||
-        entity.myAddress.toLowerCase().includes(searchParam)
+        entity.address.toLowerCase().includes(searchParam)
       ) {
         newList.push(entity);
       }

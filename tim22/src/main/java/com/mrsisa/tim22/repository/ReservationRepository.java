@@ -15,5 +15,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     @Query(value="select r from Reservation r where r.systemEntity.owner.id= ?1")
     public List<Reservation> findByOwner(int id);
 
+    @Query(value="select r from Reservation r where r.systemEntity.id= ?1")
+    public List<Reservation> findByEntity(int id);
+
     public Reservation findOneById(Integer entityId);
 }
