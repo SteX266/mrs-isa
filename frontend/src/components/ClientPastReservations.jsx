@@ -15,10 +15,9 @@ export default function ClientReservationsTable(props) {
   const [sortedByDate, setSortedByDate] = useState(false);
   const [sortedByDuration, setSortedByDuration] = useState(false);
 
-  const [upcomingReservations, setUpcomingReservations] = useState([]);
-  const [searchUpcomingReservations, setSearchUpcomingReservations] = useState(
-    []
-  );
+  const [pastReservations, setPastReservations] = useState([]);
+
+  const [searchPastReservations, setSearchPastReservations] = useState([]);
 
   const headers = [
     "Type",
@@ -86,16 +85,17 @@ export default function ClientReservationsTable(props) {
             future.push(element);
           }
         });
-        setUpcomingReservations(future);
-        setSearchUpcomingReservations(future);
+        setPastReservations(past);
+        setSearchPastReservations(past);
       });
   }
   function onSearchFieldChange(event) {
+    console.log(pastReservations);
 
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
-    for (let index = 0; index < upcomingReservations.length; index++) {
-      const reservation = upcomingReservations[index];
+    for (let index = 0; index < pastReservations.length; index++) {
+      const reservation = pastReservations[index];
       if (
         reservation.entityName.toLowerCase().includes(searchParam) ||
         reservation.owner.toLowerCase().includes(searchParam) ||
@@ -104,36 +104,38 @@ export default function ClientReservationsTable(props) {
         searchResult.push(reservation);
       }
     }
-    setSearchUpcomingReservations(searchResult);
+    setSearchPastReservations(searchResult);
   }
-
-
-  function filterUpcomingEntities(event) {
+  function filterPastEntities(event) {
     var filterType = event.target.name;
     if (filterType === "SHOW_ALL") {
-      setSearchUpcomingReservations(upcomingReservations);
+      setSearchPastReservations(pastReservations);
       return;
     } else {
       const filterResult = [];
 
-      for (let index = 0; index < upcomingReservations.length; index++) {
-        const reservation = upcomingReservations[index];
+      for (let index = 0; index < pastReservations.length; index++) {
+        const reservation = pastReservations[index];
         if (reservation.entityType == filterType) {
           filterResult.push(reservation);
         }
       }
 
-      setSearchUpcomingReservations(filterResult);
+      setSearchPastReservations(filterResult);
     }
   }
 
-  function sortReservations(event) {
+
+
+  function sortPastReservations(event) {
     var sortParam = event.target.name;
     const sortResult = [];
-    for (let index = 0; index < searchUpcomingReservations.length; index++) {
-      const reservation = searchUpcomingReservations[index];
+    for (let index = 0; index < searchPastReservations.length; index++) {
+      const reservation = searchPastReservations[index];
       sortResult.push(reservation);
     }
+
+    console.log(sortResult);
 
     if (sortParam == "PRICE") {
       if (sortedByPrice) {
@@ -178,17 +180,16 @@ export default function ClientReservationsTable(props) {
       }
     }
 
-    setSearchUpcomingReservations(sortResult);
+    setSearchPastReservations(sortResult);
   }
 
   return (
     <Container style={{ maxWidth: "95%" }}>
+
+
       <Navbar collapseOnSelect className="rounded border border-dark" style={{marginTop:"15px"}}>
         <Container>
-          <Navbar.Text className="text-dark">
-            {" "}
-            Upcoming reservations{" "}
-          </Navbar.Text>
+          <Navbar.Text className="text-dark"> Reservation history </Navbar.Text>
         </Container>
 
         <Dropdown style={{ padding: "5px" }}>
@@ -199,28 +200,28 @@ export default function ClientReservationsTable(props) {
           <Dropdown.Menu>
             <Dropdown.Item
               as="button"
-              onClick={filterUpcomingEntities}
+              onClick={filterPastEntities}
               name="SHOW_ALL"
             >
               Show all
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterUpcomingEntities}
+              onClick={filterPastEntities}
               name="VACATION"
             >
               Vacations
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterUpcomingEntities}
+              onClick={filterPastEntities}
               name="VESSEL"
             >
               Vessels
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterUpcomingEntities}
+              onClick={filterPastEntities}
               name="ADVENTURE"
             >
               Adventures
@@ -234,23 +235,23 @@ export default function ClientReservationsTable(props) {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-          <Dropdown.Item
+            <Dropdown.Item
               as="button"
-              onClick={sortReservations}
+              onClick={sortPastReservations}
               name="START_DATE"
             >
               Start date
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortReservations}
+              onClick={sortPastReservations}
               name="PRICE"
             >
               Price
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortReservations}
+              onClick={sortPastReservations}
               name="DURATION"
             >
               Duration
@@ -262,10 +263,8 @@ export default function ClientReservationsTable(props) {
       </Navbar>
       <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
         <TableHeader headers={headers} />
-        <TableBody reservations={searchUpcomingReservations} />
+        <TableBody reservations={searchPastReservations} />
       </Table>
-
-
     </Container>
   );
 }

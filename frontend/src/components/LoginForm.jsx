@@ -136,7 +136,7 @@ const handleChange = (event) => {
     {errors.password.length > 0 && <span className='error'>{errors.password}</span>}
   </div>
 
-  <button onClick={handleSubmit} type="submit" className="btn btn-primary">Login</button>
+  <button onClick={handleSubmit} type="submit" className="btn btn-primary" style={{marginTop:"10px"}}>Login</button>
 </form>
 </div>
 </div>

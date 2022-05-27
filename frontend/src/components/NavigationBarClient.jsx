@@ -9,7 +9,7 @@ const NavigationBarClient = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/client">
-            <h2 className="text-warning">Fish&Ships</h2>
+            <h2 className="text-secondary">Fish&Ships</h2>
           </a>
           <button
             className="navbar-toggler"
@@ -74,7 +74,7 @@ const NavigationBarClient = () => {
               </li>
             </ul>
             <Link to="/">
-              <a className="btn btn-warning">Logout</a>
+              <a className="btn btn-danger">Logout</a>
             </Link>
           </div>
         </div>

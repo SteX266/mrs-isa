@@ -25,6 +25,7 @@ import ClientReservationsTable from "./ClientReservationTable";
 import ListingProfilePage from "./ListingProfilePage";
 import Map from "./Map";
 import ClientCalendar from "./ClientCalendar";
+import ClientPastReservations from "./ClientPastReservations";
 
 export default function Router() {
   function Nested(type) {
@@ -148,6 +149,20 @@ export default function Router() {
               </>
             }
           />
+
+          <Route
+            path="/client/reservationsHistory"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <ClientPastReservations
+                  clientEmail={localStorage.getItem("username")}
+                />
+              </>
+            }
+          />
+
           <Route
             path="/client/profile/:id"
             element={
