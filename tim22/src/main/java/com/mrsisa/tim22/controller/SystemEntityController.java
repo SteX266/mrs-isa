@@ -24,7 +24,7 @@ public class SystemEntityController {
     @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(), HttpStatus.OK);
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(1,3), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getAllAdventures", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

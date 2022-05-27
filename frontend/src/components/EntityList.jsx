@@ -2,10 +2,28 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EntityCard from "./EntityCard";
 import { MDBCol, MDBInput } from "mdbreact";
+import Pagination from "./Pagination";
 
 function EntityList(props) {
   const [allEntities, setAllEntities] = useState([]);
   const [searchList, setSearchList] = useState([]);
+
+  const [currentEntities, setCurrentEntities] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3);
+
+  const [indexOfLastPost, setIndexOfLastPost] = useState(currentPage * postsPerPage);
+  const [indexOfFirstPost, setIndexOfFirstPost] = useState(indexOfLastPost - postsPerPage);
+
+
+  function setPageNumber(pageNumber){
+    setCurrentPage(pageNumber);
+    setIndexOfLastPost(currentPage * postsPerPage);
+    setIndexOfFirstPost(indexOfLastPost - postsPerPage);
+    console.log(indexOfFirstPost);
+    console.log(indexOfLastPost);
+    filtering();
+  }
 
   useEffect(() => {
     filtering();
@@ -25,9 +43,6 @@ function EntityList(props) {
   }
 
   async function filtering() {
-    console.log("TOKENCINAAA");
-    console.log(localStorage.getItem("userToken"));
-    console.log(localStorage.getItem("username"));
 
     const requestOptions = {
       headers: {
@@ -35,6 +50,10 @@ function EntityList(props) {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      params:{
+        startId:indexOfFirstPost,
+        endId:indexOfLastPost
+      }
     };
     let res = await axios.get(
       "http://localhost:8080/auth/getAllEntities",
@@ -44,6 +63,8 @@ function EntityList(props) {
     if (props.type === "ALL_ENTITIES") {
       setAllEntities(res.data);
       setSearchList(res.data);
+      setCurrentEntities(res.data);
+      console.log(res.data);
 
       return;
     } else {
@@ -90,7 +111,12 @@ function EntityList(props) {
             />
           </MDBCol>
           <div className="row" id="entities">
-            {searchList.map(renderAllEntities)}
+            {currentEntities.map(renderAllEntities)}
+            <Pagination 
+            postsPerPage={postsPerPage}
+            totalPosts ={7}
+            paginate={setPageNumber}
+            />
           </div>
         </div>
       </div>

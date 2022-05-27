@@ -20,13 +20,13 @@ public class SystemEntityService {
     @Autowired
     private SystemEntityRepository systemEntityRepository;
 
-    public ArrayList<SystemEntityDTO> getEntities(){
+    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
 
 
 
         System.out.println("Prosao zahtev");
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
-        List<SystemEntity> allEntities = systemEntityRepository.findAll();
+        List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
 
         for (SystemEntity entity : allEntities){
             if (!entity.isDeleted()){

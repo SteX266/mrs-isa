@@ -100,9 +100,11 @@ public class AuthentificationController {
     }
 
     @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(), HttpStatus.OK);
+        System.out.println(startId);
+        System.out.println(endId);
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
     }
 
 }
