@@ -16,11 +16,9 @@ export default function ClientReservationsTable(props) {
   const [sortedByDuration, setSortedByDuration] = useState(false);
 
   const [upcomingReservations, setUpcomingReservations] = useState([]);
-  const [pastReservations, setPastReservations] = useState([]);
   const [searchUpcomingReservations, setSearchUpcomingReservations] = useState(
     []
   );
-  const [searchPastReservations, setSearchPastReservations] = useState([]);
 
   const headers = [
     "Type",
@@ -89,13 +87,10 @@ export default function ClientReservationsTable(props) {
           }
         });
         setUpcomingReservations(future);
-        setPastReservations(past);
-        setSearchPastReservations(past);
         setSearchUpcomingReservations(future);
       });
   }
   function onSearchFieldChange(event) {
-    console.log(pastReservations);
 
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
@@ -111,24 +106,7 @@ export default function ClientReservationsTable(props) {
     }
     setSearchUpcomingReservations(searchResult);
   }
-  function filterPastEntities(event) {
-    var filterType = event.target.name;
-    if (filterType === "SHOW_ALL") {
-      setSearchPastReservations(pastReservations);
-      return;
-    } else {
-      const filterResult = [];
 
-      for (let index = 0; index < pastReservations.length; index++) {
-        const reservation = pastReservations[index];
-        if (reservation.entityType == filterType) {
-          filterResult.push(reservation);
-        }
-      }
-
-      setSearchPastReservations(filterResult);
-    }
-  }
 
   function filterUpcomingEntities(event) {
     var filterType = event.target.name;
@@ -149,15 +127,13 @@ export default function ClientReservationsTable(props) {
     }
   }
 
-  function sortPastReservations(event) {
+  function sortReservations(event) {
     var sortParam = event.target.name;
     const sortResult = [];
-    for (let index = 0; index < searchPastReservations.length; index++) {
-      const reservation = searchPastReservations[index];
+    for (let index = 0; index < searchUpcomingReservations.length; index++) {
+      const reservation = searchUpcomingReservations[index];
       sortResult.push(reservation);
     }
-
-    console.log(sortResult);
 
     if (sortParam == "PRICE") {
       if (sortedByPrice) {
@@ -202,12 +178,12 @@ export default function ClientReservationsTable(props) {
       }
     }
 
-    setSearchPastReservations(sortResult);
+    setSearchUpcomingReservations(sortResult);
   }
 
   return (
     <Container style={{ maxWidth: "95%" }}>
-      <Navbar collapseOnSelect className="rounded border border-dark">
+      <Navbar collapseOnSelect className="rounded border border-dark" style={{marginTop:"15px"}}>
         <Container>
           <Navbar.Text className="text-dark">
             {" "}
@@ -216,7 +192,7 @@ export default function ClientReservationsTable(props) {
         </Container>
 
         <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="warning" id="dropdown-basic">
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Entities
           </Dropdown.Toggle>
 
@@ -253,89 +229,28 @@ export default function ClientReservationsTable(props) {
         </Dropdown>
 
         <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="warning" id="dropdown-basic">
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Sort by
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">Start date</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Price</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Duration</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <SearchForm onSearchFieldChange={onSearchFieldChange} />
-      </Navbar>
-      <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
-        <TableHeader headers={headers} />
-        <TableBody reservations={searchUpcomingReservations} />
-      </Table>
-
-      <Navbar collapseOnSelect className="rounded border border-dark">
-        <Container>
-          <Navbar.Text className="text-dark"> Reservation history </Navbar.Text>
-        </Container>
-
-        <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="warning" id="dropdown-basic">
-            Entities
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item
+          <Dropdown.Item
               as="button"
-              onClick={filterPastEntities}
-              name="SHOW_ALL"
-            >
-              Show all
-            </Dropdown.Item>
-            <Dropdown.Item
-              as="button"
-              onClick={filterPastEntities}
-              name="VACATION"
-            >
-              Vacations
-            </Dropdown.Item>
-            <Dropdown.Item
-              as="button"
-              onClick={filterPastEntities}
-              name="VESSEL"
-            >
-              Vessels
-            </Dropdown.Item>
-            <Dropdown.Item
-              as="button"
-              onClick={filterPastEntities}
-              name="ADVENTURE"
-            >
-              Adventures
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="warning" id="dropdown-basic">
-            Sort by
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item
-              as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="START_DATE"
             >
               Start date
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="PRICE"
             >
               Price
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="DURATION"
             >
               Duration
@@ -347,8 +262,10 @@ export default function ClientReservationsTable(props) {
       </Navbar>
       <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
         <TableHeader headers={headers} />
-        <TableBody reservations={searchPastReservations} />
+        <TableBody reservations={searchUpcomingReservations} />
       </Table>
+
+
     </Container>
   );
 }
