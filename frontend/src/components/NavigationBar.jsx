@@ -9,7 +9,7 @@ const NavigationBar = () => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            <h2 className="text-warning">Fish&Ships</h2>
+            <h2 className="text-secondary">Fish&Ships</h2>
           </a>
           <button
             className="navbar-toggler"
@@ -54,12 +54,12 @@ const NavigationBar = () => {
               </li>
             </ul>
             <Link to="/login">
-              <a className="btn btn-warning">Login</a>
+              <a className="btn btn-secondary">Login</a>
             </Link>
             <a
               href="/registration"
               style={{ marginLeft: "5px" }}
-              className="btn btn-warning"
+              className="btn btn-secondary"
             >
               Sing up
             </a>
