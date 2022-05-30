@@ -10,24 +10,23 @@ function EntityList(props) {
 
   const [currentEntities, setCurrentEntities] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
+  const postsPerPage = 3;
 
-  const [indexOfLastPost, setIndexOfLastPost] = useState(currentPage * postsPerPage);
-  const [indexOfFirstPost, setIndexOfFirstPost] = useState(indexOfLastPost - postsPerPage);
+  const [indexOfLastPost, setIndexOfLastPost] = useState(3);
+  const [indexOfFirstPost, setIndexOfFirstPost] = useState(1);
 
 
   function setPageNumber(pageNumber){
     setCurrentPage(pageNumber);
-    setIndexOfLastPost(currentPage * postsPerPage);
-    setIndexOfFirstPost(indexOfLastPost - postsPerPage);
-    console.log(indexOfFirstPost);
-    console.log(indexOfLastPost);
-    filtering();
+    setIndexOfLastPost(pageNumber * postsPerPage);
+    setIndexOfFirstPost((pageNumber-1) * postsPerPage + 1);
+
+//    filtering();
   }
 
   useEffect(() => {
     filtering();
-  }, [props.type]);
+  }, [props.type,indexOfFirstPost]);
 
   function renderAllEntities(entity) {
     return (
@@ -43,6 +42,8 @@ function EntityList(props) {
   }
 
   async function filtering() {
+    console.log(indexOfFirstPost);
+    console.log(indexOfLastPost);
 
     const requestOptions = {
       headers: {

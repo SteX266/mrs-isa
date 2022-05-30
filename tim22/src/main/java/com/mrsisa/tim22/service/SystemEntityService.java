@@ -28,6 +28,8 @@ public class SystemEntityService {
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
 
+
+
         for (SystemEntity entity : allEntities){
             if (!entity.isDeleted()){
                 entities.add(new SystemEntityDTO(entity));
