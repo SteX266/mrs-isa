@@ -65,8 +65,11 @@ public class UserService {
         // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
         List<Role> roles = roleService.findByName("CLIENT");
         u.setRoles(roles);
-
+        System.out.println("KLJUUUUUUC");
+        System.out.println(u.getId());
+        u.setId(5);
         return this.userRepository.save(u);
+
     }
 
     public User saveUser(User user){
