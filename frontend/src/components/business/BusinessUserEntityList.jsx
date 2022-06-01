@@ -1,5 +1,4 @@
 import EntityCard from "../EntityCard";
-import { MDBCol, MDBInput } from "mdbreact";
 
 export default function BusinessUserEntityList(props) {
   function renderAllEntities(entity) {
@@ -14,18 +13,10 @@ export default function BusinessUserEntityList(props) {
       />
     );
   }
-
   return (
     <>
       <div className="album py-5 bg-light">
         <div className="container">
-          <MDBCol md="12">
-            <MDBInput
-              hint="Search"
-              type="text"
-              containerClass="active-pink active-pink-2 mt-0 mb-3"
-            />
-          </MDBCol>
           <div className="row" id="entities">
             {props.services.map(renderAllEntities)}
           </div>

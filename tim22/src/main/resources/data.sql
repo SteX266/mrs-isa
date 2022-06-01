@@ -56,10 +56,10 @@ INSERT INTO public.adventure(id, average_score, cancellation_fee, capacity, desc
 VALUES (3, 4,20,2,'TOOOOOOP!!!!','ADVENTURE',false, 'Avantura', 120,'None', 3,4);
 
 INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
-VALUES (4, 1,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brodic', 120,'None', 3,3, 1, 150, 50, 'YACHT');
+VALUES (4, 1,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brodic', 100,'None', 3,3, 1, 150, 50, 'YACHT');
 
 INSERT INTO public.vessel(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id, engine_number, engine_power, max_speed, vessel_type)
-VALUES (5, 5,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brod', 120,'None', 3,3, 1, 150, 50, 'YACHT');
+VALUES (5, 5,20,2,'TOOOOOOP!!!!','VESSEL',false, 'Brod', 20,'None', 2,3, 1, 150, 50, 'YACHT');
 
 INSERT INTO public.vacation(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
 VALUES (6, 4, 20 , 3,'Bad Place to stay','VACATION',false,'Fina kuca', 300, 'None', 2,2);

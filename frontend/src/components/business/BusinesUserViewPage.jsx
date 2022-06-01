@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  Container,
-  Nav,
-  Navbar,
-  Button,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BusinessUserEntityList from "./BusinessUserEntityList";
+import SearchBar from "./SearchBar";
 
 export default function BusinessUserViewServicesPage(props) {
   const [user, setUser] = React.useState({ type: "" });
@@ -17,34 +11,30 @@ export default function BusinessUserViewServicesPage(props) {
 
   const [searchServices, setSearchServices] = React.useState([]);
   React.useEffect(() => {
-    let func = "";
     switch (props.type) {
       case "host":
-        func = "getCurrentUserListings";
         setUser({
           type: "listings",
         });
         break;
       case "instructor":
-        func = "getCurrentUserAdventures";
         setUser({
           type: "adventures",
         });
         break;
 
       case "captain":
-        func = "getCurrentUserVessels";
         setUser({
           type: "vessels",
         });
     }
-    getServiceData(func);
+    getServiceData();
   }, []);
 
-  function getServiceData(func) {
+  function getServiceData() {
     const token = JSON.parse(localStorage.getItem("userToken"));
 
-    let path = "http://localhost:8080/entity/" + func;
+    let path = "http://localhost:8080/entity/getCurrentUserAdventures";
     axios
       .get(path, {
         headers: {
@@ -62,20 +52,11 @@ export default function BusinessUserViewServicesPage(props) {
         setSearchServices(res.data);
       });
   }
-
-  function searchFieldChanged(event) {
-    const filtering = [];
-    const searchParam = event.target.value.toLowerCase();
-    for (let index = 0; index < services.length; index++) {
-      const service = services[index];
-      if (
-        service.name.toLowerCase().includes(searchParam) ||
-        service.location.toLowerCase().includes(searchParam)
-      ) {
-        filtering.push(service);
-      }
-    }
-    setSearchServices(filtering);
+  function del() {
+    let new_services = services;
+    new_services.pop();
+    console.log(new_services);
+    setServices(new_services);
   }
 
   return (
@@ -92,7 +73,7 @@ export default function BusinessUserViewServicesPage(props) {
           </Container>
 
           <Container>
-            <SearchForm searchFieldChanged={searchFieldChanged} />
+            <SearchBar del={del} setServices={setServices} />
           </Container>
 
           <Container>
@@ -108,19 +89,5 @@ export default function BusinessUserViewServicesPage(props) {
         <BusinessUserEntityList services={services} />
       </Container>
     </div>
-  );
-}
-
-function SearchForm(props) {
-  return (
-    <Form>
-      <FormControl
-        type="search"
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-        onChange={props.searchFieldChanged}
-      />
-    </Form>
   );
 }

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Button, Form, Stack } from "react-bootstrap";
-import { useFetch } from "../utilities";
 import FilterModal from "./FilterModal";
 
-function SearchBar({ setServices }) {
+function SearchBar({ del, setServices }) {
   const [searchField, setSearchField] = useState("");
   const [filters, setFilters] = useState({});
   const [show, setShow] = useState(false);
@@ -11,14 +10,8 @@ function SearchBar({ setServices }) {
     setShow(!show);
   };
   const search = () => {
-    setServices(
-      useFetch("entity/search", {
-        searchField: searchField,
-        filtersDTO: filters,
-      })
-    );
-    console.log(filters);
-    console.log(searchField);
+    console.log(searchField, filters, setServices);
+    del();
   };
   const onFieldChange = (event) => {
     setSearchField(event.target.value);
