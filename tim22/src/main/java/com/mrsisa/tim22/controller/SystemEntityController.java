@@ -1,9 +1,6 @@
 package com.mrsisa.tim22.controller;
 
-import com.mrsisa.tim22.dto.AdventureDTO;
-import com.mrsisa.tim22.dto.ListingDTO;
-import com.mrsisa.tim22.dto.SystemEntityDTO;
-import com.mrsisa.tim22.dto.VesselDTO;
+import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,9 +42,14 @@ public class SystemEntityController {
 
     @RequestMapping(value ="getEntityById", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SystemEntityDTO> getEntityById(@RequestParam int id){
-
-
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getEntityById(id), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value ="/search", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SystemEntityDTO> search(@RequestBody SearchDTO searchDTO){
+        System.out.println(searchDTO.getSearchField());
+        return new ResponseEntity<SystemEntityDTO>(new SystemEntityDTO(), HttpStatus.OK);
     }
 
 
@@ -57,9 +59,6 @@ public class SystemEntityController {
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserAdventures(email), HttpStatus.OK);
     }
-
-
-
 
 
 }

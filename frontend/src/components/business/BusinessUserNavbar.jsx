@@ -47,13 +47,7 @@ export default function BusinessUserNavbar(props) {
   var name = "Fish & Ships";
   return (
     <>
-      <Navbar
-        collapseOnSelect
-        expand="lg"
-        bg="dark"
-        variant="dark"
-        className="rounded border border-light"
-      >
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href={props.type}>{name}</Navbar.Brand>
         </Container>
