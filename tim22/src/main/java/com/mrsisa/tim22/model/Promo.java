@@ -28,4 +28,6 @@ public class Promo {
     private int capacity;
     @Column
     private double price;
+    @Column
+    private boolean isTaken;
 }

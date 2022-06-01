@@ -12,4 +12,5 @@ public interface PromoRepository extends JpaRepository<Promo, Integer> {
     @Query(value="select p from Promo p where p.systemEntity.id = ?1")
     List<Promo> findByEntity(int entityId);
 
+    public Promo findOneById(int promoId);
 }
