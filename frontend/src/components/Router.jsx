@@ -26,7 +26,6 @@ import ListingProfilePage from "./ListingProfilePage";
 import Map from "./Map";
 import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./ClientPastReservations";
-import AdminViewEntities from "./admin/AdminViewEntities";
 
 export default function Router() {
   function Nested(type) {
@@ -173,7 +172,7 @@ export default function Router() {
             element={
               <>
                 <Header></Header>
-                <NavigationBar />
+                <NavigationBarClient />
                 <ListingProfilePage></ListingProfilePage>
               </>
             }
@@ -184,7 +183,7 @@ export default function Router() {
             element={
               <>
                 <Header></Header>
-                <NavigationBar />
+                <NavigationBarClient />
                 <ClientCalendar></ClientCalendar>
               </>
             }

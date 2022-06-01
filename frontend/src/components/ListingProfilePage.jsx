@@ -254,16 +254,10 @@ export default function ListingProfilePage(){
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
-
         </div>
     </div>
-        
-        
         </>
 
     );

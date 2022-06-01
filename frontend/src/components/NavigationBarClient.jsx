@@ -63,6 +63,14 @@ const NavigationBarClient = () => {
                 </Link>
               </li>
 
+              <li className="nav-item">
+                <Link to="/client/reservationsHistory">
+                  {" "}
+                  <a className="nav-link" >
+                    History
+                  </a>
+                </Link>
+              </li>
 
               <li className="nav-item">
                 <Link to="/client/clientProfile">

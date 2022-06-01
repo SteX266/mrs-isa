@@ -9,9 +9,9 @@ function EntityList(props) {
   const [searchList, setSearchList] = useState([]);
 
   const [currentEntities, setCurrentEntities] = useState([]);
-  const postsPerPage = 3;
+  const postsPerPage = 8;
 
-  const [indexOfLastPost, setIndexOfLastPost] = useState(3);
+  const [indexOfLastPost, setIndexOfLastPost] = useState(1*postsPerPage);
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(1);
 
 
@@ -112,7 +112,7 @@ function EntityList(props) {
             {currentEntities.map(renderAllEntities)}
             <Pagination 
             postsPerPage={postsPerPage}
-            totalPosts ={7}
+            totalPosts ={17}
             paginate={setPageNumber}
             />
           </div>
