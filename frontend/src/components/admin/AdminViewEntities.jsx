@@ -36,15 +36,17 @@ export default function AdminViewEntities(props) {
     setSearchList(filtering);
   }
   async function filtering() {
+    const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
+        Authorization: "Bearer " + token.accessToken,
       },
     };
     let res = await axios.get(
-      "http://localhost:8080/api/entity/getAllEntities",
+      "http://localhost:8080/entity/getAllEntities",
       requestOptions
     );
 

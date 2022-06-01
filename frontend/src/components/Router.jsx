@@ -26,6 +26,7 @@ import ListingProfilePage from "./ListingProfilePage";
 import Map from "./Map";
 import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./ClientPastReservations";
+import AdminViewEntities from "./admin/AdminViewEntities";
 
 export default function Router() {
   function Nested(type) {
@@ -83,6 +84,10 @@ export default function Router() {
             />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
+            <Route
+              path="viewEntities"
+              element={<EntityList type="ALL_ENTITIES" />}
+            />
           </Route>
         </Routes>
         <Routes>
@@ -174,7 +179,7 @@ export default function Router() {
             }
           />
 
-            <Route
+          <Route
             path="/client/calendar/:id"
             element={
               <>
@@ -184,7 +189,6 @@ export default function Router() {
               </>
             }
           />
-
         </Routes>
 
         <Routes>
@@ -238,8 +242,6 @@ export default function Router() {
               </>
             }
           />
-
-
 
           <Route
             path="/map"
