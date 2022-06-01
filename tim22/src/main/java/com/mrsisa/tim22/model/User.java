@@ -20,11 +20,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity(name="user_table")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements UserDetails {
     @Id
-    @SequenceGenerator(name = "userSequenceGenerator", sequenceName = "userIds", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequenceGenerator")
+    @Column(unique=true, nullable=false)
     private Integer id;
     @Column
     private String username;
