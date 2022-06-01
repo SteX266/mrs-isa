@@ -5,6 +5,13 @@ import { Link } from "react-router-dom";
 
 const EntityCard = (props) =>  {  
     var link = "/client/profile/" + props.id;
+    var title = props.title;
+    if(title.length > 12){
+      title = title.slice(0,11);
+      title+="..."
+    }
+
+
     return <>
     <div className="col-md-3">
     <Link to={link}>
@@ -13,7 +20,7 @@ const EntityCard = (props) =>  {
      <img  height="200px" src={props.image} alt="Nesto"/>
      <hr/>
      <div className="card-body">
-       <h3 className="card-title">{props.title}</h3>
+       <h3 className="card-title">{title}</h3>
        <span className="lokacija">{props.address}</span>
        <p className="card-text">{props.price}$</p>
        <div className="row justify-content-around align-items-center"><span className="ocena">{props.rating}/5</span>

@@ -9,7 +9,6 @@ function EntityList(props) {
   const [searchList, setSearchList] = useState([]);
 
   const [currentEntities, setCurrentEntities] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 3;
 
   const [indexOfLastPost, setIndexOfLastPost] = useState(3);
@@ -17,11 +16,9 @@ function EntityList(props) {
 
 
   function setPageNumber(pageNumber){
-    setCurrentPage(pageNumber);
     setIndexOfLastPost(pageNumber * postsPerPage);
     setIndexOfFirstPost((pageNumber-1) * postsPerPage + 1);
 
-//    filtering();
   }
 
   useEffect(() => {
@@ -101,7 +98,7 @@ function EntityList(props) {
 
   return (
     <>
-      <div className="album py-5 bg-light">
+      <div className="album py-5 ">
         <div className="container">
           <MDBCol md="12">
             <MDBInput
