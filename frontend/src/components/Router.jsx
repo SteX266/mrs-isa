@@ -151,7 +151,7 @@ export default function Router() {
                 <ClientReservationsTable
                   clientEmail={localStorage.getItem("username")}
                 />
-              </>
+                </>
             }
           />
 
