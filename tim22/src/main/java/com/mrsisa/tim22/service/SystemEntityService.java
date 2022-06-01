@@ -28,6 +28,8 @@ public class SystemEntityService {
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
 
+
+
         for (SystemEntity entity : allEntities){
             if (!entity.isDeleted()){
                 entities.add(new SystemEntityDTO(entity));
@@ -80,6 +82,19 @@ public class SystemEntityService {
 
         SystemEntity entity = systemEntityRepository.findOneById(id);
         return new SystemEntityDTO(entity);
+
+    }
+
+    public ArrayList<SystemEntityDTO> getCurrentUserAdventures(String email) {
+         ArrayList <SystemEntity> entities=  systemEntityRepository.findSystemEntitiesByOwner_Username(email);
+
+        ArrayList<SystemEntityDTO> entitiesDTO = new ArrayList<>();
+         for (SystemEntity entity : entities){
+            if (!entity.isDeleted()){
+                entitiesDTO.add(new SystemEntityDTO(entity));
+            }
+        }
+        return entitiesDTO;
 
     }
 }

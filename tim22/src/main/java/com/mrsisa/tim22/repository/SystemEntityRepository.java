@@ -6,10 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface SystemEntityRepository extends JpaRepository<SystemEntity, Integer> {
     public SystemEntity findOneById(Integer id);
+
+    public ArrayList<SystemEntity> findSystemEntitiesByOwner_Username(String email);
 
 
     public Page<SystemEntity> findAll(Pageable pageable);

@@ -6,6 +6,10 @@ import Map from "./Map";
 import CarouselItem from "./CarouselItem";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import {
+  Table,
+  Button,
+} from "react-bootstrap";
 
 
 
@@ -34,6 +38,14 @@ export default function ListingProfilePage(){
     const [calendar,setCalendar] = useState("");
     const [promos, setPromos] = useState([]);
 
+    
+  const headers = [
+    "Start",
+    "End",
+    "Price",
+    "Button"
+  ];
+
     function renderAllPhotos(photo){
       if (photo == listing.firstImage){
         return <></>;
@@ -42,10 +54,8 @@ export default function ListingProfilePage(){
         <CarouselItem photo={photo}/>
 
       )
-
-
     }
-
+    
 
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem("userToken"));
@@ -225,8 +235,12 @@ export default function ListingProfilePage(){
                 <div className="col-sm-6 mb-3">
                   <div className="card h-100">
                     <div className="card-body">
-                      
-                     Lorem ispum maecenas pharetra convallis posuere morbi leo urna molestie. Ut eu sem integer vitae justo eget. Pellentesque diam volutpat commodo sed egestas. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus sed. Lorem donec massa sapien faucibus et molestie. Lobortis feugiat vivamus at augue eget arcu dictum varius. Massa sed elementum tempus egestas sed sed. Sed egestas egestas fringilla phasellus faucibus. Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis.
+
+                    <Table striped hover className="rounded  bg-light" style={{ paddingTop: "125px", marginTop:"15px" }}>
+                    <TableHeader headers={headers} />
+                   <TableBody promos={promos} />
+                    </Table>
+                    
 
                     </div>
                   </div>
@@ -240,20 +254,84 @@ export default function ListingProfilePage(){
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
-
         </div>
     </div>
-        
-        
         </>
 
     );
 
 }
+
+function TableHeader(props) {
+  return (
+    <thead>
+      <tr>
+        {props.headers.map((header, index) => (
+          <th key={index}>{header}</th>
+        ))}
+      </tr>
+    </thead>
+  );
+}
+
+function TableBody(props) {
+  return (
+    <tbody>
+      {props.promos.map((promo) => (
+        <Promo key={promo.id} promo={promo} />
+    ))}
+    </tbody>
+  );
+}
+
+function Promo(props) {
+  const [promo, setPromo] = useState(props.promo);
+  const [button, setButton] = useState(getButton());
+
+  function reservePromo() {
+    let newPromo = promo;
+    setPromo(newPromo);
+    setButton(getButton());
+    saveReservation(newPromo.id);
+  }
+
+  function saveReservation(reservationId) {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token.accessToken,
+      },
+      params: {
+        entityId: reservationId,
+      },
+    };
+
+    axios.get(
+      "http://localhost:8080/reservation/cancelReservation",
+      requestOptions
+    );
+  }
+  function getButton() {
+    return (
+      <Button onClick={reservePromo} variant="outline-dark">
+        Reserve
+      </Button>
+    );
+  }
+
+  return (
+    <tr id={promo.id}>
+      <td>{promo.dateFrom}</td>
+      <td> {promo.dateTo}</td>
+      <td>{promo.price}</td>
+      <td>{button}</td>
+    </tr>
+  );
+}
+
 
 

@@ -9,25 +9,21 @@ function EntityList(props) {
   const [searchList, setSearchList] = useState([]);
 
   const [currentEntities, setCurrentEntities] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
+  const postsPerPage = 8;
 
-  const [indexOfLastPost, setIndexOfLastPost] = useState(currentPage * postsPerPage);
-  const [indexOfFirstPost, setIndexOfFirstPost] = useState(indexOfLastPost - postsPerPage);
+  const [indexOfLastPost, setIndexOfLastPost] = useState(1*postsPerPage);
+  const [indexOfFirstPost, setIndexOfFirstPost] = useState(1);
 
 
   function setPageNumber(pageNumber){
-    setCurrentPage(pageNumber);
-    setIndexOfLastPost(currentPage * postsPerPage);
-    setIndexOfFirstPost(indexOfLastPost - postsPerPage);
-    console.log(indexOfFirstPost);
-    console.log(indexOfLastPost);
-    filtering();
+    setIndexOfLastPost(pageNumber * postsPerPage);
+    setIndexOfFirstPost((pageNumber-1) * postsPerPage + 1);
+
   }
 
   useEffect(() => {
     filtering();
-  }, [props.type]);
+  }, [props.type,indexOfFirstPost]);
 
   function renderAllEntities(entity) {
     return (
@@ -43,6 +39,8 @@ function EntityList(props) {
   }
 
   async function filtering() {
+    console.log(indexOfFirstPost);
+    console.log(indexOfLastPost);
 
     const requestOptions = {
       headers: {
@@ -100,7 +98,7 @@ function EntityList(props) {
 
   return (
     <>
-      <div className="album py-5 bg-light">
+      <div className="album py-5 ">
         <div className="container">
           <MDBCol md="12">
             <MDBInput
@@ -114,7 +112,7 @@ function EntityList(props) {
             {currentEntities.map(renderAllEntities)}
             <Pagination 
             postsPerPage={postsPerPage}
-            totalPosts ={7}
+            totalPosts ={17}
             paginate={setPageNumber}
             />
           </div>

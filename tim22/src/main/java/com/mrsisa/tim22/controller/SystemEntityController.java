@@ -51,6 +51,14 @@ public class SystemEntityController {
     }
 
 
+    @RequestMapping(value ="getCurrentUserAdventures", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserAdventures(@RequestParam String email){
+
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserAdventures(email), HttpStatus.OK);
+    }
+
+
 
 
 

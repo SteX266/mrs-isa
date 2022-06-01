@@ -67,6 +67,55 @@ VALUES (6, 4, 20 , 3,'Bad Place to stay','VACATION',false,'Fina kuca', 300, 'Non
 INSERT INTO public.vacation(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
 VALUES (7, 3, 20, 4, 'Great Place', 'VACATION', false, 'Drvena kuca', 500, 'None', 1, 2);
 
+
+
+
+
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (8, 3, 10, 4, 'Student excursion with lots of fun and beautiful scenery', 'ADVENTURE', false, 'Summer Fun', 120, 'None', 2, 4);
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (9, 2, 20, 7,'for people who like risky and inaccessible landscapes', 'ADVENTURE', false, 'Unforgettable hiking in Bosnia', 200, 'None', 3, 4);
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (10, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Tara River', 230, 'None', 3, 4);
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (11, 5, 15, 10,'classes for beginners and children on the Danube' , 'ADVENTURE', false, 'Fishing lessons for beginners in Novi Sad', 135, 'beginners must listen to their instructor and be kind to other students', 1, 4);
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (12, 4, 10, 8, 'Great adventure in nature very cheap and fun', 'ADVENTURE', false, 'Fun Trip', 80, 'None', 4, 4);
+
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (13, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Sutjeska River', 230, 'None', 3, 4);
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (14, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Belica River', 230, 'None', 3, 4);
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (15, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Geralt of Rivia', 230, 'None', 3, 4);
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (16, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Belica River', 230, 'None', 3, 4);
+
+INSERT INTO public.adventure(
+    id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
+VALUES (17, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'ADVENTURE', false, 'Rafting on the Geralt of Rivia', 230, 'None', 3, 4);
+
+
+
+
+
+
+
+
 INSERT INTO public.photos(entity_id, photos)
 VALUES (1, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
 INSERT INTO public.photos(entity_id, photos)
@@ -86,6 +135,8 @@ INSERT INTO public.photos(entity_id, photos)
 VALUES (6, 'https://www.mojenterijer.rs/storage/posts/gallery/2017/Dec/115648/sarmantna-vikendica-u-kanadi.jpg');
 INSERT INTO public.photos(entity_id, photos)
 VALUES (7, 'https://img.halooglasi.com/slike/oglasi/Thumbs/200904/l/prodaje-se-vikendica-25-m2-g-goracici-prijepo-5425635877817-71792611911.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (8, 'https://thebrownidentity.com/wp-content/uploads/2020/07/01-birth-month-If-You-Were-Born-In-Summer-This-Is-What-We-Know-About-You_644740429-icemanphotos.jpg');
 
 
 
