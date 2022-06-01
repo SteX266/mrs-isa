@@ -20,8 +20,10 @@ public class PromoService {
         ArrayList<Promo> promos = (ArrayList<Promo>) promoRepository.findByEntity(id);
         ArrayList<PromoDTO> promoDTOS = new ArrayList<PromoDTO>();
         for(Promo p:promos){
-            PromoDTO promoDTO = new PromoDTO(p);
-            promoDTOS.add(promoDTO);
+            if (!p.isTaken()) {
+                PromoDTO promoDTO = new PromoDTO(p);
+                promoDTOS.add(promoDTO);
+            }
         }
 
         return promoDTOS;

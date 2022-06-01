@@ -55,6 +55,15 @@ export default function ListingProfilePage(){
 
       )
     }
+
+    function removePromo(promoId){
+      for (var i = 0; i< promos.length;i++){
+        var promo = promos[i];
+        if(promo.id == promoId){
+          promos.splice(i, 1);
+        }
+      }
+    }
     
 
     useEffect(() => {
@@ -238,7 +247,7 @@ export default function ListingProfilePage(){
 
                     <Table striped hover className="rounded  bg-light" style={{ paddingTop: "125px", marginTop:"15px" }}>
                     <TableHeader headers={headers} />
-                   <TableBody promos={promos} />
+                   <TableBody promos={promos} removePromo = {removePromo} />
                     </Table>
                     
 
@@ -277,10 +286,12 @@ function TableHeader(props) {
 }
 
 function TableBody(props) {
+
+
   return (
     <tbody>
       {props.promos.map((promo) => (
-        <Promo key={promo.id} promo={promo} />
+        <Promo key={promo.id} promo={promo} removePromo = {props.removePromo} />
     ))}
     </tbody>
   );
@@ -290,34 +301,25 @@ function Promo(props) {
   const [promo, setPromo] = useState(props.promo);
   const [button, setButton] = useState(getButton());
 
-  function reservePromo() {
-    let newPromo = promo;
-    setPromo(newPromo);
-    setButton(getButton());
-    saveReservation(newPromo.id);
-  }
-
-  function saveReservation(reservationId) {
+  function reservePromo(e) {
+    const id = e.target.value;
+    const username = localStorage.getItem("username");
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        entityId: reservationId,
-      },
+      headers: { Authorization: "Bearer " + token.accessToken },
+      params: { promoId: id, username:username },
     };
+    axios
+      .get("http://localhost:8080/reservation/createPromoReservation", requestOptions)
+      .then((res) => {
+        props.removePromo(id);
+      });
 
-    axios.get(
-      "http://localhost:8080/reservation/cancelReservation",
-      requestOptions
-    );
   }
+
   function getButton() {
     return (
-      <Button onClick={reservePromo} variant="outline-dark">
+      <Button value={promo.id} onClick={e => reservePromo(e, "value")} variant="outline-dark">
         Reserve
       </Button>
     );

@@ -3,8 +3,10 @@ package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.ReservationDTO;
 import com.mrsisa.tim22.model.Address;
+import com.mrsisa.tim22.model.Promo;
 import com.mrsisa.tim22.model.Reservation;
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.repository.PromoRepository;
 import com.mrsisa.tim22.repository.ReservationRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
@@ -23,6 +25,8 @@ public class ReservationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PromoRepository promoRepository;
     @Autowired
     private SystemEntityRepository systemEntityRepository;
 
@@ -93,5 +97,14 @@ public class ReservationService {
         }
 
         return reservations;
+    }
+
+    public void createPromoReservation(int promoId, String username) {
+        Promo p = promoRepository.findOneById(promoId);
+        User u = userRepository.findOneByUsername(username);
+        Reservation r = new Reservation(p, u);
+        p.setTaken(true);
+        promoRepository.save(p);
+        reservationRepository.save(r);
     }
 }

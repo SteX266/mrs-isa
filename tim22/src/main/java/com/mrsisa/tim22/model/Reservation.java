@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Reservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private LocalDateTime dateFrom;
@@ -29,4 +30,14 @@ public class Reservation {
     private boolean isApproved;
     @Column
     private boolean isCanceled;
+
+    public Reservation(Promo p, User u){
+        this.dateFrom = p.getDateFrom();
+        this.dateTo = p.getDateTo();
+        this.systemEntity = p.getSystemEntity();
+        this.client = u;
+        this.isApproved = true;
+        this.isCanceled = false;
+    }
+
 }

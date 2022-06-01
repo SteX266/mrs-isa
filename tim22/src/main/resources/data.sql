@@ -140,29 +140,29 @@ VALUES (8, 'https://thebrownidentity.com/wp-content/uploads/2020/07/01-birth-mon
 
 
 
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (1, '2022-07-20', '2022-07-22', true, 1, 6, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (2, '2022-07-25', '2022-07-28', true, 1, 7, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (3, '2022-04-25', '2022-04-28', true, 1, 7, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-07-20', '2022-07-22', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ('2022-07-25', '2022-07-28', true, 1, 7, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-25', '2022-04-28', true, 1, 7, false);
 
 
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (4, '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (5, '2022-03-15', '2022-03-20', true, 1, 4, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (6, '2022-03-22', '2022-03-23', true, 1, 2, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (7, '2021-09-26', '2021-10-01', true, 1, 1, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-15', '2022-03-20', true, 1, 4, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-22', '2022-03-23', true, 1, 2, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ('2021-09-26', '2021-10-01', true, 1, 1, false);
 
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id)
-VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+    id, capacity, date_from, date_to, description, price, system_entity_id,is_taken)
+VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id)
-VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+    id, capacity, date_from, date_to, description, price, system_entity_id, is_taken)
+VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
