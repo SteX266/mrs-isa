@@ -29,6 +29,7 @@ export default function ClientReservationsTable(props) {
     "Price",
     "Owner",
     "Status",
+    "Button"
   ];
 
   useEffect(() => {
@@ -192,7 +193,7 @@ export default function ClientReservationsTable(props) {
         </Container>
 
         <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+          <Dropdown.Toggle variant="dark" id="dropdown-basic">
             Entities
           </Dropdown.Toggle>
 
@@ -229,7 +230,7 @@ export default function ClientReservationsTable(props) {
         </Dropdown>
 
         <Dropdown style={{ padding: "5px" }}>
-          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+          <Dropdown.Toggle variant="dark" id="dropdown-basic">
             Sort by
           </Dropdown.Toggle>
 
@@ -260,7 +261,7 @@ export default function ClientReservationsTable(props) {
 
         <SearchForm onSearchFieldChange={onSearchFieldChange} />
       </Navbar>
-      <Table striped hover className="rounded" style={{ paddingTop: "125px" }}>
+      <Table striped hover className="rounded table-dark" style={{ paddingTop: "125px",marginTop:"15px"}}>
         <TableHeader headers={headers} />
         <TableBody reservations={searchUpcomingReservations} />
       </Table>
@@ -339,7 +340,7 @@ function Reservation(props) {
   function getButton() {
     if (reservation.status == "APPROVED") {
       return (
-        <Button onClick={cancelReservation} variant="outline-dark">
+        <Button onClick={cancelReservation} variant="outline-light">
           Cancel reservation
         </Button>
       );

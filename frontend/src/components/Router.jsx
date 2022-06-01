@@ -83,6 +83,10 @@ export default function Router() {
             />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
+            <Route
+              path="viewEntities"
+              element={<EntityList type="ALL_ENTITIES" />}
+            />
           </Route>
         </Routes>
         <Routes>
@@ -146,7 +150,7 @@ export default function Router() {
                 <ClientReservationsTable
                   clientEmail={localStorage.getItem("username")}
                 />
-              </>
+                </>
             }
           />
 
@@ -168,23 +172,22 @@ export default function Router() {
             element={
               <>
                 <Header></Header>
-                <NavigationBar />
+                <NavigationBarClient />
                 <ListingProfilePage></ListingProfilePage>
               </>
             }
           />
 
-            <Route
+          <Route
             path="/client/calendar/:id"
             element={
               <>
                 <Header></Header>
-                <NavigationBar />
+                <NavigationBarClient />
                 <ClientCalendar></ClientCalendar>
               </>
             }
           />
-
         </Routes>
 
         <Routes>
@@ -238,8 +241,6 @@ export default function Router() {
               </>
             }
           />
-
-
 
           <Route
             path="/map"

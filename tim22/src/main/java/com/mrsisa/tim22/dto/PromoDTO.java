@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class PromoDTO {
 
     private Integer id;
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
+    private String dateFrom;
+    private String dateTo;
     private String description;
     private Integer systemEntityId;
     private int capacity;
@@ -25,8 +25,8 @@ public class PromoDTO {
 
     public PromoDTO(Promo p){
         this.id = p.getId();
-        this.dateFrom = p.getDateFrom();
-        this.dateTo = p.getDateTo();
+        this.dateFrom = String.valueOf(p.getDateFrom());
+        this.dateTo = String.valueOf(p.getDateTo());
         this.description = p.getDescription();
         this.systemEntityId = p.getSystemEntity().getId();
         this.capacity = p.getCapacity();

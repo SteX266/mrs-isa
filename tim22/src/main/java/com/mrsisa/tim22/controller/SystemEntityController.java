@@ -45,10 +45,20 @@ public class SystemEntityController {
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getEntityById(id), HttpStatus.OK);
     }
 
+
     @RequestMapping(value ="/search", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SystemEntityDTO> search(@RequestBody SearchDTO searchDTO){
         System.out.println(searchDTO.getSearchField());
         return new ResponseEntity<SystemEntityDTO>(new SystemEntityDTO(), HttpStatus.OK);
     }
+
+
+    @RequestMapping(value ="getCurrentUserAdventures", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserAdventures(@RequestParam String email){
+
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserAdventures(email), HttpStatus.OK);
+    }
+
 
 }
