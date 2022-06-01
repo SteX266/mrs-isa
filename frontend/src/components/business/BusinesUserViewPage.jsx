@@ -9,10 +9,10 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ServiceTable from "./ServiceTable";
+import BusinessUserEntityList from "./BusinessUserEntityList";
 
 export default function BusinessUserViewServicesPage(props) {
-  const [user, setUser] = React.useState({ type: "", headers: [] });
+  const [user, setUser] = React.useState({ type: "" });
   const [services, setServices] = React.useState([]);
 
   const [searchServices, setSearchServices] = React.useState([]);
@@ -20,38 +20,41 @@ export default function BusinessUserViewServicesPage(props) {
     let func = "";
     switch (props.type) {
       case "host":
-        func = "getAllListings";
+        func = "getCurrentUserListings";
         setUser({
           type: "listings",
-          headers: ["Name", "Location", "Rooms", "Beds", "Price"],
         });
         break;
       case "instructor":
-        func = "getAllAdventures";
+        func = "getCurrentUserAdventures";
         setUser({
           type: "adventures",
-          headers: ["Name", "Location", "Available spots", "Price"],
         });
         break;
 
       case "captain":
-        func = "getAllVessels";
+        func = "getCurrentUserVessels";
         setUser({
           type: "vessels",
-          headers: ["Name", "Location", "Length", "Capacity", "Price"],
         });
     }
     getServiceData(func);
   }, []);
 
   function getServiceData(func) {
-    let path = "http://localhost:8080/api/entity/" + func;
+    const token = JSON.parse(localStorage.getItem("userToken"));
+
+    let path = "http://localhost:8080/entity/" + func;
     axios
       .get(path, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
+          Authorization: "Bearer " + token.accessToken,
+        },
+        params: {
+          email: localStorage.getItem("username"),
         },
       })
       .then((res) => {
@@ -73,19 +76,6 @@ export default function BusinessUserViewServicesPage(props) {
       }
     }
     setSearchServices(filtering);
-  }
-
-  function DeleteButtonHendler(id) {
-    const filtering = [];
-    for (let index = 0; index < services.length; index++) {
-      const adventure = services[index];
-      if (adventure.id !== id) {
-        filtering.push(adventure);
-      }
-    }
-    setSearchServices(filtering);
-    setServices(filtering);
-    
   }
 
   return (
@@ -115,12 +105,7 @@ export default function BusinessUserViewServicesPage(props) {
             </Nav>
           </Container>
         </Navbar>
-        <ServiceTable
-          headers={user.headers}
-          type={props.type}
-          onDelete={DeleteButtonHendler}
-          services={searchServices}
-        />
+        <BusinessUserEntityList services={services} />
       </Container>
     </div>
   );

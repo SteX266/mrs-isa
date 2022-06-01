@@ -84,4 +84,17 @@ public class SystemEntityService {
         return new SystemEntityDTO(entity);
 
     }
+
+    public ArrayList<SystemEntityDTO> getCurrentUserAdventures(String email) {
+         ArrayList <SystemEntity> entities=  systemEntityRepository.findSystemEntitiesByOwner_Username(email);
+
+        ArrayList<SystemEntityDTO> entitiesDTO = new ArrayList<>();
+         for (SystemEntity entity : entities){
+            if (!entity.isDeleted()){
+                entitiesDTO.add(new SystemEntityDTO(entity));
+            }
+        }
+        return entitiesDTO;
+
+    }
 }
