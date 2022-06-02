@@ -37,7 +37,7 @@ export default function ListingProfilePage(){
     
     const [calendar,setCalendar] = useState("");
     const [promos, setPromos] = useState([]);
-    const[isSubscribed, setIsSubscribed] = useState(false);
+    const [button, setButton] = useState(<></>);
 
     
   const headers = [
@@ -101,11 +101,10 @@ export default function ListingProfilePage(){
             
           });
         getEntityPromos();
-
         getSubscribeState();
       }, []);
 
-    function getSubscribeState(){
+    async function getSubscribeState(){
       const token = JSON.parse(localStorage.getItem("userToken"));
       const username = localStorage.getItem("username");
       const entityId = 1;
@@ -114,15 +113,18 @@ export default function ListingProfilePage(){
         params: { entityId: entityId, username:username },
       };
       axios
-        .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
+        .get("http://localhost:8080/user/getSubscribeState", requestOptions)
         .then((res) => {
-          setPromos(res.data);
-          console.log(promos);
-          console.log(res.data);
+          if(res.data){
+            setButton(<button onClick={unsubscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Unsubscribe</button>);
+          }
+          else{
+            setButton(<button onClick={subscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Subscribe</button>);
+          }
         });
     }
 
-    function getEntityPromos(){
+    async function getEntityPromos(){
 
       const token = JSON.parse(localStorage.getItem("userToken"));
       const entityId = 1;
@@ -134,11 +136,10 @@ export default function ListingProfilePage(){
         .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
         .then((res) => {
           setPromos(res.data);
-          console.log(promos);
-          console.log(res.data);
         });
 
     }
+
     function subscribe(){
 
       const token = JSON.parse(localStorage.getItem("userToken"));
@@ -150,7 +151,23 @@ export default function ListingProfilePage(){
       };
       axios
         .get("http://localhost:8080/entity/createSubscribtion", requestOptions);
-        
+      
+      setButton(<button onClick={unsubscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Unsubscribe</button>);
+    }
+
+    function unsubscribe(){
+
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const username = localStorage.getItem("username");
+      const entityId = 1;
+      const requestOptions = {
+        headers: { Authorization: "Bearer " + token.accessToken },
+        params: { entityId: entityId, username:username },
+      };
+      axios
+        .get("http://localhost:8080/entity/unsubscribe", requestOptions);
+      
+      setButton(<button onClick={subscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Subscribe</button>);
     }
 
 
@@ -172,7 +189,7 @@ export default function ListingProfilePage(){
                       <h4>{listing.name}</h4>
                       <p className="text-secondary mb-1">{listing.type}</p>
                       <p className="text-muted font-size-sm">{listing.address}</p>
-                      <button onClick={subscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Subscribe</button>
+                      {button}
                       <Link to={calendar}><button className="btn btn-outline-warning" style={{marginRight:"10px", marginTop:"15px"}}>Reserve</button></Link>
                     </div>
                   </div>

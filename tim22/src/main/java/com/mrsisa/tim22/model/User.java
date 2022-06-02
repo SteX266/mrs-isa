@@ -103,4 +103,8 @@ public class User implements UserDetails {
     public void addSubscribtion(SystemEntity e){
         this.subscribtions.add(e);
     }
+
+    public void removeSubscribtion(SystemEntity e) {
+        this.subscribtions.remove(e);
+    }
 }

@@ -4,7 +4,9 @@ import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.model.AccountCancellationRequest;
 import com.mrsisa.tim22.model.Role;
+import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SystemEntityRepository systemEntityRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,5 +78,25 @@ public class UserService {
 
     public User saveUser(User user){
         return this.userRepository.save(user);
+    }
+
+    public Boolean getSubscribeState(String username, int entityId) {
+        User u = userRepository.findOneByUsername(username);
+
+        SystemEntity e = systemEntityRepository.findOneById(entityId);
+
+        for (SystemEntity entity:u.getSubscribtions()){
+            System.out.println("ALOOOOOOOOOOO");
+            System.out.println(entity.getId());
+            System.out.println(entityId);
+            if (entity.getId() == entityId){
+                System.out.println("USAOOOO");
+                return true;
+            }
+        }
+
+        return false;
+
+
     }
 }

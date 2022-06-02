@@ -113,4 +113,15 @@ public class SystemEntityService {
 
 
     }
+
+    public void unsubscribe(int entityId, String username) {
+        SystemEntity e = systemEntityRepository.findOneById(entityId);
+        User u = userRepository.findOneByUsername(username);
+
+        e.removeSubscriber(u);
+        u.removeSubscribtion(e);
+
+        systemEntityRepository.save(e);
+        userRepository.save(u);
+    }
 }

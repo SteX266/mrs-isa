@@ -79,4 +79,7 @@ public abstract class SystemEntity {
         this.subscribers.add(u);
     }
 
+    public void removeSubscriber(User u) {
+        this.subscribers.remove(u);
+    }
 }

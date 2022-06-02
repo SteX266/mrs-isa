@@ -62,5 +62,10 @@ public class SystemEntityController {
         systemEntityService.createSubscribtion(entityId, username);
     }
 
+    @RequestMapping(value ="unsubscribe", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
+        systemEntityService.unsubscribe(entityId, username);
+    }
+
 
 }
