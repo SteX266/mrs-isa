@@ -6,7 +6,9 @@ import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.VesselDTO;
 import com.mrsisa.tim22.model.Address;
 import com.mrsisa.tim22.model.SystemEntity;
+import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
+import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class SystemEntityService {
 
     @Autowired
     private SystemEntityRepository systemEntityRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
 
@@ -96,5 +100,28 @@ public class SystemEntityService {
         }
         return entitiesDTO;
 
+    }
+
+    public void createSubscribtion(int entityId, String username) {
+        SystemEntity e = systemEntityRepository.findOneById(entityId);
+        User u = userRepository.findOneByUsername(username);
+        e.addSubscriber(u);
+        u.addSubscribtion(e);
+
+        systemEntityRepository.save(e);
+        userRepository.save(u);
+
+
+    }
+
+    public void unsubscribe(int entityId, String username) {
+        SystemEntity e = systemEntityRepository.findOneById(entityId);
+        User u = userRepository.findOneByUsername(username);
+
+        e.removeSubscriber(u);
+        u.removeSubscribtion(e);
+
+        systemEntityRepository.save(e);
+        userRepository.save(u);
     }
 }
