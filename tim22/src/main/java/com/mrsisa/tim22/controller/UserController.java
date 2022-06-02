@@ -1,9 +1,6 @@
 package com.mrsisa.tim22.controller;
 
-import com.mrsisa.tim22.dto.UserCredentialsDTO;
-import com.mrsisa.tim22.dto.UserDTO;
-import com.mrsisa.tim22.dto.UserRequest;
-import com.mrsisa.tim22.dto.UserTokenState;
+import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.model.AccountCancellationRequest;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.UserService;
@@ -13,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -41,6 +40,12 @@ public class UserController {
         return new ResponseEntity<Boolean>(userService.getSubscribeState(username, entityId), HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/getClientSubscriptions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getClientSubscriptions(@RequestParam String username){
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(userService.getClientSubscriptions(username), HttpStatus.OK);
+    }
 
 
 

@@ -53,6 +53,14 @@ const NavigationBarClient = () => {
                 </Link>
               </li>
 
+              <li className="nav-item">
+                <Link to="/client/subscriptions">
+                  {" "}
+                  <a className="nav-link" href="/subscriptions">
+                    Subscriptions
+                  </a>
+                </Link>
+              </li>
 
               <li className="nav-item">
                 <Link to="/client/reservations">

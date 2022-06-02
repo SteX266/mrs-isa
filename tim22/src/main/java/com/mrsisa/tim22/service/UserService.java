@@ -1,5 +1,6 @@
 package com.mrsisa.tim22.service;
 
+import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.model.AccountCancellationRequest;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -97,6 +99,18 @@ public class UserService {
 
         return false;
 
+
+    }
+
+    public ArrayList<SystemEntityDTO> getClientSubscriptions(String username) {
+        User u = userRepository.findOneByUsername(username);
+        ArrayList<SystemEntityDTO> entities = new ArrayList<>();
+        for(SystemEntity entity: u.getSubscribtions()){
+            if(!entity.isDeleted()){
+                entities.add(new SystemEntityDTO(entity));
+            }
+        }
+        return entities;
 
     }
 }
