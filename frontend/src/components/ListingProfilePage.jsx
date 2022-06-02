@@ -107,10 +107,9 @@ export default function ListingProfilePage(){
     async function getSubscribeState(){
       const token = JSON.parse(localStorage.getItem("userToken"));
       const username = localStorage.getItem("username");
-      const entityId = 1;
       const requestOptions = {
         headers: { Authorization: "Bearer " + token.accessToken },
-        params: { entityId: entityId, username:username },
+        params: { entityId: params.id, username:username },
       };
       axios
         .get("http://localhost:8080/user/getSubscribeState", requestOptions)
@@ -127,10 +126,9 @@ export default function ListingProfilePage(){
     async function getEntityPromos(){
 
       const token = JSON.parse(localStorage.getItem("userToken"));
-      const entityId = 1;
       const requestOptions = {
         headers: { Authorization: "Bearer " + token.accessToken },
-        params: { id: entityId },
+        params: { id: params.id },
       };
       axios
         .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
@@ -144,10 +142,9 @@ export default function ListingProfilePage(){
 
       const token = JSON.parse(localStorage.getItem("userToken"));
       const username = localStorage.getItem("username");
-      const entityId = 1;
       const requestOptions = {
         headers: { Authorization: "Bearer " + token.accessToken },
-        params: { entityId: entityId, username:username },
+        params: { entityId: params.id, username:username },
       };
       axios
         .get("http://localhost:8080/entity/createSubscribtion", requestOptions);
@@ -159,10 +156,9 @@ export default function ListingProfilePage(){
 
       const token = JSON.parse(localStorage.getItem("userToken"));
       const username = localStorage.getItem("username");
-      const entityId = 1;
       const requestOptions = {
         headers: { Authorization: "Bearer " + token.accessToken },
-        params: { entityId: entityId, username:username },
+        params: { entityId: params.id, username:username },
       };
       axios
         .get("http://localhost:8080/entity/unsubscribe", requestOptions);
