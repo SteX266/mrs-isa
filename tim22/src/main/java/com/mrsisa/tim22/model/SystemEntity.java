@@ -75,4 +75,8 @@ public abstract class SystemEntity {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    public void addSubscriber(User u){
+        this.subscribers.add(u);
+    }
+
 }

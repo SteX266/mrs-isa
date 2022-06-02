@@ -37,6 +37,7 @@ export default function ListingProfilePage(){
     
     const [calendar,setCalendar] = useState("");
     const [promos, setPromos] = useState([]);
+    const[isSubscribed, setIsSubscribed] = useState(false);
 
     
   const headers = [
@@ -100,8 +101,26 @@ export default function ListingProfilePage(){
             
           });
         getEntityPromos();
+
+        getSubscribeState();
       }, []);
 
+    function getSubscribeState(){
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const username = localStorage.getItem("username");
+      const entityId = 1;
+      const requestOptions = {
+        headers: { Authorization: "Bearer " + token.accessToken },
+        params: { entityId: entityId, username:username },
+      };
+      axios
+        .get("http://localhost:8080/promo/getEntityPromos", requestOptions)
+        .then((res) => {
+          setPromos(res.data);
+          console.log(promos);
+          console.log(res.data);
+        });
+    }
 
     function getEntityPromos(){
 
@@ -122,7 +141,16 @@ export default function ListingProfilePage(){
     }
     function subscribe(){
 
-        console.log(listing);
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const username = localStorage.getItem("username");
+      const entityId = 1;
+      const requestOptions = {
+        headers: { Authorization: "Bearer " + token.accessToken },
+        params: { entityId: entityId, username:username },
+      };
+      axios
+        .get("http://localhost:8080/entity/createSubscribtion", requestOptions);
+        
     }
 
 
@@ -298,8 +326,8 @@ function TableBody(props) {
 }
 
 function Promo(props) {
-  const [promo, setPromo] = useState(props.promo);
-  const [button, setButton] = useState(getButton());
+  const promo = props.promo;
+  const button = getButton();
 
   function reservePromo(e) {
     const id = e.target.value;
@@ -312,6 +340,7 @@ function Promo(props) {
     axios
       .get("http://localhost:8080/reservation/createPromoReservation", requestOptions)
       .then((res) => {
+        console.log(res);
         props.removePromo(id);
       });
 
