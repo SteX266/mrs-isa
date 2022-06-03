@@ -91,7 +91,8 @@ export default function ListingProfilePage(){
             rulesOfConduct:res.data.rulesOfConduct,
             owner:res.data.owner,
             ownersPhoneNumber:res.data.ownersPhoneNumber,
-            amenities:res.data.amenities
+            amenities:res.data.amenities,
+            cancelationFee:res.data.cancelationFee
 
 
             });
@@ -308,6 +309,15 @@ export default function ListingProfilePage(){
           </div>
         </div>
     </div>
+
+    <Dialog
+        show={showTaskDialog}
+        title="Delete profile?"
+        description="Are you sure you want to delete your profile?"
+        confirmed={confirmDeleteProfile}
+        canceled={cancelDeleteProfile}
+        hasText={true}
+      />
         </>
 
     );
