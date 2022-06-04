@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EntityCard from "./EntityCard";
 import { MDBCol, MDBInput } from "mdbreact";
 import Pagination from "./Pagination";
+import EntityCardTest from "./EntityCardTest";
 
 function EntityList(props) {
   const [allEntities, setAllEntities] = useState([]);
@@ -27,7 +27,7 @@ function EntityList(props) {
 
   function renderAllEntities(entity) {
     return (
-      <EntityCard
+      <EntityCardTest
         id={entity.id}
         title={entity.name}
         address={entity.address}

@@ -6,6 +6,7 @@ import Map from "./Map";
 import CarouselItem from "./CarouselItem";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import Dialog from "./Dialog";
 import {
   Table,
   Button,
@@ -39,6 +40,7 @@ export default function ListingProfilePage(){
     const [promos, setPromos] = useState([]);
     const [button, setButton] = useState(<></>);
 
+    const [description, setDescription] = useState("");
     
   const headers = [
     "Start",
@@ -98,9 +100,13 @@ export default function ListingProfilePage(){
             });
             var link = "/client/calendar/" + res.data.id;
             setCalendar(link);
+
+            const desc = "Are you sure you want to make a reservation? Cancellation fee is " + res.data.cancelationFee;
+            setDescription(desc);
             
             
           });
+        
         getEntityPromos();
         getSubscribeState();
       }, []);
@@ -289,7 +295,7 @@ export default function ListingProfilePage(){
 
                     <Table striped hover className="rounded  bg-light" style={{ paddingTop: "125px", marginTop:"15px" }}>
                     <TableHeader headers={headers} />
-                   <TableBody promos={promos} removePromo = {removePromo} />
+                   <TableBody promos={promos} removePromo = {removePromo} description={description} />
                     </Table>
                     
 
@@ -310,14 +316,7 @@ export default function ListingProfilePage(){
         </div>
     </div>
 
-    <Dialog
-        show={showTaskDialog}
-        title="Delete profile?"
-        description="Are you sure you want to delete your profile?"
-        confirmed={confirmDeleteProfile}
-        canceled={cancelDeleteProfile}
-        hasText={true}
-      />
+    
         </>
 
     );
@@ -342,7 +341,7 @@ function TableBody(props) {
   return (
     <tbody>
       {props.promos.map((promo) => (
-        <Promo key={promo.id} promo={promo} removePromo = {props.removePromo} />
+        <Promo key={promo.id} promo={promo} removePromo = {props.removePromo} description={props.description} />
     ))}
     </tbody>
   );
@@ -351,39 +350,61 @@ function TableBody(props) {
 function Promo(props) {
   const promo = props.promo;
   const button = getButton();
+  const desc = props.description;
+  
+  const [showDialog, setShowDialog] = useState(false);
 
-  function reservePromo(e) {
-    const id = e.target.value;
+
+  function confirmReservation(){
+    reservePromo();
+    setShowDialog(false);
+  }
+  function cancelReservation(){
+    setShowDialog(false);
+  }
+
+  function reservePromo() {
     const username = localStorage.getItem("username");
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: { Authorization: "Bearer " + token.accessToken },
-      params: { promoId: id, username:username },
+      params: { promoId: promo.id, username:username },
     };
     axios
       .get("http://localhost:8080/reservation/createPromoReservation", requestOptions)
       .then((res) => {
         console.log(res);
-        props.removePromo(id);
       });
 
   }
 
   function getButton() {
     return (
-      <Button value={promo.id} onClick={e => reservePromo(e, "value")} variant="outline-dark">
+      <Button value={promo.id} onClick={() => {setShowDialog(true)}} variant="outline-dark">
         Reserve
       </Button>
     );
   }
 
   return (
+    <>
     <tr id={promo.id}>
       <td>{promo.dateFrom}</td>
       <td> {promo.dateTo}</td>
       <td>{promo.price}</td>
       <td>{button}</td>
     </tr>
+
+
+<Dialog
+        show={showDialog}
+        title="Create reservation?"
+        description={desc}
+        confirmed={confirmReservation}
+        canceled={cancelReservation}
+        hasText={false}
+      />
+      </>
   );
 }
 
