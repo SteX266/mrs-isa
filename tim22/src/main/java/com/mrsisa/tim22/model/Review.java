@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity
 public class Review {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private Integer score;
@@ -29,4 +30,12 @@ public class Review {
     @ManyToOne
     @JoinColumn(name="system_entity_id")
     private SystemEntity systemEntity;
+
+    public Review(int score, String text, User client, SystemEntity systemEntity){
+        this.score = score;
+        this.text = text;
+        this.client = client;
+        this.systemEntity = systemEntity;
+
+    }
 }
