@@ -404,7 +404,10 @@ function Promo(props) {
         canceled={cancelReservation}
         hasText={false}
       />
+
+
       </>
+
   );
 }
 

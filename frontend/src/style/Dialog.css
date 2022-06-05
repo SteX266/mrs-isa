@@ -791,3 +791,17 @@ body {
 
 @media (min-width: 1536px){
 }
+
+
+button.on button.off {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.on {
+  color: #000;
+}
+.off {
+  color: #ccc;
+}

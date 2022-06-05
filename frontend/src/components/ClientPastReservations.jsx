@@ -9,6 +9,7 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
+import ReviewDialog from "./ReviewDialog";
 
 export default function ClientReservationsTable(props) {
   const [sortedByPrice, setSortedByPrice] = useState(false);
@@ -309,6 +310,7 @@ function TableBody(props) {
 function Reservation(props) {
   const [reservation, setReservation] = useState(props.reservation);
   const [button, setButton] = useState(getButton());
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
 
   function cancelReservation() {
     let newReservation = reservation;
@@ -347,7 +349,7 @@ function Reservation(props) {
       return (
         <>
           <Button
-            onClick={cancelReservation}
+            onClick={() => {setShowReviewDialog(true);}}
             variant="outline-light"
             style={{ marginRight: "5px" }}
           >
@@ -364,6 +366,7 @@ function Reservation(props) {
   }
 
   return (
+    <>
     <tr id={reservation.id}>
       <td>{reservation.entityType}</td>
       <td> {reservation.entityName}</td>
@@ -375,5 +378,19 @@ function Reservation(props) {
       <td>{reservation.status}</td>
       <td>{button}</td>
     </tr>
+
+<ReviewDialog
+show={showReviewDialog}
+confirmed={createReview}
+canceled={cancelReview}
+/>
+</>
   );
+
+function createReview(){
+  setShowReviewDialog(false);
+}
+function cancelReview(){
+  setShowReviewDialog(false);
+}
 }
