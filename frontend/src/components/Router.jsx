@@ -27,6 +27,7 @@ import Map from "./Map";
 import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./ClientPastReservations";
 import ClientSubscriptions from "./ClientSubscriptions";
+import {Toaster} from "react-hot-toast";
 
 export default function Router() {
   function Nested(type) {
@@ -53,6 +54,7 @@ export default function Router() {
         />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
+
       </>
     );
   }
@@ -279,6 +281,8 @@ export default function Router() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      <Toaster></Toaster>
+
     </>
   );
 }

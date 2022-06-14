@@ -2,14 +2,8 @@ package com.mrsisa.tim22.service;
 
 
 import com.mrsisa.tim22.dto.ReservationDTO;
-import com.mrsisa.tim22.model.Address;
-import com.mrsisa.tim22.model.Promo;
-import com.mrsisa.tim22.model.Reservation;
-import com.mrsisa.tim22.model.User;
-import com.mrsisa.tim22.repository.PromoRepository;
-import com.mrsisa.tim22.repository.ReservationRepository;
-import com.mrsisa.tim22.repository.SystemEntityRepository;
-import com.mrsisa.tim22.repository.UserRepository;
+import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +23,9 @@ public class ReservationService {
     private PromoRepository promoRepository;
     @Autowired
     private SystemEntityRepository systemEntityRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
 
     public ArrayList<ReservationDTO> getClientReservations(String username){
@@ -106,5 +103,17 @@ public class ReservationService {
         p.setTaken(true);
         promoRepository.save(p);
         reservationRepository.save(r);
+    }
+
+    public void createRevieww(int reservationId, String username, String text, int rating) {
+
+        Reservation reservation = reservationRepository.findOneById(reservationId);
+        User u = userRepository.findOneByUsername(username);
+        Review review = new Review(rating, text, u, reservation.getSystemEntity());
+        SystemEntity e = reservation.getSystemEntity();
+        reservation.getSystemEntity().addReview(review);
+        reviewRepository.save(review);
+
+        systemEntityRepository.save(e);
     }
 }
