@@ -51,7 +51,7 @@ else{
     <>
       <Modal show={true} onHide={canceled} >
         <Modal.Header closeButton>
-          <Modal.Title>REVIEW</Modal.Title>
+          <Modal.Title>COMPLAINT</Modal.Title>
         </Modal.Header>
         <Modal.Body>
 

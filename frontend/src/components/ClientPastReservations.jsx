@@ -9,6 +9,7 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
+import ComplaintDialog from "./ComplaintDialog";
 import ReviewDialog from "./ReviewDialog";
 
 export default function ClientReservationsTable(props) {
@@ -311,6 +312,7 @@ function Reservation(props) {
   const reservation = props.reservation;
   const button = getButton();
   const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const [showComplaintDialog,setShowComplaintDialog] = useState(false);
 
   function getButton() {
      if (reservation.status == "EXPIRED") {
@@ -323,7 +325,7 @@ function Reservation(props) {
           >
             Review
           </Button>
-          <Button onClick={() => {setShowReviewDialog(true);}} variant="outline-light">
+          <Button onClick={() => {setShowComplaintDialog(true);}} variant="outline-light">
             Complaint
           </Button>
         </>
@@ -350,16 +352,27 @@ function Reservation(props) {
 <ReviewDialog
 showModal={showReviewDialog}
 reservationId={reservation.id}
-confirmed={createReview}
-canceled={cancelReview}
+confirmed={closeReviewDialog}
+canceled={closeReviewDialog}
 />
+<ComplaintDialog
+showModal={showComplaintDialog}
+reservationId={reservation.id}
+confirmed={closeComplaintDialog}
+canceled={closeComplaintDialog}
+/>
+
+
+
 </>
   );
 
-function createReview(){
+function closeReviewDialog(){
   setShowReviewDialog(false);
 }
-function cancelReview(){
-  setShowReviewDialog(false);
+
+function closeComplaintDialog(){
+  setShowComplaintDialog(false);
 }
+
 }
