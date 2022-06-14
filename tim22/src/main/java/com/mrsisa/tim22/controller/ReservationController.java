@@ -47,4 +47,9 @@ public class ReservationController {
         reservationService.createPromoReservation(promoId, username);
     }
 
+    @RequestMapping(value = "/createReview", method=RequestMethod.GET)
+    public void createReview(@RequestParam int reservationId, @RequestParam String username, @RequestParam String text, @RequestParam int rating){
+        reservationService.createRevieww(reservationId, username, text, rating);
+    }
+
 }
