@@ -15,9 +15,9 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "/createReview", method= RequestMethod.GET)
-    public void createPromoReservation(@RequestParam int entityId, @RequestParam String username, @RequestParam int score, @RequestParam String text){
-        reviewService.createPromoReservation(entityId, username, score, text);
+    @RequestMapping(value = "/createReview", method=RequestMethod.GET)
+    public void createReview(@RequestParam int reservationId, @RequestParam String username, @RequestParam String text, @RequestParam int rating){
+        reviewService.createReview(reservationId, username, text, rating);
     }
 
 }

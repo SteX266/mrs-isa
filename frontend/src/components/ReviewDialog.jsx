@@ -61,7 +61,7 @@ export default function ReviewDialog({showModal,reservationId, confirmed, cancel
     };
 
     axios.get(
-      "http://localhost:8080/reservation/createReview",
+      "http://localhost:8080/review/createReview",
       requestOptions
     );
     confirmed();
