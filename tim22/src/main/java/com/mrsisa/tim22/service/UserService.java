@@ -33,7 +33,7 @@ public class UserService {
     @Autowired
     private RoleService roleService;
 
-    public User editUserData(String email,String name, String surname, String phoneNumber, String addressLine) {
+    public User editUserData(String email, String name, String surname, String phoneNumber, String addressLine) {
         User u = userRepository.findOneByUsername(email);
         u.setName(name);
         u.setSurname(surname);
@@ -44,18 +44,18 @@ public class UserService {
         return u;
     }
 
-    public UserDTO getUserByUsername(String username){
+    public UserDTO getUserByUsername(String username) {
         User u = userRepository.findOneByUsername(username);
         int penaltyNumber = getUserPenalties(u);
-        return new UserDTO(u.getUsername(),u.getName(), u.getSurname(),u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), penaltyNumber);
+        return new UserDTO(u.getUsername(), u.getName(), u.getSurname(), u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), penaltyNumber);
 
     }
 
     private int getUserPenalties(User u) {
         Set<Penalty> penalties = u.getPenalties();
         int penaltyNumber = 0;
-        for(Penalty p:penalties){
-            if (p.getDate().plusDays(31).isBefore(LocalDate.now()) ){
+        for (Penalty p : penalties) {
+            if (p.getDate().plusDays(31).isAfter(LocalDate.now())) {
                 penaltyNumber++;
             }
         }
@@ -63,11 +63,12 @@ public class UserService {
 
     }
 
-    public User findByUsername(String email){
+    public User findByUsername(String email) {
         return userRepository.findOneByUsername(email);
 
     }
-    public User findOneById(Integer id){
+
+    public User findOneById(Integer id) {
         return userRepository.findOneById(id);
     }
 
@@ -95,54 +96,52 @@ public class UserService {
 
     }
 
-    public User saveUser(User user){
+    public User saveUser(User user) {
         return this.userRepository.save(user);
     }
-
-
 
 
     public void changePassword(PasswordChangeDTO passwordChange) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String current = user.getPassword();
-        if(passwordEncoder.matches(passwordChange.getOldPassword(),current) && passwordChange.getNewPassword().equals(passwordChange.getRepeatPassword())) {
+        if (passwordEncoder.matches(passwordChange.getOldPassword(), current) && passwordChange.getNewPassword().equals(passwordChange.getRepeatPassword())) {
             User u = this.userRepository.findOneByUsername(user.getUsername());
             u.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
             this.saveUser(u);
         }
 
+    }
+        public Boolean getSubscribeState (String username,int entityId){
+            User u = userRepository.findOneByUsername(username);
 
-    public Boolean getSubscribeState(String username, int entityId) {
-        User u = userRepository.findOneByUsername(username);
+            SystemEntity e = systemEntityRepository.findOneById(entityId);
 
-        SystemEntity e = systemEntityRepository.findOneById(entityId);
-
-        for (SystemEntity entity:u.getSubscribtions()){
-            System.out.println("ALOOOOOOOOOOO");
-            System.out.println(entity.getId());
-            System.out.println(entityId);
-            if (entity.getId() == entityId){
-                System.out.println("USAOOOO");
-                return true;
+            for (SystemEntity entity : u.getSubscribtions()) {
+                System.out.println("ALOOOOOOOOOOO");
+                System.out.println(entity.getId());
+                System.out.println(entityId);
+                if (entity.getId() == entityId) {
+                    System.out.println("USAOOOO");
+                    return true;
+                }
             }
+
+            return false;
+
+
         }
 
-        return false;
-
-
-    }
-
-    public ArrayList<SystemEntityDTO> getClientSubscriptions(String username) {
-        User u = userRepository.findOneByUsername(username);
-        ArrayList<SystemEntityDTO> entities = new ArrayList<>();
-        for(SystemEntity entity: u.getSubscribtions()){
-            if(!entity.isDeleted()){
-                entities.add(new SystemEntityDTO(entity));
+        public ArrayList<SystemEntityDTO> getClientSubscriptions (String username){
+            User u = userRepository.findOneByUsername(username);
+            ArrayList<SystemEntityDTO> entities = new ArrayList<>();
+            for (SystemEntity entity : u.getSubscribtions()) {
+                if (!entity.isDeleted()) {
+                    entities.add(new SystemEntityDTO(entity));
+                }
             }
+            return entities;
+
+
         }
-        return entities;
-
-
     }
-}

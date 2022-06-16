@@ -25,7 +25,7 @@ public class ReservationService {
     private SystemEntityRepository systemEntityRepository;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private PenaltyRepository penaltyRepository;
 
 
     public ArrayList<ReservationDTO> getClientReservations(String username){
@@ -69,7 +69,12 @@ public class ReservationService {
     public void cancelReservation(int entityId) {
         System.out.println("Otkazivanje rezervacije");
         Reservation r = reservationRepository.findOneById(entityId);
+        User u = r.getClient();
+        Penalty p = new Penalty(u);
+        u.addPenalty(p);
+
         r.setCanceled(true);
+        penaltyRepository.save(p);
         reservationRepository.save(r);
     }
 

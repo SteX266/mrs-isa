@@ -244,22 +244,22 @@ INSERT INTO public.availability_period(
 VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
 
 
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (1, '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (2, '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (3, '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false);
 
 
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (4, '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (5, '2022-03-15T15:00', '2022-03-20T15:00', true, 1, 4, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (6, '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (7, '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
+INSERT INTO public.reservation(date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-15T15:00', '2022-03-20T15:00', true, 1, 4, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES ( '2022-07-20', '2022-07-22', true, 1, 6, false);
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)

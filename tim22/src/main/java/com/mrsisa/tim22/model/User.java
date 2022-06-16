@@ -110,4 +110,8 @@ public class User implements UserDetails {
     public void removeSubscribtion(SystemEntity e) {
         this.subscribtions.remove(e);
     }
+
+    public void addPenalty(Penalty p) {
+        this.penalties.add(p);
+    }
 }

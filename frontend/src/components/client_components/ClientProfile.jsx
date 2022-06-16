@@ -18,6 +18,7 @@ function ClientProfile() {
   const [addressLine, setAddressLine] = useState("");
   const [email, setEmail] = useState("");
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+  const [penaltyNumber, setPenaltyNumber] = useState(0);
 
   const handleSubmit = () => {
 
@@ -149,6 +150,7 @@ function ClientProfile() {
         setPhoneNumber(res.data.phoneNumber);
         setAddressLine(res.data.addressLine);
         setLoyaltyPoints(res.data.loyaltyPoints);
+        setPenaltyNumber(res.data.penalties)
       });
   }, []);
 
@@ -256,7 +258,7 @@ function ClientProfile() {
             <div className="d-flex justify-content-between align-items-center experience">
                 <span>Penalties</span>
                 <span className="border px-3 p-1 add-experience">
-                  <i className="fa fa-plus"></i>&nbsp;{loyaltyPoints}
+                  <i className="fa fa-plus"></i>&nbsp;{penaltyNumber}
                 </span>
               </div>
               <br />
