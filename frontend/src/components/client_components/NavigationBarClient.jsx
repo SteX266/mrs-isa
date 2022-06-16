@@ -1,5 +1,5 @@
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "../../node_modules/bootstrap/dist/js/bootstrap";
+import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../../../node_modules/bootstrap/dist/js/bootstrap";
 
 import { Link } from "react-router-dom";
 
@@ -27,31 +27,7 @@ const NavigationBarClient = () => {
                   Home
                 </a>
               </li>
-              <li className="nav-item">
-                <Link to="/client/vacations">
-                  {" "}
-                  <a className="nav-link" href="/vacations">
-                    Vacations
-                  </a>
-                </Link>
-              </li>
 
-              <li className="nav-item">
-                <Link to="/client/vessels">
-                  {" "}
-                  <a className="nav-link" href="/clientProfile">
-                    Vessels
-                  </a>{" "}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/client/adventures">
-                  {" "}
-                  <a className="nav-link" href="/adventures">
-                    Adventures
-                  </a>
-                </Link>
-              </li>
 
               <li className="nav-item">
                 <Link to="/client/subscriptions">

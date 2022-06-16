@@ -16,8 +16,6 @@ public class ComplaintController {
     @RequestMapping(value="createComplaint", method = RequestMethod.GET)
     public void createComplaint(@RequestParam String username,@RequestParam int reservationId, @RequestParam String text){
         complaintService.createComplaint(username, reservationId, text);
-
-
     }
 
 

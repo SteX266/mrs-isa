@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import RegistrationRequestTable from "./RegistrationRequestTable";
-import Dialog from "../Dialog";
+import Dialog from "../modals/Dialog";
 
 export default function RegistrationRequest() {
   const [requests, setRequests] = React.useState([]);

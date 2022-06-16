@@ -1,5 +1,5 @@
 import React from 'react'
-import "../style/Dialog.css"
+import "../../style/Dialog.css"
 
 
 export default function Dialog({show, title, description, confirmed, canceled, hasText}){

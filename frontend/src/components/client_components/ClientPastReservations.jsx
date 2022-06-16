@@ -9,8 +9,8 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
-import ComplaintDialog from "./ComplaintDialog";
-import ReviewDialog from "./ReviewDialog";
+import ComplaintDialog from "../modals/ComplaintDialog";
+import ReviewDialog from "../modals/ReviewDialog";
 
 export default function ClientReservationsTable(props) {
   const [sortedByPrice, setSortedByPrice] = useState(false);
