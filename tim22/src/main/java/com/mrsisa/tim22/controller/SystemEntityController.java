@@ -1,6 +1,7 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
+import com.mrsisa.tim22.model.Adventure;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,22 +23,6 @@ public class SystemEntityController {
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(1,3), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/getAllAdventures", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<AdventureDTO>> getAllAdventures(){
-        return new ResponseEntity<ArrayList<AdventureDTO>>(systemEntityService.getAllAdventures(), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/getAllVessels", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<VesselDTO>> getAllVessels(){
-
-        return new ResponseEntity<ArrayList<VesselDTO>>(systemEntityService.getAllVessels(), HttpStatus.OK);
-    }
-    @RequestMapping(value = "/getAllListings", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<ListingDTO>> getAllListings(){
-
-        return new ResponseEntity<ArrayList<ListingDTO>>(systemEntityService.getAllListings(), HttpStatus.OK);
     }
 
     @RequestMapping(value ="getEntityById", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,6 +51,18 @@ public class SystemEntityController {
     public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.unsubscribe(entityId, username);
     }
+    @RequestMapping(value ="getDetailVessel", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VesselDTO> getDetailVessel(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailVessel(id), HttpStatus.OK);
+    }
 
+    @RequestMapping(value ="getDetailAdventure", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AdventureDTO> getDetailAdventure(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailAdventures(id), HttpStatus.OK);
+    }
+    @RequestMapping(value ="getDetailVacation", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ListingDTO> getDetailVacation(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailVacation(id), HttpStatus.OK);
+    }
 
 }
