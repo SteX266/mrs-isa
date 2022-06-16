@@ -1,5 +1,7 @@
 package com.mrsisa.tim22.service;
 
+
+import com.mrsisa.tim22.dto.PasswordChangeDTO;
 import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
@@ -10,6 +12,8 @@ import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +86,20 @@ public class UserService {
         return this.userRepository.save(user);
     }
 
+
+
+
+    public void changePassword(PasswordChangeDTO passwordChange) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String current = user.getPassword();
+        if(passwordEncoder.matches(passwordChange.getOldPassword(),current) && passwordChange.getNewPassword().equals(passwordChange.getRepeatPassword())) {
+            User u = this.userRepository.findOneByUsername(user.getUsername());
+            u.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
+            this.saveUser(u);
+        }
+
+
     public Boolean getSubscribeState(String username, int entityId) {
         User u = userRepository.findOneByUsername(username);
 
@@ -111,6 +129,7 @@ public class UserService {
             }
         }
         return entities;
+
 
     }
 }

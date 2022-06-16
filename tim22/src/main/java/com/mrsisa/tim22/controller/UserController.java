@@ -34,6 +34,12 @@ public class UserController {
         return new ResponseEntity<UserDTO>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
+
+    @RequestMapping(value ="/change-password", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
+        userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat));
+    }
+
     @RequestMapping(value = "/getSubscribeState", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> getSubscribeState(@RequestParam String username, @RequestParam int entityId){
 

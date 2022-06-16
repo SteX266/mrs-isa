@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Navbar,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import { Container, Navbar, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import RegistrationRequestTable from "./RegistrationRequestTable";
 import Dialog from "../modals/Dialog";
@@ -64,7 +59,7 @@ export default function RegistrationRequest() {
   }, []);
 
   async function getRequestsData() {
-    let path = "http://localhost:8080/api/entity/getReservationRequests";
+    let path = "http://localhost:8080/entity/getReservationRequests";
     const res = axios.get(path, {
       headers: {
         Accept: "application/json",

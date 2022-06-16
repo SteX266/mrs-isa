@@ -20,6 +20,7 @@
     "fontawesome-free": "^1.0.4",
     "mdb-ui-kit": "^4.1.0",
     "mdbreact": "^5.2.0",
+    "moment-timezone": "^0.5.34",
     "react": "^18.0.0",
     "react-big-calendar": "^0.40.1",
     "react-bootstrap": "^2.3.0",
