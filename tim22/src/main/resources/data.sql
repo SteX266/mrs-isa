@@ -35,6 +35,21 @@ VALUES (3, 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2Ta
 INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
 VALUES (4, 'Foca', false, true, null, 0, 'Milica','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066230222', 'Skipina', 'skipina@gmail.com');
 
+INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES (5, 'Marka Kraljevica 12, Sremska Mitroica', false, true, null, 0, 'Bubi','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0661332324', 'Bubisa', 'bubisa@gmail.com');
+
+INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES (6, 'Petra Kocica 8a, Kraljevo', false, true, null, 20, 'Srdjan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'djidja.milosevic@gmail.com');
+
+INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES (7, 'Vujice Vujanova 12, Melenci', false, true, null, 5, 'Nikoleta','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0662454298', 'Milivojev', 'ketiketi@gmail.com');
+
+INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES (8, 'Vojvodjanskih Brigata 52, Pancevo', false, true, null, 0, 'Anastasia','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0622234567', 'Indjic', 'indija4@gmail.com');
+
+INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES (9, 'Cara Lazara 66, Paracin', false, true, null, 0, 'Milos','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0642280890', 'Petrovic', 'perapera@gmail.com');
+
 
 INSERT INTO public.user_role(user_id, role_id)
 VALUES (1, 2);
@@ -44,6 +59,16 @@ INSERT INTO public.user_role(user_id, role_id)
 VALUES (3,4);
 INSERT INTO public.user_role(user_id, role_id)
 VALUES (4,5);
+INSERT INTO public.user_role(user_id, role_id)
+VALUES (5, 1);
+INSERT INTO public.user_role(user_id, role_id)
+VALUES (6, 2);
+INSERT INTO public.user_role(user_id, role_id)
+VALUES (7, 2);
+INSERT INTO public.user_role(user_id, role_id)
+VALUES (8, 2);
+INSERT INTO public.user_role(user_id, role_id)
+VALUES (9, 2);
 
 
 INSERT INTO public.adventure(id, average_score, cancellation_fee, capacity, description, entity_type, is_deleted, name, price, rules_of_conduct, addres_id, owner_id)
@@ -138,24 +163,102 @@ VALUES (7, 'https://img.halooglasi.com/slike/oglasi/Thumbs/200904/l/prodaje-se-v
 INSERT INTO public.photos(entity_id, photos)
 VALUES (8, 'https://thebrownidentity.com/wp-content/uploads/2020/07/01-birth-month-If-You-Were-Born-In-Summer-This-Is-What-We-Know-About-You_644740429-icemanphotos.jpg');
 
+INSERT INTO public.photos(entity_id, photos)
+VALUES (9, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (10, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+
+INSERT INTO public.photos(entity_id, photos)
+VALUES (12, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (13, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (14, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+
+INSERT INTO public.photos(entity_id, photos)
+VALUES (15, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (16, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (17, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+
+INSERT INTO public.photos(entity_id, photos)
+VALUES (17, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (17, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+INSERT INTO public.photos(entity_id, photos)
+VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (1,'2022-02-20T15:00', '2022-04-23T13:00', 1);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (2,'2022-03-20T15:00', '2023-04-12T13:00', 2);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (3,'2022-04-20T15:00', '2023-04-15T13:00', 3);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (4,'2022-05-20T15:00', '2023-05-11T13:00', 4);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (5,'2022-07-20T15:00', '2023-07-14T13:00', 5);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (6,'2022-05-20T15:00', '2023-11-27T13:00', 6);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (7,'2022-03-20T15:00', '2023-02-24T13:00', 7);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (8,'2022-04-20T15:00', '2023-04-22T13:00', 8);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (9,'2022-04-20T15:00', '2023-05-21T13:00', 9);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (10,'2022-04-20T15:00', '2023-09-21T13:00', 10);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (11,'2022-04-15T15:00', '2023-12-25T13:00', 11);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (12,'2022-03-16T15:00', '2023-05-26T13:00', 12);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (13,'2022-02-13T15:00', '2023-01-11T13:00', 13);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (14,'2022-01-21T15:00', '2023-08-16T13:00', 14);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (15,'2022-01-22T15:00', '2023-07-14T13:00', 15);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (16,'2022-06-22T15:00', '2023-06-20T13:00', 16);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
+
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (1, '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (2, '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false);
+INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES (3, '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false);
 
 
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (1, '2022-07-20', '2022-07-22', true, 1, 6, false);
+VALUES (4, '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (2, '2022-07-25', '2022-07-28', true, 1, 7, false);
+VALUES (5, '2022-03-15T15:00', '2022-03-20T15:00', true, 1, 4, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (3, '2022-04-25', '2022-04-28', true, 1, 7, false);
-
-
+VALUES (6, '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (4, '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (5, '2022-03-15', '2022-03-20', true, 1, 4, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (6, '2022-03-22', '2022-03-23', true, 1, 2, false);
-INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES (7, '2021-09-26', '2021-10-01', true, 1, 1, false);
+VALUES (7, '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
 
 
 INSERT INTO public.promo(

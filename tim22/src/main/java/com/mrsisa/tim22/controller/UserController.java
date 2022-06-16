@@ -1,9 +1,6 @@
 package com.mrsisa.tim22.controller;
 
-import com.mrsisa.tim22.dto.UserCredentialsDTO;
-import com.mrsisa.tim22.dto.UserDTO;
-import com.mrsisa.tim22.dto.UserRequest;
-import com.mrsisa.tim22.dto.UserTokenState;
+import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.model.AccountCancellationRequest;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.UserService;
@@ -35,7 +32,10 @@ public class UserController {
         return new ResponseEntity<UserDTO>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
-
+    @RequestMapping(value ="/change-password", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
+        userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat));
+    }
 
 
 
