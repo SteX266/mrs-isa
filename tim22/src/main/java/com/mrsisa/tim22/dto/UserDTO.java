@@ -14,4 +14,5 @@ public class UserDTO {
     String phoneNumber;
     String addressLine;
     int loyaltyPoints;
+    int penalties;
 }

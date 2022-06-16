@@ -252,6 +252,15 @@ function ClientProfile() {
           </div>
           <div className="col-md-4">
             <div className="p-3 py-5">
+
+            <div className="d-flex justify-content-between align-items-center experience">
+                <span>Penalties</span>
+                <span className="border px-3 p-1 add-experience">
+                  <i className="fa fa-plus"></i>&nbsp;{loyaltyPoints}
+                </span>
+              </div>
+              <br />
+
               <div className="d-flex justify-content-between align-items-center experience">
                 <span>Loyalty points</span>
                 <span className="border px-3 p-1 add-experience">
