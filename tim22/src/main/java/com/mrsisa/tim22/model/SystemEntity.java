@@ -86,4 +86,8 @@ public abstract class SystemEntity {
     public void addReview(Review review) {
         this.reviews.add(review);
     }
+
+    public void addComplaint(Complaint complaint) {
+        this.complaints.add(complaint);
+    }
 }

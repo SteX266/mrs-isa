@@ -104,16 +104,4 @@ public class ReservationService {
         promoRepository.save(p);
         reservationRepository.save(r);
     }
-
-    public void createRevieww(int reservationId, String username, String text, int rating) {
-
-        Reservation reservation = reservationRepository.findOneById(reservationId);
-        User u = userRepository.findOneByUsername(username);
-        Review review = new Review(rating, text, u, reservation.getSystemEntity());
-        SystemEntity e = reservation.getSystemEntity();
-        reservation.getSystemEntity().addReview(review);
-        reviewRepository.save(review);
-
-        systemEntityRepository.save(e);
-    }
 }
