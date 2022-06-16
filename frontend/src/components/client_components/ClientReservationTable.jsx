@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Dialog from "../modals/Dialog";
+import toast from "react-hot-toast";
+
 import {
   Container,
   Navbar,
@@ -331,12 +333,10 @@ export default function ClientReservationsTable(props) {
     } 
   
     function cancelReservation() {
-      let newReservation = reservation;
-      newReservation.status = "CANCELED";
-      setReservation(newReservation);
-      setButton(getButton());
-      saveReservation(newReservation.id);
+
+      saveReservation(reservation.id);
       setShowTaskDialog(false);
+
     }
   
     function saveReservation(reservationId) {
@@ -355,7 +355,23 @@ export default function ClientReservationsTable(props) {
       axios.get(
         "http://localhost:8080/reservation/cancelReservation",
         requestOptions
-      );
+      ).catch(() => {
+
+        toast.error("Reservations within 3 days cannot be canceled!");
+
+      }).then(async result =>{
+        if(result.data == "OK"){
+
+          let newReservation = reservation;
+          newReservation.status = "CANCELED";
+          setReservation(newReservation);
+          setButton(getButton());
+          toast.success("Reservation canceled successfully!");
+
+
+        }
+
+      });
     }
     function getButton() {
       if (reservation.status == "APPROVED") {

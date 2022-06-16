@@ -128,8 +128,6 @@ public class UserService {
             }
 
             return false;
-
-
         }
 
         public ArrayList<SystemEntityDTO> getClientSubscriptions (String username){

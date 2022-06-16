@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {Navigate} from 'react-router-dom';
+import toast from "react-hot-toast";
 
 
 function LoginForm()   {  
@@ -33,9 +34,9 @@ const handleSubmit = (event) =>{
     const data = await response.json();
     if(!response.ok){
 
-      console.log("Kredencijali nisu validni");
+      toast.error("Credentials are not valid!");
     }
-    if(data.username !== null){
+    else if(data.username !== null){
       console.log("Uspesan login!");
       localStorage.setItem('userToken', JSON.stringify(data));
       localStorage.setItem('username', username);

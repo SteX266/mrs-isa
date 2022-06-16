@@ -281,7 +281,9 @@ export default function Router() {
         </Routes>
         <Footer />
       </BrowserRouter>
-      <Toaster></Toaster>
+      <Toaster
+        position="bottom-right"
+      ></Toaster>
 
     </>
   );

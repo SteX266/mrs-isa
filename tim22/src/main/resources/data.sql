@@ -250,8 +250,6 @@ INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, syst
 VALUES ( '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false);
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES ( '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false);
-
-
 INSERT INTO public.reservation(date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES ( '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false);
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
@@ -260,22 +258,11 @@ INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, syst
 VALUES ( '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES ( '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-07-20', '2022-07-22', true, 1, 6, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ('2022-07-25', '2022-07-28', true, 1, 7, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-04-25', '2022-04-28', true, 1, 7, false);
 
 
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-03-15', '2022-03-20', true, 1, 4, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-03-22', '2022-03-23', true, 1, 2, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ('2021-09-26', '2021-10-01', true, 1, 1, false);
+VALUES ( '2022-06-19T15:00', '2022-07-01T15:00', true, 1, 1, false);
+
 
 
 

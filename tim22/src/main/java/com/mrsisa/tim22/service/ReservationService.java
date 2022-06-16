@@ -66,9 +66,12 @@ public class ReservationService {
         return reservations;
     }
 
-    public void cancelReservation(int entityId) {
-        System.out.println("Otkazivanje rezervacije");
+    public boolean cancelReservation(int entityId) {
         Reservation r = reservationRepository.findOneById(entityId);
+        if (LocalDateTime.now().plusDays(3).isAfter(r.getDateFrom())){
+            return false;
+
+        }
         User u = r.getClient();
         Penalty p = new Penalty(u);
         u.addPenalty(p);
@@ -76,6 +79,8 @@ public class ReservationService {
         r.setCanceled(true);
         penaltyRepository.save(p);
         reservationRepository.save(r);
+
+        return true;
     }
 
     public void approveReservation(int entityId) {
