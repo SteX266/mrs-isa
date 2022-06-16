@@ -1,4 +1,4 @@
-import "../style/EntityCard.css"
+import "../../style/EntityCard.css"
 import { Link } from "react-router-dom";
 
 

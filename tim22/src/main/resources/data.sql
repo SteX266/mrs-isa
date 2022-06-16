@@ -243,6 +243,7 @@ INSERT INTO public.availability_period(
     id, date_from, date_to, system_entity)
 VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
 
+
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES (1, '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
@@ -259,13 +260,30 @@ INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, s
 VALUES (6, '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
 INSERT INTO public.reservation(id, date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
 VALUES (7, '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-07-20', '2022-07-22', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ('2022-07-25', '2022-07-28', true, 1, 7, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-25', '2022-04-28', true, 1, 7, false);
+
+
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-04-20T15:20', '2022-04-23T13:00', true, 1, 6, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-15', '2022-03-20', true, 1, 4, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ( '2022-03-22', '2022-03-23', true, 1, 2, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
+VALUES ('2021-09-26', '2021-10-01', true, 1, 1, false);
+
 
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id)
-VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+    id, capacity, date_from, date_to, description, price, system_entity_id,is_taken)
+VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id)
-VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1);
+    id, capacity, date_from, date_to, description, price, system_entity_id, is_taken)
+VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 

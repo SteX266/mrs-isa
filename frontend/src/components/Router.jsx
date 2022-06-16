@@ -9,23 +9,25 @@ import BusinessUserCreatePage from "./business/BusinessUserCreatePage";
 import BusinessUserProfilePage from "./business/BusinessUserProfilePage";
 import ChangePasswordPage from "./business/ChangePasswordPage";
 import BusinessUserNavbar from "./business/BusinessUserNavbar";
-import Header from "./Header";
-import Footer from "./Footer";
-import NavigationBar from "./NavigationBar";
-import EntityList from "./EntityList";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-import ClientProfile from "./ClientProfile";
+import Header from "./client_components/Header";
+import Footer from "./client_components/Footer";
+import NavigationBar from "./client_components/NavigationBar";
+import EntityList from "./client_components/EntityList";
+import LoginForm from "./client_components/LoginForm";
+import RegisterForm from "./client_components/RegisterForm";
+import ClientProfile from "./client_components/ClientProfile";
 import AdminNavbar from "./admin/AdminNavbar";
 import RegistrationRequest from "./admin/RegistrationRequest";
 import AdminProfile from "./admin/AdminProfile";
 import AdminRegistration from "./admin/AdminRegistration";
-import NavigationBarClient from "./NavigationBarClient";
-import ClientReservationsTable from "./ClientReservationTable";
-import ListingProfilePage from "./ListingProfilePage";
-import Map from "./Map";
+import NavigationBarClient from "./client_components/NavigationBarClient";
+import ClientReservationsTable from "./client_components/ClientReservationTable";
+import ListingProfilePage from "./client_components/ListingProfilePage";
+import Map from "./client_components/Map";
 import ClientCalendar from "./ClientCalendar";
-import ClientPastReservations from "./ClientPastReservations";
+import ClientPastReservations from "./client_components/ClientPastReservations";
+import ClientSubscriptions from "./client_components/ClientSubscriptions";
+import {Toaster} from "react-hot-toast";
 
 export default function Router() {
   function Nested(type) {
@@ -52,6 +54,7 @@ export default function Router() {
         />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
+
       </>
     );
   }
@@ -168,6 +171,18 @@ export default function Router() {
           />
 
           <Route
+            path="/client/subscriptions"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <ClientSubscriptions
+                />
+              </>
+            }
+          />
+
+          <Route
             path="/client/profile/:id"
             element={
               <>
@@ -266,6 +281,8 @@ export default function Router() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      <Toaster></Toaster>
+
     </>
   );
 }

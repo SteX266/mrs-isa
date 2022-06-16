@@ -34,6 +34,8 @@ public class SystemEntityDTO{
 
     private String amenities;
 
+    private double cancelationFee;
+
 
     public SystemEntityDTO(SystemEntity entity){
         this.id = entity.getId();
@@ -55,7 +57,7 @@ public class SystemEntityDTO{
         this.owner = entity.getOwner().getName() + " " + entity.getOwner().getSurname();
         this.ownersPhoneNumber = entity.getOwner().getPhoneNumber();
         this.amenities = generateAmenitiesString(entity.getAmenities());
-
+        this.cancelationFee = entity.getCancellationFee();
     }
 
     private String generateAmenitiesString(List<Amenity> amenities) {
@@ -84,7 +86,7 @@ public class SystemEntityDTO{
         return address;
     }
 
-    public SystemEntityDTO(int id,String image, String name, double price, double rating, String address, String type){
+    public SystemEntityDTO(int id,String image, String name, double price, double rating, String address, String type, double cancelationFee){
         this.id = id;
         this.photos = new ArrayList<String>();
         this.photos.add(image);
@@ -94,6 +96,7 @@ public class SystemEntityDTO{
         this.averageScore = rating;
         this.firstImage = image;
         this.type = type;
+        this.cancelationFee = cancelationFee;
     }
 
 }

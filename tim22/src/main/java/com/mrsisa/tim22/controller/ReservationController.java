@@ -42,5 +42,9 @@ public class ReservationController {
         reservationService.approveReservation(entityId);
     }
 
+    @RequestMapping(value = "/createPromoReservation", method=RequestMethod.GET)
+    public void createPromoReservation(@RequestParam int promoId, @RequestParam String username){
+        reservationService.createPromoReservation(promoId, username);
+    }
 
 }

@@ -37,6 +37,7 @@ public class SystemEntityController {
     }
 
 
+
     @RequestMapping(value ="getCurrentUserEntities", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserEntities(){
 
@@ -47,5 +48,21 @@ public class SystemEntityController {
     public ResponseEntity<ArrayList<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
         return new ResponseEntity<ArrayList<AvailabilityPeriodDTO>>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
     }
+
+    @RequestMapping(value ="getCurrentUserAdventures", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserAdventures(@RequestParam String email){
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserAdventures(email), HttpStatus.OK);
+    }
+    @RequestMapping(value ="createSubscribtion", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void createSubscribtion(@RequestParam String username, @RequestParam int entityId){
+        systemEntityService.createSubscribtion(entityId, username);
+    }
+
+    @RequestMapping(value ="unsubscribe", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
+        systemEntityService.unsubscribe(entityId, username);
+    }
+
+
 
 }

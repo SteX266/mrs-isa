@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Dialog from "../modals/Dialog";
 import {
   Container,
   Navbar,
@@ -266,115 +267,133 @@ export default function ClientReservationsTable(props) {
         <TableBody reservations={searchUpcomingReservations} />
       </Table>
 
+      
+
 
     </Container>
   );
-}
 
-function SearchForm(props) {
-  return (
-    <Form>
-      <FormControl
-        type="search"
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-        onChange={props.onSearchFieldChange}
-      />
-    </Form>
-  );
-}
 
-function TableHeader(props) {
-  return (
-    <thead>
-      <tr>
-        {props.headers.map((header, index) => (
-          <th key={index}>{header}</th>
-        ))}
-      </tr>
-    </thead>
-  );
-}
-
-function TableBody(props) {
-  return (
-    <tbody>
-      {props.reservations.map((reservation) => (
-        <Reservation key={reservation.id} reservation={reservation} />
-      ))}
-    </tbody>
-  );
-}
-
-function Reservation(props) {
-  const [reservation, setReservation] = useState(props.reservation);
-  const [button, setButton] = useState(getButton());
-
-  function cancelReservation() {
-    let newReservation = reservation;
-    newReservation.status = "CANCELED";
-    setReservation(newReservation);
-    setButton(getButton());
-    saveReservation(newReservation.id);
-  }
-
-  function saveReservation(reservationId) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        entityId: reservationId,
-      },
-    };
-
-    axios.get(
-      "http://localhost:8080/reservation/cancelReservation",
-      requestOptions
+  function SearchForm(props) {
+    return (
+      <Form>
+        <FormControl
+          type="search"
+          placeholder="Search"
+          className="me-2"
+          aria-label="Search"
+          onChange={props.onSearchFieldChange}
+        />
+      </Form>
     );
   }
-  function getButton() {
-    if (reservation.status == "APPROVED") {
-      return (
-        <Button onClick={cancelReservation} variant="outline-light">
-          Cancel reservation
-        </Button>
-      );
-    } else if (reservation.status == "EXPIRED") {
-      return (
-        <>
-          <Button
-            onClick={cancelReservation}
-            variant="outline-dark"
-            style={{ marginRight: "5px" }}
-          >
-            Review
-          </Button>
-          <Button onClick={cancelReservation} variant="outline-dark">
-            Complaint
-          </Button>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+  
+  function TableHeader(props) {
+    return (
+      <thead>
+        <tr>
+          {props.headers.map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+    );
   }
+  
+  function TableBody(props) {
+    return (
+      <tbody>
+        {props.reservations.map((reservation) => (
+          <Reservation key={reservation.id} reservation={reservation} />
+        ))}
+      </tbody>
+    );
+  }
+  
+  function Reservation(props) {
+    const [reservation, setReservation] = useState(props.reservation);
+    const [showTaskDialog, setShowTaskDialog] = useState(false);
 
-  return (
-    <tr id={reservation.id}>
-      <td>{reservation.entityType}</td>
-      <td> {reservation.entityName}</td>
-      <td>{reservation.location}</td>
-      <td>{reservation.startDate}</td>
-      <td>{reservation.endDate}</td>
-      <td>{reservation.fee}$</td>
-      <td>{reservation.owner}</td>
-      <td>{reservation.status}</td>
-      <td>{button}</td>
-    </tr>
-  );
+
+
+    const [button, setButton] = useState(<></>);
+
+
+    useEffect(() => {
+      setButton(getButton());
+    }, []);
+
+
+    
+    
+    function cancelCanceling(){
+      setShowTaskDialog(false);
+    } 
+  
+    function cancelReservation() {
+      let newReservation = reservation;
+      newReservation.status = "CANCELED";
+      setReservation(newReservation);
+      setButton(getButton());
+      saveReservation(newReservation.id);
+      setShowTaskDialog(false);
+    }
+  
+    function saveReservation(reservationId) {
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token.accessToken,
+        },
+        params: {
+          entityId: reservationId,
+        },
+      };
+  
+      axios.get(
+        "http://localhost:8080/reservation/cancelReservation",
+        requestOptions
+      );
+    }
+    function getButton() {
+      if (reservation.status == "APPROVED") {
+        return (
+          <Button onClick={() => {setShowTaskDialog(true)}} variant="outline-light">
+            Cancel reservation
+          </Button>
+        );
+      } else {
+        return <></>;
+      }
+    }
+  
+    return (
+      <>
+      <tr id={reservation.id}>
+        <td>{reservation.entityType}</td>
+        <td> {reservation.entityName}</td>
+        <td>{reservation.location}</td>
+        <td>{reservation.startDate}</td>
+        <td>{reservation.endDate}</td>
+        <td>{reservation.fee}$</td>
+        <td>{reservation.owner}</td>
+        <td>{reservation.status}</td>
+        <td>{button}</td>
+      </tr>
+
+<Dialog
+show={showTaskDialog}
+title="Cancel reservation?"
+description="Are you sure you want to cancel this reservation? You will get 1 penalty for canceling it."
+confirmed={cancelReservation}
+canceled={cancelCanceling}
+hasText={false}
+/>
+</>
+    );
+  }
 }
+
+

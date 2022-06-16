@@ -1,4 +1,4 @@
-import Dialog from "../Dialog";
+import Dialog from "../modals/Dialog";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/Errors.css";

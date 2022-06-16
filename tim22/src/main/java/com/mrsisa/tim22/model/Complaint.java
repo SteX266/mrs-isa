@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class Complaint {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String text;
@@ -27,5 +28,11 @@ public class Complaint {
     private SystemEntity systemEntity;
     @Column
     private String responseText;
+
+    public Complaint(String text, User sender, SystemEntity systemEntity){
+        this.text = text;
+        this.sender = sender;
+        this.systemEntity = systemEntity;
+    }
 
 }

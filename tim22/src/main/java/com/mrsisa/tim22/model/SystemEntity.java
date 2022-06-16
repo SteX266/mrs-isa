@@ -75,4 +75,19 @@ public abstract class SystemEntity {
     @JoinColumn(name = "owner_id")
     private User owner;
 
+    public void addSubscriber(User u){
+        this.subscribers.add(u);
+    }
+
+    public void removeSubscriber(User u) {
+        this.subscribers.remove(u);
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void addComplaint(Complaint complaint) {
+        this.complaints.add(complaint);
+    }
 }

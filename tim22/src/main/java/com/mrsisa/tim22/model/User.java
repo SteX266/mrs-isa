@@ -66,6 +66,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> reviews = new HashSet<Review>();
 
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Penalty> penalties = new HashSet<Penalty>();
+
     @OneToMany(mappedBy ="owner", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<SystemEntity> entities = new HashSet<>();
 
@@ -98,5 +101,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public void addSubscribtion(SystemEntity e){
+        this.subscribtions.add(e);
+    }
+
+    public void removeSubscribtion(SystemEntity e) {
+        this.subscribtions.remove(e);
     }
 }

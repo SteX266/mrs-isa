@@ -1,9 +1,10 @@
-import Dialog from "./Dialog";
+import Dialog from "../modals/Dialog";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../style/Errors.css";
+import "../../style/Errors.css";
 function ClientProfile() {
   const [showTaskDialog, setShowTaskDialog] = useState(false);
+  const[showEditDialog, setShowEditDialog] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     surname: "",
@@ -18,8 +19,7 @@ function ClientProfile() {
   const [email, setEmail] = useState("");
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
 
     if (validateForm()) {
       const token = JSON.parse(localStorage.getItem("userToken"));
@@ -241,7 +241,7 @@ function ClientProfile() {
 
               <div className="mt-5 text-center">
                 <button
-                  onClick={handleSubmit}
+                  onClick={()=>{setShowEditDialog(true);}}
                   className="btn btn-primary profile-button"
                   type="button"
                 >
@@ -299,9 +299,30 @@ function ClientProfile() {
         description="Are you sure you want to delete your profile?"
         confirmed={confirmDeleteProfile}
         canceled={cancelDeleteProfile}
+        hasText={true}
+      />
+
+      <Dialog
+        show={showEditDialog}
+        title="Edit profile?"
+        description="Are you sure you want to edit your profile?"
+        confirmed={confirmEditProfile}
+        canceled={cancelEditProfile}
+        hasText={false}
       />
     </>
   );
+
+  function confirmEditProfile(){
+
+    handleSubmit();
+    setShowEditDialog(false);
+
+  }
+  function cancelEditProfile(){
+
+    setShowEditDialog(false);
+  }
 }
 
 export default ClientProfile;

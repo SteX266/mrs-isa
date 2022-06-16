@@ -9,6 +9,8 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
+import ComplaintDialog from "../modals/ComplaintDialog";
+import ReviewDialog from "../modals/ReviewDialog";
 
 export default function ClientReservationsTable(props) {
   const [sortedByPrice, setSortedByPrice] = useState(false);
@@ -307,53 +309,23 @@ function TableBody(props) {
 }
 
 function Reservation(props) {
-  const [reservation, setReservation] = useState(props.reservation);
-  const [button, setButton] = useState(getButton());
+  const reservation = props.reservation;
+  const button = getButton();
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const [showComplaintDialog,setShowComplaintDialog] = useState(false);
 
-  function cancelReservation() {
-    let newReservation = reservation;
-    newReservation.status = "CANCELED";
-    setReservation(newReservation);
-    setButton(getButton());
-    saveReservation(newReservation.id);
-  }
-
-  function saveReservation(reservationId) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        entityId: reservationId,
-      },
-    };
-
-    axios.get(
-      "http://localhost:8080/reservation/cancelReservation",
-      requestOptions
-    );
-  }
   function getButton() {
-    if (reservation.status == "APPROVED") {
-      return (
-        <Button onClick={cancelReservation} variant="outline-dark">
-          Cancel reservation
-        </Button>
-      );
-    } else if (reservation.status == "EXPIRED") {
+     if (reservation.status == "EXPIRED") {
       return (
         <>
           <Button
-            onClick={cancelReservation}
+            onClick={() => {setShowReviewDialog(true);}}
             variant="outline-light"
             style={{ marginRight: "5px" }}
           >
             Review
           </Button>
-          <Button onClick={cancelReservation} variant="outline-light">
+          <Button onClick={() => {setShowComplaintDialog(true);}} variant="outline-light">
             Complaint
           </Button>
         </>
@@ -364,6 +336,7 @@ function Reservation(props) {
   }
 
   return (
+    <>
     <tr id={reservation.id}>
       <td>{reservation.entityType}</td>
       <td> {reservation.entityName}</td>
@@ -375,5 +348,31 @@ function Reservation(props) {
       <td>{reservation.status}</td>
       <td>{button}</td>
     </tr>
+
+<ReviewDialog
+showModal={showReviewDialog}
+reservationId={reservation.id}
+confirmed={closeReviewDialog}
+canceled={closeReviewDialog}
+/>
+<ComplaintDialog
+showModal={showComplaintDialog}
+reservationId={reservation.id}
+confirmed={closeComplaintDialog}
+canceled={closeComplaintDialog}
+/>
+
+
+
+</>
   );
+
+function closeReviewDialog(){
+  setShowReviewDialog(false);
+}
+
+function closeComplaintDialog(){
+  setShowComplaintDialog(false);
+}
+
 }
