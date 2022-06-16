@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import Address from "./captain_components/create_vessel/Address";
-import AvailabilityPeriod from "./captain_components/create_vessel/AvailabilityPeriod";
-import ConfirmCreate from "./captain_components/create_vessel/ConfirmCreate";
-import General from "./captain_components/create_vessel/General";
-import PhotoUpload from "./captain_components/create_vessel/PhotoUpload";
-import Utilities from "./captain_components/create_vessel/Utilities";
+import Address from "../../captain_components/create_vessel/Address";
+import AvailabilityPeriod from "../../captain_components/create_vessel/AvailabilityPeriod";
+import ConfirmCreate from "../../captain_components/create_vessel/ConfirmCreate";
+import General from "../../captain_components/create_vessel/General";
+import PhotoUpload from "../../captain_components/create_vessel/PhotoUpload";
+import Utilities from "../../captain_components/create_vessel/Utilities";
 
-function CreateAdventure() {
+export default function CreateListing() {
   const [componentCounter, setComponentCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("");
 
@@ -93,11 +93,9 @@ function CreateAdventure() {
   return (
     <Stack direction="horizontal">
       <div className="left-container">
-        <p className="left-container-text">What adventures await you?</p>
+        <p className="left-container-text">What kind of place will you host?</p>
       </div>
       <Stack className="right-container">{currentComponent}</Stack>
     </Stack>
   );
 }
-
-export default CreateAdventure;

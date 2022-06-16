@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import Address from "./captain_components/create_vessel/Address";
-import AvailabilityPeriod from "./captain_components/create_vessel/AvailabilityPeriod";
-import ConfirmCreate from "./captain_components/create_vessel/ConfirmCreate";
-import General from "./captain_components/create_vessel/General";
-import PhotoUpload from "./captain_components/create_vessel/PhotoUpload";
-import Utilities from "./captain_components/create_vessel/Utilities";
+import "../create_vessel/CreateVessel.css";
+import Address from "../create_vessel/Address";
+import AvailabilityPeriod from "../create_vessel/AvailabilityPeriod";
+import General from "../create_vessel/General";
+import PhotoUpload from "../create_vessel/PhotoUpload";
+import Utilities from "../create_vessel/Utilities";
+import VesselDetails from "../create_vessel/VesselDetails";
+import VesselTypeSelect from "../create_vessel/VesselTypeSelect";
+import ConfirmEdit from "./ConfirmEdit";
+import { useGet } from "../../utilities";
 
-function CreateAdventure() {
+function EditVessel({ vesselID }) {
   const [componentCounter, setComponentCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("");
 
@@ -36,7 +40,20 @@ function CreateAdventure() {
       enginePower: "",
     },
   });
+  function getVesselById() {
+    const data = useGet("entity/getEntityById", { id: vesselID });
+    return data;
+  }
+  useEffect(() => {
+    setVesselDTO(getVesselById());
+  }, []);
   const components = [
+    <VesselTypeSelect
+      key="TYPE_SELECT"
+      next={next}
+      save={save}
+      typeDTO={vesselDTO.type}
+    />,
     <General
       key="GENERAL"
       next={next}
@@ -72,7 +89,14 @@ function CreateAdventure() {
       back={back}
       amenitiesDTO={vesselDTO.amenities}
     />,
-    <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
+    <VesselDetails
+      key="VESSEL_DETAILS"
+      save={save}
+      next={next}
+      back={back}
+      vesselDetailsDTO={vesselDTO.vesselDetails}
+    />,
+    <ConfirmEdit key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
   ];
 
   useEffect(() => {
@@ -93,11 +117,11 @@ function CreateAdventure() {
   return (
     <Stack direction="horizontal">
       <div className="left-container">
-        <p className="left-container-text">What adventures await you?</p>
+        <p className="left-container-text">Change your description?</p>
       </div>
       <Stack className="right-container">{currentComponent}</Stack>
     </Stack>
   );
 }
 
-export default CreateAdventure;
+export default EditVessel;
