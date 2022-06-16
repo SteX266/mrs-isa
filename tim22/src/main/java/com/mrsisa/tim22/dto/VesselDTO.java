@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,13 +26,16 @@ public class VesselDTO {
     private List<FishingEquipement> fishingEquipement;
     protected String name;
     protected String description;
-    protected Address address;
     protected int capacity;
+    private String city;
+    private String country;
+    private String streetName;
+    private int streetNumber;
     protected List<String> photos;
     protected String rulesOfConduct;
     protected List<Amenity> amenities;
     protected double cancellationFee;
-    protected Set<AvailabilityPeriod> availabilityPeriod = new HashSet<AvailabilityPeriod>();
+    protected List<AvailabilityPeriodDTO> availabilityPeriod;
     protected double price;
 
     public VesselDTO(Vessel v){
@@ -43,13 +47,19 @@ public class VesselDTO {
         this.fishingEquipement=v.getFishingEquipement();
         this.name = v.getName();
         this.description=v.getDescription();
-        this.address=v.getAddress();
+        this.city = v.getAddress().getCity();
+        this.country = v.getAddress().getCountry();
+        this.streetName = v.getAddress().getStreetName();
+        this.streetNumber = v.getAddress().getStreetNumber();
         this.capacity=v.getCapacity();
         this.photos=v.getPhotos();
         this.rulesOfConduct=v.getRulesOfConduct();
         this.amenities=v.getAmenities();
         this.cancellationFee =v.getCancellationFee();
-        this.availabilityPeriod=v.getAvailabilityPeriod();
+        this.availabilityPeriod= new ArrayList<>();
+        for (AvailabilityPeriod ap : v.getAvailabilityPeriod()){
+            this.availabilityPeriod.add(new AvailabilityPeriodDTO(ap));
+        }
         this.price=v.getPrice();
     }
 
