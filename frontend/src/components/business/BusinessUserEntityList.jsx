@@ -1,4 +1,4 @@
-import EntityCard from "../EntityCard";
+import EntityCard from "../client_components/EntityCard";
 
 export default function BusinessUserEntityList(props) {
   function renderAllEntities(entity) {

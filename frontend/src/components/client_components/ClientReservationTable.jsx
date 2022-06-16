@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Dialog from "./Dialog";
+import Dialog from "../modals/Dialog";
 import {
   Container,
   Navbar,

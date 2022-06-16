@@ -1,12 +1,12 @@
 
 import React,{useEffect, useState} from "react";
-import "../style/ListingProfilePage.css";
+import "../../style/ListingProfilePage.css";
 import axios from "axios";
 import Map from "./Map";
 import CarouselItem from "./CarouselItem";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import Dialog from "./Dialog";
+import Dialog from "../modals/Dialog";
 import {
   Table,
   Button,

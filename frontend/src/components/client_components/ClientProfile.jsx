@@ -1,7 +1,7 @@
-import Dialog from "./Dialog";
+import Dialog from "../modals/Dialog";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../style/Errors.css";
+import "../../style/Errors.css";
 function ClientProfile() {
   const [showTaskDialog, setShowTaskDialog] = useState(false);
   const[showEditDialog, setShowEditDialog] = useState(false);

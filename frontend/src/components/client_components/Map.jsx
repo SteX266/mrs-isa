@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import "../style/Map.css";
+import "../../style/Map.css";
 import Geocode from "react-geocode";
 
 
