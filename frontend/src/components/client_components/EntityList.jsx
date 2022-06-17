@@ -25,7 +25,10 @@ function EntityList(props) {
     filtering();
   }, [props.type,indexOfFirstPost]);
 
+
+
   function renderAllEntities(entity) {
+
     return (
       <EntityCardTest
         id={entity.id}
@@ -39,8 +42,6 @@ function EntityList(props) {
   }
 
   async function filtering() {
-    console.log(indexOfFirstPost);
-    console.log(indexOfLastPost);
 
     const requestOptions = {
       headers: {

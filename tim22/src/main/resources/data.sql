@@ -142,54 +142,30 @@ VALUES (17, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'A
 
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+VALUES (1, '1.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+VALUES (1, '2.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+VALUES (1, '3.jpg');
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (2, 'https://cdn.boatinternational.com/files/2021/01/b2c5a350-5998-11eb-beb1-e5b23185a864-avanti-profile.jpg');
+VALUES (2, '4.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (3, 'https://sgbonline.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-31-at-8.54.57-AM-copy.jpg');
+VALUES (3, '5.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (4, 'https://sailtraininginternational.org/app/uploads/2016/06/vessel-shtandart-1.jpg');
+VALUES (4, '6.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Amerigo_vespucci_1976_nyc_aufgetakelt.jpg/800px-Amerigo_vespucci_1976_nyc_aufgetakelt.jpg');
+VALUES (5, '7.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (6, 'https://www.mojenterijer.rs/storage/posts/gallery/2017/Dec/115648/sarmantna-vikendica-u-kanadi.jpg');
+VALUES (6, '8.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (7, 'https://img.halooglasi.com/slike/oglasi/Thumbs/200904/l/prodaje-se-vikendica-25-m2-g-goracici-prijepo-5425635877817-71792611911.jpg');
+VALUES (7, '9.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (8, 'https://thebrownidentity.com/wp-content/uploads/2020/07/01-birth-month-If-You-Were-Born-In-Summer-This-Is-What-We-Know-About-You_644740429-icemanphotos.jpg');
+VALUES (8, '10.jpg');
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (9, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (10, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+VALUES (9, '11.jpg');
 
-INSERT INTO public.photos(entity_id, photos)
-VALUES (12, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (13, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (14, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
-
-INSERT INTO public.photos(entity_id, photos)
-VALUES (15, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (16, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
-
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
 
 INSERT INTO public.availability_period(
     id, date_from, date_to, system_entity)

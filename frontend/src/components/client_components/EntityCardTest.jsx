@@ -1,9 +1,24 @@
 import "../../style/EntityCardTest.css"
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
-const EntityCardTest = (props) =>  {  
+export default function EntityCardTest  (props)   {  
+
+    const [photo, setPhoto] = useState("");
+
+    useEffect(()=> {
+
+        let ext = props.image.split(".");
+        axios.get("http://localhost:8080/auth/getImage/"+props.image,{responseType:"blob",params:{extension:ext[1]}}).then(response =>{
+            setPhoto(URL.createObjectURL(response.data));
+          }).catch((error) =>{
+            console.log(error);
+          });
+
+    },[]);
     var link = "/client/profile/" + props.id;
     var title = props.title;
     if(title.length > 12){
@@ -16,7 +31,7 @@ const EntityCardTest = (props) =>  {
 
     <div className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-0 pt-4">
         <Link to={link}>
-                        <div className="card entity"> <img className="slika card-img-top" src={props.image}/>
+                        <div className="card entity"> <img className="slika card-img-top" src={photo}/>
                             <div className="card-body">
                                 <h6 className="font-weight-bold pt-1">{props.address}</h6>
                                 <div className="text-muted description">{props.title}</div>
@@ -34,4 +49,3 @@ const EntityCardTest = (props) =>  {
 
 </>}
 
-export default EntityCardTest;
