@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
-import EditVessel from "../captain_components/edit_vessel/EditVessel";
-import EditListing from "../host_components/edit_listing/EditListing";
+import EditVessel from "../edit/EditVessel";
+import EditAdventure from "../edit/EditAdventure";
+import EditListing from "../edit/EditListing";
 
 export default function BusinessUserEditPage(props) {
   let component = "";
@@ -12,7 +13,9 @@ export default function BusinessUserEditPage(props) {
       component = <EditVessel vesselID={useParams()["id"]}></EditVessel>;
       break;
     case "instructor":
-      component = <></>;
+      component = (
+        <EditAdventure adventureID={useParams()["id"]}></EditAdventure>
+      );
       break;
     default:
       break;

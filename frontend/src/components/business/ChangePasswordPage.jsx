@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
-import PasswordChangeForm from "../host_components/PasswordChangeForm";
+import PasswordChangeForm from "./PasswordChangeForm";
 
 class ChangePasswordPage extends Component {
   state = {};

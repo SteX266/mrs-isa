@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import Address from "../../captain_components/create_vessel/Address";
-import AvailabilityPeriod from "../../captain_components/create_vessel/AvailabilityPeriod";
-import ConfirmCreate from "../../captain_components/create_vessel/ConfirmCreate";
-import General from "../../captain_components/create_vessel/General";
-import PhotoUpload from "../../captain_components/create_vessel/PhotoUpload";
-import Utilities from "../../captain_components/create_vessel/Utilities";
+import "./CreateVessel.css";
+import Address from "./Address";
+import General from "./General";
+import VesselTypeSelect from "./VesselTypeSelect";
+import PhotoUpload from "./PhotoUpload";
+import Utilities from "./Utilities";
+import AvailabilityPeriod from "./AvailabilityPeriod";
+import VesselDetails from "./VesselDetails";
+import ConfirmCreate from "./ConfirmCreate";
 
-export default function CreateListing() {
+export default function CreateVessel() {
   const [componentCounter, setComponentCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("");
 
@@ -19,6 +22,7 @@ export default function CreateListing() {
       capacity: "",
       rentalFee: "",
       cancellationFee: "",
+      description: "",
     },
     periods: [],
     address: {
@@ -37,6 +41,12 @@ export default function CreateListing() {
     },
   });
   const components = [
+    <VesselTypeSelect
+      key="TYPE_SELECT"
+      next={next}
+      save={save}
+      typeDTO={vesselDTO.type}
+    />,
     <General
       key="GENERAL"
       next={next}
@@ -72,6 +82,13 @@ export default function CreateListing() {
       back={back}
       amenitiesDTO={vesselDTO.amenities}
     />,
+    <VesselDetails
+      key="VESSEL_DETAILS"
+      save={save}
+      next={next}
+      back={back}
+      vesselDetailsDTO={vesselDTO.vesselDetails}
+    />,
     <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
   ];
 
@@ -93,7 +110,7 @@ export default function CreateListing() {
   return (
     <Stack direction="horizontal">
       <div className="left-container">
-        <p className="left-container-text">What kind of place will you host?</p>
+        <p className="left-container-text">Are your boats the best in town?</p>
       </div>
       <Stack className="right-container">{currentComponent}</Stack>
     </Stack>

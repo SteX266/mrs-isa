@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import Address from "../../captain_components/create_vessel/Address";
-import AvailabilityPeriod from "../../captain_components/create_vessel/AvailabilityPeriod";
-import General from "../../captain_components/create_vessel/General";
-import PhotoUpload from "../../captain_components/create_vessel/PhotoUpload";
-import Utilities from "../../captain_components/create_vessel/Utilities";
-import VesselTypeSelect from "../../captain_components/create_vessel/VesselTypeSelect";
-import ConfirmEdit from "../../captain_components/edit_vessel/ConfirmEdit";
+import Address from "./Address";
+import AvailabilityPeriod from "./AvailabilityPeriod";
+import ConfirmCreate from "./ConfirmCreate";
+import General from "./General";
+import PhotoUpload from "./PhotoUpload";
+import Utilities from "./Utilities";
 
-export default function EditListing({ listingId }) {
+function CreateAdventure() {
   const [componentCounter, setComponentCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("");
 
-  const [listingDTO, setListingDTO] = useState({
-    type: "",
+  const [vesselDTO, setVesselDTO] = useState({
     general: {
       name: "",
       rulesOfConduct: "",
@@ -31,56 +29,43 @@ export default function EditListing({ listingId }) {
     photos: [],
     amenities: [],
   });
-  function getListingById() {
-    console.log(listingId);
-    return {};
-  }
-  useEffect(() => {
-    setListingDTO(getListingById());
-  }, []);
   const components = [
-    <VesselTypeSelect
-      key="TYPE_SELECT"
-      next={next}
-      save={save}
-      typeDTO={listingDTO.type}
-    />,
     <General
       key="GENERAL"
       next={next}
       back={back}
       save={save}
-      generalDTO={listingDTO.general}
+      generalDTO={vesselDTO.general}
     />,
     <AvailabilityPeriod
       key="AVAILABILITY_PERIOD"
       save={save}
       next={next}
       back={back}
-      peridosDTO={listingDTO.periods}
+      peridosDTO={vesselDTO.periods}
     />,
     <Address
       key="ADDRESS"
       save={save}
       next={next}
       back={back}
-      addressDTO={listingDTO.address}
+      addressDTO={vesselDTO.address}
     />,
     <PhotoUpload
       key="PHOTO_UPLOAD"
       save={save}
       next={next}
       back={back}
-      photosDTO={listingDTO.photos}
+      photosDTO={vesselDTO.photos}
     />,
     <Utilities
       key="UTILITIES"
       save={save}
       next={next}
       back={back}
-      amenitiesDTO={listingDTO.amenities}
+      amenitiesDTO={vesselDTO.amenities}
     />,
-    <ConfirmEdit key="CONFIRM" serviceDTO={listingDTO} back={back} />,
+    <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
   ];
 
   useEffect(() => {
@@ -95,15 +80,17 @@ export default function EditListing({ listingId }) {
     setComponentCounter(componentCounter - 1);
   }
   function save(value, key) {
-    setListingDTO({ ...listingDTO, [key]: value });
-    console.log(listingDTO);
+    setVesselDTO({ ...vesselDTO, [key]: value });
+    console.log(vesselDTO);
   }
   return (
     <Stack direction="horizontal">
       <div className="left-container">
-        <p className="left-container-text">Change your description?</p>
+        <p className="left-container-text">What adventures await you?</p>
       </div>
       <Stack className="right-container">{currentComponent}</Stack>
     </Stack>
   );
 }
+
+export default CreateAdventure;

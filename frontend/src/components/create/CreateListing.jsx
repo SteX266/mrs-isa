@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack } from "react-bootstrap";
-import "../create_vessel/CreateVessel.css";
-import Address from "./Address";
-import General from "./General";
-import VesselTypeSelect from "./VesselTypeSelect";
-import PhotoUpload from "./PhotoUpload";
-import Utilities from "./Utilities";
-import AvailabilityPeriod from "./AvailabilityPeriod";
-import VesselDetails from "./VesselDetails";
-import ConfirmCreate from "./ConfirmCreate";
+import Address from "../create/Address";
+import AvailabilityPeriod from "../create/AvailabilityPeriod";
+import ConfirmCreate from "../create/ConfirmCreate";
+import General from "../create/General";
+import PhotoUpload from "../create/PhotoUpload";
+import Utilities from "../create/Utilities";
 
-export default function CreateVessel() {
+export default function CreateListing() {
   const [componentCounter, setComponentCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState("");
 
   const [vesselDTO, setVesselDTO] = useState({
-    type: "",
     general: {
       name: "",
       rulesOfConduct: "",
@@ -32,20 +28,8 @@ export default function CreateVessel() {
     },
     photos: [],
     amenities: [],
-    vesselDetails: {
-      length: "",
-      maxSpeed: "",
-      engineNumber: "",
-      enginePower: "",
-    },
   });
   const components = [
-    <VesselTypeSelect
-      key="TYPE_SELECT"
-      next={next}
-      save={save}
-      typeDTO={vesselDTO.type}
-    />,
     <General
       key="GENERAL"
       next={next}
@@ -81,13 +65,6 @@ export default function CreateVessel() {
       back={back}
       amenitiesDTO={vesselDTO.amenities}
     />,
-    <VesselDetails
-      key="VESSEL_DETAILS"
-      save={save}
-      next={next}
-      back={back}
-      vesselDetailsDTO={vesselDTO.vesselDetails}
-    />,
     <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
   ];
 
@@ -109,7 +86,7 @@ export default function CreateVessel() {
   return (
     <Stack direction="horizontal">
       <div className="left-container">
-        <p className="left-container-text">Are your boats the best in town?</p>
+        <p className="left-container-text">What kind of place will you host?</p>
       </div>
       <Stack className="right-container">{currentComponent}</Stack>
     </Stack>

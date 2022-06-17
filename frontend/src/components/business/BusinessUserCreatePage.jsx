@@ -1,6 +1,6 @@
-import CreateAdventure from "../CreateAdventure";
-import CreateVessel from "../captain_components/create_vessel/CreateVessel";
-import CreateListing from "../host_components/create_listing/CreateListing";
+import CreateAdventure from "../create/CreateAdventure";
+import CreateVessel from "../create/CreateVessel";
+import CreateListing from "../create/CreateListing";
 export default function BussinessUserCreatePage(props) {
   let component = "";
   switch (props.type) {
