@@ -11,6 +11,8 @@ import com.mrsisa.tim22.service.SystemEntityService;
 import com.mrsisa.tim22.service.UserService;
 import com.mrsisa.tim22.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +25,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthentificationController {
 
 
@@ -112,6 +115,20 @@ public class AuthentificationController {
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getImage/{name}")
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable String name, @RequestParam String extension){
+        try{
+            System.out.println(extension);
+            String path = "src/main/resources/images/" + name + "." + extension;
+            System.out.println(path);
+            FileSystemResource imgFile = new FileSystemResource(path);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(imgFile.getInputStream()));
+        } catch (IOException e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
