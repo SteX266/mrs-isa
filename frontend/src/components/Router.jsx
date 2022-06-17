@@ -28,6 +28,7 @@ import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./client_components/ClientPastReservations";
 import ClientSubscriptions from "./client_components/ClientSubscriptions";
 import { Toaster } from "react-hot-toast";
+import ReportsPage from "./reports/ReportsPage";
 
 export default function Router() {
   function Nested(type) {
@@ -43,6 +44,9 @@ export default function Router() {
           element={<BusinessUserCreatePage type={type} />}
         />
         <Route path="edit/:id" element={<BusinessUserEditPage type={type} />} />
+
+        <Route path="reports" element={<ReportsPage type={type} />} />
+
         <Route
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}
