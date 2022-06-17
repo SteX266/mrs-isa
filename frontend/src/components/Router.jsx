@@ -27,7 +27,7 @@ import Map from "./client_components/Map";
 import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./client_components/ClientPastReservations";
 import ClientSubscriptions from "./client_components/ClientSubscriptions";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 export default function Router() {
   function Nested(type) {
@@ -54,7 +54,6 @@ export default function Router() {
         />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
-
       </>
     );
   }
@@ -90,6 +89,7 @@ export default function Router() {
               path="viewEntities"
               element={<EntityList type="ALL_ENTITIES" />}
             />
+            <Route path="change-password" element={<ChangePasswordPage />} />
           </Route>
         </Routes>
         <Routes>
@@ -153,7 +153,7 @@ export default function Router() {
                 <ClientReservationsTable
                   clientEmail={localStorage.getItem("username")}
                 />
-                </>
+              </>
             }
           />
 
@@ -176,8 +176,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ClientSubscriptions
-                />
+                <ClientSubscriptions />
               </>
             }
           />
@@ -281,10 +280,7 @@ export default function Router() {
         </Routes>
         <Footer />
       </BrowserRouter>
-      <Toaster
-        position="bottom-right"
-      ></Toaster>
-
+      <Toaster position="bottom-right"></Toaster>
     </>
   );
 }
