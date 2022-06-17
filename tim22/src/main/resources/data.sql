@@ -193,7 +193,7 @@ VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Tra
 
 INSERT INTO public.availability_period(
     id, date_from, date_to, system_entity)
-VALUES (1,'2022-02-20T15:00', '2022-04-23T13:00', 1);
+VALUES (1,'2022-02-20T15:00', '2022-08-23T13:00', 1);
 INSERT INTO public.availability_period(
     id, date_from, date_to, system_entity)
 VALUES (2,'2022-03-20T15:00', '2023-04-12T13:00', 2);

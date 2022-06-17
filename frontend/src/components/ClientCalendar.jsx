@@ -18,9 +18,16 @@ function ClientCalendar() {
 
   useEffect(() => {
     getReservations(params.id);
+    getEntityAvailabilityPeriods(params.id);
   }, []);
 
-  function getReservations(entityId) {
+  var preDates = [];
+  var preEvents = [];
+
+  function Reserve() {
+    console.log("aaa");
+  }
+  async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       method: "GET",
@@ -33,7 +40,7 @@ function ClientCalendar() {
       },
     };
 
-    axios
+    await axios
       .get(
         "http://localhost:8080/reservation/getEntityReservations",
         requestOptions
@@ -47,11 +54,15 @@ function ClientCalendar() {
           dates.push(event);
           addDatesToExclude(startDate, endDate);
         });
+        preEvents.forEach((date) => {
+          dates.push(date);
+        });
+        preEvents = dates;
         setEvents(dates);
       });
   }
 
-  function getAvailabilityPeriods(entityId) {
+  async function getEntityAvailabilityPeriods(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       method: "POST",
@@ -64,20 +75,33 @@ function ClientCalendar() {
       },
     };
 
-    axios
+    await axios
       .get(
-        "http://localhost:8080/reservation/getAvailabilityPeriods",
+        "http://localhost:8080/entity/getEntityAvailabilityPeriods",
         requestOptions
       )
       .then((res) => {
+        let start = new Date();
         let dates = [];
         res.data.forEach((element) => {
-          let startDate = new Date(element.startDate);
-          let endDate = new Date(element.endDate);
-          let event = { start: startDate, end: endDate };
-          dates.push(event);
-          addDatesToExclude(startDate, endDate);
+          if (startDate.getTime() < new Date().getTime()) {
+            start = new Date(element.dateTo);
+          } else {
+            let startDate = start;
+            let endDate = new Date(element.dateFrom);
+            start = new Date(element.dateTo);
+            let event = { start: startDate, end: endDate };
+            dates.push(event);
+            addDatesToExclude(startDate, endDate);
+          }
         });
+        addDatesToExclude(start, new Date("2024/02/08"));
+        let event = { start: start, end: new Date("2024/02/08") };
+        dates.push(event);
+        preEvents.forEach((date) => {
+          dates.push(date);
+        });
+        preEvents = dates;
         setEvents(dates);
       });
   }
@@ -93,7 +117,11 @@ function ClientCalendar() {
       dates.push(new Date(date));
       date.setDate(date.getDate() + 1);
     }
+    preDates.forEach((date) => {
+      dates.push(date);
+    });
     setExcludeDates(dates);
+    preDates = dates;
   }
 
   function StartDateSelected(date) {
@@ -178,7 +206,11 @@ function ClientCalendar() {
             />
           </div>
         </div>
-        <button className="btn btn-warning" style={{ margin: "15px" }}>
+        <button
+          className="btn btn-warning"
+          style={{ margin: "15px" }}
+          onClick={Reserve}
+        >
           Reserve
         </button>
         <BigCalendar />
