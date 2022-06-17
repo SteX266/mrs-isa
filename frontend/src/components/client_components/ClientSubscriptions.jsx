@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import EntityCard from "./EntityCard";
+import EntityCardTest from "./EntityCardTest";
 
 
 export default function ClientSubscriptions(){
@@ -15,8 +15,6 @@ export default function ClientSubscriptions(){
     },[]);
 
     function getSubscriptions(){
-
-
         const token = JSON.parse(localStorage.getItem("userToken"));
         const username = localStorage.getItem("username");
         const requestOptions = {
@@ -42,7 +40,7 @@ export default function ClientSubscriptions(){
 
     function renderAllEntities(entity) {
         return (
-          <EntityCard
+          <EntityCardTest
             id={entity.id}
             title={entity.name}
             address={entity.address}
