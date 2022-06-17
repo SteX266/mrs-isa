@@ -49,8 +49,8 @@ public class SystemEntityController {
         return new ResponseEntity<ArrayList<AvailabilityPeriodDTO>>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="createSubscribtion", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createSubscribtion(@RequestParam String username, @RequestParam int entityId){
+    @RequestMapping(value ="createSubscription", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void createSubscription(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.createSubscribtion(entityId, username);
     }
 

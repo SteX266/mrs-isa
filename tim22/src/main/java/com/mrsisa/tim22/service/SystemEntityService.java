@@ -27,6 +27,8 @@ public class SystemEntityService {
     private SystemEntityRepository systemEntityRepository;
     @Autowired
     private AvailabilityPeriodRepository availabilityPeriodRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
@@ -35,9 +37,6 @@ public class SystemEntityService {
         };
         return(dtos);
     }
-
-    private UserRepository userRepository;
-
 
     public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
 
@@ -85,6 +84,7 @@ public class SystemEntityService {
 
     public void createSubscribtion(int entityId, String username) {
         SystemEntity e = systemEntityRepository.findOneById(entityId);
+        System.out.println(username);
         User u = userRepository.findOneByUsername(username);
         e.addSubscriber(u);
         u.addSubscribtion(e);
