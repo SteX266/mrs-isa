@@ -154,7 +154,7 @@ export default function ListingProfilePage(){
         params: { entityId: params.id, username:username },
       };
       axios
-        .get("http://localhost:8080/entity/createSubscribtion", requestOptions);
+        .get("http://localhost:8080/entity/createSubscription", requestOptions);
       
       setButton(<button onClick={unsubscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Unsubscribe</button>);
     }
