@@ -62,11 +62,11 @@ VALUES (4,5);
 INSERT INTO public.user_role(user_id, role_id)
 VALUES (5, 1);
 INSERT INTO public.user_role(user_id, role_id)
-VALUES (6, 2);
+VALUES (6, 3);
 INSERT INTO public.user_role(user_id, role_id)
-VALUES (7, 2);
+VALUES (7, 4);
 INSERT INTO public.user_role(user_id, role_id)
-VALUES (8, 2);
+VALUES (8, 5);
 INSERT INTO public.user_role(user_id, role_id)
 VALUES (9, 2);
 
@@ -274,3 +274,19 @@ INSERT INTO public.promo(
     id, capacity, date_from, date_to, description, price, system_entity_id, is_taken)
 VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
+
+INSERT INTO public.registration_request(
+    id, description, is_answered, client_id)
+VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
+
+INSERT INTO public.registration_request(
+    id, description, is_answered, client_id)
+VALUES (2, 'Zelim da zaradim paree', false, 7);
+
+INSERT INTO public.registration_request(
+    id, description, is_answered, client_id)
+VALUES (3, 'Please give me a chance to prove i will pay', false, 8);
+
+INSERT INTO public.loyalty_program(
+    id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)
+VALUES (1, 10, 60, 15, 100, 3, 6, 5, 30);

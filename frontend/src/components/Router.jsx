@@ -28,6 +28,7 @@ import ClientCalendar from "./ClientCalendar";
 import ClientPastReservations from "./client_components/ClientPastReservations";
 import ClientSubscriptions from "./client_components/ClientSubscriptions";
 import { Toaster } from "react-hot-toast";
+import LoyaltyProgram from "./admin/LoyaltyProgram";
 
 export default function Router() {
   function Nested(type) {
@@ -90,6 +91,7 @@ export default function Router() {
               element={<EntityList type="ALL_ENTITIES" />}
             />
             <Route path="change-password" element={<ChangePasswordPage />} />
+            <Route path="loyalty" element={<LoyaltyProgram />} />
           </Route>
         </Routes>
         <Routes>

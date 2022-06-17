@@ -32,7 +32,7 @@ export default function ClientReservationsTable(props) {
     "Price",
     "Owner",
     "Status",
-    "Button"
+    "Button",
   ];
 
   useEffect(() => {
@@ -95,7 +95,6 @@ export default function ClientReservationsTable(props) {
       });
   }
   function onSearchFieldChange(event) {
-
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
     for (let index = 0; index < upcomingReservations.length; index++) {
@@ -110,7 +109,6 @@ export default function ClientReservationsTable(props) {
     }
     setSearchUpcomingReservations(searchResult);
   }
-
 
   function filterUpcomingEntities(event) {
     var filterType = event.target.name;
@@ -187,7 +185,11 @@ export default function ClientReservationsTable(props) {
 
   return (
     <Container style={{ maxWidth: "95%" }}>
-      <Navbar collapseOnSelect className="rounded border border-dark" style={{marginTop:"15px"}}>
+      <Navbar
+        collapseOnSelect
+        className="rounded border border-dark"
+        style={{ marginTop: "15px" }}
+      >
         <Container>
           <Navbar.Text className="text-dark">
             {" "}
@@ -238,18 +240,14 @@ export default function ClientReservationsTable(props) {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-          <Dropdown.Item
+            <Dropdown.Item
               as="button"
               onClick={sortReservations}
               name="START_DATE"
             >
               Start date
             </Dropdown.Item>
-            <Dropdown.Item
-              as="button"
-              onClick={sortReservations}
-              name="PRICE"
-            >
+            <Dropdown.Item as="button" onClick={sortReservations} name="PRICE">
               Price
             </Dropdown.Item>
             <Dropdown.Item
@@ -264,17 +262,17 @@ export default function ClientReservationsTable(props) {
 
         <SearchForm onSearchFieldChange={onSearchFieldChange} />
       </Navbar>
-      <Table striped hover className="rounded table-dark" style={{ paddingTop: "125px",marginTop:"15px"}}>
+      <Table
+        striped
+        hover
+        className="rounded table-dark"
+        style={{ paddingTop: "125px", marginTop: "15px" }}
+      >
         <TableHeader headers={headers} />
         <TableBody reservations={searchUpcomingReservations} />
       </Table>
-
-      
-
-
     </Container>
   );
-
 
   function SearchForm(props) {
     return (
@@ -289,7 +287,7 @@ export default function ClientReservationsTable(props) {
       </Form>
     );
   }
-  
+
   function TableHeader(props) {
     return (
       <thead>
@@ -301,7 +299,7 @@ export default function ClientReservationsTable(props) {
       </thead>
     );
   }
-  
+
   function TableBody(props) {
     return (
       <tbody>
@@ -311,34 +309,26 @@ export default function ClientReservationsTable(props) {
       </tbody>
     );
   }
-  
+
   function Reservation(props) {
     const [reservation, setReservation] = useState(props.reservation);
     const [showTaskDialog, setShowTaskDialog] = useState(false);
 
-
-
     const [button, setButton] = useState(<></>);
-
 
     useEffect(() => {
       setButton(getButton());
     }, []);
 
-
-    
-    
-    function cancelCanceling(){
+    function cancelCanceling() {
       setShowTaskDialog(false);
-    } 
-  
-    function cancelReservation() {
+    }
 
+    function cancelReservation() {
       saveReservation(reservation.id);
       setShowTaskDialog(false);
-
     }
-  
+
     function saveReservation(reservationId) {
       const token = JSON.parse(localStorage.getItem("userToken"));
       const requestOptions = {
@@ -351,32 +341,34 @@ export default function ClientReservationsTable(props) {
           entityId: reservationId,
         },
       };
-  
-      axios.get(
-        "http://localhost:8080/reservation/cancelReservation",
-        requestOptions
-      ).catch(() => {
 
-        toast.error("Reservations within 3 days cannot be canceled!");
-
-      }).then(async result =>{
-        if(result.data == "OK"){
-
-          let newReservation = reservation;
-          newReservation.status = "CANCELED";
-          setReservation(newReservation);
-          setButton(getButton());
-          toast.success("Reservation canceled successfully!");
-
-
-        }
-
-      });
+      axios
+        .get(
+          "http://localhost:8080/reservation/cancelReservation",
+          requestOptions
+        )
+        .catch(() => {
+          toast.error("Reservations within 3 days cannot be canceled!");
+        })
+        .then(async (result) => {
+          if (result.data == "OK") {
+            let newReservation = reservation;
+            newReservation.status = "CANCELED";
+            setReservation(newReservation);
+            setButton(getButton());
+            toast.success("Reservation canceled successfully!");
+          }
+        });
     }
     function getButton() {
       if (reservation.status == "APPROVED") {
         return (
-          <Button onClick={() => {setShowTaskDialog(true)}} variant="outline-light">
+          <Button
+            onClick={() => {
+              setShowTaskDialog(true);
+            }}
+            variant="outline-light"
+          >
             Cancel reservation
           </Button>
         );
@@ -384,32 +376,30 @@ export default function ClientReservationsTable(props) {
         return <></>;
       }
     }
-  
+
     return (
       <>
-      <tr id={reservation.id}>
-        <td>{reservation.entityType}</td>
-        <td> {reservation.entityName}</td>
-        <td>{reservation.location}</td>
-        <td>{reservation.startDate}</td>
-        <td>{reservation.endDate}</td>
-        <td>{reservation.fee}$</td>
-        <td>{reservation.owner}</td>
-        <td>{reservation.status}</td>
-        <td>{button}</td>
-      </tr>
+        <tr id={reservation.id}>
+          <td>{reservation.entityType}</td>
+          <td> {reservation.entityName}</td>
+          <td>{reservation.location}</td>
+          <td>{reservation.startDate}</td>
+          <td>{reservation.endDate}</td>
+          <td>{reservation.fee}$</td>
+          <td>{reservation.owner}</td>
+          <td>{reservation.status}</td>
+          <td>{button}</td>
+        </tr>
 
-<Dialog
-show={showTaskDialog}
-title="Cancel reservation?"
-description="Are you sure you want to cancel this reservation? You will get 1 penalty for canceling it."
-confirmed={cancelReservation}
-canceled={cancelCanceling}
-hasText={false}
-/>
-</>
+        <Dialog
+          show={showTaskDialog}
+          title="Cancel reservation?"
+          description="Are you sure you want to cancel this reservation? You will get 1 penalty for canceling it."
+          confirmed={cancelReservation}
+          canceled={cancelCanceling}
+          hasText={false}
+        />
+      </>
     );
   }
 }
-
-

@@ -24,9 +24,15 @@ public class LoyaltyProgram {
     @Column
     private int silverLimit;
     @Column
+    private int silverDiscount;
+    @Column
     private int goldLimit;
     @Column
+    private int goldDiscount;
+    @Column
     private int platinumLimit;
+    @Column
+    private int platinumDiscount;
 
 
 }

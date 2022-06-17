@@ -12,74 +12,34 @@ export default function RegistrationRequest() {
   const [showTaskDialog, setShowTaskDialog] = React.useState(false);
 
   React.useEffect(() => {
-    let data = getRequestsData();
-    console.log(data);
-    setRequests([
-      {
-        id: 1,
-        email: "mama@gmail.com",
-        type: "instructor",
-        description: "hahah lool",
-      },
-      {
-        id: 2,
-        email: "baba@gmail.com",
-        type: "host",
-        description:
-          "dadadad stvaaaaaaaasrno mi treba ovaj proooooofil mooolim vaaaas",
-      },
-      {
-        id: 3,
-        email: "tata@gmail.com",
-        type: "instructor",
-        description: "hahah lool",
-      },
-    ]);
-    setSearchRequests([
-      {
-        id: 1,
-        email: "mama@gmail.com",
-        type: "instructor",
-        description: "hahah lool",
-      },
-      {
-        id: 2,
-        email: "baba@gmail.com",
-        type: "host",
-        description:
-          "dadadad stvaaaaaaaasrno mi treba ovaj proooooofil mooolim vaaaas",
-      },
-      {
-        id: 3,
-        email: "tata@gmail.com",
-        type: "instructor",
-        description: "hahah lool",
-      },
-    ]);
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const requestOptions = {
+      headers: { Authorization: "Bearer " + token.accessToken },
+    };
+    axios
+      .get(
+        "http://localhost:8080/registrationRequest/getAllRegistrationRequests",
+        requestOptions
+      )
+      .then((res) => {
+        setRequests(res.data);
+        setSearchRequests(res.data);
+      });
   }, []);
 
-  async function getRequestsData() {
-    let path = "http://localhost:8080/entity/getReservationRequests";
-    const res = axios.get(path, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
-    return res.data;
-  }
-
-  function searchFieldChanged(event) {
-    const filtering = [];
+  function onSearchFieldChange(event) {
+    const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
     for (let index = 0; index < requests.length; index++) {
-      const service = requests[index];
-      if (service.email.toLowerCase().includes(searchParam)) {
-        filtering.push(service);
+      const r = requests[index];
+      if (
+        r.client.toLowerCase().includes(searchParam) ||
+        r.description.toLowerCase().includes(searchParam)
+      ) {
+        searchResult.push(r);
       }
     }
-    setSearchRequests(filtering);
+    setSearchRequests(searchResult);
   }
   let len = searchRequests.length;
   if (len == undefined) {
@@ -123,7 +83,7 @@ export default function RegistrationRequest() {
             </Container>
 
             <Container>
-              <SearchForm searchFieldChanged={searchFieldChanged} />
+              <SearchForm searchFieldChanged={onSearchFieldChange} />
             </Container>
           </Navbar>
           <RegistrationRequestTable

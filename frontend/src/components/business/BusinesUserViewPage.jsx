@@ -34,7 +34,7 @@ export default function BusinessUserViewServicesPage(props) {
   function getServiceData() {
     const token = JSON.parse(localStorage.getItem("userToken"));
 
-    let path = "http://localhost:8080/entity/getCurrentUserAdventures";
+    let path = "http://localhost:8080/entity/getCurrentUserEntities";
     axios
       .get(path, {
         headers: {
