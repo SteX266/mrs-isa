@@ -20,9 +20,11 @@ public class ReviewService {
     private ReservationRepository reservationRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private SystemEntityRepository systemEntityRepository;
 
 
-    public void createReview(int reservationId, String username, String text, int rating) {
+    public boolean createReview(int reservationId, String username, String text, int rating) {
 
         Reservation reservation = reservationRepository.findOneById(reservationId);
         User u = userRepository.findOneByUsername(username);
@@ -32,12 +34,25 @@ public class ReviewService {
         for (Review r:e.getReviews()){
             if (r.getClient().getUsername().equals(username)){
                 //TODO ODGOVOR NESTO NA FRONT
-                return;
+                return false;
             }
         }
         Review review = new Review(rating, text, u, reservation.getSystemEntity());
         reservation.getSystemEntity().addReview(review);
+        SystemEntity entity = reservation.getSystemEntity();
+
+        double avg = 0;
+
+        for(Review r:entity.getReviews()){
+            avg+=r.getScore();
+        }
+
+        entity.setAverageScore(avg/entity.getReviews().size());
+
+
         reviewRepository.save(review);
+        systemEntityRepository.save(entity);
+        return true;
 
     }
 }

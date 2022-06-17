@@ -43,7 +43,6 @@ export default function ReviewDialog({showModal,reservationId, confirmed, cancel
 
     const token = JSON.parse(localStorage.getItem("userToken"));
     const username = localStorage.getItem("username");
-    toast.success('Review successfully created!');
 
     const requestOptions = {
       method: "POST",
@@ -63,7 +62,17 @@ export default function ReviewDialog({showModal,reservationId, confirmed, cancel
     axios.get(
       "http://localhost:8080/review/createReview",
       requestOptions
-    );
+    ).then(async result=>{
+      if(result.data =="OK"){
+        toast.success('Review successfully created!');
+
+      }
+    }).catch(()=>{
+
+      toast.error('You\'ve already reviewed this entity');
+
+    });
+
     confirmed();
   }
 
