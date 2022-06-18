@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Card, Button, Stack } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import EntityCardTest from "../client_components/EntityCardTest";
+import { Container } from "react-bootstrap";
 
 function RatingsReport({ type }) {
   const [averageRating, setAverageRating] = useState(0);
@@ -10,22 +10,29 @@ function RatingsReport({ type }) {
     id: "",
     photo: "",
     name: "",
-    description: "",
+    price: "",
     rating: "",
+    address: "",
   });
-  const navigate = useNavigate();
+  const [bestCard, setBestCard] = useState(<></>);
+  const [worstCard, setWorstCard] = useState(<></>);
   const [worstVacation, setWorstVacation] = useState({
     id: "",
     photo: "",
     name: "",
-    description: "",
+    price: "",
     rating: "",
+    address: "",
   });
   useEffect(() => {
     getAverageRating();
     getBestVacation();
     getWorstVacation();
   }, []);
+  useEffect(() => {
+    setBestCard(createCard(bestVacation));
+    setWorstCard(createCard(worstVacation));
+  }, [bestVacation, worstVacation, averageRating]);
 
   function getAverageRating() {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -39,7 +46,7 @@ function RatingsReport({ type }) {
       },
     };
     axios.get(path, requestOptions).then((res) => {
-      rating = res.data.averageRating;
+      rating = res.data;
       setAverageRating(rating);
     });
   }
@@ -51,7 +58,6 @@ function RatingsReport({ type }) {
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
         Authorization: "Bearer " + token.accessToken,
       },
     };
@@ -59,12 +65,27 @@ function RatingsReport({ type }) {
       data = {
         id: res.data.id,
         name: res.data.name,
-        photo: res.data.photo,
-        description: res.data.description,
-        rating: res.data.rating,
+        photo: res.data.firstImage,
+        price: res.data.price,
+        rating: res.data.averageScore,
+        address: res.data.address,
       };
+      console.log(data);
       setBestVacation(data);
+      setBestCard(createCard(bestVacation));
     });
+  }
+  function createCard(data) {
+    return (
+      <EntityCardTest
+        id={data.id}
+        title={data.name}
+        address={data.address}
+        price={data.price}
+        rating={data.rating}
+        image={data.photo}
+      />
+    );
   }
   function getWorstVacation() {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -78,60 +99,34 @@ function RatingsReport({ type }) {
       },
     };
     axios.get(path, requestOptions).then((res) => {
+      console.log(res.data);
       data = {
         id: res.data.id,
         name: res.data.name,
-        photo: res.data.photo,
-        description: res.data.description,
-        rating: res.data.rating,
+        photo: res.data.firstImage,
+        price: res.data.price,
+        rating: res.data.averageScore,
+        address: res.data.address,
       };
+      console.log(data);
       setWorstVacation(data);
+      setWorstCard(createCard(worstVacation));
     });
   }
   return (
-    <>
+    <Container>
       <p>
         Average {type} Rating: {averageRating}
       </p>
       <p>
         Best Rated{type}: {averageRating}
       </p>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={bestVacation.photo} />
-        <Card.Body>
-          <Card.Title>{bestVacation.name}</Card.Title>
-          <Card.Text>{bestVacation.description}</Card.Text>
-          <Stack direction="horizontal" gap={3}>
-            <Card.Text>Rating:{bestVacation.rating}</Card.Text>
-            <Button
-              variant="outline-dark"
-              onClick={() => navigate(type + `/profile/${bestVacation.id}`)}
-            >
-              Profile
-            </Button>
-          </Stack>
-        </Card.Body>
-      </Card>
+      {bestCard}
       <p>
         Worst Rated{type}: {averageRating}
       </p>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={worstVacation.photo} />
-        <Card.Body>
-          <Card.Title>{worstVacation.name}</Card.Title>
-          <Card.Text>{worstVacation.description}</Card.Text>
-          <Stack direction="horizontal" gap={3}>
-            <Card.Text>Rating:{worstVacation.rating}</Card.Text>
-            <Button
-              variant="outline-dark"
-              onClick={() => navigate(type + `/profile/${worstVacation.id}`)}
-            >
-              Profile
-            </Button>
-          </Stack>
-        </Card.Body>
-      </Card>
-    </>
+      {worstCard}
+    </Container>
   );
 }
 

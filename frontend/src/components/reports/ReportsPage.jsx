@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Nav } from "react-bootstrap";
+import AttendanceReport from "./AttendanceReport";
 import RatingsReport from "./RatingsReport";
 
 const types = {
-  host: "Listing",
-  captain: "Vessel",
-  instructor: "Adventure",
+  host: "listing",
+  captain: "vessel",
+  instructor: "adventure",
 };
 
 function ReportsPage({ type }) {
@@ -17,6 +18,7 @@ function ReportsPage({ type }) {
         setReport(<RatingsReport type={serviceType} />);
         break;
       case "revenue":
+        setReport(<AttendanceReport />);
         break;
       case "attendance":
         break;
@@ -33,7 +35,9 @@ function ReportsPage({ type }) {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link>Revenue Report</Nav.Link>
+          <Nav.Link onClick={() => changeReport("revenue")}>
+            Revenue Report
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link>Attendance Report</Nav.Link>
