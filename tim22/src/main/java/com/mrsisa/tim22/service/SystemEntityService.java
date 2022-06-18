@@ -105,4 +105,20 @@ public class SystemEntityService {
         systemEntityRepository.save(e);
         userRepository.save(u);
     }
+
+    public double getAverageRating() {
+        double sum = 0;
+        double len = 0;
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            sum+= e.getAverageScore();
+            len+=1;
+        }
+        if(len==0){
+            return 0;
+        }
+        return sum/len;
+    }
 }

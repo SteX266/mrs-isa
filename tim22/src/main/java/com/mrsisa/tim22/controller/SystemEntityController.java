@@ -59,6 +59,11 @@ public class SystemEntityController {
         systemEntityService.unsubscribe(entityId, username);
     }
 
+    @RequestMapping(value ="getAverageRating", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public double getAverageRating(){
+        return systemEntityService.getAverageRating();
+    }
+
 
 
 }
