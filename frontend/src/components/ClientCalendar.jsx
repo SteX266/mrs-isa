@@ -1,87 +1,15 @@
-import format from "date-fns/format";
-import getDay from "date-fns/getDay";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
 import React, { useState, useEffect } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
-//import TimePicker from "react-bootstrap-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useParams } from "react-router";
+import BigCalendar from "./BigCalendar";
 
-const locales = {
-  "en-US": require("date-fns/locale/en-US"),
-};
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
-
-function BigCalendar() {
-  const params = useParams();
-
-  const [allEvents, setAllEvents] = useState([]);
-
-
-
-  useEffect(() => {
-    getReservations(params.id);
-  }, []);
-
-  function getReservations(entityId) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        id: entityId,
-      },
-    };
-
-    axios
-      .get(
-        "http://localhost:8080/reservation/getEntityReservations",
-        requestOptions
-      )
-      .then((res) => {
-        let events = [];
-        res.data.forEach((element) => {
-          let startDate = new Date(element.startDate);
-          let endDate = new Date(element.endDate);
-          events.push({
-            title: "Unavailable",
-            start: startDate,
-            end: endDate,
-          });
-        });
-        setAllEvents(events);
-      });
-  }
-  return (
-    <div className="App">
-
-
-      <Calendar
-        localizer={localizer}
-        events={allEvents}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500, margin: "50px", backgroundColor:"white" }}
-      />
-    </div>
-  );
-}
 function ClientCalendar() {
   const params = useParams();
   const [excludeDates, setExcludeDates] = useState([]);
+  const [events, setEvents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [lastavailableDate, setLastAvailableDate] = useState(
@@ -90,9 +18,51 @@ function ClientCalendar() {
 
   useEffect(() => {
     getReservations(params.id);
+    getEntityAvailabilityPeriods(params.id);
   }, []);
 
-  function getReservations(entityId) {
+  var preDates = [];
+  var preEvents = [];
+
+  function Reserve() {
+    console.log("aaa");
+  }
+  async function getReservations(entityId) {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token.accessToken,
+      },
+      params: {
+        id: entityId,
+      },
+    };
+
+    await axios
+      .get(
+        "http://localhost:8080/reservation/getEntityReservations",
+        requestOptions
+      )
+      .then((res) => {
+        let dates = [];
+        res.data.forEach((element) => {
+          let startDate = new Date(element.startDate);
+          let endDate = new Date(element.endDate);
+          let event = { start: startDate, end: endDate };
+          dates.push(event);
+          addDatesToExclude(startDate, endDate);
+        });
+        preEvents.forEach((date) => {
+          dates.push(date);
+        });
+        preEvents = dates;
+        setEvents(dates);
+      });
+  }
+
+  async function getEntityAvailabilityPeriods(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       method: "POST",
@@ -105,77 +75,146 @@ function ClientCalendar() {
       },
     };
 
-    axios
+    await axios
       .get(
-        "http://localhost:8080/reservation/getEntityReservations",
+        "http://localhost:8080/entity/getEntityAvailabilityPeriods",
         requestOptions
       )
       .then((res) => {
-        console.log(res.data);
-        let events = [];
+        let start = new Date();
+        let dates = [];
         res.data.forEach((element) => {
-          let startDate = new Date(element.startDate);
-          let endDate = new Date(element.endDate);
-          events.push({ start: startDate, end: endDate });
+          if (startDate.getTime() < new Date().getTime()) {
+            start = new Date(element.dateTo);
+          } else {
+            let startDate = start;
+            let endDate = new Date(element.dateFrom);
+            start = new Date(element.dateTo);
+            let event = { start: startDate, end: endDate };
+            dates.push(event);
+            addDatesToExclude(startDate, endDate);
+          }
         });
-        setExcludeDates(events);
+        addDatesToExclude(start, new Date("2024/02/08"));
+        let event = { start: start, end: new Date("2024/02/08") };
+        dates.push(event);
+        preEvents.forEach((date) => {
+          dates.push(date);
+        });
+        preEvents = dates;
+        setEvents(dates);
       });
   }
-  const filterPassedTime = (time) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
 
-    return currentDate.getTime() < selectedDate.getTime();
-  };
+  function addDatesToExclude(startDate, endDate) {
+    let dates = [];
+    const date = new Date(startDate);
+    date.setHours(0, 0, 0, 0);
+    const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 1);
+    while (date.getTime() < end.getTime()) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    preDates.forEach((date) => {
+      dates.push(date);
+    });
+    setExcludeDates(dates);
+    preDates = dates;
+  }
 
   function StartDateSelected(date) {
     setStartDate(date);
     setEndDate(date);
-    excludeDates.forEach((event) => {
-      if (event.start < lastavailableDate && event.start > date) {
+    events.forEach((event) => {
+      if (
+        event.start.getTime() < lastavailableDate.getTime() &&
+        event.start.getTime() > date.getTime()
+      ) {
         setLastAvailableDate(event.start);
       }
     });
   }
+  // eslint-disable-next-line react/display-name
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+    <button className="btn btn-warning" onClick={onClick} ref={ref}>
+      {value}
+    </button>
+  ));
+  const filterStartTime = (time) => {
+    const selectedDate = new Date(time);
+    const currentDate = new Date();
+    if (currentDate.getTime() >= selectedDate.getTime()) return false;
+    let isFree = true;
+    events.forEach((event) => {
+      if (
+        selectedDate.getTime() >= event.start.getTime() &&
+        selectedDate.getTime() <= event.end.getTime()
+      )
+        isFree = false;
+    });
+    return isFree;
+  };
+
+  const filterEndTime = (time) => {
+    const selectedDate = new Date(time);
+    if (startDate.getTime() >= selectedDate.getTime()) return false;
+    let isFree = true;
+    events.forEach((event) => {
+      if (
+        selectedDate.getTime() >= event.start.getTime() &&
+        selectedDate.getTime() <= event.end.getTime()
+      )
+        isFree = false;
+    });
+    return isFree;
+  };
 
   return (
     <>
-    <div className="container" style={{}}>
-      <div className="row" style={{padding:"15px"}}>
-
-        <div className="col-md">
-
-      Start date:
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => StartDateSelected(date)}
-        showTimeSelect
-        minDate={new Date()}
-        excludeDateIntervals={excludeDates}
-        filterTime={filterPassedTime}
-        dateFormat="MMMM d, yyyy h:mm aa"
-        withPortal
-      />
+      <div className="container" style={{}}>
+        <div className="row" style={{ padding: "15px" }}>
+          <div className="col-md">
+            Start date:
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => StartDateSelected(date)}
+              showTimeSelect
+              minDate={new Date()}
+              excludeDates={excludeDates}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              customInput={<CustomInput />}
+              filterTime={filterStartTime}
+              withPortal
+            />
+          </div>
+        </div>
+        <div className="row" style={{ padding: "15px" }}>
+          <div className="col-md">
+            End date:
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              minDate={startDate}
+              maxDate={lastavailableDate}
+              showTimeSelect
+              filterTime={filterEndTime}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              customInput={<CustomInput />}
+              withPortal
+            />
+          </div>
+        </div>
+        <button
+          className="btn btn-warning"
+          style={{ margin: "15px" }}
+          onClick={Reserve}
+        >
+          Reserve
+        </button>
+        <BigCalendar />
       </div>
-      </div>
-      <div className = "row" style={{padding:"15px"}}>
-      <div className="col-md">
-        End date:
-      <DatePicker
-        selected={endDate}
-        onChange={(date) => setEndDate(date)}
-        minDate={startDate}
-        maxDate={lastavailableDate}
-        showTimeSelect
-        filterTime={filterPassedTime}
-        dateFormat="MMMM d, yyyy h:mm aa"
-        withPortal
-      />
-      </div>
-      </div>
-      <button className="btn btn-warning" style={{margin:"15px"}}>Reserve</button>
-      <BigCalendar/>
-    </div>
     </>
   );
 }

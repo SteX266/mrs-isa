@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 
-import "../style/Errors.css";
+import "../../style/Errors.css";
 
 function RegisterForm()  {  
 

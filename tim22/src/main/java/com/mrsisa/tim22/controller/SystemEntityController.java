@@ -38,12 +38,20 @@ public class SystemEntityController {
     }
 
 
-    @RequestMapping(value ="getCurrentUserAdventures", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserAdventures(@RequestParam String email){
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserAdventures(email), HttpStatus.OK);
+
+    @RequestMapping(value ="getCurrentUserEntities", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserEntities(){
+
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserEntities(), HttpStatus.OK);
     }
-    @RequestMapping(value ="createSubscribtion", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void createSubscribtion(@RequestParam String username, @RequestParam int entityId){
+    @RequestMapping(value = "/getEntityAvailabilityPeriods", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
+        return new ResponseEntity<ArrayList<AvailabilityPeriodDTO>>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value ="createSubscription", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void createSubscription(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.createSubscribtion(entityId, username);
     }
 
@@ -64,5 +72,6 @@ public class SystemEntityController {
     public ResponseEntity<ListingDTO> getDetailVacation(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getDetailVacation(id), HttpStatus.OK);
     }
+
 
 }

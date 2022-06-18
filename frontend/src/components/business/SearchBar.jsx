@@ -1,37 +1,69 @@
 import { useState } from "react";
-import { Button, Form, Stack } from "react-bootstrap";
+import { Button, Stack, Dropdown } from "react-bootstrap";
+
 import FilterModal from "./FilterModal";
 
-function SearchBar({ del, setServices }) {
-  const [searchField, setSearchField] = useState("");
-  const [filters, setFilters] = useState({});
+function SearchBar({setSearchFilters, search, setEntityType }) {
   const [show, setShow] = useState(false);
   const toggleModal = () => {
     setShow(!show);
   };
-  const search = () => {
-    console.log(searchField, filters, setServices);
-    del();
-  };
-  const onFieldChange = (event) => {
-    setSearchField(event.target.value);
-  };
+  function setType(event){
+    console.log("ALO BA");
+    setEntityType(event.target.name);
+  }
+
   return (
     <Stack direction="horizontal" gap={3}>
-      <Form.Control
-        type="search"
-        placeholder="Search..."
-        onChange={onFieldChange}
-      />
+      
 
+      <Dropdown style={{ padding: "5px" }}>
+          <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+            Entities
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item
+              as="button"
+              onClick={setType}
+              name="SHOW_ALL"
+            >
+              Show all
+            </Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={setType}
+              name="VACATION"
+            >
+              Vacations
+            </Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={setType}
+              name="VESSEL"
+            >
+              Vessels
+            </Dropdown.Item>
+            <Dropdown.Item
+              as="button"
+              onClick={setType}
+              name="ADVENTURE"
+            >
+              Adventures
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
+
+        <Button onClick={toggleModal} variant="outline-dark">
+        Filters
+      </Button>
       <Button onClick={search} variant="outline-dark">
         Search
       </Button>
-      <Button onClick={toggleModal} variant="outline-dark">
-        Filters
-      </Button>
+
       <FilterModal
-        setState={setFilters}
+        setState={setSearchFilters}
         show={show}
         toggleModal={toggleModal}
       />

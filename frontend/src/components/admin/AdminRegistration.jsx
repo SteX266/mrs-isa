@@ -36,7 +36,7 @@ export default function AdminRegistration() {
         }),
       };
 
-      fetch("http://localhost:8080/api/user/signup", requestOptions).then(
+      fetch("http://localhost:8080/auth/usersignup", requestOptions).then(
         async (response) => {
           const data = await response.json();
 

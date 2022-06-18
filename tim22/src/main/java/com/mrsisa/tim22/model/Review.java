@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 
 @NoArgsConstructor
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Entity
 public class Review {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private Integer score;
@@ -22,6 +24,8 @@ public class Review {
     private String text;
     @Column
     private boolean isApproved;
+    @Column
+    private LocalDate date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="sender_id")
@@ -29,4 +33,14 @@ public class Review {
     @ManyToOne
     @JoinColumn(name="system_entity_id")
     private SystemEntity systemEntity;
+
+    public Review(int score, String text, User client, SystemEntity systemEntity){
+        this.score = score;
+        this.text = text;
+        this.client = client;
+        this.systemEntity = systemEntity;
+        this.date = LocalDate.now();
+
+    }
+
 }

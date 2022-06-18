@@ -1,11 +1,12 @@
 
 import React,{useEffect, useState} from "react";
-import "../style/ListingProfilePage.css";
+import "../../style/ListingProfilePage.css";
 import axios from "axios";
-import Map from "./Map";
 import CarouselItem from "./CarouselItem";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import Dialog from "../modals/Dialog";
+import Map from "./Map";
 import {
   Table,
   Button,
@@ -38,7 +39,8 @@ export default function ListingProfilePage(){
     const [calendar,setCalendar] = useState("");
     const [promos, setPromos] = useState([]);
     const [button, setButton] = useState(<></>);
-
+    const [description, setDescription] = useState("");
+    const [firstPhoto,setFirstPhoto] = useState("");
     
   const headers = [
     "Start",
@@ -68,42 +70,59 @@ export default function ListingProfilePage(){
     
 
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("userToken"));
-        const entityId = params.id;
-        const requestOptions = {
-          headers: { Authorization: "Bearer " + token.accessToken },
-          params: { id: entityId },
-        };
-        axios
-          .get("http://localhost:8080/entity/getEntityById", requestOptions)
-          .then((res) => {
-            setListing(res.data);
-            setListing({id:res.data.id,
-            photos:res.data.photos,
-            name:res.data.name,
-            description:res.data.description,
-            price:res.data.price,
-            averageScore:res.data.averageScore,
-            capacity:res.data.capacity,
-            address:res.data.address,
-            firstImage:res.data.firstImage,
-            type:res.data.type,
-            rulesOfConduct:res.data.rulesOfConduct,
-            owner:res.data.owner,
-            ownersPhoneNumber:res.data.ownersPhoneNumber,
-            amenities:res.data.amenities
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const entityId = params.id;
+      const requestOptions = {
+        headers: { Authorization: "Bearer " + token.accessToken },
+        params: { id: entityId },
+      };
+
+      axios
+      .get("http://localhost:8080/entity/getEntityById", requestOptions)
+      .then((res) => {
+        setListing(res.data);
+        setListing({id:res.data.id,
+        photos:res.data.photos,
+        name:res.data.name,
+        description:res.data.description,
+        price:res.data.price,
+        averageScore:res.data.averageScore,
+        capacity:res.data.capacity,
+        address:res.data.address,
+        firstImage:res.data.firstImage,
+        type:res.data.type,
+        rulesOfConduct:res.data.rulesOfConduct,
+        owner:res.data.owner,
+        ownersPhoneNumber:res.data.ownersPhoneNumber,
+        amenities:res.data.amenities,
+        cancelationFee:res.data.cancelationFee
+        });
+        var link = "/client/calendar/" + res.data.id;
+        setCalendar(link);
+
+        const desc = "Are you sure you want to make a reservation? Cancellation fee is " + res.data.cancelationFee;
+        setDescription(desc);
+        getFirstPhoto(res.data.firstImage);
 
 
-            });
-            var link = "/client/calendar/" + res.data.id;
-            setCalendar(link);
-            
-            
-          });
+
+      });
+
         getEntityPromos();
         getSubscribeState();
       }, []);
 
+
+    function getFirstPhoto(first){
+      let ext = first.split(".");
+      axios.get("http://localhost:8080/auth/getImage/"+first,{responseType:"blob",params:{extension:ext[1]}}).then(response =>{
+          setFirstPhoto(URL.createObjectURL(response.data));
+        }).catch((error) =>{
+          console.log(error);
+        });
+    }
+
+    
     async function getSubscribeState(){
       const token = JSON.parse(localStorage.getItem("userToken"));
       const username = localStorage.getItem("username");
@@ -147,7 +166,7 @@ export default function ListingProfilePage(){
         params: { entityId: params.id, username:username },
       };
       axios
-        .get("http://localhost:8080/entity/createSubscribtion", requestOptions);
+        .get("http://localhost:8080/entity/createSubscription", requestOptions);
       
       setButton(<button onClick={unsubscribe} className="btn btn-warning" style={{marginRight:"10px", marginTop:"15px"}}>Unsubscribe</button>);
     }
@@ -172,7 +191,6 @@ export default function ListingProfilePage(){
         <>
         <div className="container">
     <div className="main-body">
-    
 
     
           <div className="row gutters-sm">
@@ -180,7 +198,7 @@ export default function ListingProfilePage(){
               <div className="card">
                 <div className="card-body">
                   <div className="d-flex flex-column align-items-center text-center">
-                    <img src={listing.firstImage} className="rounded" alt="Admin"  width="350"/>
+                    <img src={firstPhoto} className="rounded" alt="Admin"  width="350"/>
                     <div className="mt-3">
                       <h4>{listing.name}</h4>
                       <p className="text-secondary mb-1">{listing.type}</p>
@@ -198,9 +216,10 @@ export default function ListingProfilePage(){
   <div className="carousel-inner">
 
   <div className="carousel-item active">
-        <img src={listing.firstImage} className="d-block w-100" alt="..."/>
+        <img src={firstPhoto} className="d-block w-100" alt="..."/>
       </div>
     {listing.photos.map(renderAllPhotos)}
+
 
   </div>
   <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -288,7 +307,7 @@ export default function ListingProfilePage(){
 
                     <Table striped hover className="rounded  bg-light" style={{ paddingTop: "125px", marginTop:"15px" }}>
                     <TableHeader headers={headers} />
-                   <TableBody promos={promos} removePromo = {removePromo} />
+                   <TableBody promos={promos} removePromo = {removePromo} description={description} />
                     </Table>
                     
 
@@ -299,7 +318,6 @@ export default function ListingProfilePage(){
                   <div className="card h-100">
                     <div className="card-body">
                     <Map address={listing.address}></Map>
-
                     </div>
                   </div>
                 </div>
@@ -308,6 +326,8 @@ export default function ListingProfilePage(){
           </div>
         </div>
     </div>
+
+    
         </>
 
     );
@@ -332,7 +352,7 @@ function TableBody(props) {
   return (
     <tbody>
       {props.promos.map((promo) => (
-        <Promo key={promo.id} promo={promo} removePromo = {props.removePromo} />
+        <Promo key={promo.id} promo={promo} removePromo = {props.removePromo} description={props.description} />
     ))}
     </tbody>
   );
@@ -341,39 +361,64 @@ function TableBody(props) {
 function Promo(props) {
   const promo = props.promo;
   const button = getButton();
+  const desc = props.description;
+  
+  const [showDialog, setShowDialog] = useState(false);
 
-  function reservePromo(e) {
-    const id = e.target.value;
+
+  function confirmReservation(){
+    reservePromo();
+    setShowDialog(false);
+  }
+  function cancelReservation(){
+    setShowDialog(false);
+  }
+
+  function reservePromo() {
     const username = localStorage.getItem("username");
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: { Authorization: "Bearer " + token.accessToken },
-      params: { promoId: id, username:username },
+      params: { promoId: promo.id, username:username },
     };
     axios
       .get("http://localhost:8080/reservation/createPromoReservation", requestOptions)
       .then((res) => {
         console.log(res);
-        props.removePromo(id);
       });
 
   }
 
   function getButton() {
     return (
-      <Button value={promo.id} onClick={e => reservePromo(e, "value")} variant="outline-dark">
+      <Button value={promo.id} onClick={() => {setShowDialog(true)}} variant="outline-dark">
         Reserve
       </Button>
     );
   }
 
   return (
+    <>
     <tr id={promo.id}>
       <td>{promo.dateFrom}</td>
       <td> {promo.dateTo}</td>
       <td>{promo.price}</td>
       <td>{button}</td>
     </tr>
+
+
+<Dialog
+        show={showDialog}
+        title="Create reservation?"
+        description={desc}
+        confirmed={confirmReservation}
+        canceled={cancelReservation}
+        hasText={false}
+      />
+
+
+      </>
+
   );
 }
 

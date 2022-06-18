@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Dialog from "../modals/Dialog";
+import toast from "react-hot-toast";
+
 import {
   Container,
   Navbar,
@@ -15,9 +18,10 @@ export default function ClientReservationsTable(props) {
   const [sortedByDate, setSortedByDate] = useState(false);
   const [sortedByDuration, setSortedByDuration] = useState(false);
 
-  const [pastReservations, setPastReservations] = useState([]);
-
-  const [searchPastReservations, setSearchPastReservations] = useState([]);
+  const [upcomingReservations, setUpcomingReservations] = useState([]);
+  const [searchUpcomingReservations, setSearchUpcomingReservations] = useState(
+    []
+  );
 
   const headers = [
     "Type",
@@ -86,17 +90,16 @@ export default function ClientReservationsTable(props) {
             future.push(element);
           }
         });
-        setPastReservations(past);
-        setSearchPastReservations(past);
+        setUpcomingReservations(future);
+        setSearchUpcomingReservations(future);
       });
   }
   function onSearchFieldChange(event) {
-    console.log(pastReservations);
 
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
-    for (let index = 0; index < pastReservations.length; index++) {
-      const reservation = pastReservations[index];
+    for (let index = 0; index < upcomingReservations.length; index++) {
+      const reservation = upcomingReservations[index];
       if (
         reservation.entityName.toLowerCase().includes(searchParam) ||
         reservation.owner.toLowerCase().includes(searchParam) ||
@@ -105,38 +108,36 @@ export default function ClientReservationsTable(props) {
         searchResult.push(reservation);
       }
     }
-    setSearchPastReservations(searchResult);
+    setSearchUpcomingReservations(searchResult);
   }
-  function filterPastEntities(event) {
+
+
+  function filterUpcomingEntities(event) {
     var filterType = event.target.name;
     if (filterType === "SHOW_ALL") {
-      setSearchPastReservations(pastReservations);
+      setSearchUpcomingReservations(upcomingReservations);
       return;
     } else {
       const filterResult = [];
 
-      for (let index = 0; index < pastReservations.length; index++) {
-        const reservation = pastReservations[index];
+      for (let index = 0; index < upcomingReservations.length; index++) {
+        const reservation = upcomingReservations[index];
         if (reservation.entityType == filterType) {
           filterResult.push(reservation);
         }
       }
 
-      setSearchPastReservations(filterResult);
+      setSearchUpcomingReservations(filterResult);
     }
   }
 
-
-
-  function sortPastReservations(event) {
+  function sortReservations(event) {
     var sortParam = event.target.name;
     const sortResult = [];
-    for (let index = 0; index < searchPastReservations.length; index++) {
-      const reservation = searchPastReservations[index];
+    for (let index = 0; index < searchUpcomingReservations.length; index++) {
+      const reservation = searchUpcomingReservations[index];
       sortResult.push(reservation);
     }
-
-    console.log(sortResult);
 
     if (sortParam == "PRICE") {
       if (sortedByPrice) {
@@ -181,16 +182,17 @@ export default function ClientReservationsTable(props) {
       }
     }
 
-    setSearchPastReservations(sortResult);
+    setSearchUpcomingReservations(sortResult);
   }
 
   return (
     <Container style={{ maxWidth: "95%" }}>
-
-
       <Navbar collapseOnSelect className="rounded border border-dark" style={{marginTop:"15px"}}>
         <Container>
-          <Navbar.Text className="text-dark"> Reservation history </Navbar.Text>
+          <Navbar.Text className="text-dark">
+            {" "}
+            Upcoming reservations{" "}
+          </Navbar.Text>
         </Container>
 
         <Dropdown style={{ padding: "5px" }}>
@@ -201,28 +203,28 @@ export default function ClientReservationsTable(props) {
           <Dropdown.Menu>
             <Dropdown.Item
               as="button"
-              onClick={filterPastEntities}
+              onClick={filterUpcomingEntities}
               name="SHOW_ALL"
             >
               Show all
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterPastEntities}
+              onClick={filterUpcomingEntities}
               name="VACATION"
             >
               Vacations
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterPastEntities}
+              onClick={filterUpcomingEntities}
               name="VESSEL"
             >
               Vessels
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={filterPastEntities}
+              onClick={filterUpcomingEntities}
               name="ADVENTURE"
             >
               Adventures
@@ -236,23 +238,23 @@ export default function ClientReservationsTable(props) {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item
+          <Dropdown.Item
               as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="START_DATE"
             >
               Start date
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="PRICE"
             >
               Price
             </Dropdown.Item>
             <Dropdown.Item
               as="button"
-              onClick={sortPastReservations}
+              onClick={sortReservations}
               name="DURATION"
             >
               Duration
@@ -262,118 +264,152 @@ export default function ClientReservationsTable(props) {
 
         <SearchForm onSearchFieldChange={onSearchFieldChange} />
       </Navbar>
-      <Table striped hover className="rounded table-dark bg-light" style={{ paddingTop: "125px", marginTop:"15px" }}>
+      <Table striped hover className="rounded table-dark" style={{ paddingTop: "125px",marginTop:"15px"}}>
         <TableHeader headers={headers} />
-        <TableBody reservations={searchPastReservations} />
+        <TableBody reservations={searchUpcomingReservations} />
       </Table>
+
+      
+
+
     </Container>
   );
-}
 
-function SearchForm(props) {
-  return (
-    <Form>
-      <FormControl
-        type="search"
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-        onChange={props.onSearchFieldChange}
-      />
-    </Form>
-  );
-}
 
-function TableHeader(props) {
-  return (
-    <thead>
-      <tr>
-        {props.headers.map((header, index) => (
-          <th key={index}>{header}</th>
-        ))}
-      </tr>
-    </thead>
-  );
-}
-
-function TableBody(props) {
-  return (
-    <tbody>
-      {props.reservations.map((reservation) => (
-        <Reservation key={reservation.id} reservation={reservation} />
-      ))}
-    </tbody>
-  );
-}
-
-function Reservation(props) {
-  const [reservation, setReservation] = useState(props.reservation);
-  const [button, setButton] = useState(getButton());
-
-  function cancelReservation() {
-    let newReservation = reservation;
-    newReservation.status = "CANCELED";
-    setReservation(newReservation);
-    setButton(getButton());
-    saveReservation(newReservation.id);
-  }
-
-  function saveReservation(reservationId) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        entityId: reservationId,
-      },
-    };
-
-    axios.get(
-      "http://localhost:8080/reservation/cancelReservation",
-      requestOptions
+  function SearchForm(props) {
+    return (
+      <Form>
+        <FormControl
+          type="search"
+          placeholder="Search"
+          className="me-2"
+          aria-label="Search"
+          onChange={props.onSearchFieldChange}
+        />
+      </Form>
     );
   }
-  function getButton() {
-    if (reservation.status == "APPROVED") {
-      return (
-        <Button onClick={cancelReservation} variant="outline-dark">
-          Cancel reservation
-        </Button>
-      );
-    } else if (reservation.status == "EXPIRED") {
-      return (
-        <>
-          <Button
-            onClick={cancelReservation}
-            variant="outline-light"
-            style={{ marginRight: "5px" }}
-          >
-            Review
-          </Button>
-          <Button onClick={cancelReservation} variant="outline-light">
-            Complaint
-          </Button>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+  
+  function TableHeader(props) {
+    return (
+      <thead>
+        <tr>
+          {props.headers.map((header, index) => (
+            <th key={index}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+    );
   }
+  
+  function TableBody(props) {
+    return (
+      <tbody>
+        {props.reservations.map((reservation) => (
+          <Reservation key={reservation.id} reservation={reservation} />
+        ))}
+      </tbody>
+    );
+  }
+  
+  function Reservation(props) {
+    const [reservation, setReservation] = useState(props.reservation);
+    const [showTaskDialog, setShowTaskDialog] = useState(false);
 
-  return (
-    <tr id={reservation.id}>
-      <td>{reservation.entityType}</td>
-      <td> {reservation.entityName}</td>
-      <td>{reservation.location}</td>
-      <td>{reservation.startDate}</td>
-      <td>{reservation.endDate}</td>
-      <td>{reservation.fee}$</td>
-      <td>{reservation.owner}</td>
-      <td>{reservation.status}</td>
-      <td>{button}</td>
-    </tr>
-  );
+
+
+    const [button, setButton] = useState(<></>);
+
+
+    useEffect(() => {
+      setButton(getButton());
+    }, []);
+
+
+    
+    
+    function cancelCanceling(){
+      setShowTaskDialog(false);
+    } 
+  
+    function cancelReservation() {
+
+      saveReservation(reservation.id);
+      setShowTaskDialog(false);
+
+    }
+  
+    function saveReservation(reservationId) {
+      const token = JSON.parse(localStorage.getItem("userToken"));
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token.accessToken,
+        },
+        params: {
+          entityId: reservationId,
+        },
+      };
+  
+      axios.get(
+        "http://localhost:8080/reservation/cancelReservation",
+        requestOptions
+      ).catch(() => {
+
+        toast.error("Reservations within 3 days cannot be canceled!");
+
+      }).then(async result =>{
+        if(result.data == "OK"){
+
+          let newReservation = reservation;
+          newReservation.status = "CANCELED";
+          setReservation(newReservation);
+          setButton(getButton());
+          toast.success("Reservation canceled successfully!");
+
+
+        }
+
+      });
+    }
+    function getButton() {
+      if (reservation.status == "APPROVED") {
+        return (
+          <Button onClick={() => {setShowTaskDialog(true)}} variant="outline-light">
+            Cancel reservation
+          </Button>
+        );
+      } else {
+        return <></>;
+      }
+    }
+  
+    return (
+      <>
+      <tr id={reservation.id}>
+        <td>{reservation.entityType}</td>
+        <td> {reservation.entityName}</td>
+        <td>{reservation.location}</td>
+        <td>{reservation.startDate}</td>
+        <td>{reservation.endDate}</td>
+        <td>{reservation.fee}$</td>
+        <td>{reservation.owner}</td>
+        <td>{reservation.status}</td>
+        <td>{button}</td>
+      </tr>
+
+<Dialog
+show={showTaskDialog}
+title="Cancel reservation?"
+description="Are you sure you want to cancel this reservation? You will get 1 penalty for canceling it."
+confirmed={cancelReservation}
+canceled={cancelCanceling}
+hasText={false}
+/>
+</>
+    );
+  }
 }
+
+

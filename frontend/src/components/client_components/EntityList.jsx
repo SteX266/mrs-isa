@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EntityCard from "./EntityCard";
-import { MDBCol, MDBInput } from "mdbreact";
+import { MDBCol } from "mdbreact";
 import Pagination from "./Pagination";
+import EntityCardTest from "./EntityCardTest";
+import SearchBar from "../business/SearchBar";
 
 function EntityList(props) {
-  const [allEntities, setAllEntities] = useState([]);
-  const [searchList, setSearchList] = useState([]);
 
   const [currentEntities, setCurrentEntities] = useState([]);
-  const postsPerPage = 8;
+  const postsPerPage = 6;
 
   const [indexOfLastPost, setIndexOfLastPost] = useState(1*postsPerPage);
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(1);
+
+
+  const [entityType, setEntityType] = useState("SHOW_ALL");
+  const[currentEntityType, setCurrentEntityType] = useState("SHOW_ALL");
+
+  const [searchFilters, setSearchFilters] = useState({
+    rentalFeeFrom: 0,
+    rentalFeeTo: 500,
+    cancellationFeeFrom: 0,
+    cancellationFeeTo: 500,
+    guestsFrom: 1,
+    guestsTo: 10,
+    street: "",
+    city: "",
+    country: "",
+  });
+  const [currentFilters, setCurrentFilters] = useState({
+    rentalFeeFrom: 0,
+    rentalFeeTo: 500,
+    cancellationFeeFrom: 0,
+    cancellationFeeTo: 500,
+    guestsFrom: 1,
+    guestsTo: 10,
+    street: "",
+    city: "",
+    country: "",
+  });
 
 
   function setPageNumber(pageNumber){
@@ -23,11 +49,14 @@ function EntityList(props) {
 
   useEffect(() => {
     filtering();
-  }, [props.type,indexOfFirstPost]);
+  }, [props.type,indexOfFirstPost,currentFilters, currentEntityType]);
+
+
 
   function renderAllEntities(entity) {
+
     return (
-      <EntityCard
+      <EntityCardTest
         id={entity.id}
         title={entity.name}
         address={entity.address}
@@ -39,8 +68,8 @@ function EntityList(props) {
   }
 
   async function filtering() {
-    console.log(indexOfFirstPost);
-    console.log(indexOfLastPost);
+    console.log(currentFilters);
+    console.log(currentEntityType);
 
     const requestOptions = {
       headers: {
@@ -50,50 +79,31 @@ function EntityList(props) {
       },
       params:{
         startId:indexOfFirstPost,
-        endId:indexOfLastPost
-      }
+        endId:indexOfLastPost,
+        entityType:currentEntityType,
+      },
+      body:JSON.stringify({currentFilters})
     };
     let res = await axios.get(
-      "http://localhost:8080/auth/getAllEntities",
+      "http://localhost:8080/auth/getFilteredEntities",
       requestOptions
     );
-
-    if (props.type === "ALL_ENTITIES") {
-      setAllEntities(res.data);
-      setSearchList(res.data);
-      setCurrentEntities(res.data);
-      console.log(res.data);
-
-      return;
-    } else {
-      var filteredList = [];
-
-      for (let i = 0; i < res.data.length; i++) {
-        const entity = res.data[i];
-        if (entity.type === props.type) {
-          filteredList.push(entity);
-        }
-      }
-      setAllEntities(filteredList);
-      setSearchList(filteredList);
-      console.log(searchList);
-    }
+    setCurrentEntities(res.data);
+    console.log(res.data);
   }
-  function searchFieldChanged(e) {
-    var newList = [];
+  function setFilters(filters){
+    setSearchFilters(filters);
+  }
 
-    const searchParam = e.target.value.toLowerCase();
-    for (let i = 0; i < allEntities.length; i++) {
-      const entity = allEntities[i];
-      if (
-        entity.name.toLowerCase().includes(searchParam) ||
-        entity.address.toLowerCase().includes(searchParam)
-      ) {
-        newList.push(entity);
-      }
-    }
+  function searchEntities(){
+    setCurrentEntityType(entityType);
+    setCurrentFilters(searchFilters);
+  }
 
-    setSearchList(newList);
+  function setType(type){
+    console.log("ALOOOOO");
+    console.log(type);
+    setEntityType(type);
   }
 
   return (
@@ -101,12 +111,7 @@ function EntityList(props) {
       <div className="album py-5 ">
         <div className="container">
           <MDBCol md="12">
-            <MDBInput
-              onChange={searchFieldChanged}
-              hint="Search"
-              type="text"
-              containerClass="active-pink active-pink-2 mt-0 mb-3"
-            />
+            <SearchBar setSearchFilters={setFilters} search = {searchEntities} setEntityType = {setType}/>
           </MDBCol>
           <div className="row" id="entities">
             {currentEntities.map(renderAllEntities)}

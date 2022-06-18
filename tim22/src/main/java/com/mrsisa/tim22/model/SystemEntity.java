@@ -82,4 +82,12 @@ public abstract class SystemEntity {
     public void removeSubscriber(User u) {
         this.subscribers.remove(u);
     }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void addComplaint(Complaint complaint) {
+        this.complaints.add(complaint);
+    }
 }

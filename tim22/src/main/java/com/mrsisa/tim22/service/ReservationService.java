@@ -2,14 +2,8 @@ package com.mrsisa.tim22.service;
 
 
 import com.mrsisa.tim22.dto.ReservationDTO;
-import com.mrsisa.tim22.model.Address;
-import com.mrsisa.tim22.model.Promo;
-import com.mrsisa.tim22.model.Reservation;
-import com.mrsisa.tim22.model.User;
-import com.mrsisa.tim22.repository.PromoRepository;
-import com.mrsisa.tim22.repository.ReservationRepository;
-import com.mrsisa.tim22.repository.SystemEntityRepository;
-import com.mrsisa.tim22.repository.UserRepository;
+import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +23,9 @@ public class ReservationService {
     private PromoRepository promoRepository;
     @Autowired
     private SystemEntityRepository systemEntityRepository;
+
+    @Autowired
+    private PenaltyRepository penaltyRepository;
 
 
     public ArrayList<ReservationDTO> getClientReservations(String username){
@@ -69,11 +66,21 @@ public class ReservationService {
         return reservations;
     }
 
-    public void cancelReservation(int entityId) {
-        System.out.println("Otkazivanje rezervacije");
+    public boolean cancelReservation(int entityId) {
         Reservation r = reservationRepository.findOneById(entityId);
+        if (LocalDateTime.now().plusDays(3).isAfter(r.getDateFrom())){
+            return false;
+
+        }
+        User u = r.getClient();
+        Penalty p = new Penalty(u);
+        u.addPenalty(p);
+
         r.setCanceled(true);
+        penaltyRepository.save(p);
         reservationRepository.save(r);
+
+        return true;
     }
 
     public void approveReservation(int entityId) {

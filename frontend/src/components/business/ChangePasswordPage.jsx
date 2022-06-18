@@ -8,7 +8,7 @@ class ChangePasswordPage extends Component {
     return (
       <div style={{ padding: "55px" }}>
         <Container
-          style={({ maxWidth: "30%" }, { padding: "20px" })}
+          style={{ maxWidth: "30%" }}
           className="rounded border border-dark"
         >
           <PasswordChangeForm></PasswordChangeForm>

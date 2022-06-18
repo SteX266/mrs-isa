@@ -1,38 +1,33 @@
-import Dialog from "../Dialog";
+import Dialog from "../modals/Dialog";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/Errors.css";
-function ClientProfile() {
+
+function AdminProfile() {
   const [showTaskDialog, setShowTaskDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     surname: "",
     phoneNumber: "",
     addressLine: "",
-    streetNumber: "",
-    city: "",
-    country: "",
-    state: "",
   });
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [addressLine, setAddressLine] = useState("");
-  const [streetNumber, setStreetNumber] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (validateForm()) {
+      const token = JSON.parse(localStorage.getItem("userToken"));
+
       const requestOptions = {
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token.accessToken,
         },
         params: {
           email: email,
@@ -40,14 +35,9 @@ function ClientProfile() {
           surname: surname,
           phoneNumber: phoneNumber,
           addressLine: addressLine,
-          streetNumber: streetNumber,
-          city: city,
-          country: country,
-          state: state,
         },
       };
-      axios.get("http://localhost:8080/api/user/editUserData", requestOptions);
-
+      axios.get("http://localhost:8080/user/editUserData", requestOptions);
       console.log("Podaci uspesno izmenjeni!");
     } else {
       console.log("Invalid Form");
@@ -55,19 +45,21 @@ function ClientProfile() {
   };
 
   const confirmDeleteProfile = () => {
+    const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        Authorization: "Bearer " + token.accessToken,
       },
       params: {
-        user: "stex",
+        username: email,
+        text: "Yes, I'm sure!",
       },
     };
 
     axios.get(
-      "http://localhost:8080/api/user/createCancellationRequest",
+      "http://localhost:8080/cancellationRequest/createCancellationRequest",
       requestOptions
     );
     setShowTaskDialog(false);
@@ -109,34 +101,12 @@ function ClientProfile() {
     } else {
       currentErrors.addressLine = "";
     }
-    if (streetNumber === "") {
-      currentErrors.streetNumber = "Street number field is required!";
-      valid = false;
-    } else {
-      currentErrors.streetNumber = "";
-    }
-    if (city === "") {
-      currentErrors.city = "City field is required!";
-      valid = false;
-    } else {
-      currentErrors.city = "";
-    }
-    if (country === "") {
-      currentErrors.country = "Country field is required!";
-      valid = false;
-    } else {
-      currentErrors.country = "";
-    }
 
     setErrors({
       name: currentErrors.name,
       surname: currentErrors.surname,
       phoneNumber: currentErrors.phoneNumber,
       addressLine: currentErrors.addressLine,
-      streetNumber: currentErrors.streetNumber,
-      city: currentErrors.city,
-      country: currentErrors.country,
-      state: "",
     });
     return valid;
   };
@@ -158,47 +128,25 @@ function ClientProfile() {
       case "addressLine":
         setAddressLine(value);
         break;
-      case "streetNumber":
-        setStreetNumber(value);
-        break;
-      case "city":
-        setCity(value);
-        break;
-      case "country":
-        setCountry(value);
-        break;
-      case "state":
-        setState(value);
-        break;
       default:
         break;
     }
   };
 
   useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+      headers: { Authorization: "Bearer " + token.accessToken },
+      params: { username: localStorage.getItem("username") },
     };
     axios
-      .get("http://localhost:8080/api/user/getCurrentUser", requestOptions)
+      .get("http://localhost:8080/user/getUserByUsername", requestOptions)
       .then((res) => {
-        console.log(res.data.name);
         setName(res.data.name);
         setSurname(res.data.surname);
         setEmail(res.data.email);
         setPhoneNumber(res.data.phoneNumber);
         setAddressLine(res.data.addressLine);
-        setStreetNumber(res.data.streetNumber);
-        setCity(res.data.city);
-        setCountry(res.data.country);
-        setState(res.data.state);
-
-        console.log(name);
-        console.log(surname);
       });
   }, []);
 
@@ -238,7 +186,7 @@ function ClientProfile() {
                     value={name}
                   />
                   {errors.name.length > 0 && (
-                    <span className="error">{errors.name}</span>
+                    <span classNameName="error">{errors.name}</span>
                   )}
                 </div>
                 <div className="col-md-6">
@@ -252,7 +200,7 @@ function ClientProfile() {
                     value={surname}
                   />
                   {errors.surname.length > 0 && (
-                    <span className="error">{errors.surname}</span>
+                    <span classNameName="error">{errors.surname}</span>
                   )}
                 </div>
               </div>
@@ -268,9 +216,11 @@ function ClientProfile() {
                     value={phoneNumber}
                   />
                   {errors.phoneNumber.length > 0 && (
-                    <span className="error">{errors.phoneNumber}</span>
+                    <span classNameName="error">{errors.phoneNumber}</span>
                   )}
                 </div>
+              </div>
+              <div className="row mt-3">
                 <div className="col-md-12">
                   <label className="labels">Address Line</label>
                   <input
@@ -282,77 +232,42 @@ function ClientProfile() {
                     value={addressLine}
                   />
                   {errors.addressLine.length > 0 && (
-                    <span className="error">{errors.addressLine}</span>
-                  )}
-                </div>
-                <div className="col-md-12">
-                  <label className="labels">Street number</label>
-                  <input
-                    onChange={handleChange}
-                    name="streetNumber"
-                    type="text"
-                    className="form-control"
-                    placeholder="enter street number"
-                    value={streetNumber}
-                  />
-                  {errors.streetNumber.length > 0 && (
-                    <span className="error">{errors.streetNumber}</span>
-                  )}
-                </div>
-                <div className="col-md-12">
-                  <label className="labels">City</label>
-                  <input
-                    onChange={handleChange}
-                    name="city"
-                    type="text"
-                    className="form-control"
-                    placeholder="enter city"
-                    value={city}
-                  />
-                  {errors.city.length > 0 && (
-                    <span className="error">{errors.city}</span>
+                    <span classNameName="error">{errors.addressLine}</span>
                   )}
                 </div>
               </div>
-              <div className="row mt-3">
-                <div className="col-md-6">
-                  <label className="labels">Country</label>
-                  <input
-                    onChange={handleChange}
-                    name="country"
-                    type="text"
-                    className="form-control"
-                    placeholder="country"
-                    value={country}
-                  />
-                  {errors.country.length > 0 && (
-                    <span className="error">{errors.country}</span>
-                  )}
-                </div>
-                <div className="col-md-6">
-                  <label className="labels">State/Region</label>
-                  <input
-                    onChange={handleChange}
-                    name="state"
-                    type="text"
-                    className="form-control"
-                    placeholder="state"
-                    value={state}
-                  />
-                  {errors.state.length > 0 && (
-                    <span className="error">{errors.state}</span>
-                  )}
-                </div>
-              </div>
+
               <div className="mt-5 text-center">
                 <button
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    setShowEditDialog(true);
+                  }}
                   className="btn btn-primary profile-button"
                   type="button"
                 >
                   Save Profile
                 </button>
               </div>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="p-5 py-2">
+              <br />
+
+              <div className="d-flex justify-content-end align-items-center experience">
+                <button
+                  onClick={() => {
+                    setShowTaskDialog(true);
+                  }}
+                  className="btn btn-danger delete-button"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Delete Profile
+                </button>
+              </div>
+              <br />
             </div>
           </div>
         </div>
@@ -364,9 +279,27 @@ function ClientProfile() {
         description="Are you sure you want to delete your profile?"
         confirmed={confirmDeleteProfile}
         canceled={cancelDeleteProfile}
+        hasText={true}
+      />
+
+      <Dialog
+        show={showEditDialog}
+        title="Edit profile?"
+        description="Are you sure you want to edit your profile?"
+        confirmed={confirmEditProfile}
+        canceled={cancelEditProfile}
+        hasText={false}
       />
     </>
   );
+
+  function confirmEditProfile() {
+    handleSubmit();
+    setShowEditDialog(false);
+  }
+  function cancelEditProfile() {
+    setShowEditDialog(false);
+  }
 }
 
-export default ClientProfile;
+export default AdminProfile;

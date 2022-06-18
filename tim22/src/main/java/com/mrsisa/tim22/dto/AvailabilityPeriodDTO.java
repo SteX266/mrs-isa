@@ -7,19 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class AvailabilityPeriodDTO {
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
+    private String dateFrom;
+    private String dateTo;
 
-    public AvailabilityPeriodDTO(AvailabilityPeriod a){
-        this.dateFrom = a.getDateFrom();
-        this.dateTo =a.getDateTo();
+    public AvailabilityPeriodDTO(AvailabilityPeriod a) {
+        this.dateFrom = String.valueOf(a.getDateFrom());
+        this.dateTo = String.valueOf(a.getDateTo());
     }
 }

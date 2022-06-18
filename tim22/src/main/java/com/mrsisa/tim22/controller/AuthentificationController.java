@@ -1,9 +1,6 @@
 package com.mrsisa.tim22.controller;
 
-import com.mrsisa.tim22.dto.SystemEntityDTO;
-import com.mrsisa.tim22.dto.UserCredentialsDTO;
-import com.mrsisa.tim22.dto.UserRequest;
-import com.mrsisa.tim22.dto.UserTokenState;
+import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.exception.ResourceConflictException;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.EmailService;
@@ -11,22 +8,26 @@ import com.mrsisa.tim22.service.SystemEntityService;
 import com.mrsisa.tim22.service.UserService;
 import com.mrsisa.tim22.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthentificationController {
 
 
@@ -51,8 +52,16 @@ public class AuthentificationController {
 
         // Ukoliko kredencijali nisu ispravni, logovanje nece biti uspesno, desice se
         // AuthenticationException
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        Authentication authentication;
+        try{
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+
+        }
+        catch(AuthenticationException ae){
+            return new ResponseEntity<>(new UserTokenState(), HttpStatus.NOT_FOUND);
+        }
+
 
         // Ukoliko je autentifikacija uspesna, ubaci korisnika u trenutni security
         // kontekst
@@ -67,7 +76,7 @@ public class AuthentificationController {
 
         String role = user.getRoles().get(0).getName();
         // Vrati token kao odgovor na uspesnu autentifikaciju
-        return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, role));
+        return new ResponseEntity<>(new UserTokenState(jwt, expiresIn, role), HttpStatus.OK);
     }
 
 
@@ -102,9 +111,27 @@ public class AuthentificationController {
     @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
 
-        System.out.println(startId);
-        System.out.println(endId);
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getFilteredEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getFilteredEntities(@RequestParam int startId, @RequestParam int endId, @RequestParam String entityType, @RequestBody FilterDTO filters){
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(startId, endId, entityType, filters), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/getImage/{name}")
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable String name, @RequestParam String extension){
+        try{
+            System.out.println(extension);
+            String path = "src/main/resources/images/" + name + "." + extension;
+            System.out.println(path);
+            FileSystemResource imgFile = new FileSystemResource(path);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(imgFile.getInputStream()));
+        } catch (IOException e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

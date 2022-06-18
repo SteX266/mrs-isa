@@ -33,8 +33,17 @@ public class ReservationController {
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getOwnerReservations(email), HttpStatus.OK);
     }
     @RequestMapping(value = "/cancelReservation", method=RequestMethod.GET)
-    public void cancelReservation(@RequestParam int entityId){
-        reservationService.cancelReservation(entityId);
+    public ResponseEntity<String>cancelReservation(@RequestParam int entityId){
+
+
+
+        if (reservationService.cancelReservation(entityId)){
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Too late to cancel.", HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @RequestMapping(value = "/approveReservation", method=RequestMethod.GET)

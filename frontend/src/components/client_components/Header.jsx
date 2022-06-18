@@ -1,9 +1,9 @@
-import "../style/Header.css";
+import "../../style/Header.css";
 
-import vacation from "../images/333.png";
-import vessel from "../images/111.png";
-import fishing from "../images/222.png";
-import business from "../images/ljudi.png";
+import vacation from "../../images/333.png";
+import vessel from "../../images/111.png";
+import fishing from "../../images/222.png";
+import business from "../../images/ljudi.png";
 import { Link } from "react-router-dom";
 
 const Header = () => {
