@@ -121,4 +121,36 @@ public class SystemEntityService {
         }
         return sum/len;
     }
+
+    public int getBestRated() {
+        int id = 0;
+        double bestRating = 0;
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            if(e.getAverageScore()> bestRating){
+                bestRating = e.getAverageScore();
+                id = e.getId();
+            }
+        }
+
+        return id;
+    }
+
+    public int getWorstRated() {
+        int id = -1;
+        double worst = 5;
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            if(e.getAverageScore()< worst){
+                worst = e.getAverageScore();
+                id = e.getId();
+            }
+        }
+
+        return id;
+    }
 }

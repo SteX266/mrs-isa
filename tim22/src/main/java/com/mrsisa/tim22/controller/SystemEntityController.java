@@ -63,6 +63,14 @@ public class SystemEntityController {
     public double getAverageRating(){
         return systemEntityService.getAverageRating();
     }
+    @RequestMapping(value ="getBestRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public int getBestRated(){
+        return systemEntityService.getBestRated();
+    }
+    @RequestMapping(value ="getWorstRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public int getWorstRated(){
+        return systemEntityService.getWorstRated();
+    }
 
 
 
