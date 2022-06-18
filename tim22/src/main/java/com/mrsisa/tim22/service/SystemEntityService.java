@@ -9,6 +9,7 @@ import com.mrsisa.tim22.repository.AvailabilityPeriodRepository;
 
 import com.mrsisa.tim22.model.User;
 
+import com.mrsisa.tim22.repository.ReservationRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class SystemEntityService {
     private AvailabilityPeriodRepository availabilityPeriodRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     public ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new ArrayList<>();
@@ -159,7 +163,7 @@ public class SystemEntityService {
         LocalDateTime start = LocalDateTime.now().minusYears(1);
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
-        while (start.isBefore(now)){
+        while (!start.isAfter(now)){
             String k = String.valueOf(start.getMonth()) +" - " + String.valueOf(start.getYear());
             dtos.add(new ReservationsReportDTO(k, 0));
             start =start.plusMonths(1);
@@ -170,7 +174,6 @@ public class SystemEntityService {
         String email = user.getUsername();
         for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             for (Reservation r : e.getReservations()) {
-                System.out.println("REZERVACIJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
                     String k = String.valueOf(r.getDateFrom().getMonth()) + " - " + String.valueOf(r.getDateFrom().getYear());
                     for (ReservationsReportDTO report : dtos) {
@@ -182,6 +185,62 @@ public class SystemEntityService {
                 }
             }
         }
+        return dtos;
+    }
+
+    public ArrayList<ReservationsReportDTO> getReservationsAmountYearly() {
+        LocalDateTime start = LocalDateTime.now().minusYears(10);
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
+        while (!start.isAfter(now)){
+            String k = String.valueOf(start.getYear());
+            dtos.add(new ReservationsReportDTO(k, 0));
+            start =start.plusYears(1);
+        }
+        start = LocalDateTime.now().minusYears(10);
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            for (Reservation r : e.getReservations()) {
+                if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
+                    String k = String.valueOf(r.getDateFrom().getYear());
+                    for (ReservationsReportDTO report : dtos) {
+                        if (report.getName().equals(k)) {
+                            report.increaseAmount();
+                        }
+                    }
+
+                }
+            }
+        }
+        return dtos;
+    }
+
+    public ArrayList<ReservationsReportDTO> getReservationsAmountWeekly() {
+        LocalDateTime start = LocalDateTime.now().minusWeeks(10);
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        while (!start.isAfter(now)){
+            String k = String.valueOf(start.getDayOfMonth()) +" " + start.getMonth()+ " - " + String.valueOf(start.plusWeeks(1).getDayOfMonth()) +" " + start.plusWeeks(1).getMonth();
+            int n =0;
+            for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+
+                for (Reservation r : e.getReservations()) {
+                    if (r.getDateFrom().isAfter(start) && r.getDateFrom().isBefore(start.plusWeeks(1))) {
+                        n += 1;
+                    }
+                }
+            }
+            dtos.add(new ReservationsReportDTO(k, n));
+            start =start.plusWeeks(1);
+        }
+
+
+
         return dtos;
     }
 }

@@ -39,11 +39,12 @@ export default function AttendanceReport() {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [type]);
   useEffect(() => {
     setGraph(createGraph());
   }, [type, data]);
   useEffect(() => {}, []);
+
   function getData() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     let path = "http://localhost:8080/entity/getReservationsAmountMonthly";

@@ -78,5 +78,12 @@ public class SystemEntityController {
     public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountMonthly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountMonthly(), HttpStatus.OK);
     }
-
+    @RequestMapping(value ="getReservationsAmountYearly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountYearly(){
+        return new ResponseEntity<>(systemEntityService.getReservationsAmountYearly(), HttpStatus.OK);
+    }
+    @RequestMapping(value ="getReservationsAmountWeekly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountWeekly(){
+        return new ResponseEntity<>(systemEntityService.getReservationsAmountWeekly(), HttpStatus.OK);
+    }
 }

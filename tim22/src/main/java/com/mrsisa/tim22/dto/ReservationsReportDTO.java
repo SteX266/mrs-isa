@@ -17,4 +17,7 @@ public class ReservationsReportDTO {
     public void increaseAmount(){
         this.Attendance += 1;
     }
+    public void increaseAmount(int i){
+        this.Attendance += i;
+    }
 }
