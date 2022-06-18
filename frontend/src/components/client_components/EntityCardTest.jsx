@@ -10,15 +10,22 @@ export default function EntityCardTest  (props)   {
     const [photo, setPhoto] = useState("");
 
     useEffect(()=> {
+        setImage();
+    },[props.id]);
 
+    async function setImage(){
         let ext = props.image.split(".");
-        axios.get("http://localhost:8080/auth/getImage/"+props.image,{responseType:"blob",params:{extension:ext[1]}}).then(response =>{
-            setPhoto(URL.createObjectURL(response.data));
+
+        let result = await axios.get("http://localhost:8080/auth/getImage/"+props.image,{responseType:"blob",params:{extension:ext[1]}}).then(response =>{
+            return URL.createObjectURL(response.data);
           }).catch((error) =>{
             console.log(error);
           });
+        setPhoto(result);
 
-    },[]);
+
+    }
+
     var link = "/client/profile/" + props.id;
     var title = props.title;
     if(title.length > 12){

@@ -39,24 +39,45 @@ public class SystemEntityService {
     }
 
     public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
-
-
-
         System.out.println("Prosao zahtev");
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
-
-
-
         for (SystemEntity entity : allEntities){
             if (!entity.isDeleted()){
                 entities.add(new SystemEntityDTO(entity));
             }
         }
-
-
         return entities;
+    }
 
+    public ArrayList<SystemEntityDTO> getFilteredEntities(int startId, int endId, String entityType, FilterDTO filters) {
+
+        List<SystemEntity> filteredList = new ArrayList<>();
+
+        for(SystemEntity entity:systemEntityRepository.findAll()){
+            if (entity.getEntityType().toString().equals(entityType) || entityType.equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
+                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
+                        if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
+                            Address address = entity.getAddress();
+                            if (address.getStreetName().contains(filters.street) && address.getCity().contains(filters.city) && address.getCountry().contains(filters.country)){
+                                filteredList.add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ArrayList<SystemEntityDTO> systemEntityDTOS = new ArrayList<>();
+
+        int count = 0;
+        for (SystemEntity entity:filteredList){
+            count++;
+            if(count >= startId && count <= endId){
+                systemEntityDTOS.add(new SystemEntityDTO(entity));
+            }
+        }
+        return systemEntityDTOS;
     }
     public SystemEntityDTO getEntityById(int id) {
 
@@ -105,4 +126,6 @@ public class SystemEntityService {
         systemEntityRepository.save(e);
         userRepository.save(u);
     }
+
+
 }

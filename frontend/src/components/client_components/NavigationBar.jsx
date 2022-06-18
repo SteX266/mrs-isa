@@ -22,36 +22,7 @@ const NavigationBar = () => {
           </button>
           <div className="collapse navbar-collapse" id="mob-navbar">
             <ul className="navbar-nav mb-2 mb-lg-0 mx-auto">
-              <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="/">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link to="/vacations">
-                  {" "}
-                  <a className="nav-link" href="/vacations">
-                    Vacations
-                  </a>
-                </Link>
-              </li>
 
-              <li className="nav-item">
-                <Link to="/vessels">
-                  {" "}
-                  <a className="nav-link" href="/clientProfile">
-                    Vessels
-                  </a>{" "}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/adventures">
-                  {" "}
-                  <a className="nav-link" href="/adventures">
-                    Adventures
-                  </a>
-                </Link>
-              </li>
             </ul>
             <Link to="/login">
               <a className="btn btn-secondary">Login</a>
