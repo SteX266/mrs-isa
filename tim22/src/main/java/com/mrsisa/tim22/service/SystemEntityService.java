@@ -164,12 +164,13 @@ public class SystemEntityService {
             dtos.add(new ReservationsReportDTO(k, 0));
             start =start.plusMonths(1);
         }
-
+        start = LocalDateTime.now().minusYears(1);
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
         for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             for (Reservation r : e.getReservations()) {
+                System.out.println("REZERVACIJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
                     String k = String.valueOf(r.getDateFrom().getMonth()) + " - " + String.valueOf(r.getDateFrom().getYear());
                     for (ReservationsReportDTO report : dtos) {
