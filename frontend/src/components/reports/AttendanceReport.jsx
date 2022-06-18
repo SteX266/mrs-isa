@@ -39,7 +39,7 @@ export default function AttendanceReport() {
   }
   useEffect(() => {
     getData();
-  }, []);
+  }, [type]);
   useEffect(() => {
     setGraph(createGraph());
   }, [type, data]);
