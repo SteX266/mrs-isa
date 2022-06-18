@@ -31,6 +31,8 @@ public class Reservation {
     @Column
     private boolean isCanceled;
 
+    
+
     public Reservation(Promo p, User u){
         this.dateFrom = p.getDateFrom();
         this.dateTo = p.getDateTo();

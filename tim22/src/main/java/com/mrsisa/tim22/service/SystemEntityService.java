@@ -1,13 +1,10 @@
 package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.AvailabilityPeriod;
-import com.mrsisa.tim22.model.Reservation;
-import com.mrsisa.tim22.model.SystemEntity;
+import com.mrsisa.tim22.model.*;
 
 import com.mrsisa.tim22.repository.AvailabilityPeriodRepository;
 
-import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.repository.*;
 
 import com.mrsisa.tim22.repository.ReservationRepository;
@@ -45,15 +42,13 @@ public class SystemEntityService {
     @Autowired
     private VacationRepository vacationRepository;
 
-    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
-
 
     public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
         for ( AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)){
             dtos.add(new AvailabilityPeriodDTO(ap));
         }
-        ;
+
         return (dtos);
     }
 

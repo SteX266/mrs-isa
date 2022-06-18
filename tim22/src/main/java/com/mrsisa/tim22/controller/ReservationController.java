@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RestController
@@ -54,6 +55,11 @@ public class ReservationController {
     @RequestMapping(value = "/createPromoReservation", method=RequestMethod.GET)
     public void createPromoReservation(@RequestParam int promoId, @RequestParam String username){
         reservationService.createPromoReservation(promoId, username);
+    }
+
+    @RequestMapping(value = "/makeReservation", method=RequestMethod.GET)
+    public void makeReservation(@RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo){
+        reservationService.makeReservation(dateFrom, dateTo);
     }
 
 }
