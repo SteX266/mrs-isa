@@ -16,6 +16,8 @@ function EntityList(props) {
 
   const [entityType, setEntityType] = useState("SHOW_ALL");
   const[currentEntityType, setCurrentEntityType] = useState("SHOW_ALL");
+  const[postsNumber, setPostsNumber] = useState(0);
+
 
   const [searchFilters, setSearchFilters] = useState({
     rentalFeeFrom: 0,
@@ -98,6 +100,28 @@ function EntityList(props) {
     );
     setCurrentEntities(res.data);
     console.log(res.data);
+    
+    let size = await axios.post(
+      "http://localhost:8080/auth/getFilteredEntitiesTotalNumber",
+      {    rentalFeeFrom: currentFilters.rentalFeeFrom,
+        rentalFeeTo: currentFilters.rentalFeeTo,
+        cancellationFeeFrom: currentFilters.cancellationFeeFrom,
+        cancellationFeeTo: currentFilters.cancellationFeeTo,
+        guestsFrom: currentFilters.guestsFrom,
+        guestsTo: currentFilters.guestsTo,
+        street: currentFilters.street,
+        city: currentFilters.city,
+        country: currentFilters.country,
+        type:currentEntityType,
+        startIndex:indexOfFirstPost,
+        endIndex:indexOfLastPost
+      },
+      {headers}
+    );
+
+    setPostsNumber(size.data);
+
+
   }
   function setFilters(filters){
     setSearchFilters(filters);
@@ -125,7 +149,7 @@ function EntityList(props) {
             {currentEntities.map(renderAllEntities)}
             <Pagination 
             postsPerPage={postsPerPage}
-            totalPosts ={17}
+            totalPosts ={postsNumber}
             paginate={setPageNumber}
             />
           </div>

@@ -65,9 +65,27 @@ public class SystemEntityService {
         return entities;
     }
 
+    public Integer getFilteredEntitiesTotalNumber(FilterDTO filters) {
+        List<SystemEntity> filteredList = new ArrayList<>();
 
+        for(SystemEntity entity:systemEntityRepository.findAll()){
+            if (entity.getEntityType().toString().equals(filters.type) || filters.type.equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
+                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
+                        if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
+                            Address address = entity.getAddress();
+                            if (address.getStreetName().contains(filters.street) && address.getCity().contains(filters.city) && address.getCountry().contains(filters.country)){
+                                filteredList.add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return filteredList.size();
+
+    }
     public ArrayList<SystemEntityDTO> getFilteredEntities(FilterDTO filters) {
-
         List<SystemEntity> filteredList = new ArrayList<>();
 
         for(SystemEntity entity:systemEntityRepository.findAll()){
@@ -250,6 +268,8 @@ public class SystemEntityService {
         return dtos;
     }
 
+
+
     public ArrayList<ReservationsReportDTO> getReservationsAmountWeekly() {
         LocalDateTime start = LocalDateTime.now().minusWeeks(10);
         LocalDateTime now = LocalDateTime.now();
@@ -271,9 +291,6 @@ public class SystemEntityService {
             dtos.add(new ReservationsReportDTO(k, n));
             start =start.plusWeeks(1);
         }
-
-
-
         return dtos;
     }
     public VesselDTO getDetailVessel(int id) {
@@ -288,5 +305,6 @@ public class SystemEntityService {
     public ListingDTO getDetailVacation(int id) {
         return new ListingDTO(vacationRepository.findVacationById(id));
     }
+
 
 }

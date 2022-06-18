@@ -120,6 +120,13 @@ public class AuthentificationController {
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(filters), HttpStatus.OK);
     }
 
+
+    @PostMapping(value = "/getFilteredEntitiesTotalNumber")
+    public ResponseEntity<Integer> getFilteredEntitiesTotalNumber(@RequestBody FilterDTO filters){
+
+        return new ResponseEntity<>(systemEntityService.getFilteredEntitiesTotalNumber(filters), HttpStatus.OK);
+    }
+
     @GetMapping(value="/getImage/{name}")
     public ResponseEntity<InputStreamResource> getImage(@PathVariable String name, @RequestParam String extension){
         try{
