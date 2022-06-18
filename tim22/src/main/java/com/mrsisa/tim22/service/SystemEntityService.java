@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.Address;
 import com.mrsisa.tim22.model.AvailabilityPeriod;
 import com.mrsisa.tim22.model.SystemEntity;
 
@@ -16,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,8 +120,8 @@ public class SystemEntityService {
         return sum/len;
     }
 
-    public int getBestRated() {
-        int id = 0;
+    public SystemEntityDTO getBestRated() {
+        SystemEntity id = null;
         double bestRating = 0;
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -131,15 +129,15 @@ public class SystemEntityService {
         for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             if(e.getAverageScore()> bestRating){
                 bestRating = e.getAverageScore();
-                id = e.getId();
+                id = e;
             }
         }
 
-        return id;
+        return new SystemEntityDTO(id);
     }
 
-    public int getWorstRated() {
-        int id = -1;
+    public SystemEntityDTO getWorstRated() {
+        SystemEntity id = null;
         double worst = 5;
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
@@ -147,10 +145,10 @@ public class SystemEntityService {
         for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             if(e.getAverageScore()< worst){
                 worst = e.getAverageScore();
-                id = e.getId();
+                id = e;
             }
         }
 
-        return id;
+        return new SystemEntityDTO(id);
     }
 }

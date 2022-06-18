@@ -1,6 +1,7 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
+import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,14 +65,14 @@ public class SystemEntityController {
         return systemEntityService.getAverageRating();
     }
     @RequestMapping(value ="getBestRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public int getBestRated(){
-        return systemEntityService.getBestRated();
+    public  ResponseEntity<SystemEntityDTO> getBestRated(){
+        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getBestRated(), HttpStatus.OK);
+
     }
     @RequestMapping(value ="getWorstRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public int getWorstRated(){
-        return systemEntityService.getWorstRated();
+    public  ResponseEntity<SystemEntityDTO> getWorstRated(){
+        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getWorstRated(), HttpStatus.OK);
     }
-
 
 
 }
