@@ -66,12 +66,12 @@ public class SystemEntityService {
     }
 
 
-    public ArrayList<SystemEntityDTO> getFilteredEntities(int startId, int endId, String entityType, FilterDTO filters) {
+    public ArrayList<SystemEntityDTO> getFilteredEntities(FilterDTO filters) {
 
         List<SystemEntity> filteredList = new ArrayList<>();
 
         for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(entityType) || entityType.equals("SHOW_ALL")){
+            if (entity.getEntityType().toString().equals(filters.type) || filters.type.equals("SHOW_ALL")){
                 if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
                     if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
                         if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
@@ -89,7 +89,7 @@ public class SystemEntityService {
         int count = 0;
         for (SystemEntity entity:filteredList){
             count++;
-            if(count >= startId && count <= endId){
+            if(count >= filters.startIndex && count <= filters.endIndex){
                 systemEntityDTOS.add(new SystemEntityDTO(entity));
             }
         }

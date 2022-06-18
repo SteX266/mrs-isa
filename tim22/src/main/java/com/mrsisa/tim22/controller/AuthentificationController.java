@@ -114,10 +114,10 @@ public class AuthentificationController {
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getFilteredEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getFilteredEntities(@RequestParam int startId, @RequestParam int endId, @RequestParam String entityType, @RequestBody FilterDTO filters){
+    @PostMapping(value = "/getFilteredEntities")
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getFilteredEntities(@RequestBody FilterDTO filters){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(startId, endId, entityType, filters), HttpStatus.OK);
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(filters), HttpStatus.OK);
     }
 
     @GetMapping(value="/getImage/{name}")

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -31,7 +33,11 @@ public class Reservation {
     @Column
     private boolean isCanceled;
 
-    
+    @Column
+    private double clientPrice;
+
+    @Column
+    private double ownerPrice;
 
     public Reservation(Promo p, User u){
         this.dateFrom = p.getDateFrom();
@@ -40,6 +46,19 @@ public class Reservation {
         this.client = u;
         this.isApproved = true;
         this.isCanceled = false;
+    }
+
+    public Reservation(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo, User u){
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.systemEntity = entity;
+        this.client = u;
+        this.isApproved = true;
+        this.isCanceled = false;
+        long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
+
+
+
     }
 
 }

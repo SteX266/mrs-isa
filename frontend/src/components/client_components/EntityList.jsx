@@ -71,22 +71,30 @@ function EntityList(props) {
     console.log(currentFilters);
     console.log(currentEntityType);
 
-    const requestOptions = {
-      headers: {
+
+     const headers = {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-      },
-      params:{
-        startId:indexOfFirstPost,
-        endId:indexOfLastPost,
-        entityType:currentEntityType,
-      },
-      body:JSON.stringify({currentFilters})
-    };
-    let res = await axios.get(
+      };
+
+
+    let res = await axios.post(
       "http://localhost:8080/auth/getFilteredEntities",
-      requestOptions
+      {    rentalFeeFrom: currentFilters.rentalFeeFrom,
+        rentalFeeTo: currentFilters.rentalFeeTo,
+        cancellationFeeFrom: currentFilters.cancellationFeeFrom,
+        cancellationFeeTo: currentFilters.cancellationFeeTo,
+        guestsFrom: currentFilters.guestsFrom,
+        guestsTo: currentFilters.guestsTo,
+        street: currentFilters.street,
+        city: currentFilters.city,
+        country: currentFilters.country,
+        type:currentEntityType,
+        startIndex:indexOfFirstPost,
+        endIndex:indexOfLastPost
+      },
+      {headers}
     );
     setCurrentEntities(res.data);
     console.log(res.data);
