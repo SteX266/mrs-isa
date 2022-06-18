@@ -159,6 +159,12 @@ public class SystemEntityService {
         LocalDateTime start = LocalDateTime.now().minusYears(1);
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
+        while (start.isBefore(now)){
+            String k = String.valueOf(start.getMonth()) +" - " + String.valueOf(start.getYear());
+            dtos.add(new ReservationsReportDTO(k, 0));
+            start =start.plusYears(1);
+        }
+
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
@@ -166,16 +172,12 @@ public class SystemEntityService {
             for (Reservation r : e.getReservations()) {
                 if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
                     String k = String.valueOf(r.getDateFrom().getMonth()) + String.valueOf(r.getDateFrom().getYear());
-                    boolean isFound = false;
                     for (ReservationsReportDTO report : dtos) {
                         if (report.getName().equals(k)) {
                             report.increaseAmount();
-                            isFound = true;
                         }
                     }
-                    if (!isFound) {
-                        dtos.add(new ReservationsReportDTO(k, 1));
-                    }
+                   
                 }
             }
         }

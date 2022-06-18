@@ -11,10 +11,10 @@ import lombok.Setter;
 @Setter
 public class ReservationsReportDTO {
     private String name;
-    private int amount;
+    private int Attendance;
 
 
     public void increaseAmount(){
-        this.amount += 1;
+        this.Attendance += 1;
     }
 }
