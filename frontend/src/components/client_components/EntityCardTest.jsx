@@ -37,6 +37,7 @@ export default function EntityCardTest(props) {
   return (
     <>
       <div className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-0 pt-4">
+
         <Link to={link}>
           <div className="card entity">
             {" "}

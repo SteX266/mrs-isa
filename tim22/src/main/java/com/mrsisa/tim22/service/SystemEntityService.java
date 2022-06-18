@@ -8,6 +8,7 @@ import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.repository.AvailabilityPeriodRepository;
 
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.repository.*;
 
 import com.mrsisa.tim22.repository.ReservationRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
@@ -35,32 +36,69 @@ public class SystemEntityService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
-        ArrayList<AvailabilityPeriodDTO> dtos = new ArrayList<>();
-        for (AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)) {
+    @Autowired
+    private VesselRepository vesselRepository;
+
+    @Autowired
+    private AdventureRepository adventureRepositry;
+
+    @Autowired
+    private VacationRepository vacationRepository;
+
+    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
+
+
+    public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
+        ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
+        for ( AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)){
             dtos.add(new AvailabilityPeriodDTO(ap));
         }
         ;
         return (dtos);
     }
 
-    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId) {
 
-
+    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
         System.out.println("Prosao zahtev");
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
-
-
-        for (SystemEntity entity : allEntities) {
-            if (!entity.isDeleted()) {
+        for (SystemEntity entity : allEntities){
+            if (!entity.isDeleted()){
                 entities.add(new SystemEntityDTO(entity));
             }
         }
-
-
         return entities;
+    }
 
+
+    public ArrayList<SystemEntityDTO> getFilteredEntities(int startId, int endId, String entityType, FilterDTO filters) {
+
+        List<SystemEntity> filteredList = new ArrayList<>();
+
+        for(SystemEntity entity:systemEntityRepository.findAll()){
+            if (entity.getEntityType().toString().equals(entityType) || entityType.equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
+                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
+                        if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
+                            Address address = entity.getAddress();
+                            if (address.getStreetName().contains(filters.street) && address.getCity().contains(filters.city) && address.getCountry().contains(filters.country)){
+                                filteredList.add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ArrayList<SystemEntityDTO> systemEntityDTOS = new ArrayList<>();
+
+        int count = 0;
+        for (SystemEntity entity:filteredList){
+            count++;
+            if(count >= startId && count <= endId){
+                systemEntityDTOS.add(new SystemEntityDTO(entity));
+            }
+        }
+        return systemEntityDTOS;
     }
 
     public SystemEntityDTO getEntityById(int id) {
@@ -243,4 +281,17 @@ public class SystemEntityService {
 
         return dtos;
     }
+    public VesselDTO getDetailVessel(int id) {
+        return new VesselDTO(vesselRepository.findVesselById(id));
+    }
+
+    public AdventureDTO getDetailAdventures(int id) {
+        return new AdventureDTO(adventureRepositry.findAdventureById(id));
+    }
+
+
+    public ListingDTO getDetailVacation(int id) {
+        return new ListingDTO(vacationRepository.findVacationById(id));
+    }
+
 }

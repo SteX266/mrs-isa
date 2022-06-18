@@ -1,6 +1,7 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
+import com.mrsisa.tim22.model.Adventure;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,10 @@ public class SystemEntityController {
     public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.unsubscribe(entityId, username);
     }
+    @RequestMapping(value ="getDetailVessel", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VesselDTO> getDetailVessel(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailVessel(id), HttpStatus.OK);
+    }
 
     @RequestMapping(value ="getAverageRating", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public double getAverageRating(){
@@ -67,8 +72,16 @@ public class SystemEntityController {
     @RequestMapping(value ="getBestRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<SystemEntityDTO> getBestRated(){
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getBestRated(), HttpStatus.OK);
-
     }
+    @RequestMapping(value ="getDetailAdventure", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AdventureDTO> getDetailAdventure(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailAdventures(id), HttpStatus.OK);
+    }
+    @RequestMapping(value ="getDetailVacation", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ListingDTO> getDetailVacation(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getDetailVacation(id), HttpStatus.OK);
+    }
+
     @RequestMapping(value ="getWorstRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public  ResponseEntity<SystemEntityDTO> getWorstRated(){
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getWorstRated(), HttpStatus.OK);

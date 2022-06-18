@@ -51,7 +51,6 @@ export default function Router() {
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}
         />
-
         <Route
           path="profile"
           element={<BusinessUserProfilePage type={type} />}

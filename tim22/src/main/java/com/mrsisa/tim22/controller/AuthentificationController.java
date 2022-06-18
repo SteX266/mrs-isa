@@ -1,9 +1,6 @@
 package com.mrsisa.tim22.controller;
 
-import com.mrsisa.tim22.dto.SystemEntityDTO;
-import com.mrsisa.tim22.dto.UserCredentialsDTO;
-import com.mrsisa.tim22.dto.UserRequest;
-import com.mrsisa.tim22.dto.UserTokenState;
+import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.exception.ResourceConflictException;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.EmailService;
@@ -115,6 +112,12 @@ public class AuthentificationController {
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getFilteredEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrayList<SystemEntityDTO>> getFilteredEntities(@RequestParam int startId, @RequestParam int endId, @RequestParam String entityType, @RequestBody FilterDTO filters){
+
+        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(startId, endId, entityType, filters), HttpStatus.OK);
     }
 
     @GetMapping(value="/getImage/{name}")
