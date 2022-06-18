@@ -36,6 +36,7 @@
     "react-scripts": "5.0.0",
     "react-simple-star-rating": "^4.0.5",
     "react-ui-cards": "^3.0.0",
+    "recharts": "^2.1.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -64,6 +65,7 @@
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.7",
-    "eslint-config-prettier": "^8.5.0"
+    "eslint-config-prettier": "^8.5.0",
+    "use-force-update-hook": "^2.1.0"
   }
 }

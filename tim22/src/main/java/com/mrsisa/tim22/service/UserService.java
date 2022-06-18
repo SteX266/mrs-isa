@@ -53,9 +53,12 @@ public class UserService {
 
     private int getUserPenalties(User u) {
         Set<Penalty> penalties = u.getPenalties();
+
+        LocalDate todayDate = LocalDate.now();
+        todayDate = todayDate.withDayOfMonth(1);
         int penaltyNumber = 0;
         for (Penalty p : penalties) {
-            if (p.getDate().plusDays(31).isAfter(LocalDate.now())) {
+            if (p.getDate().isAfter(todayDate)) {
                 penaltyNumber++;
             }
         }

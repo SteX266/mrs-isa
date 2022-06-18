@@ -142,54 +142,30 @@ VALUES (17, 4, 20, 7, 'rafting on the Tara River full of adrenaline and fun', 'A
 
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
+VALUES (1, '1.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
+VALUES (1, '2.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (1, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+VALUES (1, '3.jpg');
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (2, 'https://cdn.boatinternational.com/files/2021/01/b2c5a350-5998-11eb-beb1-e5b23185a864-avanti-profile.jpg');
+VALUES (2, '4.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (3, 'https://sgbonline.com/wp-content/uploads/2019/07/Screen-Shot-2019-07-31-at-8.54.57-AM-copy.jpg');
+VALUES (3, '5.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (4, 'https://sailtraininginternational.org/app/uploads/2016/06/vessel-shtandart-1.jpg');
+VALUES (4, '6.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (5, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Amerigo_vespucci_1976_nyc_aufgetakelt.jpg/800px-Amerigo_vespucci_1976_nyc_aufgetakelt.jpg');
+VALUES (5, '7.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (6, 'https://www.mojenterijer.rs/storage/posts/gallery/2017/Dec/115648/sarmantna-vikendica-u-kanadi.jpg');
+VALUES (6, '8.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (7, 'https://img.halooglasi.com/slike/oglasi/Thumbs/200904/l/prodaje-se-vikendica-25-m2-g-goracici-prijepo-5425635877817-71792611911.jpg');
+VALUES (7, '9.jpg');
 INSERT INTO public.photos(entity_id, photos)
-VALUES (8, 'https://thebrownidentity.com/wp-content/uploads/2020/07/01-birth-month-If-You-Were-Born-In-Summer-This-Is-What-We-Know-About-You_644740429-icemanphotos.jpg');
+VALUES (8, '10.jpg');
 
 INSERT INTO public.photos(entity_id, photos)
-VALUES (9, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (10, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
+VALUES (9, '11.jpg');
 
-INSERT INTO public.photos(entity_id, photos)
-VALUES (12, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (13, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (14, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
-
-INSERT INTO public.photos(entity_id, photos)
-VALUES (15, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (16, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
-
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://images.hindustantimes.com/img/2022/01/21/1600x900/bf0cce4e-79af-11ec-9200-af8cbbcf9206_1642765235944.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (17, 'https://destinationdeluxe.com/wp-content/uploads/2021/06/Adventure-Activities-Destination-Deluxe.jpg');
-INSERT INTO public.photos(entity_id, photos)
-VALUES (11, 'https://www.bsframework.io/wp-content/uploads/2020/12/Adventure-Travel-A-Thrilling-And-Enthralling-Experience.jpg');
 
 INSERT INTO public.availability_period(
     id, date_from, date_to, system_entity)
@@ -290,3 +266,54 @@ VALUES (3, 'Please give me a chance to prove i will pay', false, 8);
 INSERT INTO public.loyalty_program(
     id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)
 VALUES (1, 10, 60, 15, 100, 3, 6, 5, 30);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (1,'2022-02-20T15:00', '2022-04-23T13:00', 1);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (2,'2022-03-20T15:00', '2023-04-12T13:00', 2);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (3,'2022-04-20T15:00', '2023-04-15T13:00', 3);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (4,'2022-05-20T15:00', '2023-05-11T13:00', 4);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (5,'2022-07-20T15:00', '2023-07-14T13:00', 5);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (6,'2022-05-20T15:00', '2023-11-27T13:00', 6);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (7,'2022-03-20T15:00', '2023-02-24T13:00', 7);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (8,'2022-04-20T15:00', '2023-04-22T13:00', 8);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (9,'2022-04-20T15:00', '2023-05-21T13:00', 9);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (10,'2022-04-20T15:00', '2023-09-21T13:00', 10);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (11,'2022-04-15T15:00', '2023-12-25T13:00', 11);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (12,'2022-03-16T15:00', '2023-05-26T13:00', 12);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (13,'2022-02-13T15:00', '2023-01-11T13:00', 13);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (14,'2022-01-21T15:00', '2023-08-16T13:00', 14);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (15,'2022-01-22T15:00', '2023-07-14T13:00', 15);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (16,'2022-06-22T15:00', '2023-06-20T13:00', 16);
+INSERT INTO public.availability_period(
+    id, date_from, date_to, system_entity)
+VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);

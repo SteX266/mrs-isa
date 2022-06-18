@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
@@ -19,4 +20,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     public List<Reservation> findByEntity(int id);
 
     public Reservation findOneById(Integer entityId);
+
 }

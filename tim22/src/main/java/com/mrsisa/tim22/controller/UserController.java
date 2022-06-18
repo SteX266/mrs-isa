@@ -1,16 +1,12 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.AccountCancellationRequest;
-import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.ArrayList;
 
 @RestController
@@ -52,6 +48,7 @@ public class UserController {
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(userService.getClientSubscriptions(username), HttpStatus.OK);
     }
+
 
 
 
