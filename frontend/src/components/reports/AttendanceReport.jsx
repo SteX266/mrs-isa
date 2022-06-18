@@ -46,7 +46,21 @@ export default function AttendanceReport() {
   useEffect(() => {}, []);
   function getData() {
     const token = JSON.parse(localStorage.getItem("userToken"));
-    const path = "http://localhost:8080/entity/getReservationsAmountMonthly";
+    let path = "http://localhost:8080/entity/getReservationsAmountMonthly";
+    switch (type) {
+      case "month":
+        path = "http://localhost:8080/entity/getReservationsAmountMonthly";
+        break;
+      case "year":
+        path = "http://localhost:8080/entity/getReservationsAmountYearly";
+        break;
+      case "week":
+        path = "http://localhost:8080/entity/getReservationsAmountWeekly";
+        break;
+
+      default:
+        break;
+    }
     let values;
     const requestOptions = {
       headers: {
