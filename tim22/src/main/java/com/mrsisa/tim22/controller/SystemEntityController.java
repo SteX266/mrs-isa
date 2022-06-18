@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -74,5 +74,9 @@ public class SystemEntityController {
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getWorstRated(), HttpStatus.OK);
     }
 
+    @RequestMapping(value ="getReservationsAmountMonthly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountMonthly(){
+        return new ResponseEntity<>(systemEntityService.getReservationsAmountMonthly(), HttpStatus.OK);
+    }
 
 }

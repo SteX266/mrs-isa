@@ -2,6 +2,7 @@ package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.model.AvailabilityPeriod;
+import com.mrsisa.tim22.model.Reservation;
 import com.mrsisa.tim22.model.SystemEntity;
 
 import com.mrsisa.tim22.repository.AvailabilityPeriodRepository;
@@ -15,7 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -28,16 +31,16 @@ public class SystemEntityService {
     @Autowired
     private UserRepository userRepository;
 
-    public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
-        ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
-        for ( AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)){
+    public ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
+        ArrayList<AvailabilityPeriodDTO> dtos = new ArrayList<>();
+        for (AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)) {
             dtos.add(new AvailabilityPeriodDTO(ap));
-        };
-        return(dtos);
+        }
+        ;
+        return (dtos);
     }
 
-    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
-
+    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId) {
 
 
         System.out.println("Prosao zahtev");
@@ -45,9 +48,8 @@ public class SystemEntityService {
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
 
 
-
-        for (SystemEntity entity : allEntities){
-            if (!entity.isDeleted()){
+        for (SystemEntity entity : allEntities) {
+            if (!entity.isDeleted()) {
                 entities.add(new SystemEntityDTO(entity));
             }
         }
@@ -56,6 +58,7 @@ public class SystemEntityService {
         return entities;
 
     }
+
     public SystemEntityDTO getEntityById(int id) {
 
 
@@ -68,11 +71,11 @@ public class SystemEntityService {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
-        ArrayList <SystemEntity> entities=  systemEntityRepository.findSystemEntitiesByOwner_Username(email);
+        ArrayList<SystemEntity> entities = systemEntityRepository.findSystemEntitiesByOwner_Username(email);
 
         ArrayList<SystemEntityDTO> entitiesDTO = new ArrayList<>();
-         for (SystemEntity entity : entities){
-            if (!entity.isDeleted()){
+        for (SystemEntity entity : entities) {
+            if (!entity.isDeleted()) {
                 entitiesDTO.add(new SystemEntityDTO(entity));
             }
         }
@@ -110,14 +113,14 @@ public class SystemEntityService {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
-        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
-            sum+= e.getAverageScore();
-            len+=1;
+        for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            sum += e.getAverageScore();
+            len += 1;
         }
-        if(len==0){
+        if (len == 0) {
             return 0;
         }
-        return sum/len;
+        return sum / len;
     }
 
     public SystemEntityDTO getBestRated() {
@@ -126,8 +129,8 @@ public class SystemEntityService {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
-        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
-            if(e.getAverageScore()> bestRating){
+        for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            if (e.getAverageScore() > bestRating) {
                 bestRating = e.getAverageScore();
                 id = e;
             }
@@ -142,13 +145,40 @@ public class SystemEntityService {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
-        for ( SystemEntity e: systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
-            if(e.getAverageScore()< worst){
+        for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            if (e.getAverageScore() < worst) {
                 worst = e.getAverageScore();
                 id = e;
             }
         }
 
         return new SystemEntityDTO(id);
+    }
+
+    public ArrayList<ReservationsReportDTO> getReservationsAmountMonthly() {
+        LocalDateTime start = LocalDateTime.now().minusYears(1);
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            for (Reservation r : e.getReservations()) {
+                if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
+                    String k = String.valueOf(r.getDateFrom().getMonth()) + String.valueOf(r.getDateFrom().getYear());
+                    boolean isFound = false;
+                    for (ReservationsReportDTO report : dtos) {
+                        if (report.getName().equals(k)) {
+                            report.increaseAmount();
+                            isFound = true;
+                        }
+                    }
+                    if (!isFound) {
+                        dtos.add(new ReservationsReportDTO(k, 1));
+                    }
+                }
+            }
+        }
+        return dtos;
     }
 }
