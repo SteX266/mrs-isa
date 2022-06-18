@@ -18,8 +18,8 @@ export default function AttendanceReport() {
   function createGraph() {
     return (
       <BarChart
-        width={1500}
-        height={800}
+        width={1200}
+        height={400}
         data={data}
         margin={{
           top: 5,
