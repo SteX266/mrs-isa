@@ -162,7 +162,7 @@ public class SystemEntityService {
         while (start.isBefore(now)){
             String k = String.valueOf(start.getMonth()) +" - " + String.valueOf(start.getYear());
             dtos.add(new ReservationsReportDTO(k, 0));
-            start =start.plusYears(1);
+            start =start.plusMonths(1);
         }
 
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
@@ -171,13 +171,13 @@ public class SystemEntityService {
         for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             for (Reservation r : e.getReservations()) {
                 if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
-                    String k = String.valueOf(r.getDateFrom().getMonth()) + String.valueOf(r.getDateFrom().getYear());
+                    String k = String.valueOf(r.getDateFrom().getMonth()) +  " - " +String.valueOf(r.getDateFrom().getYear());
                     for (ReservationsReportDTO report : dtos) {
                         if (report.getName().equals(k)) {
                             report.increaseAmount();
                         }
                     }
-                   
+
                 }
             }
         }
