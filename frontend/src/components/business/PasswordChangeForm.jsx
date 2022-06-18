@@ -5,6 +5,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 export default function PasswordChangeForm() {
   const [passwords, setPasswords] = useState({ old: "", new: "", repeat: "" });
   const [successfull, setSuccessfull] = useState(false);
+
   const [errors, setErrors] = useState({
     repeatedPassword: "",
     password: "",
@@ -35,7 +36,6 @@ export default function PasswordChangeForm() {
     };
     axios.get("http://localhost:8080/user/change-password", requestOptions);
   }
-
   function handleChange(event) {
     setPasswords((prevPasswords) => {
       return {
@@ -44,6 +44,7 @@ export default function PasswordChangeForm() {
       };
     });
   }
+
   function isValidForm() {
     let currentErrors = errors;
 
@@ -116,6 +117,7 @@ export default function PasswordChangeForm() {
     </Form>
   );
 }
+
 
 function PasswordAlert() {
   return (

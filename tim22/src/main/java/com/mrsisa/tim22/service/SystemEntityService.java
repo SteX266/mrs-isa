@@ -8,6 +8,7 @@ import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.repository.AvailabilityPeriodRepository;
 
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.repository.*;
 
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
@@ -30,6 +31,18 @@ public class SystemEntityService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private VesselRepository vesselRepository;
+
+    @Autowired
+    private AdventureRepository adventureRepositry;
+
+    @Autowired
+    private VacationRepository vacationRepository;
+
+    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
+
+
     public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
         for ( AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)){
@@ -49,6 +62,7 @@ public class SystemEntityService {
         }
         return entities;
     }
+
 
     public ArrayList<SystemEntityDTO> getFilteredEntities(int startId, int endId, String entityType, FilterDTO filters) {
 
@@ -127,5 +141,17 @@ public class SystemEntityService {
         userRepository.save(u);
     }
 
+    public VesselDTO getDetailVessel(int id) {
+        return new VesselDTO(vesselRepository.findVesselById(id));
+    }
+
+    public AdventureDTO getDetailAdventures(int id) {
+        return new AdventureDTO(adventureRepositry.findAdventureById(id));
+    }
+
+
+    public ListingDTO getDetailVacation(int id) {
+        return new ListingDTO(vacationRepository.findVacationById(id));
+    }
 
 }

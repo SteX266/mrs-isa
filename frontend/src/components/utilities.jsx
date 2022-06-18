@@ -9,11 +9,12 @@ export function useGet(path, data) {
       "Content-type": "application/json",
       Authorization: "Bearer " + token.accessToken,
     },
-    data: data,
+    params: data,
   };
   axios
     .get(url, requestOptions)
     .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .catch((error) => {
