@@ -177,7 +177,7 @@ public class SystemEntityService {
                             report.increaseAmount();
                         }
                     }
-                   
+
                 }
             }
         }
