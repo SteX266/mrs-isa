@@ -47,11 +47,12 @@ export default function BussinessPromoPage() {
     };
     axios.delete(url, requestOptions).then((res) => {
       if (res.status == 200) {
-        toast.success(res.body);
+        toast.success(res.data);
         getPromosByID();
-      } else toast.error(res.body);
+      } else toast.error(res.data);
     });
   }
+
   function getPromosByID() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     let url = "http://localhost:8080/promo/getEntityPromos";
@@ -127,8 +128,10 @@ export default function BussinessPromoPage() {
     };
     console.log(promo.dateFrom.toJSON());
     axios.post(url, promo, requestOptions).then((res) => {
-      console.log(res.data);
-      getPromosByID();
+      if (res.status == 200) {
+        toast.success(res.data);
+        getPromosByID();
+      } else toast.error(res.data);
     });
     handleClose();
   }

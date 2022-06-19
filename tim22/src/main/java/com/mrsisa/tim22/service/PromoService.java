@@ -34,10 +34,10 @@ public class PromoService {
         return promoDTOS;
     }
 
-    public PromoDTO createPromoFromDTO(PromoDTO promoDTO ) {
+    public boolean createPromoFromDTO(PromoDTO promoDTO ) {
         SystemEntity entity = systemEntityRepository.findOneById(promoDTO.getSystemEntityId());
         promoRepository.save(new Promo(promoDTO, entity));
-        return promoDTO;
+        return true;
     }
     public boolean deleteById(Integer id) {
         Promo promo = promoRepository.getOne(id);
