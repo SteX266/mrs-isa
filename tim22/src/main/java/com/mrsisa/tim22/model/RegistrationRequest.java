@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 public class RegistrationRequest {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -22,4 +23,10 @@ public class RegistrationRequest {
     private String description;
     @Column
     private Boolean isAnswered;
+
+    public RegistrationRequest(User u, String registrationReason) {
+        this.client = u;
+        this.description = registrationReason;
+        this.isAnswered = false;
+    }
 }

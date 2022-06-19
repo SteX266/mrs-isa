@@ -6,6 +6,7 @@ import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.repository.RegistrationRequestRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RegistrationRequestRepository registrationRequestRepository;
 
     public User editUserData(String email, String name, String surname, String phoneNumber, String addressLine) {
         User u = userRepository.findOneByUsername(email);
@@ -76,13 +80,27 @@ public class UserService {
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setPhoneNumber(userRequest.getPhoneNumber());
         // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
-        List<Role> roles = roleService.findByName("CLIENT");
-        u.setRoles(roles);
-        System.out.println("KLJUUUUUUC");
-        System.out.println(u.getId());
-        u.setId(5);
-        return this.userRepository.save(u);
+        List<Role> roles;
+        if(userRequest.getUserType().equals("client")){
+            roles = roleService.findByName("CLIENT");
+        }
+        else if(userRequest.getUserType().equals("vacation")){
+            roles = roleService.findByName("VACATION_OWNER");
+        }
+        else if(userRequest.getUserType().equals("vessel")){
+            roles = roleService.findByName("SHIP_OWNER");
+        }
+        else if(userRequest.getUserType().equals("instructor")){
+            roles = roleService.findByName("INSTRUCTOR");
+        }
+        else{
+            roles = roleService.findByName("CLIENT");
 
+        }
+        u.setRoles(roles);
+
+
+        return this.userRepository.save(u);
     }
 
     public User saveUser(User user) {
