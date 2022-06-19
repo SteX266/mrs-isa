@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useParams } from "react-router";
 import BigCalendar from "./BigCalendar";
+import toast from "react-hot-toast";
 
 function ClientCalendar() {
   const params = useParams();
@@ -42,7 +43,16 @@ function ClientCalendar() {
       entityId: params.id
     },
     {headers}
-  );
+  ).then(async result=>{
+    if(result.data =="OK"){
+      toast.success("Reservation created successfully!");
+
+    }
+
+
+  }).catch(() =>{
+    toast.error("You are not eligible to make reservations because you have 3 or more penalties this month");
+  });
   }
   async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));

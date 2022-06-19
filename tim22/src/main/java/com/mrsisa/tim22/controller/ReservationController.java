@@ -59,8 +59,13 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/makeReservation")
-    public void makeReservation(@RequestBody ReservationRequestDTO reservationRequest){
-        reservationService.makeReservation(reservationRequest);
+    public ResponseEntity<String> makeReservation(@RequestBody ReservationRequestDTO reservationRequest){
+        if(reservationService.makeReservation(reservationRequest)){
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Too many penalties", HttpStatus.FORBIDDEN);
+        }
     }
 
 }

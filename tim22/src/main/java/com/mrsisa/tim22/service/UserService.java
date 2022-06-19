@@ -46,25 +46,11 @@ public class UserService {
 
     public UserDTO getUserByUsername(String username) {
         User u = userRepository.findOneByUsername(username);
-        int penaltyNumber = getUserPenalties(u);
+        int penaltyNumber = u.getUserPenalties();
         return new UserDTO(u.getUsername(), u.getName(), u.getSurname(), u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), penaltyNumber);
 
     }
 
-    private int getUserPenalties(User u) {
-        Set<Penalty> penalties = u.getPenalties();
-
-        LocalDate todayDate = LocalDate.now();
-        todayDate = todayDate.withDayOfMonth(1);
-        int penaltyNumber = 0;
-        for (Penalty p : penalties) {
-            if (p.getDate().isAfter(todayDate)) {
-                penaltyNumber++;
-            }
-        }
-        return penaltyNumber;
-
-    }
 
     public User findByUsername(String email) {
         return userRepository.findOneByUsername(email);

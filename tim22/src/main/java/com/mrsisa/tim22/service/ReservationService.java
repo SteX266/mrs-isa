@@ -127,27 +127,45 @@ public class ReservationService {
         reservationRepository.save(r);
     }
 
-    public void makeReservation(ReservationRequestDTO reservationRequest) {
-        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.getEntityId());
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.dateFrom.replace("T"," ").substring(0,16), formatter);
-        LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.dateTo.replace("T"," ").substring(0,16), formatter);
-
+    public boolean makeReservation(ReservationRequestDTO reservationRequest) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
         User u = userRepository.findOneByUsername(email);
+        if(u.getUserPenalties() >=3){
+            return false;
+        }
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.getEntityId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.dateFrom.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.dateTo.replace("T"," ").substring(0,16), formatter);
         long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
+
+
         double clientPrice = calculateClientPrice(diff, entity.getPrice(), u.getLoyaltyPoints());
         double ownerPrice = calculateOwnerPrice(diff,entity.getPrice(), entity.getOwner().getLoyaltyPoints());
 
-        Reservation reservation = new Reservation(entity, dateFrom.plusHours(2), dateTo.plusHours(2), u, clientPrice, ownerPrice);
 
+        Reservation reservation = new Reservation(entity, dateFrom.plusHours(2), dateTo.plusHours(2), u, clientPrice, ownerPrice);
         reservationRepository.save(reservation);
 
+
+        User owner = entity.getOwner();
+
+
+
+        LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
+        u.addPoints(loyaltyProgram.getPointsPerReservation());
+        owner.addPoints(loyaltyProgram.getPointsForBusiness());
+        userRepository.save(u);
+        userRepository.save(owner);
+
         emailService.sendConfirmReservationEmail(email, entity.getName());
+
+        return true;
     }
+
+
 
     private double calculateOwnerPrice(long diff, double price, int loyaltyPoints) {
         LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
