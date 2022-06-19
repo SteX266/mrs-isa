@@ -27,7 +27,7 @@ INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password
 VALUES (1, 'Petra Kocica 38, Jagodina', false, true, null, 100, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
 
 INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (2, 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
+VALUES (2, 'Ulica retarda 1, Zrenjanin', false, false, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
 
 INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
 VALUES (3, 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222111', 'Stevanovic', 'stevaszumza@gmail.com');
@@ -253,7 +253,7 @@ VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snize
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)
-VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
+VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 2);
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)

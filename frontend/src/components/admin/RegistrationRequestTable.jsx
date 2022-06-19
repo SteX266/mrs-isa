@@ -3,6 +3,8 @@ import { Table, Button } from "react-bootstrap";
 
 export default function RegistrationRequestTable(props) {
   let headers = ["Email", "Type", "Description", "Accept", "Decline"];
+  if (props.requests.length == 0)
+    return <h1>There is currenty no unanswered requests</h1>;
   return (
     <Table striped hover className="rounded">
       <TableHeader headers={headers}></TableHeader>
@@ -36,8 +38,8 @@ function TableBody(props) {
     <tbody>
       {props.requests.map((request) => (
         <EditableTableRow
-          onAccept={props.onAccept}
-          onDecline={props.onDecline}
+          onAccept={() => props.onAccept(request.client)}
+          onDecline={() => props.onDecline(request.client)}
           key={request.id}
           request={request}
         ></EditableTableRow>

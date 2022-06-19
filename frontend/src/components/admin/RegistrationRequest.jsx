@@ -12,6 +12,10 @@ export default function RegistrationRequest() {
   const [showTaskDialog, setShowTaskDialog] = React.useState(false);
 
   React.useEffect(() => {
+    getRequests();
+  }, []);
+
+  async function getRequests() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: { Authorization: "Bearer " + token.accessToken },
@@ -22,11 +26,41 @@ export default function RegistrationRequest() {
         requestOptions
       )
       .then((res) => {
+        console.log(res.data);
         setRequests(res.data);
         setSearchRequests(res.data);
       });
-  }, []);
+  }
+  async function AcceptRequest(client) {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + token.accessToken,
+    };
 
+    axios.post(
+      "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
+      { client: client },
+      { headers }
+    );
+  }
+  async function DeclineRequest(client, reason) {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + token.accessToken,
+    };
+
+    axios.post(
+      "http://localhost:8080/registrationRequest/declineRegistrationRequest",
+      { client: client, description: reason },
+      { headers }
+    );
+  }
   function onSearchFieldChange(event) {
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
@@ -46,19 +80,25 @@ export default function RegistrationRequest() {
     len = 0;
   }
 
-  function onAccept(id) {
-    const filtering = [];
+  function removeRequest(client) {
+    let searchResult = [];
     for (let index = 0; index < requests.length; index++) {
       const r = requests[index];
-      if (r.id !== id) {
-        filtering.push(r);
+      if (!r.client.includes(client)) {
+        searchResult.push(r);
       }
     }
-    setSearchRequests(filtering);
-    setRequests(filtering);
+    setSearchRequests(searchResult);
+    setRequests(searchResult);
   }
-  function onDecline(id) {
-    onAccept(id);
+
+  function onAccept(client) {
+    AcceptRequest(client);
+    removeRequest(client);
+  }
+  function onDecline(client) {
+    DeclineRequest(client, "pusi kurac mentolu");
+    setShowTaskDialog(true);
   }
 
   function confirmDecline() {

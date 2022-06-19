@@ -2,6 +2,7 @@ package com.mrsisa.tim22.controller;
 
 
 import com.mrsisa.tim22.dto.RegistrationRequestDTO;
+import com.mrsisa.tim22.dto.ReservationRequestDTO;
 import com.mrsisa.tim22.service.RegistrationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,13 @@ public class RegistrationRequestController {
         public ResponseEntity<ArrayList<RegistrationRequestDTO>> getAllRegistrationRequests(){
             return new ResponseEntity<ArrayList<RegistrationRequestDTO>>(registrationRequestService.getAllRegistrationRequests(), HttpStatus.OK);
         }
-
-
+     @PostMapping(value = "/acceptRegistrationRequest")
+    public boolean makeReservation(@RequestBody RegistrationRequestDTO dto){
+         return registrationRequestService.acceptRegistrationRequest(dto);
     }
+    @PostMapping(value = "/declineRegistrationRequest")
+    public boolean declineRegistrationRequest(@RequestBody RegistrationRequestDTO dto){
+        return registrationRequestService.declineRegistrationRequest(dto);
+    }
+}
 
