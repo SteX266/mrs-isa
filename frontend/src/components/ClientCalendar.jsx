@@ -24,8 +24,25 @@ function ClientCalendar() {
   var preDates = [];
   var preEvents = [];
 
-  function Reserve() {
-    console.log("aaa");
+  async function Reserve() {
+
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + token.accessToken
+    };
+
+
+  axios.post(
+    "http://localhost:8080/reservation/makeReservation",
+    { dateFrom: startDate,
+      dateTo: endDate,
+      entityId: params.id
+    },
+    {headers}
+  );
   }
   async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));

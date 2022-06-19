@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-
+import RegistrationDialog from '../modals/RegistrationDialog';
 import "../../style/Errors.css";
 
 function RegisterForm()  {  
@@ -14,41 +14,58 @@ function RegisterForm()  {
   const[username,setUsername] = useState("");
   const[password, setPassword] = useState("");
   const[repeatedPassword, setRepeatedPassword] = useState("");
+  const[userType,setUserType] = useState("client");
+  const [registrtaionReason,setRegistrationReason] = useState("");
+
+  const [showRegistrationDialog,setShowRegistrationDialog] = useState(false);
+
 
 
 
   const handleSubmit = (event) => {
       event.preventDefault();
       if(validateForm()){
+        console.log(userType);
 
+        if (userType == "client"){
+          setRegistrationReason("");
+          signup();
+      }
+      else{
 
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json'  },
-          body:JSON.stringify({
-            username,name,surname,phoneNumber,addressLine,password
-
-          })
-      };
-
-
-
-      fetch("http://localhost:8080/auth/usersignup", requestOptions).then(async response=>{
-        const data = await response.json();
-
-        if(data.username !== null){
-          console.log("Uspesna registracija!");
-        }
-        else{
-          console.log("Neuspesna registracija!");
-        }
-    
-      });
-    
+        setShowRegistrationDialog(true);
+        console.log("cekaj be");
+      
       }
 
-      }
+
+
+    }
+  }
     
+  function signup(){
+    console.log(registrtaionReason);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'  },
+      body:JSON.stringify({
+        username,name,surname,phoneNumber,addressLine,password
+
+      })
+  };
+
+  fetch("http://localhost:8080/auth/usersignup", requestOptions).then(async response=>{
+    const data = await response.json();
+
+    if(data.username !== null){
+      console.log("Uspesna registracija!");
+    }
+    else{
+      console.log("Neuspesna registracija!");
+    }
+
+  });
+  }
   
   const emailValidation = (email) => {
       const regex =
@@ -154,6 +171,17 @@ function RegisterForm()  {
     }
 
 }
+function handleComboChange(event){
+  setUserType(event.target.value);
+}
+function confirmRegistration(text){
+  setRegistrationReason(text);
+  setShowRegistrationDialog(false);
+  signup();
+}
+function cancelRegistration(){
+  setShowRegistrationDialog(false);
+}
 
 
     return <>
@@ -199,11 +227,29 @@ function RegisterForm()  {
     {errors.phoneNumber.length > 0 && <span className='error'>{errors.phoneNumber}</span>}
   </div>
 
+  <div className="mb-3 w-25" style={{marginTop:"20px"}}>
+    <label htmlFor="exampleInputEmail1" className="form-label">User type: </label>
+    <select onChange={handleComboChange}  name="cars" id="cars">
+  <option value="client">Client</option>
+  <option value="vacation">Vacation owner</option>
+  <option value="vessel">Vessel owner</option>
+  <option value="instructor">Fish instructor</option>
+</select>
+  </div>
+
   <button type="submit" onClick={handleSubmit} className="btn btn-primary">Register</button>
 </form>
 
 </div>
 </div>
+<RegistrationDialog
+  showModal={showRegistrationDialog}
+  confirmed={confirmRegistration}
+  canceled={cancelRegistration}
+
+/>
+
+
 </>
 }
 

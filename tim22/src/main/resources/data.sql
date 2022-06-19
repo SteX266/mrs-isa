@@ -24,7 +24,7 @@ VALUES (4, 'Amsterdam', 'Netherlands', 'Robina van Persija', 18);
 
 
 INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (1, 'Petra Kocica 38, Jagodina', false, true, null, 0, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
+VALUES (1, 'Petra Kocica 38, Jagodina', false, true, null, 100, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
 
 INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
 VALUES (2, 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
@@ -220,24 +220,24 @@ INSERT INTO public.availability_period(
 VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
 
 
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false);
-INSERT INTO public.reservation(date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-03-15T15:00', '2022-03-20T15:00', true, 1, 4, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false);
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-07-20T16:00', '2022-07-22T15:30', true, 1, 6, false,100,75);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-07-25T15:00', '2022-07-28T15:00', true, 1, 7, false,100,75);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-04-25T15:00', '2022-04-28T15:30', true, 1, 7, false,100,75);
+INSERT INTO public.reservation(date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-04-20T15:00', '2022-04-23T13:00', true, 1, 6, false,100,75);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-03-15T15:00', '2022-03-20T15:00', true, 1, 4, false,100,75);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-03-22T15:00', '2022-03-23T15:00', true, 1, 2, false,100,75);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2021-09-26T15:00', '2021-10-01T15:00', true, 1, 1, false,100,75);
 
 
-INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled)
-VALUES ( '2022-06-19T15:00', '2022-07-01T15:00', true, 1, 1, false);
+INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
+VALUES ( '2022-06-19T15:00', '2022-07-01T15:00', true, 1, 1, false,100,75);
 
 
 

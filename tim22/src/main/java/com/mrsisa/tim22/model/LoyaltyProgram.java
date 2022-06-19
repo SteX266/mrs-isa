@@ -34,5 +34,20 @@ public class LoyaltyProgram {
     @Column
     private int platinumDiscount;
 
+    public int getDiscountByPoints(int points){
+        if (points >= platinumLimit){
+            return platinumDiscount;
+        }
+        else if (points >= goldLimit){
+            return goldDiscount;
+        }
+        else if (points >= silverLimit){
+            return silverDiscount;
+        }
+        else{
+            return 0;
+        }
+    }
+
 
 }

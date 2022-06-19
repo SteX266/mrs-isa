@@ -48,17 +48,17 @@ public class Reservation {
         this.isCanceled = false;
     }
 
-    public Reservation(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo, User u){
+    public Reservation(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo, User u,double clientPrice,double ownerPrice){
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.systemEntity = entity;
         this.client = u;
         this.isApproved = true;
         this.isCanceled = false;
-        long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
-
-
+        this.clientPrice = clientPrice;
+        this.ownerPrice = ownerPrice;
 
     }
+
 
 }

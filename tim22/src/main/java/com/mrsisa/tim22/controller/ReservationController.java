@@ -3,6 +3,7 @@ package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.ListingDTO;
 import com.mrsisa.tim22.dto.ReservationDTO;
+import com.mrsisa.tim22.dto.ReservationRequestDTO;
 import com.mrsisa.tim22.model.Reservation;
 import com.mrsisa.tim22.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +58,9 @@ public class ReservationController {
         reservationService.createPromoReservation(promoId, username);
     }
 
-    @RequestMapping(value = "/makeReservation", method=RequestMethod.GET)
-    public void makeReservation(@RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo){
-        reservationService.makeReservation(dateFrom, dateTo);
+    @PostMapping(value = "/makeReservation")
+    public void makeReservation(@RequestBody ReservationRequestDTO reservationRequest){
+        reservationService.makeReservation(reservationRequest);
     }
 
 }

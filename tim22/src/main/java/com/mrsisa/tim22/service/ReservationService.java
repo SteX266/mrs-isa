@@ -2,14 +2,19 @@ package com.mrsisa.tim22.service;
 
 
 import com.mrsisa.tim22.dto.ReservationDTO;
+import com.mrsisa.tim22.dto.ReservationRequestDTO;
 import com.mrsisa.tim22.model.*;
 import com.mrsisa.tim22.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 @Service
@@ -27,6 +32,12 @@ public class ReservationService {
 
     @Autowired
     private PenaltyRepository penaltyRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private LoyaltyProgramRepository loyaltyProgramRepository;
 
 
     public ArrayList<ReservationDTO> getClientReservations(String username){
@@ -116,9 +127,38 @@ public class ReservationService {
         reservationRepository.save(r);
     }
 
-    public void makeReservation(LocalDate dateFrom, LocalDate dateTo) {
+    public void makeReservation(ReservationRequestDTO reservationRequest) {
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.getEntityId());
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.dateFrom.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.dateTo.replace("T"," ").substring(0,16), formatter);
 
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        User u = userRepository.findOneByUsername(email);
+        long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
+        double clientPrice = calculateClientPrice(diff, entity.getPrice(), u.getLoyaltyPoints());
+        double ownerPrice = calculateOwnerPrice(diff,entity.getPrice(), entity.getOwner().getLoyaltyPoints());
+
+        Reservation reservation = new Reservation(entity, dateFrom.plusHours(2), dateTo.plusHours(2), u, clientPrice, ownerPrice);
+
+        reservationRepository.save(reservation);
+
+        emailService.sendConfirmReservationEmail(email, entity.getName());
+    }
+
+    private double calculateOwnerPrice(long diff, double price, int loyaltyPoints) {
+        LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
+        int percentage = loyaltyProgram.getDiscountByPoints(loyaltyPoints);
+        return diff / (60*24.0) * price * ((80+percentage)/100.0);
+    }
+
+    private double calculateClientPrice(long diff, double price, int loyaltyPoints) {
+        LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
+        int percentage = loyaltyProgram.getDiscountByPoints(loyaltyPoints);
+        return diff / (60*24.0) * price * ((100-percentage)/100.0);
 
     }
 }
