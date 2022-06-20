@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Navbar, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import RegistrationRequestTable from "./RegistrationRequestTable";
-import RegistrationRequestDialog from "../modals/RegistrationRequestDialog";
+import AccountCancellationResponseDialog from "../modals/AccountCancellationResponseDialog";
 import toast from "react-hot-toast";
 
 export default function RegistrationRequest() {
@@ -25,7 +25,7 @@ export default function RegistrationRequest() {
     };
     axios
       .get(
-        "http://localhost:8080/registrationRequest/getAllRegistrationRequests",
+        "http://localhost:8080/cancellationRequest/getCancellationRequest",
         requestOptions
       )
       .then((res) => {
@@ -45,7 +45,7 @@ export default function RegistrationRequest() {
 
     axios
       .post(
-        "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
+        "http://localhost:8080/cancellationRequest/acceptCancellationRequest",
         { client: client },
         { headers }
       )
@@ -66,7 +66,7 @@ export default function RegistrationRequest() {
       const r = requests[index];
       if (
         r.client.toLowerCase().includes(searchParam) ||
-        r.description.toLowerCase().includes(searchParam)
+        r.text.toLowerCase().includes(searchParam)
       ) {
         searchResult.push(r);
       }
@@ -124,7 +124,7 @@ export default function RegistrationRequest() {
           ></RegistrationRequestTable>
         </Container>
       </div>
-      <RegistrationRequestDialog
+      <AccountCancellationResponseDialog
         showModal={showTaskDialog}
         client={client}
         confirmed={() => setShowTaskDialog(false)}

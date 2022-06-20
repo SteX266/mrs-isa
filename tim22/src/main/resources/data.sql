@@ -257,7 +257,7 @@ VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)
-VALUES (2, 'Zelim da zaradim paree', false, 7);
+VALUES (2, 'Zelim da zaradim paree moooooooooolin vas neophodno nam je posao ajdeee dajte mi pareee treba miiii aaaaaaaass', false, 7);
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)
@@ -267,3 +267,13 @@ INSERT INTO public.loyalty_program(
     id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)
 VALUES (1, 10, 60, 15, 100, 3, 6, 5, 30);
 
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (1, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 2);
+
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (2, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 4);
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (3, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 3);
