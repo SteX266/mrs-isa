@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useParams } from "react-router";
 import BigCalendar from "./BigCalendar";
+import ReservationDialog from "./modals/ReservationDialog";
 import toast from "react-hot-toast";
 
 function ClientCalendar() {
@@ -13,6 +14,7 @@ function ClientCalendar() {
   const [events, setEvents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const[showModal,setShowModal] = useState(false);
   const [lastavailableDate, setLastAvailableDate] = useState(
     new Date("2034/02/08")
   );
@@ -26,6 +28,7 @@ function ClientCalendar() {
   var preEvents = [];
 
   async function Reserve() {
+    
 
     const token = JSON.parse(localStorage.getItem("userToken"));
     const headers = {
@@ -53,6 +56,7 @@ function ClientCalendar() {
   }).catch(() =>{
     toast.error("You are not eligible to make reservations because you have 3 or more penalties this month");
   });
+  closeModal();
   }
   async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -198,6 +202,14 @@ function ClientCalendar() {
     return isFree;
   };
 
+  function closeModal(){
+    setShowModal(false);
+  }
+
+  function openModal(){
+    setShowModal(true);
+  }
+
   return (
     <>
       <div className="container" style={{}}>
@@ -236,12 +248,20 @@ function ClientCalendar() {
         <button
           className="btn btn-warning"
           style={{ margin: "15px" }}
-          onClick={Reserve}
+          onClick={openModal}
         >
           Reserve
         </button>
         <BigCalendar />
       </div>
+      <ReservationDialog
+      showModal={showModal}
+      confirmed={Reserve}
+      canceled={closeModal}
+
+      
+      
+      />
     </>
   );
 }
