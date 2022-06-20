@@ -12,4 +12,9 @@ public interface PromoRepository extends JpaRepository<Promo, Integer> {
     List<Promo> findByEntity(int entityId);
 
     public Promo findOneById(int promoId);
+    @Override
+    <S extends Promo> S save(S s);
+
+    @Override
+    void deleteById(Integer integer);
 }

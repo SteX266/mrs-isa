@@ -2,14 +2,14 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import {
   Button,
-  Col,
   Container,
   Form,
   Modal,
-  Row,
+  Navbar,
   Stack,
   Table,
 } from "react-bootstrap";
+import toast from "react-hot-toast";
 
 export default function EditAvailabilityPeriod({ serviceID, type }) {
   const [availabilityPeriod, setAvailabilityPeriod] = useState([]);
@@ -51,20 +51,8 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
       console.log(res.data);
       data = res.data.availabilityPeriod.map((period) => {
         return {
-          dateFrom: new Date(
-            period.dateFrom[0],
-            period.dateFrom[1],
-            period.dateFrom[2],
-            period.dateFrom[3],
-            period.dateFrom[4]
-          ),
-          dateTo: new Date(
-            period.dateTo[0],
-            period.dateTo[1],
-            period.dateTo[2],
-            period.dateTo[3],
-            period.dateTo[4]
-          ),
+          dateFrom: new Date(period.dateFrom),
+          dateTo: new Date(period.dateTo),
         };
       });
       setAvailabilityPeriod(data);
@@ -78,25 +66,26 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
   });
   function createPeriodList() {
     return (
-      <Table>
+      <Table striped bordered hover>
         <thead>
           <th>Date from:</th>
           <th>Date to:</th>
         </thead>
-        <tbody></tbody>
-        {availabilityPeriod.map((period, index) => {
-          return (
-            <tr key={index}>
-              <td>{period.dateFrom.toLocaleString()}</td>
-              <td>{period.dateTo.toLocaleString()}</td>
-              <td>
-                <Button variant="outline-dark" onClick={remove} name={index}>
-                  Remove
-                </Button>
-              </td>
-            </tr>
-          );
-        })}
+        <tbody>
+          {availabilityPeriod.map((period, index) => {
+            return (
+              <tr key={index}>
+                <td>{period.dateFrom.toLocaleString()}</td>
+                <td>{period.dateTo.toLocaleString()}</td>
+                <td>
+                  <Button variant="outline-dark" onClick={remove} name={index}>
+                    Remove
+                  </Button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </Table>
     );
   }
@@ -108,63 +97,73 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
     setAvailabilityPeriod(allperiods);
     setPeriodList(createPeriodList());
   }
+
   function onChange(event) {
     setPeriod({
       ...period,
       [event.target.name]: event.target.value,
     });
   }
+
   function open() {
     setShow(true);
   }
   function close() {
     setShow(false);
   }
+
   function save() {
     let periods = availabilityPeriod;
-    console.log(periods);
     toAdd.forEach((element) => {
       periods.push(element);
     });
-    console.log(periods);
     setAvailabilityPeriod(periods);
     setShow(false);
     setToAdd([]);
-    console.log(availabilityPeriod);
-    console.log(periods);
   }
+
   function addPeriod() {
     let toadds = toAdd;
     toadds.push(period);
     setToAdd(toadds);
-    setPeriod({ startDate: "", endDate: "" });
+    setPeriod({ dateFrom: "", dateTo: "" });
   }
-  function saveChanges() {}
-  function cancel() {}
-  return (
-    <Container style={{ width: "60%" }}>
-      {periodList}
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col>
-            <Button variant="outline-dark" onClick={cancel}>
-              Cancel
-            </Button>
-          </Col>
-          <Col>
-            <Button onClick={open} variant="outline-dark">
-              Add period
-            </Button>
-          </Col>
 
-          <Col>
-            <Button variant="outline-dark" onClick={saveChanges}>
-              Save changes
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-      <Stack direction="vertical" gap={1}></Stack>
+  function saveChanges() {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const data = {
+      availabilityPeriodDTOS: availabilityPeriod,
+      serviceID: serviceID,
+    };
+    const url = "http://localhost:8080/entity/editAvailabilityPeriod";
+    const requestOptions = {
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+    console.log(data);
+    axios.post(url, data, requestOptions).then((res) => {
+      if (res.status == 200) {
+        toast.success(res.data);
+        console.log(res.data);
+      } else toast.error(res.data);
+    });
+  }
+  return (
+    <Container style={{ width: "80%" }}>
+      <Navbar collapseOnSelect className="rounded border border-dark">
+        <Container>
+          <Button variant="outline-dark" onClick={saveChanges}>
+            Save changes
+          </Button>
+          <Button onClick={open} variant="outline-dark" className="ms-auto">
+            Add period
+          </Button>
+        </Container>
+      </Navbar>
+      {periodList}
       <Modal show={show} onHide={close}>
         <Modal.Header closeButton>
           <Modal.Title>Add availability period</Modal.Title>

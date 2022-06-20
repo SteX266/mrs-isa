@@ -3,17 +3,7 @@ import { Button, Container, Form, Navbar, Stack } from "react-bootstrap";
 
 export default function VesselTypeSelect({ typeDTO, save, next }) {
   const [type, setType] = useState(typeDTO);
-  const types = [
-    "Trawler",
-    "Tug Boat",
-    "Deck Boat",
-    "Dingy",
-    "Life Boat",
-    "Sail Boat",
-    "Yacht",
-    "Houseboat",
-    "Catamaran Boat",
-  ];
+  const types = ["SHIP", "YACHT", "PEDAL_BOAT"];
   const buttons = types.map((type) => (
     <Button
       key={type}

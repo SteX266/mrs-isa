@@ -48,6 +48,21 @@ public class LoyaltyProgram {
             return 0;
         }
     }
+    public String getTierByPoints(int points){
+
+        if (points >= platinumLimit){
+            return "PLATINUM";
+        }
+        else if (points >= goldLimit){
+            return "GOLD";
+        }
+        else if (points >= silverLimit){
+            return "SILVER";
+        }
+        else{
+            return "REGULAR";
+        }
+    }
 
 
 }

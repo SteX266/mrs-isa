@@ -38,7 +38,7 @@ public class Reservation {
     @Column
     private double ownerPrice;
 
-    public Reservation(Promo p, User u){
+    public Reservation(Promo p, User u, double clientPrice, double ownerPrice){
         this.dateFrom = p.getDateFrom();
         this.dateTo = p.getDateTo();
         this.systemEntity = p.getSystemEntity();

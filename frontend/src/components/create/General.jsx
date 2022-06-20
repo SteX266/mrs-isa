@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Container, Form, Navbar, Stack } from "react-bootstrap";
 
-export default function General({ generalDTO, save, next, back }) {
+export default function General({ generalDTO, save, next, back, isFirst }) {
   const max_capacity = 10;
   const max_fee = 10000;
   const max_map = { CAPACITY: 10, FEE: 10000 };
@@ -21,7 +21,6 @@ export default function General({ generalDTO, save, next, back }) {
     if (!value) value = 0;
     value = parseInt(value);
     value += step;
-    console.log(value);
     if (value > max) value = max;
     setGeneral({ ...general, [event.target.name]: value });
   }
@@ -41,7 +40,7 @@ export default function General({ generalDTO, save, next, back }) {
     return (
       !general.name ||
       !general.description ||
-      !general.rules ||
+      !general.rulesOfConduct ||
       !general.capacity ||
       !general.rentalFee ||
       !general.cancellationFee
@@ -73,7 +72,7 @@ export default function General({ generalDTO, save, next, back }) {
             as="textarea"
             rows={3}
             placeholder="Rules"
-            name="rules"
+            name="rulesOfConduct"
             value={general.rules}
             onChange={(e) => onChange(e, "TEXT")}
           />
@@ -159,8 +158,13 @@ export default function General({ generalDTO, save, next, back }) {
       </Stack>
       <Navbar collapseOnSelect expand="lg" className="navigation-buttons">
         <Container>
-          <Button variant="outline-dark" onClick={back}>
-            Back
+          {isFirst && (
+            <Button variant="outline-dark" onClick={back}>
+              Back
+            </Button>
+          )}
+          <Button variant="outline-dark" href="/captain/services">
+            Cancel
           </Button>
           <Button
             variant="outline-dark"

@@ -19,6 +19,8 @@ function ClientProfile() {
   const [email, setEmail] = useState("");
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
   const [penaltyNumber, setPenaltyNumber] = useState(0);
+  const [clientTier, setClientTier] = useState("REGULAR");
+  const [benefits, setBenefits] = useState(0);
 
   const handleSubmit = () => {
 
@@ -46,7 +48,7 @@ function ClientProfile() {
     }
   };
 
-  const confirmDeleteProfile = () => {
+  function confirmDeleteProfile (text) {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const requestOptions = {
       headers: {
@@ -56,7 +58,7 @@ function ClientProfile() {
       },
       params: {
         username: email,
-        text: "Yes, I'm sure!",
+        text: text,
       },
     };
 
@@ -150,7 +152,9 @@ function ClientProfile() {
         setPhoneNumber(res.data.phoneNumber);
         setAddressLine(res.data.addressLine);
         setLoyaltyPoints(res.data.loyaltyPoints);
-        setPenaltyNumber(res.data.penalties)
+        setPenaltyNumber(res.data.penalties);
+        setClientTier(res.data.tier);
+        setBenefits(res.data.benefits);
       });
   }, []);
 
@@ -273,14 +277,14 @@ function ClientProfile() {
               <div className="d-flex justify-content-between align-items-center experience">
                 <span>Client tier</span>
                 <span className="border px-3 p-1 add-experience">
-                  <i className="fa fa-plus"></i>&nbsp;PLATINUM
+                  <i className="fa fa-plus"></i>&nbsp;{clientTier}
                 </span>
               </div>
               <br />
               <div className="d-flex justify-content-between align-items-center experience">
                 <span>Benefits</span>
                 <span className="border px-3 p-1 add-experience">
-                  <i className="fa fa-plus"></i>&nbsp;15% off on all
+                  <i className="fa fa-plus"></i>&nbsp;{benefits}% off on all
                   reservations
                 </span>
               </div>

@@ -33,6 +33,8 @@ import ReportsPage from "./reports/ReportsPage";
 import AccountCancelationRequest from "./admin/AccountCancellationRequest";
 import ReservationReport from "./admin/ReservationReport";
 
+import BussinessPromoPage from "./business/PromoPage";
+
 export default function Router() {
   function Nested(type) {
     return (
@@ -50,6 +52,7 @@ export default function Router() {
 
         <Route path="reports" element={<ReportsPage type={type} />} />
 
+        <Route path="promos/:id" element={<BussinessPromoPage />} />
         <Route
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}

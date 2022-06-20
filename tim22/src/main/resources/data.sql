@@ -10,45 +10,46 @@ VALUES (4, 'SHIP_OWNER');
 INSERT INTO public.role(id, name)
 VALUES (5, 'INSTRUCTOR');
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (1, 'Novi Sad', 'Serbia ', 'Alekse Santica', 4);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Novi Sad', 'Serbia ', 'Alekse Santica', 4);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (2, 'Jagodina', 'Serbia', 'Kralja Aleksandra', 27);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Jagodina', 'Serbia', 'Kralja Aleksandra', 27);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (3, 'Planina', 'Bosnia', 'Na vrh brda', 13);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Planina', 'Bosnia', 'Na vrh brda', 13);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (4, 'Amsterdam', 'Netherlands', 'Robina van Persija', 18);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Amsterdam', 'Netherlands', 'Robina van Persija', 18);
 
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (1, 'Petra Kocica 38, Jagodina', false, true, null, 100, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Petra Kocica 38, Jagodina', false, true, null, 94, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (2, 'Ulica retarda 1, Zrenjanin', false, false, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (3, 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222111', 'Stevanovic', 'stevaszumza@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (4, 'Foca', false, true, null, 0, 'Milica','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066230222', 'Skipina', 'skipina@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222111', 'Stevanovic', 'stevaszumza@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (5, 'Marka Kraljevica 12, Sremska Mitroica', false, true, null, 0, 'Bubi','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0661332324', 'Bubisa', 'bubisa@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Foca', false, true, null, 0, 'Milica','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066230222', 'Skipina', 'skipina@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (6, 'Petra Kocica 8a, Kraljevo', false, true, null, 20, 'Srdjan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'djidja.milosevic@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Marka Kraljevica 12, Sremska Mitroica', false, true, null, 0, 'Bubi','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0661332324', 'Bubisa', 'bubisa@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (7, 'Vujice Vujanova 12, Melenci', false, true, null, 5, 'Nikoleta','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0662454298', 'Milivojev', 'ketiketi@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Petra Kocica 8a, Kraljevo', false, true, null, 20, 'Srdjan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'djidja.milosevic@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (8, 'Vojvodjanskih Brigata 52, Pancevo', false, true, null, 0, 'Anastasia','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0622234567', 'Indjic', 'indija4@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Vujice Vujanova 12, Melenci', false, true, null, 5, 'Nikoleta','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0662454298', 'Milivojev', 'ketiketi@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (9, 'Cara Lazara 66, Paracin', false, true, null, 0, 'Milos','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0642280890', 'Petrovic', 'perapera@gmail.com');
+INSERT INTO public.user_table(address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Vojvodjanskih Brigata 52, Pancevo', false, true, null, 0, 'Anastasia','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0622234567', 'Indjic', 'indija4@gmail.com');
+
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Cara Lazara 66, Paracin', false, true, null, 0, 'Milos','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0642280890', 'Petrovic', 'perapera@gmail.com');
 
 
 INSERT INTO public.user_role(user_id, role_id)
@@ -168,56 +169,56 @@ VALUES (9, '11.jpg');
 
 
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (1,'2022-02-20T15:00', '2022-08-23T13:00', 1);
+    date_from, date_to, system_entity)
+VALUES ('2022-02-20T15:00', '2022-08-23T13:00', 1);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (2,'2022-03-20T15:00', '2023-04-12T13:00', 2);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-20T15:00', '2023-04-12T13:00', 2);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (3,'2022-04-20T15:00', '2023-04-15T13:00', 3);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-04-15T13:00', 3);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (4,'2022-05-20T15:00', '2023-05-11T13:00', 4);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-20T15:00', '2023-05-11T13:00', 4);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (5,'2022-07-20T15:00', '2023-07-14T13:00', 5);
+    date_from, date_to, system_entity)
+VALUES ('2022-07-20T15:00', '2023-07-14T13:00', 5);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (6,'2022-05-20T15:00', '2023-11-27T13:00', 6);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-20T15:00', '2023-11-27T13:00', 6);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (7,'2022-03-20T15:00', '2023-02-24T13:00', 7);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-20T15:00', '2023-02-24T13:00', 7);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (8,'2022-04-20T15:00', '2023-04-22T13:00', 8);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-04-22T13:00', 8);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (9,'2022-04-20T15:00', '2023-05-21T13:00', 9);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-05-21T13:00', 9);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (10,'2022-04-20T15:00', '2023-09-21T13:00', 10);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-09-21T13:00', 10);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (11,'2022-04-15T15:00', '2023-12-25T13:00', 11);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-15T15:00', '2023-12-25T13:00', 11);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (12,'2022-03-16T15:00', '2023-05-26T13:00', 12);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-16T15:00', '2023-05-26T13:00', 12);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (13,'2022-02-13T15:00', '2023-01-11T13:00', 13);
+    date_from, date_to, system_entity)
+VALUES ('2022-02-13T15:00', '2023-01-11T13:00', 13);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (14,'2022-01-21T15:00', '2023-08-16T13:00', 14);
+    date_from, date_to, system_entity)
+VALUES ('2022-01-21T15:00', '2023-08-16T13:00', 14);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (15,'2022-01-22T15:00', '2023-07-14T13:00', 15);
+    date_from, date_to, system_entity)
+VALUES ('2022-01-22T15:00', '2023-07-14T13:00', 15);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (16,'2022-06-22T15:00', '2023-06-20T13:00', 16);
+    date_from, date_to, system_entity)
+VALUES ('2022-06-22T15:00', '2023-06-20T13:00', 16);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-21T15:00', '2023-05-23T13:00', 17);
 
 
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)
@@ -243,25 +244,26 @@ VALUES ( '2022-06-19T15:00', '2022-07-01T15:00', true, 1, 1, false,100,75);
 
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id,is_taken)
-VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
+    capacity, date_from, date_to, description, price, system_entity_id,is_taken)
+VALUES (2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id, is_taken)
-VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
+    capacity, date_from, date_to, description, price, system_entity_id, is_taken)
+VALUES (2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
+     description, is_answered, client_id)
+VALUES ('Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (2, 'Zelim da zaradim paree moooooooooolin vas neophodno nam je posao ajdeee dajte mi pareee treba miiii aaaaaaaass', false, 7);
+
+     description, is_answered, client_id)
+VALUES ( 'Zelim da zaradim paree', false, 7);
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (3, 'Please give me a chance to prove i will pay', false, 8);
+     description, is_answered, client_id)
+VALUES ( 'Please give me a chance to prove i will pay', false, 8);
 
 INSERT INTO public.loyalty_program(
     id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)
