@@ -25,7 +25,7 @@ public class Address {
     private String streetName;
     @Column
     private int streetNumber;
-    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "address")
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "address")
     private Set<SystemEntity> systemEntities = new HashSet<>();
 
     public Address(String city, String country, String streetName, int streetNumber) {

@@ -1,11 +1,8 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.Adventure;
 import com.mrsisa.tim22.model.Utility;
-import com.mrsisa.tim22.repository.AddressRepository;
 import com.mrsisa.tim22.service.SystemEntityService;
-import org.slf4j.helpers.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -118,8 +114,8 @@ public class SystemEntityController {
     }
 
     @DeleteMapping("/deleteVessel")
-    public ResponseEntity<String> deleteVessel(@RequestParam Long id) {
-        if(systemEntityService.deleteVessel(id)) {
+    public ResponseEntity<String> deleteVessel(@RequestParam Integer id) {
+        if(systemEntityService.deleteEntity(id)) {
             return new ResponseEntity<>("Successfully deleted vessel.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't delete vessel.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -138,8 +134,8 @@ public class SystemEntityController {
     }
 
     @DeleteMapping("/deleteListing")
-    public ResponseEntity<String> deleteListing(@RequestParam Long id) {
-        if(systemEntityService.deleteListing(id)) {
+    public ResponseEntity<String> deleteListing(@RequestParam Integer id) {
+        if(systemEntityService.deleteEntity(id)) {
             return new ResponseEntity<>("Successfully deleted listing.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't delete listing.", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -17,8 +17,7 @@ import java.util.Set;
 @Setter
 @Entity
 public class Adventure extends SystemEntity {
-    @Id
-    private Integer id;
+
     @ElementCollection(targetClass=FishingEquipement.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="fishing_equipement")

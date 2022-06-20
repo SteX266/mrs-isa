@@ -19,8 +19,6 @@ import java.util.Set;
 public abstract class SystemEntity {
 
     @Id
-    @SequenceGenerator(name = "entitySequenceGenerator", sequenceName = "entityIds", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entitySequenceGenerator")
     protected Integer id;
     @Column
     protected String name;
@@ -45,23 +43,23 @@ public abstract class SystemEntity {
     protected List<Amenity> amenities;
     @Column
     protected boolean isDeleted;
-    @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     protected Set<Promo> promos = new HashSet<Promo>();
     @Column
     protected double cancellationFee;
     @Column
     protected double averageScore;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
     protected Set<Review> reviews = new HashSet<Review>();
     @ManyToMany(mappedBy = "subscribtions")
     protected Set<User> subscribers = new HashSet<>();
 
-    @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     protected Set<Complaint> complaints = new HashSet<Complaint>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
     protected Set<AvailabilityPeriod> availabilityPeriod = new HashSet<AvailabilityPeriod>();
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
     protected Set<Reservation> reservations = new HashSet<Reservation>();
     @Column
     protected double price;
@@ -90,4 +88,5 @@ public abstract class SystemEntity {
     public void addComplaint(Complaint complaint) {
         this.complaints.add(complaint);
     }
+
 }

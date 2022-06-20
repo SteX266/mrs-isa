@@ -310,7 +310,20 @@ public class SystemEntityService {
                 .getPrincipal();
         return userRepository.findOneByUsername(user.getUsername());
     }
+    public Integer generateNextId(){
+        Integer id = 0;
+        List<SystemEntity> entities = systemEntityRepository.findAll();
 
+        for(SystemEntity entity:entities){
+            if (entity.getId() > id){
+                id = entity.getId();
+            }
+        }
+        id++;
+        System.out.println("ALOOOO BAAAA");
+        System.out.println(id);
+        return id;
+    }
     public boolean saveVessel(VesselDTO vesselDTO) {
         User u = getCurrentUser();
         Address address = new Address(vesselDTO.getCity(), vesselDTO.getCountry(), vesselDTO.getStreetName(), vesselDTO.getStreetNumber());
@@ -319,6 +332,9 @@ public class SystemEntityService {
         vessel.setAddress(address);
         vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
         address.addSystemEntity(vessel);
+        vessel.setId(generateNextId());
+        System.out.println("ALOOOOOO");
+        System.out.println(vessel.getId());
         addressRepository.save(address);
         vesselRepository.save(vessel);
         return true;
@@ -337,8 +353,9 @@ public class SystemEntityService {
         return new AvailabilityPeriod(dateFrom, dateTo);
     }
 
-    public boolean deleteVessel(Long id) {
-        vesselRepository.deleteById(id);
+    public boolean deleteEntity(Integer id) {
+        SystemEntity entity = systemEntityRepository.findOneById(id);
+        entity.setDeleted(true);
         return true;
     }
 

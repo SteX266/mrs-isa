@@ -3,10 +3,7 @@ package com.mrsisa.tim22.repository;
 import com.mrsisa.tim22.model.Role;
 import com.mrsisa.tim22.model.Vacation;
 import com.mrsisa.tim22.model.Vessel;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.jpa.repository.*;
 
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;

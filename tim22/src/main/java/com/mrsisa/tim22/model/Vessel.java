@@ -35,7 +35,7 @@ public class Vessel extends SystemEntity {
     private List<FishingEquipement> fishingEquipement;
 
     public Vessel(VesselDTO vesselDTO) {
-        this.id = vesselDTO.getId();
+
         vesselType = vesselDTO.getVesselType();
         engineNumber = vesselDTO.getEngineNumber();
         enginePower = vesselDTO.getEnginePower();
