@@ -253,7 +253,7 @@ VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snize
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)
-VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 2);
+VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
 
 INSERT INTO public.registration_request(
     id, description, is_answered, client_id)

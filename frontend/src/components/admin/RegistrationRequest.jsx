@@ -2,7 +2,8 @@ import React from "react";
 import { Container, Navbar, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import RegistrationRequestTable from "./RegistrationRequestTable";
-import Dialog from "../modals/Dialog";
+import RegistrationRequestDialog from "../modals/RegistrationRequestDialog";
+import toast from "react-hot-toast";
 
 export default function RegistrationRequest() {
   const [requests, setRequests] = React.useState([]);
@@ -10,6 +11,8 @@ export default function RegistrationRequest() {
   const [searchRequests, setSearchRequests] = React.useState([]);
 
   const [showTaskDialog, setShowTaskDialog] = React.useState(false);
+
+  const [client, setClient] = React.useState("");
 
   React.useEffect(() => {
     getRequests();
@@ -40,27 +43,22 @@ export default function RegistrationRequest() {
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios.post(
-      "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
-      { client: client },
-      { headers }
-    );
+    axios
+      .post(
+        "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
+        { client: client },
+        { headers }
+      )
+      .then(async () => {
+        toast.success(
+          "Registration request from user " + client + " successfully accepted "
+        );
+      })
+      .catch(() => {
+        toast.error("Something went wrong");
+      });
   }
-  async function DeclineRequest(client, reason) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: "Bearer " + token.accessToken,
-    };
 
-    axios.post(
-      "http://localhost:8080/registrationRequest/declineRegistrationRequest",
-      { client: client, description: reason },
-      { headers }
-    );
-  }
   function onSearchFieldChange(event) {
     const searchResult = [];
     const searchParam = event.target.value.toLowerCase();
@@ -96,15 +94,9 @@ export default function RegistrationRequest() {
     AcceptRequest(client);
     removeRequest(client);
   }
-  function onDecline(client) {
-    DeclineRequest(client, "pusi kurac mentolu");
-    setShowTaskDialog(true);
-  }
-
-  function confirmDecline() {
-    console.log("declined");
-  }
-  function cancelDecline() {
+  async function onDecline(c) {
+    await setClient(c);
+    removeRequest(c);
     setShowTaskDialog(true);
   }
 
@@ -133,12 +125,11 @@ export default function RegistrationRequest() {
           ></RegistrationRequestTable>
         </Container>
       </div>
-      <Dialog
-        show={showTaskDialog}
-        title="Decline Request?"
-        description="Why are you declining this request?"
-        confirmed={confirmDecline}
-        canceled={cancelDecline}
+      <RegistrationRequestDialog
+        showModal={showTaskDialog}
+        client={client}
+        confirmed={() => setShowTaskDialog(false)}
+        canceled={() => setShowTaskDialog(false)}
       />
     </>
   );
