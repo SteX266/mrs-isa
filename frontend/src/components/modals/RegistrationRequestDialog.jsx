@@ -53,7 +53,7 @@ export default function ComplaintDialog({
           </Modal.Header>
           <Modal.Body>
             <FormLabel style={{ marginTop: "5px" }}>
-              Please insert declination text
+              Please insert reason to decline request
             </FormLabel>
 
             <MDBInput
