@@ -16,7 +16,6 @@ export default function Map(props) {
   if (!isLoaded)
    {return <div>Loading...</div>}
   else{
-  console.log(props.address);
   return <GMap address={props.address} />}
 }
 

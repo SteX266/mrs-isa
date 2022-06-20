@@ -140,9 +140,7 @@ public class AuthentificationController {
     @GetMapping(value="/getImage/{name}")
     public ResponseEntity<InputStreamResource> getImage(@PathVariable String name, @RequestParam String extension){
         try{
-            System.out.println(extension);
             String path = "src/main/resources/images/" + name + "." + extension;
-            System.out.println(path);
             FileSystemResource imgFile = new FileSystemResource(path);
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(imgFile.getInputStream()));
         } catch (IOException e) {

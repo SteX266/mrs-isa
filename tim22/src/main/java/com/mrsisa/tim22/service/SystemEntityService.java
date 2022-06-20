@@ -115,8 +115,6 @@ public class SystemEntityService {
     }
 
     public SystemEntityDTO getEntityById(int id) {
-
-
         SystemEntity entity = systemEntityRepository.findOneById(id);
         return new SystemEntityDTO(entity);
 

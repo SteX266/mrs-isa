@@ -54,8 +54,14 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/createPromoReservation", method=RequestMethod.GET)
-    public void createPromoReservation(@RequestParam int promoId, @RequestParam String username){
-        reservationService.createPromoReservation(promoId, username);
+    public ResponseEntity<String> createPromoReservation(@RequestParam int promoId, @RequestParam String username){
+
+        if(reservationService.createPromoReservation(promoId, username)){
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Can't make reservation", HttpStatus.FORBIDDEN);
+        }
     }
 
     @PostMapping(value = "/makeReservation")
@@ -64,7 +70,7 @@ public class ReservationController {
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>("Too many penalties", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Can't make reservation", HttpStatus.FORBIDDEN);
         }
     }
 
