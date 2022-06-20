@@ -15,4 +15,6 @@ public class UserDTO {
     String addressLine;
     int loyaltyPoints;
     int penalties;
+    String tier;
+    int benefits;
 }

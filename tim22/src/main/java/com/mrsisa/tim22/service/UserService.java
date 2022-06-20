@@ -6,6 +6,7 @@ import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.repository.LoyaltyProgramRepository;
 import com.mrsisa.tim22.repository.RegistrationRequestRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
@@ -27,6 +28,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private SystemEntityRepository systemEntityRepository;
+    @Autowired
+    private LoyaltyProgramRepository loyaltyProgramRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -50,8 +53,10 @@ public class UserService {
 
     public UserDTO getUserByUsername(String username) {
         User u = userRepository.findOneByUsername(username);
-        int penaltyNumber = u.getUserPenalties();
-        return new UserDTO(u.getUsername(), u.getName(), u.getSurname(), u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), penaltyNumber);
+        LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
+        String tier = loyaltyProgram.getTierByPoints(u.getLoyaltyPoints());
+        int benefits = loyaltyProgram.getDiscountByPoints(u.getLoyaltyPoints());
+        return new UserDTO(u.getUsername(), u.getName(), u.getSurname(), u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), u.getUserPenalties(), tier, benefits);
 
     }
 

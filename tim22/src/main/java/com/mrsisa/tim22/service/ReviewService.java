@@ -11,6 +11,8 @@ import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ReviewService {
 
@@ -24,11 +26,13 @@ public class ReviewService {
     private SystemEntityRepository systemEntityRepository;
 
 
+    @Transactional
     public boolean createReview(int reservationId, String username, String text, int rating) {
 
-        Reservation reservation = reservationRepository.findOneById(reservationId);
-        User u = userRepository.findOneByUsername(username);
+        Reservation reservation = reservationRepository.getLockedReview(reservationId);
         SystemEntity e = reservation.getSystemEntity();
+        User u = userRepository.findOneByUsername(username);
+
 
         System.out.println("Duzina: " + e.getComplaints().size() );
         for (Review r:e.getReviews()){
