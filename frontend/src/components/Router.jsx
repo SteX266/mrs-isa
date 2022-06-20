@@ -30,6 +30,7 @@ import ClientSubscriptions from "./client_components/ClientSubscriptions";
 import { Toaster } from "react-hot-toast";
 import LoyaltyProgram from "./admin/LoyaltyProgram";
 import ReportsPage from "./reports/ReportsPage";
+import BussinessPromoPage from "./business/PromoPage";
 
 export default function Router() {
   function Nested(type) {
@@ -48,6 +49,7 @@ export default function Router() {
 
         <Route path="reports" element={<ReportsPage type={type} />} />
 
+        <Route path="promos/:id" element={<BussinessPromoPage />} />
         <Route
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}

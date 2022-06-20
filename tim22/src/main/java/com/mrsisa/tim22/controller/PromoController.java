@@ -23,6 +23,22 @@ public class PromoController {
     public ResponseEntity<ArrayList<PromoDTO>> getEntityPromos(@RequestParam int id){
         return new ResponseEntity<ArrayList<PromoDTO>>(promoService.getEntityPromos(id), HttpStatus.OK);
     }
+    @PostMapping("/create")
+    public ResponseEntity<String> create(@RequestBody PromoDTO newPromo){
+        if(promoService.createPromoFromDTO(newPromo)) {
+            return new ResponseEntity<>("Successfully created promo.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Promo couldn't be created.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePromo(@PathVariable int id) {
+        if(promoService.deleteById(id)) {
+            return new ResponseEntity<>("Successfully deleted promo.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Promo already reserved.", HttpStatus.IM_USED);
+        }
+    }
 
 
 }

@@ -243,12 +243,12 @@ VALUES ( '2022-06-19T15:00', '2022-07-01T15:00', true, 1, 1, false,100,75);
 
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id,is_taken)
-VALUES (1, 2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
+    capacity, date_from, date_to, description, price, system_entity_id,is_taken)
+VALUES (2, '2022-07-15T13:00', '2022-07-25T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 INSERT INTO public.promo(
-    id, capacity, date_from, date_to, description, price, system_entity_id, is_taken)
-VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
+    capacity, date_from, date_to, description, price, system_entity_id, is_taken)
+VALUES (2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snizenoj ceni', 100, 1, false);
 
 
 INSERT INTO public.registration_request(
