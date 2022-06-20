@@ -1,10 +1,8 @@
 package com.mrsisa.tim22.controller;
 
 
-import com.mrsisa.tim22.dto.ListingDTO;
 import com.mrsisa.tim22.dto.ReservationDTO;
 import com.mrsisa.tim22.dto.ReservationRequestDTO;
-import com.mrsisa.tim22.model.Reservation;
 import com.mrsisa.tim22.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RestController

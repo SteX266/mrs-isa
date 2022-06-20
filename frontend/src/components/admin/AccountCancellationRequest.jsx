@@ -53,6 +53,7 @@ export default function RegistrationRequest() {
         toast.success(
           "Registration request from user " + client + " successfully accepted "
         );
+        getRequests();
       })
       .catch(() => {
         toast.error("Something went wrong");
@@ -78,21 +79,8 @@ export default function RegistrationRequest() {
     len = 0;
   }
 
-  function removeRequest(client) {
-    let searchResult = [];
-    for (let index = 0; index < requests.length; index++) {
-      const r = requests[index];
-      if (!r.client.includes(client)) {
-        searchResult.push(r);
-      }
-    }
-    setSearchRequests(searchResult);
-    setRequests(searchResult);
-  }
-
   function onAccept(client) {
     AcceptRequest(client);
-    removeRequest(client);
   }
   async function onDecline(c) {
     await setClient(c);
@@ -127,7 +115,10 @@ export default function RegistrationRequest() {
       <AccountCancellationResponseDialog
         showModal={showTaskDialog}
         client={client}
-        confirmed={() => setShowTaskDialog(false)}
+        confirmed={() => {
+          setShowTaskDialog(false);
+          getRequests();
+        }}
         canceled={() => setShowTaskDialog(false)}
       />
     </>

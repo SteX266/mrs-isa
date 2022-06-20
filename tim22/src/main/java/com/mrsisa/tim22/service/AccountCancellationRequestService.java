@@ -1,9 +1,7 @@
 package com.mrsisa.tim22.service;
 
 import com.mrsisa.tim22.dto.CancellationRequestDTO;
-import com.mrsisa.tim22.dto.RegistrationRequestDTO;
 import com.mrsisa.tim22.model.AccountCancellationRequest;
-import com.mrsisa.tim22.model.RegistrationRequest;
 import com.mrsisa.tim22.model.User;
 import com.mrsisa.tim22.repository.AccountCancellationRequestRepository;
 import com.mrsisa.tim22.repository.UserRepository;

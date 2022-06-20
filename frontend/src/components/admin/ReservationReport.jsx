@@ -1,22 +1,23 @@
 import React from "react";
 import { Container, Navbar, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
-import RegistrationRequestTable from "./RegistrationRequestTable";
-import RegistrationRequestDialog from "../modals/RegistrationRequestDialog";
-import toast from "react-hot-toast";
+import ReservationReportTable from "./ReservationReportTable";
+import SanctionReportDialog from "../modals/SanctionReportDialog";
+import DeclineReportDialog from "../modals/DeclineReportDialog";
 
-export default function RegistrationRequest() {
+export default function ReservationReport() {
   const [requests, setRequests] = React.useState([]);
 
   const [searchRequests, setSearchRequests] = React.useState([]);
 
   const [showTaskDialog, setShowTaskDialog] = React.useState(false);
+  const [showDeclineDialog, setShowDeclineDialog] = React.useState(false);
 
-  const [client, setClient] = React.useState("");
+  const [report, setReport] = React.useState("");
 
   React.useEffect(() => {
     getRequests();
-  }, [showTaskDialog]);
+  }, [showDeclineDialog, showTaskDialog]);
 
   async function getRequests() {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -25,38 +26,13 @@ export default function RegistrationRequest() {
     };
     axios
       .get(
-        "http://localhost:8080/registrationRequest/getAllRegistrationRequests",
+        "http://localhost:8080/reservationReport/getAllReservationReports",
         requestOptions
       )
       .then((res) => {
         console.log(res.data);
         setRequests(res.data);
         setSearchRequests(res.data);
-      });
-  }
-  async function AcceptRequest(client) {
-    const token = JSON.parse(localStorage.getItem("userToken"));
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      Authorization: "Bearer " + token.accessToken,
-    };
-
-    axios
-      .post(
-        "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
-        { client: client },
-        { headers }
-      )
-      .then(async () => {
-        toast.success(
-          "Registration request from user " + client + " successfully accepted "
-        );
-        getRequests();
-      })
-      .catch(() => {
-        toast.error("Something went wrong");
       });
   }
 
@@ -67,7 +43,7 @@ export default function RegistrationRequest() {
       const r = requests[index];
       if (
         r.client.toLowerCase().includes(searchParam) ||
-        r.description.toLowerCase().includes(searchParam)
+        r.text.toLowerCase().includes(searchParam)
       ) {
         searchResult.push(r);
       }
@@ -79,12 +55,13 @@ export default function RegistrationRequest() {
     len = 0;
   }
 
-  async function onAccept(client) {
-    await AcceptRequest(client);
-  }
-  async function onDecline(c) {
-    await setClient(c);
+  async function onAccept(report) {
+    await setReport(report);
     setShowTaskDialog(true);
+  }
+  async function onDecline(report) {
+    await setReport(report);
+    setShowDeclineDialog(true);
   }
 
   return (
@@ -105,21 +82,30 @@ export default function RegistrationRequest() {
               <SearchForm searchFieldChanged={onSearchFieldChange} />
             </Container>
           </Navbar>
-          <RegistrationRequestTable
+          <ReservationReportTable
             onAccept={onAccept}
             onDecline={onDecline}
             requests={searchRequests}
-          ></RegistrationRequestTable>
+          ></ReservationReportTable>
         </Container>
       </div>
-      <RegistrationRequestDialog
+      <SanctionReportDialog
         showModal={showTaskDialog}
-        client={client}
+        report={report}
+        confirmed={() => setShowTaskDialog(false)}
+        canceled={() => setShowTaskDialog(false)}
+      />
+      <DeclineReportDialog
+        showModal={showDeclineDialog}
+        report={report}
         confirmed={() => {
-          setShowTaskDialog(false);
+          setShowDeclineDialog(false);
           getRequests();
         }}
-        canceled={() => setShowTaskDialog(false)}
+        canceled={() => {
+          setShowDeclineDialog(false);
+          getRequests();
+        }}
       />
     </>
   );

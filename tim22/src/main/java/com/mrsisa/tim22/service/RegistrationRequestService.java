@@ -3,7 +3,6 @@ package com.mrsisa.tim22.service;
 import com.mrsisa.tim22.dto.RegistrationRequestDTO;
 import com.mrsisa.tim22.model.RegistrationRequest;
 import com.mrsisa.tim22.model.User;
-import com.mrsisa.tim22.repository.PromoRepository;
 import com.mrsisa.tim22.repository.RegistrationRequestRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

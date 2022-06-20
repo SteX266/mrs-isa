@@ -2,7 +2,6 @@ package com.mrsisa.tim22.controller;
 
 
 import com.mrsisa.tim22.dto.RegistrationRequestDTO;
-import com.mrsisa.tim22.dto.ReservationRequestDTO;
 import com.mrsisa.tim22.service.RegistrationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

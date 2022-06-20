@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.repository;
 
 import com.mrsisa.tim22.model.Promo;
-import com.mrsisa.tim22.model.SystemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

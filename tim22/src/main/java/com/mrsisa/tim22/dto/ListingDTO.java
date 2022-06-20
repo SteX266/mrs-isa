@@ -1,15 +1,15 @@
 package com.mrsisa.tim22.dto;
 
-import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.model.Amenity;
+import com.mrsisa.tim22.model.AvailabilityPeriod;
+import com.mrsisa.tim22.model.Vacation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor

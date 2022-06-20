@@ -1,8 +1,6 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.CancellationRequestDTO;
-import com.mrsisa.tim22.dto.RegistrationRequestDTO;
-import com.mrsisa.tim22.model.AccountCancellationRequest;
 import com.mrsisa.tim22.service.AccountCancellationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
-import com.mrsisa.tim22.model.Adventure;
 import com.mrsisa.tim22.service.SystemEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
