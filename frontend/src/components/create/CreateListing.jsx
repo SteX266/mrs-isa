@@ -36,6 +36,7 @@ export default function CreateListing() {
       back={back}
       save={save}
       generalDTO={vesselDTO.general}
+      isFirst={true}
     />,
     <AvailabilityPeriod
       key="AVAILABILITY_PERIOD"
@@ -65,7 +66,12 @@ export default function CreateListing() {
       back={back}
       amenitiesDTO={vesselDTO.amenities}
     />,
-    <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
+    <ConfirmCreate
+      key="CONFIRM"
+      serviceDTO={vesselDTO}
+      back={back}
+      type="listing"
+    />,
   ];
 
   useEffect(() => {

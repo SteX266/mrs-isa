@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Button, Container, Form, Navbar, Stack } from "react-bootstrap";
+import toast from "react-hot-toast";
 
 export default function EditGeneral({ serviceID, type }) {
   const [general, setGeneral] = useState({
     name: "",
     description: "",
     rulesOfConduct: "",
-    rentalFee: "",
+    price: "",
     cancellationFee: "",
     capacity: "",
   });
@@ -46,7 +47,7 @@ export default function EditGeneral({ serviceID, type }) {
         name: res.data.name,
         description: res.data.description,
         rulesOfConduct: res.data.rulesOfConduct,
-        rentalFee: res.data.price,
+        price: res.data.price,
         cancellationFee: res.data.cancellationFee,
         capacity: res.data.capacity,
       };
@@ -56,14 +57,44 @@ export default function EditGeneral({ serviceID, type }) {
   useEffect(() => {
     getGeneralByID();
   }, []);
+
   function onChange(event) {
     setGeneral({ ...general, [event.target.name]: event.target.value });
     console.log(general);
   }
+
+  function saveChanges() {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const data = general;
+    data["serviceID"] = serviceID;
+    const url = "http://localhost:8080/entity/editGeneral";
+    const requestOptions = {
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token.accessToken,
+      },
+    };
+    console.log(data);
+    axios.post(url, data, requestOptions).then((res) => {
+      if (res.status == 200) {
+        toast.success(res.data);
+        console.log(res.data);
+      } else toast.error(res.data);
+    });
+  }
+
   return (
-    <Container style={{ width: "50%" }}>
+    <Container style={{ width: "80%" }}>
+      <Navbar collapseOnSelect className="rounded border border-dark">
+        <Container>
+          <Button variant="outline-dark" onClick={saveChanges}>
+            Save changes
+          </Button>
+        </Container>
+      </Navbar>
       <Stack direction="vertical" gap={1}>
-        <Form.Label>Service Name</Form.Label>
+        <Form.Label>Name</Form.Label>
         <Form.Control
           type="text"
           value={general.name}
@@ -98,8 +129,8 @@ export default function EditGeneral({ serviceID, type }) {
         <Form.Label>Rental fee</Form.Label>
         <Form.Control
           type="number"
-          value={general.rentalFee}
-          name="rentalFee"
+          value={general.price}
+          name="price"
           onChange={onChange}
           min={0}
           max={10000}
@@ -115,17 +146,6 @@ export default function EditGeneral({ serviceID, type }) {
           max={10000}
           step={5}
         />
-        <Container style={{ width: "90%" }}>
-          <Row className="justify-content-md-center">
-            <Col>
-              <Button variant="outline-dark">Cancel</Button>
-            </Col>
-            <Col></Col>
-            <Col>
-              <Button variant="outline-dark">Save changes</Button>
-            </Col>
-          </Row>
-        </Container>
       </Stack>
     </Container>
   );

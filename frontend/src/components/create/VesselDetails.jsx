@@ -7,7 +7,7 @@ export default function VesselDetails({ vesselDetailsDTO, save, next, back }) {
     setDetails({ ...details, [event.target.name]: event.target.value });
   }
   function onNext() {
-    save(details, "details");
+    save(details, "vesselDetails");
     next();
   }
   return (

@@ -1,5 +1,5 @@
 package com.mrsisa.tim22.model;
 
-public enum Amenity {
+public enum Utility {
     WIFI, FIRST_AID_KIT, FISHING_POLES, FISHING_NET, SONAR, GPS, KITCHEN, AC, POOL, GYM, PET_FRIENDLY, PARKING, FRIDGE, HEATING, WASHER, TV, BBQ,
 }
