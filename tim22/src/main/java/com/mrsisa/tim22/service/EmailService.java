@@ -6,8 +6,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 public class EmailService {
 
@@ -48,5 +46,14 @@ public class EmailService {
     public void deleteRequestApprovedEmail(String email){
         sendEmail(email, "Profile delete request approved!", "Your request for account deletion was approved by administration admin. You no longer have the ability to use our services. Respond to this email if you ever wish to reopen your account");
     }
+    public void sendReservationReportAccepted(String clientEmail, String ownerEmail, String complaintText, String responseText){
+        sendEmail(ownerEmail, "Complaint about " + clientEmail, "Your complaint has been accepted and client "+ clientEmail +" will recive penalty.You can check it out in further text.\n"+"Complaint text:\n"+complaintText+"\nResponse text:\n" + responseText);
+        sendEmail(clientEmail, "Complaint from" + ownerEmail, "You recieved a complaint made by " + ownerEmail + ". Complaint has been accepted and you will recive penalty. You can check it out in further text, as well as administrator response.\n"+"Complaint text:\n"+complaintText+"\nResponse text:\n" + responseText);
+    }
 
+    public void sendReservationReportDeclined(String clientEmail, String ownerEmail, String complaintText, String responseText) {
+        sendEmail(ownerEmail, "Complaint about " + clientEmail, "Your complaint has been declined and client "+ clientEmail +" will  not recive any penalties.You can check it out in further text.\n"+"Complaint text:\n"+complaintText+"\nResponse text:\n" + responseText);
+        sendEmail(clientEmail, "Complaint from" + ownerEmail, "You recieved a complaint made by " + ownerEmail + ". Complaint has been declined and you will not recive  any penalties. You can check it out in further text, as well as administrator response.\n"+"Complaint text:\n"+complaintText+"\nResponse text:\n" + responseText);
+
+    }
 }

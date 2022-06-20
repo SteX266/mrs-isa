@@ -1,8 +1,15 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 
-export default function RegistrationRequestTable(props) {
-  let headers = ["Email", "Description", "Type", "Accept", "Decline"];
+export default function ReservationReportTable(props) {
+  let headers = [
+    "Client",
+    "Owner",
+    "Reservation",
+    "Description",
+    "Accept",
+    "Decline",
+  ];
   if (props.requests.length == 0)
     return <h1>There is currenty no unanswered requests</h1>;
   return (
@@ -32,14 +39,12 @@ function TableHeader(props) {
 }
 
 function TableBody(props) {
-  console.log("telo");
-  console.log(props.requests);
   return (
     <tbody>
       {props.requests.map((request) => (
         <EditableTableRow
-          onAccept={() => props.onAccept(request.client)}
-          onDecline={() => props.onDecline(request.client)}
+          onAccept={() => props.onAccept(request)}
+          onDecline={() => props.onDecline(request)}
           key={request.id}
           request={request}
         ></EditableTableRow>
@@ -68,7 +73,7 @@ function EditableTableRow(props) {
           onClick={() => props.onAccept(props.request.id)}
           variant="outline-primary"
         >
-          Accept
+          Sanction
         </Button>
       </td>
       <td>

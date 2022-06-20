@@ -17,14 +17,14 @@ public class AccountCancellationRequest {
     @Column
     private String text;
     @Column
-    private boolean isApproved;
+    private boolean isAnswered;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
     public AccountCancellationRequest(String text, boolean isApproved, User u){
         this.text = text;
-        this.isApproved = isApproved;
+        this.isAnswered = isApproved;
         this.user = u;
     }
 

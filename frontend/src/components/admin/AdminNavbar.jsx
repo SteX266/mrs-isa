@@ -21,6 +21,12 @@ export default function AdminNavbar() {
             <Nav.Link href={`/admin/registration-request`}>
               Registration Requests
             </Nav.Link>
+            <Nav.Link href={`/admin/cancellation-request`}>
+              Cancellation Requests
+            </Nav.Link>
+            <Nav.Link href={`/admin/reservation-report`}>
+              Reservatin reports
+            </Nav.Link>
             <Nav.Link href={`/admin/registerAdmin`}>Register Admin</Nav.Link>
             <Nav.Link href={`/admin/loyalty`}>Loyalty Program</Nav.Link>
             <Nav.Link href={`/admin/viewEntities`}>Entities</Nav.Link>
