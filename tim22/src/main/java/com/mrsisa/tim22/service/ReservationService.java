@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +30,12 @@ public class ReservationService {
     private PromoRepository promoRepository;
     @Autowired
     private SystemEntityRepository systemEntityRepository;
+    @Autowired
+    private VacationRepository vacationRepository;
+    @Autowired
+    private AdventureRepository adventureRepository;
+    @Autowired
+    private VesselRepository vesselRepository;
 
     @Autowired
     private PenaltyRepository penaltyRepository;
@@ -118,36 +125,106 @@ public class ReservationService {
         return reservations;
     }
 
-    public void createPromoReservation(int promoId, String username) {
+    @Transactional
+    public boolean createPromoReservation(int promoId, String username) {
         Promo p = promoRepository.findOneById(promoId);
         User u = userRepository.findOneByUsername(username);
-        Reservation r = new Reservation(p, u);
-        p.setTaken(true);
-        promoRepository.save(p);
-        reservationRepository.save(r);
+        SystemEntity entity = systemEntityRepository.findOneById(p.getSystemEntity().getId());
+
+        SystemEntity entityToReserve;
+        if(entity.getEntityType().equals(SystemEntityType.ADVENTURE)){
+            entityToReserve = adventureRepository.getLockedEntity(entity.getId());
+        }
+        else if (entity.getEntityType().equals(SystemEntityType.VACATION)){
+            entityToReserve = vacationRepository.getLockedEntity(entity.getId());
+        }
+        else{
+            entityToReserve = vesselRepository.getLockedEntity(entity.getId());
+        }
+        if(isEntityAvailable(entityToReserve, p.getDateFrom(), p.getDateTo())){
+            return createReservation( u, entityToReserve, p.getDateFrom(), p.getDateTo());
+        }
+        else{
+            return false;
+        }
+
+
     }
 
-    public void makeReservation(ReservationRequestDTO reservationRequest) {
-        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.getEntityId());
+    @Transactional
+    public boolean makeReservation(ReservationRequestDTO reservationRequest) {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        User u = userRepository.findOneByUsername(email);
+        if(u.getUserPenalties() >=3){
+            return false;
+        }
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.entityId);
+        SystemEntity entityToReserve;
+        if(entity.getEntityType().equals(SystemEntityType.ADVENTURE)){
+            entityToReserve = adventureRepository.getLockedEntity(reservationRequest.entityId);
+        }
+        else if (entity.getEntityType().equals(SystemEntityType.VACATION)){
+            entityToReserve = vacationRepository.getLockedEntity(reservationRequest.entityId);
+        }
+        else{
+            entityToReserve = vesselRepository.getLockedEntity(reservationRequest.entityId);
+        }
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.dateFrom.replace("T"," ").substring(0,16), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.dateTo.replace("T"," ").substring(0,16), formatter);
 
-        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String email = user.getUsername();
-        User u = userRepository.findOneByUsername(email);
+        if (isEntityAvailable(entityToReserve, dateFrom, dateTo)){
+            return createReservation(u, entityToReserve, dateFrom, dateTo);
+        }
+        else{
+            return false;
+        }
+
+
+    }
+
+    private boolean createReservation( User u, SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo) {
         long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
         double clientPrice = calculateClientPrice(diff, entity.getPrice(), u.getLoyaltyPoints());
-        double ownerPrice = calculateOwnerPrice(diff,entity.getPrice(), entity.getOwner().getLoyaltyPoints());
-
+        double ownerPrice = calculateOwnerPrice(diff, entity.getPrice(), entity.getOwner().getLoyaltyPoints());
         Reservation reservation = new Reservation(entity, dateFrom.plusHours(2), dateTo.plusHours(2), u, clientPrice, ownerPrice);
-
         reservationRepository.save(reservation);
-
-        emailService.sendConfirmReservationEmail(email, entity.getName());
+        User owner = entity.getOwner();
+        LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);
+        u.addPoints(loyaltyProgram.getPointsPerReservation());
+        owner.addPoints(loyaltyProgram.getPointsForBusiness());
+        userRepository.save(u);
+        userRepository.save(owner);
+        emailService.sendConfirmReservationEmail(u.getUsername(), entity.getName());
+        return true;
     }
+
+    private boolean isEntityAvailable(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo) {
+        if(!dateFrom.isBefore(dateTo)){
+            return false;
+        }
+        boolean isAvailable = false;
+        for(AvailabilityPeriod period: entity.getAvailabilityPeriod()){
+            if (dateFrom.isAfter(period.getDateFrom()) && dateTo.isBefore(period.getDateTo())){
+                isAvailable = true;
+            }
+        }
+        if(!isAvailable){
+            return false;
+        }
+
+        for (Reservation reservation:entity.getReservations()){
+            if ((dateFrom.isAfter(reservation.getDateFrom()) && dateFrom.isBefore(reservation.getDateTo())) || (dateTo.isAfter(reservation.getDateFrom()) && dateTo.isBefore(reservation.getDateTo())) || (reservation.getDateFrom().isAfter(dateFrom) && reservation.getDateTo().isBefore(dateTo))){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     private double calculateOwnerPrice(long diff, double price, int loyaltyPoints) {
         LoyaltyProgram loyaltyProgram = this.loyaltyProgramRepository.getOne(1);

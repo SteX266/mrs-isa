@@ -6,6 +6,7 @@ import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
 import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.repository.RegistrationRequestRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class UserService {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private RegistrationRequestRepository registrationRequestRepository;
+
     public User editUserData(String email, String name, String surname, String phoneNumber, String addressLine) {
         User u = userRepository.findOneByUsername(email);
         u.setName(name);
@@ -46,25 +50,11 @@ public class UserService {
 
     public UserDTO getUserByUsername(String username) {
         User u = userRepository.findOneByUsername(username);
-        int penaltyNumber = getUserPenalties(u);
+        int penaltyNumber = u.getUserPenalties();
         return new UserDTO(u.getUsername(), u.getName(), u.getSurname(), u.getPhoneNumber(), u.getAddress(), u.getLoyaltyPoints(), penaltyNumber);
 
     }
 
-    private int getUserPenalties(User u) {
-        Set<Penalty> penalties = u.getPenalties();
-
-        LocalDate todayDate = LocalDate.now();
-        todayDate = todayDate.withDayOfMonth(1);
-        int penaltyNumber = 0;
-        for (Penalty p : penalties) {
-            if (p.getDate().isAfter(todayDate)) {
-                penaltyNumber++;
-            }
-        }
-        return penaltyNumber;
-
-    }
 
     public User findByUsername(String email) {
         return userRepository.findOneByUsername(email);
@@ -90,13 +80,27 @@ public class UserService {
         u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         u.setPhoneNumber(userRequest.getPhoneNumber());
         // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
-        List<Role> roles = roleService.findByName("CLIENT");
-        u.setRoles(roles);
-        System.out.println("KLJUUUUUUC");
-        System.out.println(u.getId());
-        u.setId(5);
-        return this.userRepository.save(u);
+        List<Role> roles;
+        if(userRequest.getUserType().equals("client")){
+            roles = roleService.findByName("CLIENT");
+        }
+        else if(userRequest.getUserType().equals("vacation")){
+            roles = roleService.findByName("VACATION_OWNER");
+        }
+        else if(userRequest.getUserType().equals("vessel")){
+            roles = roleService.findByName("SHIP_OWNER");
+        }
+        else if(userRequest.getUserType().equals("instructor")){
+            roles = roleService.findByName("INSTRUCTOR");
+        }
+        else{
+            roles = roleService.findByName("CLIENT");
 
+        }
+        u.setRoles(roles);
+
+
+        return this.userRepository.save(u);
     }
 
     public User saveUser(User user) {

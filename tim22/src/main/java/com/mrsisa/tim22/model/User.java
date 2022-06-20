@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Set;
 @Entity(name="user_table")
 public class User implements UserDetails {
     @Id
-    @Column(unique=true, nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String username;
@@ -113,5 +114,23 @@ public class User implements UserDetails {
 
     public void addPenalty(Penalty p) {
         this.penalties.add(p);
+    }
+
+    public int getUserPenalties() {
+
+
+        LocalDate todayDate = LocalDate.now();
+        todayDate = todayDate.withDayOfMonth(1);
+        int penaltyNumber = 0;
+        for (Penalty p : this.penalties) {
+            if (p.getDate().isAfter(todayDate)) {
+                penaltyNumber++;
+            }
+        }
+        return penaltyNumber;
+    }
+
+    public void addPoints(int pointsPerReservation) {
+        this.loyaltyPoints += pointsPerReservation;
     }
 }

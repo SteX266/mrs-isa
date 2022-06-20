@@ -15,7 +15,7 @@ function RegisterForm()  {
   const[password, setPassword] = useState("");
   const[repeatedPassword, setRepeatedPassword] = useState("");
   const[userType,setUserType] = useState("client");
-  const [registrtaionReason,setRegistrationReason] = useState("");
+  const [registrationReason,setRegistrationReason] = useState("");
 
   const [showRegistrationDialog,setShowRegistrationDialog] = useState(false);
 
@@ -44,12 +44,12 @@ function RegisterForm()  {
   }
     
   function signup(){
-    console.log(registrtaionReason);
+    console.log(registrationReason);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'  },
       body:JSON.stringify({
-        username,name,surname,phoneNumber,addressLine,password
+        username,name,surname,phoneNumber,addressLine,password, userType, registrationReason
 
       })
   };

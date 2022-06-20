@@ -23,32 +23,32 @@ INSERT INTO public.address(city, country, street_name, street_number)
 VALUES ('Amsterdam', 'Netherlands', 'Robina van Persija', 18);
 
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (1, 'Petra Kocica 38, Jagodina', false, true, null, 100, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Petra Kocica 38, Jagodina', false, true, null, 100, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (2, 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (3, 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222111', 'Stevanovic', 'stevaszumza@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Veliki grad, Novi Sad', false, true, null, 0, 'Aleksa','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222111', 'Stevanovic', 'stevaszumza@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (4, 'Foca', false, true, null, 0, 'Milica','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066230222', 'Skipina', 'skipina@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Foca', false, true, null, 0, 'Milica','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066230222', 'Skipina', 'skipina@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (5, 'Marka Kraljevica 12, Sremska Mitroica', false, true, null, 0, 'Bubi','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0661332324', 'Bubisa', 'bubisa@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ( 'Marka Kraljevica 12, Sremska Mitroica', false, true, null, 0, 'Bubi','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0661332324', 'Bubisa', 'bubisa@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (6, 'Petra Kocica 8a, Kraljevo', false, true, null, 20, 'Srdjan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'djidja.milosevic@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Petra Kocica 8a, Kraljevo', false, true, null, 20, 'Srdjan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'djidja.milosevic@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (7, 'Vujice Vujanova 12, Melenci', false, true, null, 5, 'Nikoleta','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0662454298', 'Milivojev', 'ketiketi@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Vujice Vujanova 12, Melenci', false, true, null, 5, 'Nikoleta','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0662454298', 'Milivojev', 'ketiketi@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (8, 'Vojvodjanskih Brigata 52, Pancevo', false, true, null, 0, 'Anastasia','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0622234567', 'Indjic', 'indija4@gmail.com');
+INSERT INTO public.user_table(address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Vojvodjanskih Brigata 52, Pancevo', false, true, null, 0, 'Anastasia','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0622234567', 'Indjic', 'indija4@gmail.com');
 
-INSERT INTO public.user_table(id, address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
-VALUES (9, 'Cara Lazara 66, Paracin', false, true, null, 0, 'Milos','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0642280890', 'Petrovic', 'perapera@gmail.com');
+INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
+VALUES ('Cara Lazara 66, Paracin', false, true, null, 0, 'Milos','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '0642280890', 'Petrovic', 'perapera@gmail.com');
 
 
 INSERT INTO public.user_role(user_id, role_id)
@@ -252,16 +252,16 @@ VALUES (2, 2, '2022-07-25T13:00', '2022-08-04T12:00', 'Prelepa avantura po snize
 
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (1, 'Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
+     description, is_answered, client_id)
+VALUES ('Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (2, 'Zelim da zaradim paree', false, 7);
+     description, is_answered, client_id)
+VALUES ( 'Zelim da zaradim paree', false, 7);
 
 INSERT INTO public.registration_request(
-    id, description, is_answered, client_id)
-VALUES (3, 'Please give me a chance to prove i will pay', false, 8);
+     description, is_answered, client_id)
+VALUES ( 'Please give me a chance to prove i will pay', false, 8);
 
 INSERT INTO public.loyalty_program(
     id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)

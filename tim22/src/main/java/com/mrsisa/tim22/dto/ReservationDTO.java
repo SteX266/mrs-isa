@@ -23,6 +23,7 @@ public class ReservationDTO {
     public String status;
     public String entityName;
     public String entityType;
+    public double ownerPrice;
 
 
     public ReservationDTO(Reservation r) {
@@ -33,12 +34,13 @@ public class ReservationDTO {
         this.setStartDate(String.valueOf(r.getDateFrom()));
         this.setEndDate(String.valueOf(r.getDateTo()));
         this.setVisitors(r.getSystemEntity().getCapacity());
-        this.setFee(r.getSystemEntity().getPrice());
+        this.setFee(r.getClientPrice());
         this.setOwner(r.getSystemEntity().getOwner().getName() + " " + r.getSystemEntity().getOwner().getSurname());
         this.setClient(r.getClient().getName() + " " + r.getClient().getSurname());
         this.setStatus(status);
         this.setEntityName(r.getSystemEntity().getName());
         this.setEntityType(String.valueOf(r.getSystemEntity().getEntityType()));
+        this.setOwnerPrice(r.getOwnerPrice());
 
     }
 

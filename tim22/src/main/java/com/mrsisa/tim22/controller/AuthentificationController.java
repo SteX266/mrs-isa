@@ -2,7 +2,9 @@ package com.mrsisa.tim22.controller;
 
 import com.mrsisa.tim22.dto.*;
 import com.mrsisa.tim22.exception.ResourceConflictException;
+import com.mrsisa.tim22.model.RegistrationRequest;
 import com.mrsisa.tim22.model.User;
+import com.mrsisa.tim22.repository.RegistrationRequestRepository;
 import com.mrsisa.tim22.service.EmailService;
 import com.mrsisa.tim22.service.SystemEntityService;
 import com.mrsisa.tim22.service.UserService;
@@ -45,6 +47,8 @@ public class AuthentificationController {
 
     @Autowired
     private SystemEntityService systemEntityService;
+    @Autowired
+    private RegistrationRequestRepository registrationRequestRepository;
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> createAuthenticationToken(
@@ -89,7 +93,13 @@ public class AuthentificationController {
             throw new ResourceConflictException(userRequest.getId(), "Username already exists");
         }
         User user = this.userService.save(userRequest);
-        emailService.sendActivationEmail(user);
+        if(userRequest.getUserType().equals("client")){
+            emailService.sendActivationEmail(user);
+        }
+        else{
+            RegistrationRequest request = new RegistrationRequest(user, userRequest.getRegistrationReason());
+            this.registrationRequestRepository.save(request);
+        }
 
         System.out.println("Registrovan " + user.getUsername());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
@@ -130,9 +140,7 @@ public class AuthentificationController {
     @GetMapping(value="/getImage/{name}")
     public ResponseEntity<InputStreamResource> getImage(@PathVariable String name, @RequestParam String extension){
         try{
-            System.out.println(extension);
             String path = "src/main/resources/images/" + name + "." + extension;
-            System.out.println(path);
             FileSystemResource imgFile = new FileSystemResource(path);
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(imgFile.getInputStream()));
         } catch (IOException e) {

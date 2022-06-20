@@ -17,4 +17,6 @@ public class UserRequest {
     private String addressLine;
     private String password;
     private String phoneNumber;
+    private String userType;
+    private String registrationReason;
 }
