@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import RegistrationDialog from "../modals/RegistrationDialog";
 import "../../style/Errors.css";
 
-export default function AdminRegistration() {
+function RegisterForm() {
   const [errors, setErrors] = useState({
     name: "",
     surname: "",
     phoneNumber: "",
     addressLine: "",
-    email: "",
+    username: "",
     repeatedPassword: "",
     password: "",
   });
@@ -16,39 +17,56 @@ export default function AdminRegistration() {
   const [surname, setSurname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [addressLine, setAddressLine] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
+  const userType = "admin";
+  const [registrtaionReason, setRegistrationReason] = useState("");
+
+  const [showRegistrationDialog, setShowRegistrationDialog] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          name,
-          surname,
-          phoneNumber,
-          addressLine,
-          password,
-        }),
-      };
+      console.log(userType);
 
-      fetch("http://localhost:8080/auth/usersignup", requestOptions).then(
-        async (response) => {
-          const data = await response.json();
-
-          if (data.email !== null) {
-            console.log("Uspesna registracija!");
-          } else {
-            console.log("Neuspesna registracija!");
-          }
-        }
-      );
+      if (userType == "client") {
+        setRegistrationReason("");
+        signup();
+      } else {
+        setShowRegistrationDialog(true);
+        console.log("cekaj be");
+      }
     }
   };
+
+  function signup() {
+    console.log(registrtaionReason);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        name,
+        surname,
+        phoneNumber,
+        addressLine,
+        password,
+      }),
+    };
+
+    fetch("http://localhost:8080/auth/usersignup", requestOptions).then(
+      async (response) => {
+        const data = await response.json();
+
+        if (data.username !== null) {
+          console.log("Uspesna registracija!");
+        } else {
+          console.log("Neuspesna registracija!");
+        }
+      }
+    );
+  }
 
   const emailValidation = (email) => {
     const regex =
@@ -88,10 +106,10 @@ export default function AdminRegistration() {
     } else {
       currentErrors.addressLine = "";
     }
-    if (emailValidation(email)) {
-      currentErrors.email = "Email is not valid!";
+    if (emailValidation(username)) {
+      currentErrors.username = "Email is not valid!";
     } else {
-      currentErrors.email = "";
+      currentErrors.username = "";
     }
     if (password === "" || password.length < 5) {
       currentErrors.password = "Password must be at least 5 characters long";
@@ -110,7 +128,7 @@ export default function AdminRegistration() {
       surname: currentErrors.surname,
       phoneNumber: currentErrors.phoneNumber,
       addressLine: currentErrors.addressLine,
-      email: currentErrors.email,
+      username: currentErrors.username,
       password: currentErrors.password,
       repeatedPassword: currentErrors.repeatedPassword,
     });
@@ -135,7 +153,7 @@ export default function AdminRegistration() {
         setAddressLine(value);
         break;
       case "email":
-        setEmail(value);
+        setUsername(value);
         break;
       case "password":
         setPassword(value);
@@ -148,13 +166,22 @@ export default function AdminRegistration() {
     }
   };
 
+  function confirmRegistration(text) {
+    setRegistrationReason(text);
+    setShowRegistrationDialog(false);
+    signup();
+  }
+  function cancelRegistration() {
+    setShowRegistrationDialog(false);
+  }
+
   return (
     <>
       <div className="album py-5 bg-light">
         <div className="container">
           <form>
             <div className="mb-6">
-              <label htmlhtmlFor="exampleInputEmail1" className="form-label">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Email address
               </label>
               <input
@@ -168,8 +195,8 @@ export default function AdminRegistration() {
               <div id="emailHelp" className="form-text">
                 Your email address will not be shared with anyone.
               </div>
-              {errors.email.length > 0 && (
-                <span className="error">{errors.email}</span>
+              {errors.username.length > 0 && (
+                <span className="error">{errors.username}</span>
               )}
             </div>
             <div className="mb-6">
@@ -277,6 +304,13 @@ export default function AdminRegistration() {
           </form>
         </div>
       </div>
+      <RegistrationDialog
+        showModal={showRegistrationDialog}
+        confirmed={confirmRegistration}
+        canceled={cancelRegistration}
+      />
     </>
   );
 }
+
+export default RegisterForm;
