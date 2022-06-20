@@ -17,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class AdventureDTO {
+    private Integer id;
     private Set<FishingEquipement> fishingEquipement;
     protected String name;
     protected String description;
@@ -33,6 +34,7 @@ public class AdventureDTO {
     protected List<AvailabilityPeriodDTO> availabilityPeriod;
     protected double price;
     public AdventureDTO(Adventure v){
+        this.id = v.getId();
         this.fishingEquipement=v.getEquipement();
         this.name = v.getName();
         this.description=v.getDescription();

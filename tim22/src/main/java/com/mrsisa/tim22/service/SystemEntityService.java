@@ -16,9 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class SystemEntityService {
@@ -42,6 +41,8 @@ public class SystemEntityService {
     @Autowired
     private VacationRepository vacationRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
 
     public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
@@ -302,6 +303,126 @@ public class SystemEntityService {
 
     public ListingDTO getDetailVacation(int id) {
         return new ListingDTO(vacationRepository.findVacationById(id));
+    }
+
+    private User getCurrentUser() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        return userRepository.findOneByUsername(user.getUsername());
+    }
+
+    public boolean saveVessel(VesselDTO vesselDTO) {
+        User u = getCurrentUser();
+        Address address = new Address(vesselDTO.getCity(), vesselDTO.getCountry(), vesselDTO.getStreetName(), vesselDTO.getStreetNumber());
+        Vessel vessel = new Vessel(vesselDTO);
+        vessel.setOwner(u);
+        vessel.setAddress(address);
+        vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
+        address.addSystemEntity(vessel);
+        addressRepository.save(address);
+        vesselRepository.save(vessel);
+        return true;
+    }
+    private Set<AvailabilityPeriod> createAvailabilityPeriods(List<AvailabilityPeriodDTO> availabilityPeriodDTOS) {
+        HashSet<AvailabilityPeriod> availabilityPeriods = new HashSet<>();
+        for (AvailabilityPeriodDTO availabilityPeriodDTO:availabilityPeriodDTOS) {
+            availabilityPeriods.add(createAvailabilityPeriod(availabilityPeriodDTO));
+        }
+        return availabilityPeriods;
+    }
+    private AvailabilityPeriod createAvailabilityPeriod(AvailabilityPeriodDTO availabilityPeriodDTO) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(availabilityPeriodDTO.getDateFrom().replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(availabilityPeriodDTO.getDateTo().replace("T"," ").substring(0,16), formatter);
+        return new AvailabilityPeriod(dateFrom, dateTo);
+    }
+
+    public boolean deleteVessel(Long id) {
+        vesselRepository.deleteById(id);
+        return true;
+    }
+
+
+    public boolean saveListing(ListingDTO listingDTO) {
+        User u = getCurrentUser();
+        Address address = new Address(listingDTO.getCity(), listingDTO.getCountry(), listingDTO.getStreetName(), listingDTO.getStreetNumber());
+        Vacation vacation = new Vacation(listingDTO);
+        vacation.setOwner(u);
+        vacation.setAddress(address);
+        vacation.setAvailabilityPeriod(createAvailabilityPeriods(listingDTO.getAvailabilityPeriod()));
+        address.addSystemEntity(vacation);
+        addressRepository.save(address);
+        vacationRepository.save(vacation);
+        return true;
+    }
+    public boolean deleteListing(Long id) {
+        vacationRepository.deleteById(id);
+        return true;
+    }
+
+
+    public boolean saveAdventure(AdventureDTO adventureDTO) {
+        User u = getCurrentUser();
+        Address address = new Address(adventureDTO.getCity(), adventureDTO.getCountry(), adventureDTO.getStreetName(), adventureDTO.getStreetNumber());
+        Adventure adventure = new Adventure(adventureDTO);
+        adventure.setOwner(u);
+        adventure.setAddress(address);
+        adventure.setAvailabilityPeriod(createAvailabilityPeriods(adventureDTO.getAvailabilityPeriod()));
+        address.addSystemEntity(adventure);
+        addressRepository.save(address);
+        adventureRepositry.save(adventure);
+        return true;
+    }
+    public boolean deleteAdventure(Long id) {
+        adventureRepositry.deleteById(id);
+        return true;
+    }
+
+
+    public boolean editAmenities(AmenitiesDTO amenitiesDTO) {
+        SystemEntity entity = systemEntityRepository.findOneById(amenitiesDTO.getServiceID());
+        entity.setAmenities(amenitiesDTO.getAmenityList());
+        systemEntityRepository.save(entity);
+        return true;
+    }
+    public boolean editGeneral(GeneralDTO generalDTO) {
+        SystemEntity entity = systemEntityRepository.findOneById(generalDTO.getServiceID());
+        entity.setName(generalDTO.getName());
+        entity.setDescription(generalDTO.getDescription());
+        entity.setRulesOfConduct(generalDTO.getRulesOfConduct());
+        entity.setPrice(generalDTO.getPrice());
+        entity.setCancellationFee(generalDTO.getCancellationFee());
+        entity.setCapacity(generalDTO.getCapacity());
+        systemEntityRepository.save(entity);
+        return true;
+    }
+
+    public boolean editAvailabilityPeriod(PeriodsDTO periodsDTO) {
+        SystemEntity entity = systemEntityRepository.findOneById(periodsDTO.getServiceID());
+        entity.setAvailabilityPeriod(createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS()));
+        systemEntityRepository.save(entity);
+        return true;
+    }
+    public boolean editAddress(AddressDTO addressDTO) {
+        SystemEntity entity = systemEntityRepository.findOneById(addressDTO.getServiceID());
+        Address oldAddress = addressRepository.getOne(entity.getAddress().getId());
+        oldAddress.removeSystemEntity(entity);
+        addressRepository.save(oldAddress);
+
+        Address newAddress = new Address(addressDTO.getCity(), addressDTO.getCountry(), addressDTO.getStreetName(), addressDTO.getStreetNumber());
+        entity.setAddress(newAddress);
+        newAddress.addSystemEntity(entity);
+        addressRepository.save(newAddress);
+        systemEntityRepository.save(entity);
+        return true;
+    }
+    public boolean editVesselDetails(VesselDetailsDTO detailsDTO) {
+        Vessel vessel = vesselRepository.findVesselById(detailsDTO.getServiceID());
+        vessel.setMaxSpeed(detailsDTO.getMaxSpeed());
+        vessel.setEngineNumber(detailsDTO.getEngineNumber());
+        vessel.setEnginePower(detailsDTO.getEnginePower());
+        vesselRepository.save(vessel);
+        return true;
     }
 
 

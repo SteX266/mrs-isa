@@ -36,6 +36,7 @@ function CreateAdventure() {
       back={back}
       save={save}
       generalDTO={vesselDTO.general}
+      isFirst={true}
     />,
     <AvailabilityPeriod
       key="AVAILABILITY_PERIOD"
@@ -65,7 +66,12 @@ function CreateAdventure() {
       back={back}
       amenitiesDTO={vesselDTO.amenities}
     />,
-    <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
+    <ConfirmCreate
+      key="CONFIRM"
+      serviceDTO={vesselDTO}
+      back={back}
+      type="adventure"
+    />,
   ];
 
   useEffect(() => {

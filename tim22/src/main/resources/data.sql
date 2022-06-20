@@ -10,17 +10,17 @@ VALUES (4, 'SHIP_OWNER');
 INSERT INTO public.role(id, name)
 VALUES (5, 'INSTRUCTOR');
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (1, 'Novi Sad', 'Serbia ', 'Alekse Santica', 4);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Novi Sad', 'Serbia ', 'Alekse Santica', 4);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (2, 'Jagodina', 'Serbia', 'Kralja Aleksandra', 27);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Jagodina', 'Serbia', 'Kralja Aleksandra', 27);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (3, 'Planina', 'Bosnia', 'Na vrh brda', 13);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Planina', 'Bosnia', 'Na vrh brda', 13);
 
-INSERT INTO public.address(id, city, country, street_name, street_number)
-VALUES (4, 'Amsterdam', 'Netherlands', 'Robina van Persija', 18);
+INSERT INTO public.address(city, country, street_name, street_number)
+VALUES ('Amsterdam', 'Netherlands', 'Robina van Persija', 18);
 
 
 INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
@@ -168,56 +168,56 @@ VALUES (9, '11.jpg');
 
 
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (1,'2022-02-20T15:00', '2022-08-23T13:00', 1);
+    date_from, date_to, system_entity)
+VALUES ('2022-02-20T15:00', '2022-08-23T13:00', 1);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (2,'2022-03-20T15:00', '2023-04-12T13:00', 2);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-20T15:00', '2023-04-12T13:00', 2);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (3,'2022-04-20T15:00', '2023-04-15T13:00', 3);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-04-15T13:00', 3);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (4,'2022-05-20T15:00', '2023-05-11T13:00', 4);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-20T15:00', '2023-05-11T13:00', 4);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (5,'2022-07-20T15:00', '2023-07-14T13:00', 5);
+    date_from, date_to, system_entity)
+VALUES ('2022-07-20T15:00', '2023-07-14T13:00', 5);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (6,'2022-05-20T15:00', '2023-11-27T13:00', 6);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-20T15:00', '2023-11-27T13:00', 6);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (7,'2022-03-20T15:00', '2023-02-24T13:00', 7);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-20T15:00', '2023-02-24T13:00', 7);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (8,'2022-04-20T15:00', '2023-04-22T13:00', 8);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-04-22T13:00', 8);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (9,'2022-04-20T15:00', '2023-05-21T13:00', 9);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-05-21T13:00', 9);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (10,'2022-04-20T15:00', '2023-09-21T13:00', 10);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-20T15:00', '2023-09-21T13:00', 10);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (11,'2022-04-15T15:00', '2023-12-25T13:00', 11);
+    date_from, date_to, system_entity)
+VALUES ('2022-04-15T15:00', '2023-12-25T13:00', 11);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (12,'2022-03-16T15:00', '2023-05-26T13:00', 12);
+    date_from, date_to, system_entity)
+VALUES ('2022-03-16T15:00', '2023-05-26T13:00', 12);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (13,'2022-02-13T15:00', '2023-01-11T13:00', 13);
+    date_from, date_to, system_entity)
+VALUES ('2022-02-13T15:00', '2023-01-11T13:00', 13);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (14,'2022-01-21T15:00', '2023-08-16T13:00', 14);
+    date_from, date_to, system_entity)
+VALUES ('2022-01-21T15:00', '2023-08-16T13:00', 14);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (15,'2022-01-22T15:00', '2023-07-14T13:00', 15);
+    date_from, date_to, system_entity)
+VALUES ('2022-01-22T15:00', '2023-07-14T13:00', 15);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (16,'2022-06-22T15:00', '2023-06-20T13:00', 16);
+    date_from, date_to, system_entity)
+VALUES ('2022-06-22T15:00', '2023-06-20T13:00', 16);
 INSERT INTO public.availability_period(
-    id, date_from, date_to, system_entity)
-VALUES (17,'2022-05-21T15:00', '2023-05-23T13:00', 17);
+    date_from, date_to, system_entity)
+VALUES ('2022-05-21T15:00', '2023-05-23T13:00', 17);
 
 
 INSERT INTO public.reservation( date_from, date_to, is_approved, client_id, system_entity_id, is_canceled, client_price, owner_price)

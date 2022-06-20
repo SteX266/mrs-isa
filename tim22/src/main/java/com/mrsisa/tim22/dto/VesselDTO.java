@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class VesselDTO {
-
+    private Integer id;
     private VesselType vesselType;
     private int engineNumber;
     private int enginePower;
@@ -39,6 +39,7 @@ public class VesselDTO {
     protected double price;
 
     public VesselDTO(Vessel v){
+        this.id = v.getId();
         this.vesselType = v.getVesselType();
         this.enginePower=v.getEnginePower();
         this.engineNumber = v.getEngineNumber();
@@ -62,6 +63,7 @@ public class VesselDTO {
         }
         this.price=v.getPrice();
     }
+
 
 }
 

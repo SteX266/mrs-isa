@@ -4,11 +4,10 @@ import { useState } from "react";
 import {
   Button,
   CloseButton,
-  Col,
   Container,
   Form,
   Modal,
-  Row,
+  Navbar,
   Stack,
 } from "react-bootstrap";
 
@@ -102,29 +101,20 @@ function EditPhotos({ serviceID, type }) {
     setPhotoGallery(createGallery());
   }
   function saveChanges() {}
-  function cancel() {}
+
   return (
-    <Container style={{ width: "60%" }}>
+    <Container style={{ width: "80%" }}>
+      <Navbar collapseOnSelect className="rounded border border-dark">
+        <Container>
+          <Button variant="outline-dark" onClick={saveChanges}>
+            Save changes
+          </Button>
+          <Button onClick={open} variant="outline-dark">
+            Upload photo
+          </Button>
+        </Container>
+      </Navbar>
       {photoGallery}
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col>
-            <Button variant="outline-dark" onClick={cancel}>
-              Cancel
-            </Button>
-          </Col>
-          <Col>
-            <Button onClick={open} variant="outline-dark">
-              Upload photo
-            </Button>
-          </Col>
-          <Col>
-            <Button variant="outline-dark" onClick={saveChanges}>
-              Save changes
-            </Button>
-          </Col>
-        </Row>
-      </Container>
       <Stack direction="vertical" gap={1}></Stack>
       <Modal show={show} onHide={close}>
         <Modal.Header closeButton>

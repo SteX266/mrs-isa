@@ -16,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class ListingDTO {
+    private Integer id;
     protected String name;
     protected String description;
     protected int capacity;
@@ -31,6 +32,7 @@ public class ListingDTO {
     protected double price;
 
     public ListingDTO(Vacation v){
+        this.id = v.getId();
         this.name = v.getName();
         this.description=v.getDescription();
         this.city = v.getAddress().getCity();

@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @Entity
 public class Address {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String city;
@@ -28,7 +28,18 @@ public class Address {
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "address")
     private Set<SystemEntity> systemEntities = new HashSet<>();
 
-
+    public Address(String city, String country, String streetName, int streetNumber) {
+        this.city = city;
+        this.country = country;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+    }
+    public void addSystemEntity(SystemEntity entity) {
+        systemEntities.add(entity);
+    }
+    public void removeSystemEntity(SystemEntity entity) {
+        systemEntities.remove(entity);
+    }
 
 
 }

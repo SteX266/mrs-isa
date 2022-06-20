@@ -71,6 +71,11 @@ export default function Address({ addressDTO, save, next, back }) {
           <Button variant="outline-dark" onClick={back}>
             Back
           </Button>
+          <Container>
+            <Button variant="outline-dark" href="/captain/services">
+              Cancel
+            </Button>
+          </Container>
           <Button
             variant="outline-dark"
             className="ms-auto"

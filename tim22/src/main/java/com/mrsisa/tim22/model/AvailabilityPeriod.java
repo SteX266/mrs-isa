@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 public class AvailabilityPeriod {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name="date_from", nullable = false)
     private LocalDateTime dateFrom;
@@ -29,8 +29,4 @@ public class AvailabilityPeriod {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
-
-
-
-
 }

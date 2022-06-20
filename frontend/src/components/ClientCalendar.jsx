@@ -28,16 +28,13 @@ function ClientCalendar() {
   var preEvents = [];
 
   async function Reserve() {
-    
-
     const token = JSON.parse(localStorage.getItem("userToken"));
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
-      Authorization: "Bearer " + token.accessToken
+      Authorization: "Bearer " + token.accessToken,
     };
-
 
   axios.post(
     "http://localhost:8080/reservation/makeReservation",
@@ -57,6 +54,7 @@ function ClientCalendar() {
     toast.error("You are not eligible to make reservations because you have 3 or more penalties this month");
   });
   closeModal();
+
   }
   async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));

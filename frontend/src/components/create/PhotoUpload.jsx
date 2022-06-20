@@ -27,7 +27,9 @@ export default function PhotoUpload({ photosDTO, save, next, back }) {
   useEffect(() => {
     setPhotoGallery(createGallery());
   }, [photos]);
-
+  function clear() {
+    setPhotos([]);
+  }
   function onUpload(event) {
     const selectedFiles = [];
     const targetFiles = event.target.files;
@@ -36,6 +38,7 @@ export default function PhotoUpload({ photosDTO, save, next, back }) {
       return selectedFiles.push(URL.createObjectURL(file));
     });
     setPhotos(selectedFiles);
+    event.target.value = "";
   }
 
   function removeImage(event) {
@@ -52,28 +55,53 @@ export default function PhotoUpload({ photosDTO, save, next, back }) {
     save(photos, "photos");
     next();
   }
+  function disabled() {
+    if (!photos || photos.length <= 0) return true;
+    return false;
+  }
   return (
     <Container>
+      <Navbar collapseOnSelect className="rounded border border-dark">
+        <Container>
+          <Container>
+            <Form.Group className="mb3">
+              <Form.Control
+                type="file"
+                multiple
+                onChange={onUpload}
+                name="photos"
+                accept="image/*"
+              />
+            </Form.Group>
+          </Container>
+
+          <Button
+            variant="outline-dark"
+            className="ms-auto"
+            onClick={clear}
+            disabled={disabled()}
+          >
+            Clear
+          </Button>
+        </Container>
+      </Navbar>
       <Stack direction="horizontal">{photoGallery}</Stack>
-      <Form.Group className="mb3">
-        <Form.Control
-          type="file"
-          multiple
-          onChange={onUpload}
-          name="photos"
-          accept="image/*"
-        />
-      </Form.Group>
+
       <Navbar collapseOnSelect expand="lg" className="navigation-buttons">
         <Container>
           <Button variant="outline-dark" onClick={back}>
             Back
           </Button>
+          <Container>
+            <Button variant="outline-dark" href="/captain/services">
+              Cancel
+            </Button>
+          </Container>
           <Button
             variant="outline-dark"
             className="ms-auto"
             onClick={onNext}
-            disabled={!photos}
+            disabled={disabled()}
           >
             Next
           </Button>

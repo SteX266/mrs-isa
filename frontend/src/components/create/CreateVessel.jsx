@@ -24,7 +24,7 @@ export default function CreateVessel() {
       cancellationFee: "",
       description: "",
     },
-    periods: [],
+    availabilityPeriod: [],
     address: {
       street: "",
       streetNumber: "",
@@ -53,13 +53,14 @@ export default function CreateVessel() {
       back={back}
       save={save}
       generalDTO={vesselDTO.general}
+      isFirst={false}
     />,
     <AvailabilityPeriod
       key="AVAILABILITY_PERIOD"
       save={save}
       next={next}
       back={back}
-      peridosDTO={vesselDTO.periods}
+      peridosDTO={vesselDTO.availabilityPeriod}
     />,
     <Address
       key="ADDRESS"
@@ -76,6 +77,7 @@ export default function CreateVessel() {
       photosDTO={vesselDTO.photos}
     />,
     <Utilities
+      type="vessel"
       key="UTILITIES"
       save={save}
       next={next}
@@ -89,7 +91,12 @@ export default function CreateVessel() {
       back={back}
       vesselDetailsDTO={vesselDTO.vesselDetails}
     />,
-    <ConfirmCreate key="CONFIRM" serviceDTO={vesselDTO} back={back} />,
+    <ConfirmCreate
+      key="CONFIRM"
+      serviceDTO={vesselDTO}
+      back={back}
+      type="vessel"
+    />,
   ];
 
   useEffect(() => {
@@ -104,6 +111,8 @@ export default function CreateVessel() {
     setComponentCounter(componentCounter - 1);
   }
   function save(value, key) {
+    console.log(key);
+    console.log(value);
     setVesselDTO({ ...vesselDTO, [key]: value });
     console.log(vesselDTO);
   }
