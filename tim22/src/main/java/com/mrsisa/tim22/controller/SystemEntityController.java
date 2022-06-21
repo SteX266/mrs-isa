@@ -22,34 +22,33 @@ public class SystemEntityController {
     private SystemEntityService systemEntityService;
 
     @GetMapping(value = "/getAllEntities")
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
+    public ResponseEntity<List<SystemEntityDTO>> getAllEntitites(){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(1,3), HttpStatus.OK);
+        return new ResponseEntity<>(systemEntityService.getEntities(1,3), HttpStatus.OK);
     }
 
     @GetMapping(value ="getEntityById")
     public ResponseEntity<SystemEntityDTO> getEntityById(@RequestParam int id){
-        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getEntityById(id), HttpStatus.OK);
+        return new ResponseEntity<>(systemEntityService.getEntityById(id), HttpStatus.OK);
     }
 
 
     @PostMapping(value ="/search")
     public ResponseEntity<SystemEntityDTO> search(@RequestBody SearchDTO searchDTO){
-        System.out.println(searchDTO.getSearchField());
-        return new ResponseEntity<SystemEntityDTO>(new SystemEntityDTO(), HttpStatus.OK);
+        return new ResponseEntity<>(new SystemEntityDTO(), HttpStatus.OK);
     }
 
 
 
     @GetMapping(value ="getCurrentUserEntities")
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserEntities(){
+    public ResponseEntity<List<SystemEntityDTO>> getCurrentUserEntities(){
 
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserEntities(), HttpStatus.OK);
+        return new ResponseEntity<>(systemEntityService.getCurrentUserEntities(), HttpStatus.OK);
     }
     @GetMapping(value = "/getEntityAvailabilityPeriods")
-    public ResponseEntity<ArrayList<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
-        return new ResponseEntity<ArrayList<AvailabilityPeriodDTO>>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
+    public ResponseEntity<List<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
+        return new ResponseEntity<>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
     }
 
     @GetMapping(value ="createSubscription")
@@ -73,7 +72,7 @@ public class SystemEntityController {
 
     @GetMapping(value ="getBestRated")
     public  ResponseEntity<SystemEntityDTO> getBestRated(){
-        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getBestRated(), HttpStatus.OK);
+        return new ResponseEntity<>(systemEntityService.getBestRated(), HttpStatus.OK);
     }
     @GetMapping(value ="getDetailAdventure")
     public ResponseEntity<AdventureDTO> getDetailAdventure(@RequestParam int id){
@@ -86,19 +85,19 @@ public class SystemEntityController {
 
     @GetMapping(value ="getWorstRated")
     public  ResponseEntity<SystemEntityDTO> getWorstRated(){
-        return new ResponseEntity<SystemEntityDTO>(systemEntityService.getWorstRated(), HttpStatus.OK);
+        return new ResponseEntity<>(systemEntityService.getWorstRated(), HttpStatus.OK);
     }
 
     @GetMapping(value ="getReservationsAmountMonthly")
-    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountMonthly(){
+    public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountMonthly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountMonthly(), HttpStatus.OK);
     }
     @GetMapping(value ="getReservationsAmountYearly")
-    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountYearly(){
+    public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountYearly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountYearly(), HttpStatus.OK);
     }
     @GetMapping(value ="getReservationsAmountWeekly")
-    public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountWeekly(){
+    public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountWeekly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountWeekly(), HttpStatus.OK);
     }
 
@@ -182,13 +181,6 @@ public class SystemEntityController {
     }
     @PostMapping("/editAvailabilityPeriod")
     public ResponseEntity<String> editAvailabilityPeriod(@RequestBody PeriodsDTO periodsDTO) {
-        for (AvailabilityPeriodDTO dto:
-             periodsDTO.getAvailabilityPeriodDTOS()) {
-            System.out.println(dto.getDateFrom());
-            System.out.println(dto.getDateTo());
-            System.out.println("AAAAAAAAAAAAAA");
-
-        }
         if(systemEntityService.editAvailabilityPeriod(periodsDTO)) {
             return new ResponseEntity<>("Successfully edited availability period.", HttpStatus.OK);
         } else {
@@ -218,26 +210,26 @@ public class SystemEntityController {
     public ResponseEntity<List<Utility>> getVesselUtilities() {
         List<Utility> utilities = new ArrayList<Utility>(Arrays.asList(Utility.AC, Utility.FIRST_AID_KIT, Utility.FISHING_NET, Utility.FISHING_POLES, Utility.FRIDGE, Utility.GPS, Utility.PET_FRIENDLY, Utility.SONAR));
 
-        return new ResponseEntity<List<Utility>>(utilities, HttpStatus.OK);
+        return new ResponseEntity<>(utilities, HttpStatus.OK);
     }
     @GetMapping("/getAdventureUtilities")
     public ResponseEntity<List<Utility>> getAdventureUtilities() {
         List<Utility> utilities = new ArrayList<Utility>(Arrays.asList(Utility.FIRST_AID_KIT, Utility.FISHING_NET, Utility.FISHING_POLES, Utility.GPS, Utility.PET_FRIENDLY));
 
-        return new ResponseEntity<List<Utility>>(utilities, HttpStatus.OK);
+        return new ResponseEntity<>(utilities, HttpStatus.OK);
     }
     @GetMapping("/getListingUtilities")
     public ResponseEntity<List<Utility>> getListingUtilities() {
         List<Utility> utilities = new ArrayList<Utility>(Arrays.asList(Utility.AC, Utility.TV, Utility.FRIDGE, Utility.BBQ, Utility.GYM, Utility.KITCHEN, Utility.HEATING, Utility.WASHER, Utility.WIFI, Utility.PET_FRIENDLY));
 
-        return new ResponseEntity<List<Utility>>(utilities, HttpStatus.OK);
+        return new ResponseEntity<>(utilities, HttpStatus.OK);
     }
     @GetMapping(value ="getRevenueReportData")
-    public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
+    public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportData(startDate,endDate), HttpStatus.OK);
     }
     @GetMapping(value ="getRevenueReportDataAdmin")
-    public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
+    public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
     }
 
