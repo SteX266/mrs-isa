@@ -9,6 +9,7 @@ export default function SanctionReportDialog({
   report,
   confirmed,
   canceled,
+  get,
 }) {
   const [text, setText] = useState("");
 
@@ -25,7 +26,7 @@ export default function SanctionReportDialog({
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios
+    await axios
       .post(
         "http://localhost:8080/reservationReport/acceptReservationReports",
         {
@@ -46,6 +47,7 @@ export default function SanctionReportDialog({
       .catch(() => {
         toast.error("Something went wrong");
       });
+    get();
     confirmed();
   }
 

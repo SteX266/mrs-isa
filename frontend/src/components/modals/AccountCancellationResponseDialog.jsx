@@ -9,6 +9,7 @@ export default function AccountCancelationDialog({
   client,
   confirmed,
   canceled,
+  get,
 }) {
   const [text, setText] = useState("");
 
@@ -25,7 +26,7 @@ export default function AccountCancelationDialog({
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios
+    await axios
       .post(
         "http://localhost:8080/cancellationRequest/declineCancellationRequest",
         { client: client, text: text },
@@ -41,6 +42,7 @@ export default function AccountCancelationDialog({
       .catch(() => {
         toast.error("Something went wrong");
       });
+    get();
     confirmed();
   }
 

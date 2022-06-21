@@ -16,7 +16,7 @@ export default function RegistrationRequest() {
 
   React.useEffect(() => {
     getRequests();
-  }, [showTaskDialog]);
+  }, []);
 
   async function getRequests() {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -43,7 +43,7 @@ export default function RegistrationRequest() {
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios
+    await axios
       .post(
         "http://localhost:8080/cancellationRequest/acceptCancellationRequest",
         { client: client },
@@ -53,11 +53,11 @@ export default function RegistrationRequest() {
         toast.success(
           "Registration request from user " + client + " successfully accepted "
         );
-        getRequests();
       })
       .catch(() => {
         toast.error("Something went wrong");
       });
+    getRequests();
   }
 
   function onSearchFieldChange(event) {
@@ -117,9 +117,9 @@ export default function RegistrationRequest() {
         client={client}
         confirmed={() => {
           setShowTaskDialog(false);
-          getRequests();
         }}
         canceled={() => setShowTaskDialog(false)}
+        get={getRequests}
       />
     </>
   );

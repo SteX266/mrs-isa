@@ -9,6 +9,7 @@ export default function ComplaintDialog({
   client,
   confirmed,
   canceled,
+  get,
 }) {
   const [text, setText] = useState("");
 
@@ -25,7 +26,7 @@ export default function ComplaintDialog({
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios
+    await axios
       .post(
         "http://localhost:8080/registrationRequest/declineRegistrationRequest",
         { client: client, description: text },
@@ -39,6 +40,7 @@ export default function ComplaintDialog({
       .catch(() => {
         toast.error("Something went wrong");
       });
+    get();
     confirmed();
   }
 

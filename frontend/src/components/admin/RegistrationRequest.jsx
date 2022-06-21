@@ -117,9 +117,9 @@ export default function RegistrationRequest() {
         client={client}
         confirmed={() => {
           setShowTaskDialog(false);
-          getRequests();
         }}
         canceled={() => setShowTaskDialog(false)}
+        get={getRequests}
       />
     </>
   );

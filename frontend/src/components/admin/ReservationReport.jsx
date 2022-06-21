@@ -94,18 +94,18 @@ export default function ReservationReport() {
         report={report}
         confirmed={() => setShowTaskDialog(false)}
         canceled={() => setShowTaskDialog(false)}
+        get={getRequests}
       />
       <DeclineReportDialog
         showModal={showDeclineDialog}
         report={report}
         confirmed={() => {
           setShowDeclineDialog(false);
-          getRequests();
         }}
         canceled={() => {
           setShowDeclineDialog(false);
-          getRequests();
         }}
+        get={getRequests}
       />
     </>
   );
