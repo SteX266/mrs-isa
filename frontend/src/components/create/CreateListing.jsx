@@ -27,6 +27,7 @@ export default function CreateListing() {
       country: "",
     },
     photos: [],
+    photoStrings:[],
     amenities: [],
   });
   const components = [

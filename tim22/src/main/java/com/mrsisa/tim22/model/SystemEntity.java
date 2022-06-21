@@ -58,7 +58,7 @@ public abstract class SystemEntity {
     @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     protected Set<Complaint> complaints = new HashSet<Complaint>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
     protected Set<AvailabilityPeriod> availabilityPeriod = new HashSet<AvailabilityPeriod>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
     protected Set<Reservation> reservations = new HashSet<Reservation>();

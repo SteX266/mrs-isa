@@ -18,6 +18,7 @@ export default function AdminNavbar() {
         </Container>
         <Container>
           <Nav className="mx-auto">
+            <Nav.Link href={`/admin/viewEntities`}> All Entities</Nav.Link>
             <Nav.Link href={`/admin/registration-request`}>
               Registration Requests
             </Nav.Link>
@@ -25,16 +26,16 @@ export default function AdminNavbar() {
               Cancellation Requests
             </Nav.Link>
             <Nav.Link href={`/admin/reservation-report`}>
-              Reservatin reports
+              Reservation reports
             </Nav.Link>
             <Nav.Link href={`/admin/registerAdmin`}>Register Admin</Nav.Link>
             <Nav.Link href={`/admin/loyalty`}>Loyalty Program</Nav.Link>
-            <Nav.Link href={`/admin/viewEntities`}>Entities</Nav.Link>
+            <Nav.Link href={`/admin/report`}> Revenue Report</Nav.Link>
           </Nav>
         </Container>
         <Container>
           <Nav className="ms-auto">
-            <NavDropdown title={<ProfileImage />}>
+            <NavDropdown style={{marginRight:"120px"}} title={<ProfileImage />}>
               <NavDropdown.Item href={"/admin/profile"}>
                 Profile
               </NavDropdown.Item>

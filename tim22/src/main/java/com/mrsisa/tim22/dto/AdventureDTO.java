@@ -29,6 +29,7 @@ public class AdventureDTO {
     private int streetNumber;
     protected int capacity;
     protected List<String> photos;
+    public List<String> photoStrings;
     protected String rulesOfConduct;
     protected List<Amenity> amenities;
     protected double cancellationFee;

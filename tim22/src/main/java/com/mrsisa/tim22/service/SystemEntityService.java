@@ -15,6 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -331,12 +335,80 @@ public class SystemEntityService {
         vessel.setOwner(u);
         vessel.setAddress(address);
         vessel.setId(generateNextId());
-        vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod(), vessel));
+        Set<AvailabilityPeriod> availabilityPeriods = createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod(), vessel);
         address.addSystemEntity(vessel);
+
+        List<String> photos;
+        try {
+            photos = createImages(vesselDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        vessel.setPhotos(photos);
+
         addressRepository.save(address);
         vesselRepository.save(vessel);
+        availabilityPeriodRepository.saveAll(availabilityPeriods);
         return true;
     }
+
+    private List<String> createImages(List<String> photos) throws IOException {
+        List<String> images = new ArrayList<>();
+        int imageNumber = getNextImageNumber();
+        for (String photo:photos){
+            byte[]data;
+            try{
+                data = Base64.getDecoder().decode(photo.split(",")[1]);
+            }
+            catch(Exception e){
+
+                continue;
+            }
+
+            String imageName = "" + imageNumber + ".jpg";
+
+            String imagePath = "src\\main\\resources\\images\\"+imageName;
+
+            System.out.println(imagePath);
+            try(OutputStream stream = new FileOutputStream(new File(imagePath).getCanonicalFile())){
+                stream.write(data);
+            }
+            images.add(imageName);
+            imageNumber++;
+
+        }
+        return images;
+
+    }
+
+    private int getNextImageNumber() {
+        List<Integer> numbers = new ArrayList<>();
+        List<String> photos = getAllPhotos();
+        for (String photo:photos){
+            String[] tokens = photo.split("\\.");
+            numbers.add(Integer.parseInt(tokens[0]));
+        }
+        int max = 0;
+        for(Integer number:numbers){
+            if(number > max){
+                max = number;
+            }
+        }
+        max++;
+
+        return max;
+    }
+
+    private List<String> getAllPhotos() {
+        List<SystemEntity> entities = systemEntityRepository.findAll();
+        List<String> allPhotos = new ArrayList<>();
+        for(SystemEntity entity:entities){
+            allPhotos.addAll(entity.getPhotos());
+        }
+        return allPhotos;
+    }
+
     private Set<AvailabilityPeriod> createAvailabilityPeriods(List<AvailabilityPeriodDTO> availabilityPeriodDTOS, SystemEntity entity) {
         HashSet<AvailabilityPeriod> availabilityPeriods = new HashSet<>();
         for (AvailabilityPeriodDTO availabilityPeriodDTO:availabilityPeriodDTOS) {
@@ -350,7 +422,7 @@ public class SystemEntityService {
         LocalDateTime dateTo = LocalDateTime.parse(availabilityPeriodDTO.getDateTo().replace("T"," ").substring(0,16), formatter);
         AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(dateFrom, dateTo);
         availabilityPeriod.setSystemEntity(entity);
-        return availabilityPeriodRepository.save(availabilityPeriod);
+        return availabilityPeriod;
     }
 
     public boolean deleteEntity(Integer id) {
@@ -373,6 +445,16 @@ public class SystemEntityService {
         vacation.setId(generateNextId());
         vacation.setAvailabilityPeriod(createAvailabilityPeriods(listingDTO.getAvailabilityPeriod(), vacation));
         address.addSystemEntity(vacation);
+
+        vacation.setId(generateNextId());
+        List<String> photos;
+        try {
+            photos = createImages(listingDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        vacation.setPhotos(photos);
         addressRepository.save(address);
         vacationRepository.save(vacation);
         return true;
@@ -393,6 +475,18 @@ public class SystemEntityService {
         adventure.setId(generateNextId());
         adventure.setAvailabilityPeriod(createAvailabilityPeriods(adventureDTO.getAvailabilityPeriod(), adventure));
         address.addSystemEntity(adventure);
+
+        adventure.setId(generateNextId());
+        List<String> photos;
+        try {
+            photos = createImages(adventureDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        adventure.setPhotos(photos);
+
+
         addressRepository.save(address);
         adventureRepositry.save(adventure);
         return true;
@@ -426,9 +520,8 @@ public class SystemEntityService {
 
         Set<AvailabilityPeriod> availabilityPeriods = entity.getAvailabilityPeriod();
         availabilityPeriodRepository.deleteAll(availabilityPeriods);
-        System.out.println(entity.getAvailabilityPeriod().size());
-        System.out.println("AAAAAAAAAAAAAAAAAAAA");
-        entity.setAvailabilityPeriod(createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS(), entity));
+        Set<AvailabilityPeriod> newAvailabilityPeriods = createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS(), entity);
+        availabilityPeriodRepository.saveAll(newAvailabilityPeriods);
         systemEntityRepository.save(entity);
         return true;
     }
@@ -476,6 +569,36 @@ public class SystemEntityService {
         }
         return dtos;
     }
- }
+
+    public ArrayList<RevenurReportDTO> getRevenueReportDataAdmin(String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(startDate.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(endDate.replace("T"," ").substring(0,16), formatter);
+
+        ArrayList<RevenurReportDTO> dtos = new ArrayList<>();
+        int profit_adventures = 0;
+        int profit_vessels = 0;
+        int profit_vacations = 0;
+        for (SystemEntity entity : systemEntityRepository.findAll()) {
+
+            for (Reservation r : entity.getReservations()) {
+                if (r.getDateFrom().isAfter(dateFrom) && r.getDateFrom().isBefore(dateTo)) {
+                    if (r.getSystemEntity().getEntityType() == SystemEntityType.ADVENTURE) {
+                        profit_adventures += r.getClientPrice() - r.getOwnerPrice();
+                    } else if (r.getSystemEntity().getEntityType() == SystemEntityType.VACATION) {
+                        profit_vacations += r.getClientPrice() - r.getOwnerPrice();
+                    } else {
+                        profit_vessels += r.getClientPrice() - r.getOwnerPrice();
+                    }
+                }
+            }
+        }
+        dtos.add(new RevenurReportDTO("Adventures", profit_adventures));
+        dtos.add(new RevenurReportDTO("Vessels", profit_vessels));
+        dtos.add(new RevenurReportDTO("Houses", profit_vacations));
+        return dtos;
+    }
+
+}
 
 
