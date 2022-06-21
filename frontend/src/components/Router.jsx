@@ -60,14 +60,7 @@ export default function Router() {
         />
 
         <Route path="profile" element={<ClientProfile />} />
-        <Route
-          path="calendar/:id"
-          element={
-            <>
-              <ClientCalendar></ClientCalendar>
-            </>
-          }
-        />
+        <Route path="calendar/:id" element={<BussinessUserReservation />} />
 
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
@@ -203,15 +196,13 @@ export default function Router() {
             }
           />
 
-<Route
+          <Route
             path="/client/changePassword"
             element={
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ChangePasswordPage
-
-                />
+                <ChangePasswordPage />
               </>
             }
           />
