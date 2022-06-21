@@ -48,7 +48,7 @@ public class AccountCancellationRequestService {
             if(u == null){
                 return false;
             }
-            for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestsByUser_Username(u.getUsername())) {
+            for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestByUserUsername(u.getUsername())) {
                 acr.setAnswered(true);
                 accountCancellationRequestRepository.save(acr);
             }
@@ -65,7 +65,7 @@ public class AccountCancellationRequestService {
         if(u == null){
             return false;
         }
-        for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestsByUser_Username(u.getUsername())) {
+        for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestByUserUsername(u.getUsername())) {
             acr.setAnswered(true);
             accountCancellationRequestRepository.save(acr);
         }

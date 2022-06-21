@@ -47,7 +47,7 @@ public class User implements UserDetails {
     @Column
     private int loyaltyPoints;
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<AccountCancellationRequest> accountCancellationRequests = new HashSet<AccountCancellationRequest>();
+    private Set<AccountCancellationRequest> accountCancellationRequests = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -57,18 +57,18 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(name="subscribtions", joinColumns = @JoinColumn(name="client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name="system_entity_id", referencedColumnName = "id"))
-    private Set<SystemEntity> subscribtions = new HashSet<SystemEntity>();
+    private Set<SystemEntity> subscribtions = new HashSet<>();
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Complaint> complaints = new HashSet<Complaint>();
+    private Set<Complaint> complaints = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Reservation> reservations = new HashSet<Reservation>();
+    private Set<Reservation> reservations = new HashSet<>();
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Review> reviews = new HashSet<Review>();
+    private Set<Review> reviews = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Penalty> penalties = new HashSet<Penalty>();
+    private Set<Penalty> penalties = new HashSet<>();
 
     @OneToMany(mappedBy ="owner", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<SystemEntity> entities = new HashSet<>();

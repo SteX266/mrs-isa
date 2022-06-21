@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReservationRequestDTO {
-    public String dateFrom;
-    public String dateTo;
-    public int entityId;
+    private String dateFrom;
+    private String dateTo;
+    private int entityId;
 
 }
