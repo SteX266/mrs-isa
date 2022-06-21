@@ -49,7 +49,7 @@ export default function BusinessUserNavbar(props) {
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href={props.type}>{name}</Navbar.Brand>
+          <Navbar.Brand href={"/" + props.type + "/home"}>{name}</Navbar.Brand>
         </Container>
         <Container>
           <Nav className="mx-auto">

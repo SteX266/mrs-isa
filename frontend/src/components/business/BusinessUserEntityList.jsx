@@ -10,6 +10,7 @@ export default function BusinessUserEntityList(props) {
         price={entity.price}
         rating={entity.averageScore}
         image={entity.firstImage}
+        type={props.userType}
       />
     );
   }
