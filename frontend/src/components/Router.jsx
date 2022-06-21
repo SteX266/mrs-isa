@@ -198,6 +198,19 @@ export default function Router() {
             }
           />
 
+<Route
+            path="/client/changePassword"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBarClient />
+                <ChangePasswordPage
+
+                />
+              </>
+            }
+          />
+
           <Route
             path="/client/subscriptions"
             element={

@@ -32,6 +32,7 @@ export default function CreateVessel() {
       country: "",
     },
     photos: [],
+    photoStrings:[],
     amenities: [],
     vesselDetails: {
       length: "",

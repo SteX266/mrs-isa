@@ -30,6 +30,7 @@ export default function ConfirmCreate({ serviceDTO, back, type }) {
           amenities: serviceDTO.amenities,
           availabilityPeriod: serviceDTO.availabilityPeriod,
           photos: serviceDTO.photos,
+          photoStrings:serviceDTO.photoStrings
         };
         break;
       case "vessel":
@@ -48,6 +49,7 @@ export default function ConfirmCreate({ serviceDTO, back, type }) {
           amenities: serviceDTO.amenities,
           availabilityPeriod: serviceDTO.availabilityPeriod,
           photos: serviceDTO.photos,
+          photoStrings:serviceDTO.photoStrings,
           maxSpeed: serviceDTO.vesselDetails.maxSpeed,
           length: serviceDTO.vesselDetails.length,
           engineNumber: serviceDTO.vesselDetails.engineNumber,
@@ -71,6 +73,7 @@ export default function ConfirmCreate({ serviceDTO, back, type }) {
           amenities: serviceDTO.amenities,
           availabilityPeriod: serviceDTO.availabilityPeriod,
           photos: serviceDTO.photos,
+          photoStrings:serviceDTO.photoStrings
         };
         break;
       default:

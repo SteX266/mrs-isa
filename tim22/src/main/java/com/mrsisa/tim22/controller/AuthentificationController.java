@@ -96,6 +96,10 @@ public class AuthentificationController {
         if(userRequest.getUserType().equals("client")){
             emailService.sendActivationEmail(user);
         }
+        else if(userRequest.getUserType().equals("admin")){
+
+        }
+
         else{
             RegistrationRequest request = new RegistrationRequest(user, userRequest.getRegistrationReason());
             this.registrationRequestRepository.save(request);

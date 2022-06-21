@@ -100,7 +100,7 @@ public class UserService {
             roles = roleService.findByName("INSTRUCTOR");
         }
         else{
-            roles = roleService.findByName("CLIENT");
+            roles = roleService.findByName("ADMIN");
 
         }
         u.setRoles(roles);

@@ -29,6 +29,7 @@ public class VesselDTO {
     private String streetName;
     private int streetNumber;
     protected List<String> photos;
+    public List<String> photoStrings;
     protected String rulesOfConduct;
     protected List<Amenity> amenities;
     protected double cancellationFee;

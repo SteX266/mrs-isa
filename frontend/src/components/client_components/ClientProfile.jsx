@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/Errors.css";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 function ClientProfile() {
   const [showTaskDialog, setShowTaskDialog] = useState(false);
   const[showEditDialog, setShowEditDialog] = useState(false);
@@ -291,7 +293,24 @@ function ClientProfile() {
               </div>
               <br />
               <div className="d-flex justify-content-end align-items-center experience">
+
+              <Link to="/client/changePassword">
+              <button
+                  onClick={() => {
+                    setShowTaskDialog(true);
+                  }}
+                  className="btn btn-primary delete-button"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Change password 
+                </button>
+                </Link>
+
                 <button
+                style={{marginLeft:"15px"}}
+
                   onClick={() => {
                     setShowTaskDialog(true);
                   }}
@@ -302,6 +321,8 @@ function ClientProfile() {
                 >
                   Delete Profile
                 </button>
+
+
               </div>
               <br />
             </div>
