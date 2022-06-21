@@ -58,16 +58,8 @@ export default function Router() {
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}
         />
-        <Route path="reservation/:id" element={<BussinessUserReservation />} />
+        <Route path="calendar/:id" element={<BussinessUserReservation />} />
         <Route path="profile" element={<ClientProfile />} />
-        <Route
-          path="calendar/:id"
-          element={
-            <>
-              <ClientCalendar></ClientCalendar>
-            </>
-          }
-        />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
         <Route
