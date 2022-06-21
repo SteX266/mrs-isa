@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -89,4 +90,14 @@ public abstract class SystemEntity {
         this.complaints.add(complaint);
     }
 
+    public boolean hasActiveReservations() {
+        for (Reservation reservation: reservations) {
+            if(!reservation.isCanceled()) {
+                if(reservation.getDateTo().isAfter(LocalDateTime.now())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

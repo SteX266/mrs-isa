@@ -322,8 +322,6 @@ public class SystemEntityService {
             }
         }
         id++;
-        System.out.println("ALOOOO BAAAA");
-        System.out.println(id);
         return id;
     }
     public boolean saveVessel(VesselDTO vesselDTO) {
@@ -335,8 +333,6 @@ public class SystemEntityService {
         vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
         address.addSystemEntity(vessel);
         vessel.setId(generateNextId());
-        System.out.println("ALOOOOOO");
-        System.out.println(vessel.getId());
         addressRepository.save(address);
         vesselRepository.save(vessel);
         return true;
@@ -357,7 +353,12 @@ public class SystemEntityService {
 
     public boolean deleteEntity(Integer id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
+        if(entity.hasActiveReservations()) {
+            return false;
+
+        }
         entity.setDeleted(true);
+        systemEntityRepository.save(entity);
         return true;
     }
 

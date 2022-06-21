@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
-  Form,
   Modal,
   Navbar,
   Stack,
@@ -151,6 +150,13 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
       } else toast.error(res.data);
     });
   }
+  // eslint-disable-next-line react/display-name
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+    <button className="btn btn-warning" onClick={onClick} ref={ref}>
+      {value}
+    </button>
+  ));
+
   return (
     <Container style={{ width: "80%" }}>
       <Navbar collapseOnSelect className="rounded border border-dark">
@@ -169,22 +175,7 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
           <Modal.Title>Add availability period</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Stack direction="vertical" gap={1}>
-            <Form.Label>Start date</Form.Label>
-            <Form.Control
-              min={new Date()}
-              type="date"
-              onChange={onChange}
-              name="dateFrom"
-            ></Form.Control>
-            <Form.Label>End date</Form.Label>
-            <Form.Control
-              min={new Date()}
-              type="date"
-              onChange={onChange}
-              name="dateTo"
-            ></Form.Control>
-          </Stack>
+          <Stack direction="vertical" gap={1}></Stack>
         </Modal.Body>
         <Modal.Footer>
           <Stack direction="horizontal" gap={3}>
