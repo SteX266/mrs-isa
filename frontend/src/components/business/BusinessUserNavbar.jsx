@@ -98,12 +98,4 @@ function ProfileImage() {
   );
 }
 
-function NotificationImage() {
-  return (
-    <Image
-      src="https://st3.depositphotos.com/8089676/32835/v/600/depositphotos_328355014-stock-illustration-notification-bell-icon-black-web.jpg"
-      roundedCircle
-      style={{ width: "30px" }}
-    ></Image>
-  );
-}
+
