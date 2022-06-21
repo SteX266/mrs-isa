@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +58,7 @@ public abstract class SystemEntity {
     @OneToMany(mappedBy = "systemEntity", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     protected Set<Complaint> complaints = new HashSet<Complaint>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "systemEntity")
     protected Set<AvailabilityPeriod> availabilityPeriod = new HashSet<AvailabilityPeriod>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, mappedBy = "systemEntity")
     protected Set<Reservation> reservations = new HashSet<Reservation>();
@@ -89,4 +90,14 @@ public abstract class SystemEntity {
         this.complaints.add(complaint);
     }
 
+    public boolean hasActiveReservations() {
+        for (Reservation reservation: reservations) {
+            if(!reservation.isCanceled()) {
+                if(reservation.getDateTo().isAfter(LocalDateTime.now())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

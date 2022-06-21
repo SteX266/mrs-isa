@@ -27,7 +27,10 @@ export default function EntityCardTest(props) {
     setPhoto(result);
   }
 
-  var link = "/client/profile/" + props.id;
+  var link = "/" + props.type + "/profile/" + props.id;
+  if (props.type == "unregistered") {
+    link = "/profile/" + props.id;
+  }
   var title = props.title;
   if (title.length > 12) {
     title = title.slice(0, 11);
@@ -37,7 +40,6 @@ export default function EntityCardTest(props) {
   return (
     <>
       <div className="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 pt-lg-0 pt-4">
-
         <Link to={link}>
           <div className="card entity">
             {" "}
@@ -57,7 +59,7 @@ export default function EntityCardTest(props) {
                 <div className="d-flex flex-column">
                   <div className="h6 font-weight-bold">{props.price} USD</div>
                 </div>
-                <div className="dugme btn btn-primary">Reserve</div>
+                <div className="dugme btn btn-primary">View</div>
               </div>
             </div>
           </div>

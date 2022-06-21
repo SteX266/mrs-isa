@@ -105,7 +105,6 @@ public class SystemEntityController {
 
     @PostMapping("/createVessel")
     public ResponseEntity<String> createVessel(@RequestBody VesselDTO vesselDTO) {
-        System.out.println("AAAAAAAAA");
         if(systemEntityService.saveVessel(vesselDTO)) {
             return new ResponseEntity<>("Successfully created vessel.", HttpStatus.OK);
         } else {
@@ -182,6 +181,13 @@ public class SystemEntityController {
     }
     @PostMapping("/editAvailabilityPeriod")
     public ResponseEntity<String> editAvailabilityPeriod(@RequestBody PeriodsDTO periodsDTO) {
+        for (AvailabilityPeriodDTO dto:
+             periodsDTO.getAvailabilityPeriodDTOS()) {
+            System.out.println(dto.getDateFrom());
+            System.out.println(dto.getDateTo());
+            System.out.println("AAAAAAAAAAAAAA");
+
+        }
         if(systemEntityService.editAvailabilityPeriod(periodsDTO)) {
             return new ResponseEntity<>("Successfully edited availability period.", HttpStatus.OK);
         } else {
@@ -229,6 +235,9 @@ public class SystemEntityController {
     public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportData(startDate,endDate), HttpStatus.OK);
     }
-
+    @RequestMapping(value ="getRevenueReportDataAdmin", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
+        return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
+    }
 
 }

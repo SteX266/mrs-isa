@@ -32,8 +32,8 @@ public class UserController {
 
 
     @RequestMapping(value ="/change-password", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
-        userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat));
+    public ResponseEntity<Integer> changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
+        return new  ResponseEntity<Integer>(userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat)), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getSubscribeState", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +49,11 @@ public class UserController {
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(userService.getClientSubscriptions(username), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/isAdminActive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Integer> isAdminActive(){
+
+        return new ResponseEntity<Integer>(userService.isAdminActive(), HttpStatus.OK);
+    }
 
 
 

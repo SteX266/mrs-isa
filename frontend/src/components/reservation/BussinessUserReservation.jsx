@@ -4,17 +4,19 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useParams } from "react-router";
-import BigCalendar from "./BigCalendar";
-import ReservationDialog from "./modals/ReservationDialog";
+import BigCalendar from "../BigCalendar";
+import ReservationDialog from "../modals/ReservationDialog";
 import toast from "react-hot-toast";
+import { Form } from "react-bootstrap";
 
-function ClientCalendar() {
+export default function BussinessUserReservation() {
   const params = useParams();
   const [excludeDates, setExcludeDates] = useState([]);
   const [events, setEvents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
+  const [username, setUsername] = useState("");
   const [lastavailableDate, setLastAvailableDate] = useState(
     new Date("2034/02/08")
   );
@@ -27,7 +29,7 @@ function ClientCalendar() {
   var preDates = [];
   var preEvents = [];
 
-  async function Reserve() {
+  async function makeReservation() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const headers = {
       Accept: "application/json",
@@ -38,8 +40,13 @@ function ClientCalendar() {
 
     axios
       .post(
-        "http://localhost:8080/reservation/makeReservation",
-        { dateFrom: startDate, dateTo: endDate, entityId: params.id },
+        "http://localhost:8080/reservation/makeReservationForClient",
+        {
+          dateFrom: startDate,
+          dateTo: endDate,
+          username: username,
+          entityId: params.id,
+        },
         { headers }
       )
       .then(async (result) => {
@@ -211,7 +218,7 @@ function ClientCalendar() {
       <div className="container" style={{}}>
         <div className="row" style={{ padding: "15px" }}>
           <div className="col-md">
-            Start date:
+            Start date
             <DatePicker
               selected={startDate}
               onChange={(date) => StartDateSelected(date)}
@@ -224,10 +231,8 @@ function ClientCalendar() {
               withPortal
             />
           </div>
-        </div>
-        <div className="row" style={{ padding: "15px" }}>
           <div className="col-md">
-            End date:
+            End date
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
@@ -240,22 +245,31 @@ function ClientCalendar() {
               withPortal
             />
           </div>
+          <div className="col-md">
+            Email
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            ></Form.Control>
+          </div>
+          <div className="col-md">
+            <button
+              className="btn btn-warning"
+              style={{ margin: "15px" }}
+              onClick={openModal}
+            >
+              Reserve
+            </button>
+          </div>
         </div>
-        <button
-          className="btn btn-warning"
-          style={{ margin: "15px" }}
-          onClick={openModal}
-        >
-          Reserve
-        </button>
         <BigCalendar />
       </div>
       <ReservationDialog
         showModal={showModal}
-        confirmed={Reserve}
+        confirmed={makeReservation}
         canceled={closeModal}
       />
     </>
   );
 }
-export default ClientCalendar;

@@ -1,25 +1,17 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Modal,
-  Navbar,
-  Stack,
-  Table,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Button, Container, Navbar, Stack, Table } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 import toast from "react-hot-toast";
 
 export default function EditAvailabilityPeriod({ serviceID, type }) {
   const [availabilityPeriod, setAvailabilityPeriod] = useState([]);
-  const [toAdd, setToAdd] = useState([]);
   const [period, setPeriod] = useState({
-    dateFrom: "",
-    dateTo: "",
+    dateFrom: new Date(),
+    dateTo: new Date(),
   });
   const [periodList, setPeriodList] = useState(<></>);
-  const [show, setShow] = useState(false);
+
   function getPeriodByID() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     let url = "http://localhost:8080/entity/getDetailAdventure";
@@ -58,18 +50,23 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
       setAvailabilityPeriod(data);
     });
   }
+
   useEffect(() => {
     getPeriodByID();
   }, []);
+
   useEffect(() => {
     setPeriodList(createPeriodList());
-  });
+  }, [availabilityPeriod]);
+
   function createPeriodList() {
     return (
       <Table striped bordered hover>
         <thead>
-          <th>Date from:</th>
-          <th>Date to:</th>
+          <tr>
+            <th>Date from</th>
+            <th>Date to</th>
+          </tr>
         </thead>
         <tbody>
           {availabilityPeriod.map((period, index) => {
@@ -98,35 +95,12 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
     setPeriodList(createPeriodList());
   }
 
-  function onChange(event) {
-    setPeriod({
-      ...period,
-      [event.target.name]: event.target.value,
-    });
-  }
-
-  function open() {
-    setShow(true);
-  }
-  function close() {
-    setShow(false);
-  }
-
-  function save() {
-    let periods = availabilityPeriod;
-    toAdd.forEach((element) => {
-      periods.push(element);
-    });
-    setAvailabilityPeriod(periods);
-    setShow(false);
-    setToAdd([]);
-  }
-
   function addPeriod() {
-    let toadds = toAdd;
-    toadds.push(period);
-    setToAdd(toadds);
-    setPeriod({ dateFrom: "", dateTo: "" });
+    let newList = availabilityPeriod;
+    newList.push(period);
+    setAvailabilityPeriod(newList);
+    setPeriodList(createPeriodList());
+    setPeriod({ dateFrom: new Date(), dateTo: new Date() });
   }
 
   function saveChanges() {
@@ -151,55 +125,71 @@ export default function EditAvailabilityPeriod({ serviceID, type }) {
       } else toast.error(res.data);
     });
   }
+
+  function addDisabled() {
+    if (period.dateFrom >= period.dateTo) return true;
+    if (!availabilityPeriod) return false;
+    let disabled = false;
+    availabilityPeriod.forEach((p) => {
+      if (period.dateFrom < p.dateTo && period.dateFrom > p.dateFrom)
+        disabled = true;
+      if (period.dateFrom < p.dateFrom && period.dateTo > p.dateFrom)
+        disabled = true;
+    });
+    return disabled;
+  }
+  // eslint-disable-next-line react/display-name
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+    <button className="btn btn-warning" onClick={onClick} ref={ref}>
+      {value}
+    </button>
+  ));
+
   return (
     <Container style={{ width: "80%" }}>
       <Navbar collapseOnSelect className="rounded border border-dark">
         <Container>
-          <Button variant="outline-dark" onClick={saveChanges}>
-            Save changes
-          </Button>
-          <Button onClick={open} variant="outline-dark" className="ms-auto">
+          <Stack direction="horizontal" gap={3}>
+            <Button variant="outline-dark" onClick={saveChanges}>
+              Save changes
+            </Button>
+            Date from
+            <DatePicker
+              selected={period.dateFrom}
+              onChange={(date) =>
+                setPeriod({ ...period, dateFrom: date, dateTo: date })
+              }
+              showTimeSelect
+              minDate={new Date()}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              customInput={<CustomInput />}
+              withPortal
+            />
+          </Stack>
+          <Stack direction="horizontal" gap={3}>
+            Date to
+            <DatePicker
+              selected={period.dateTo}
+              onChange={(date) => setPeriod({ ...period, dateTo: date })}
+              minDate={period.dateFrom}
+              showTimeSelect
+              dateFormat="MMMM d, yyyy h:mm aa"
+              customInput={<CustomInput />}
+              withPortal
+            />
+          </Stack>
+
+          <Button
+            onClick={addPeriod}
+            variant="outline-dark"
+            className="ms-auto"
+            disabled={addDisabled()}
+          >
             Add period
           </Button>
         </Container>
       </Navbar>
       {periodList}
-      <Modal show={show} onHide={close}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add availability period</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Stack direction="vertical" gap={1}>
-            <Form.Label>Start date</Form.Label>
-            <Form.Control
-              min={new Date()}
-              type="date"
-              onChange={onChange}
-              name="dateFrom"
-            ></Form.Control>
-            <Form.Label>End date</Form.Label>
-            <Form.Control
-              min={new Date()}
-              type="date"
-              onChange={onChange}
-              name="dateTo"
-            ></Form.Control>
-          </Stack>
-        </Modal.Body>
-        <Modal.Footer>
-          <Stack direction="horizontal" gap={3}>
-            <Button variant="outline-dark" onClick={close}>
-              Cancel
-            </Button>
-            <Button variant="outline-dark" onClick={addPeriod}>
-              Add Period
-            </Button>
-            <Button variant="outline-dark" onClick={save}>
-              Save Changes
-            </Button>
-          </Stack>
-        </Modal.Footer>
-      </Modal>
     </Container>
   );
 }

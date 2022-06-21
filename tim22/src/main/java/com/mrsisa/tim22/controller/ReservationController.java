@@ -70,5 +70,13 @@ public class ReservationController {
             return new ResponseEntity<>("Can't make reservation", HttpStatus.FORBIDDEN);
         }
     }
+    @PostMapping("/makeReservationForClient")
+    public ResponseEntity<String> makeReservationForClient(@RequestBody ReservationRequestDTO reservationRequestDTO) {
+        if(reservationService.makeReservationForClient(reservationRequestDTO)) {
+            return new ResponseEntity<>("OK", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Couldn't create reservation", HttpStatus.FORBIDDEN);
+        }
+    }
 
 }

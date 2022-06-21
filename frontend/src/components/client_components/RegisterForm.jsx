@@ -15,7 +15,6 @@ function RegisterForm()  {
   const[password, setPassword] = useState("");
   const[repeatedPassword, setRepeatedPassword] = useState("");
   const[userType,setUserType] = useState("client");
-  const [registrationReason,setRegistrationReason] = useState("");
 
   const [showRegistrationDialog,setShowRegistrationDialog] = useState(false);
 
@@ -28,22 +27,18 @@ function RegisterForm()  {
         console.log(userType);
 
         if (userType == "client"){
-          setRegistrationReason("");
-          signup();
+          signup("");
       }
       else{
 
         setShowRegistrationDialog(true);
-        console.log("cekaj be");
       
       }
-
-
 
     }
   }
     
-  function signup(){
+  function signup(registrationReason){
     console.log(registrationReason);
     const requestOptions = {
       method: 'POST',
@@ -175,9 +170,9 @@ function handleComboChange(event){
   setUserType(event.target.value);
 }
 function confirmRegistration(text){
-  setRegistrationReason(text);
+  console.log(text);
   setShowRegistrationDialog(false);
-  signup();
+  signup(text);
 }
 function cancelRegistration(){
   setShowRegistrationDialog(false);
