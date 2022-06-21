@@ -374,6 +374,7 @@ public class SystemEntityService {
         vacationRepository.save(vacation);
         return true;
     }
+
     public boolean deleteListing(Long id) {
         vacationRepository.deleteById(id);
         return true;
