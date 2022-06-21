@@ -185,6 +185,38 @@ public class ReservationService {
 
     }
 
+    @Transactional
+    public boolean makeReservationForClient(ReservationRequestDTO reservationRequestDTO) {
+        String email = reservationRequestDTO.getUsername();
+        User u = userRepository.findOneByUsername(email);
+        if(u == null) return false;
+        if(!u.getRoles().get(0).getName().equals("CLIENT")) return false;
+        if(u.getUserPenalties() >=3) return false;
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequestDTO.entityId);
+        SystemEntity entityToReserve;
+        if(entity.getEntityType().equals(SystemEntityType.ADVENTURE)){
+            entityToReserve = adventureRepository.getLockedEntity(reservationRequestDTO.entityId);
+        }
+        else if (entity.getEntityType().equals(SystemEntityType.VACATION)){
+            entityToReserve = vacationRepository.getLockedEntity(reservationRequestDTO.entityId);
+        }
+        else{
+            entityToReserve = vesselRepository.getLockedEntity(reservationRequestDTO.entityId);
+        }
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequestDTO.dateFrom.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(reservationRequestDTO.dateTo.replace("T"," ").substring(0,16), formatter);
+
+        if (isEntityAvailable(entityToReserve, dateFrom, dateTo)){
+            return createReservation(u, entityToReserve, dateFrom, dateTo);
+        }
+        else{
+            return false;
+        }
+    }
+
     private boolean createReservation( User u, SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo) {
         long diff = ChronoUnit.MINUTES.between(dateFrom, dateTo);
         double clientPrice = calculateClientPrice(diff, entity.getPrice(), u.getLoyaltyPoints());
