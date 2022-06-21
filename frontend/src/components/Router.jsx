@@ -31,7 +31,7 @@ import LoyaltyProgram from "./admin/LoyaltyProgram";
 import ReportsPage from "./reports/ReportsPage";
 import AccountCancelationRequest from "./admin/AccountCancellationRequest";
 import ReservationReport from "./admin/ReservationReport";
-
+import AdminReport from "./reports/AdminReport";
 import BussinessPromoPage from "./business/PromoPage";
 
 export default function Router() {
@@ -54,10 +54,7 @@ export default function Router() {
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}
         />
-        <Route
-          path="profile"
-          element={<ClientProfile />}
-        />
+        <Route path="profile" element={<ClientProfile />} />
         <Route
           path="calendar/:id"
           element={
@@ -101,6 +98,7 @@ export default function Router() {
               path="registration-request"
               element={<RegistrationRequest />}
             />
+            <Route path="report" element={<AdminReport />} />
             <Route
               path="cancellation-request"
               element={<AccountCancelationRequest />}
