@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Navbar, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import RegistrationRequestTable from "./RegistrationRequestTable";
-import RegistrationRequestDialog from "../modals/RegistrationRequestDialog";
+import AccountCancellationResponseDialog from "../modals/AccountCancellationResponseDialog";
 import toast from "react-hot-toast";
 
 export default function RegistrationRequest() {
@@ -16,7 +16,7 @@ export default function RegistrationRequest() {
 
   React.useEffect(() => {
     getRequests();
-  }, [showTaskDialog]);
+  }, []);
 
   async function getRequests() {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -25,7 +25,7 @@ export default function RegistrationRequest() {
     };
     axios
       .get(
-        "http://localhost:8080/registrationRequest/getAllRegistrationRequests",
+        "http://localhost:8080/cancellationRequest/getCancellationRequest",
         requestOptions
       )
       .then((res) => {
@@ -43,9 +43,9 @@ export default function RegistrationRequest() {
       Authorization: "Bearer " + token.accessToken,
     };
 
-    axios
+    await axios
       .post(
-        "http://localhost:8080/registrationRequest/acceptRegistrationRequest",
+        "http://localhost:8080/cancellationRequest/acceptCancellationRequest",
         { client: client },
         { headers }
       )
@@ -53,11 +53,11 @@ export default function RegistrationRequest() {
         toast.success(
           "Registration request from user " + client + " successfully accepted "
         );
-        getRequests();
       })
       .catch(() => {
         toast.error("Something went wrong");
       });
+    getRequests();
   }
 
   function onSearchFieldChange(event) {
@@ -67,7 +67,7 @@ export default function RegistrationRequest() {
       const r = requests[index];
       if (
         r.client.toLowerCase().includes(searchParam) ||
-        r.description.toLowerCase().includes(searchParam)
+        r.text.toLowerCase().includes(searchParam)
       ) {
         searchResult.push(r);
       }
@@ -79,8 +79,8 @@ export default function RegistrationRequest() {
     len = 0;
   }
 
-  async function onAccept(client) {
-    await AcceptRequest(client);
+  function onAccept(client) {
+    AcceptRequest(client);
   }
   async function onDecline(c) {
     await setClient(c);
@@ -112,7 +112,7 @@ export default function RegistrationRequest() {
           ></RegistrationRequestTable>
         </Container>
       </div>
-      <RegistrationRequestDialog
+      <AccountCancellationResponseDialog
         showModal={showTaskDialog}
         client={client}
         confirmed={() => {

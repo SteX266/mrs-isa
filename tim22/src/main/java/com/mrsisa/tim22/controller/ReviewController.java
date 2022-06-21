@@ -7,8 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
-
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"}, allowedHeaders = "*")
 @RequestMapping(value = "/review", produces = MediaType.APPLICATION_JSON_VALUE)

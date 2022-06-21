@@ -26,6 +26,7 @@ VALUES ('Amsterdam', 'Netherlands', 'Robina van Persija', 18);
 INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
 VALUES ( 'Petra Kocica 38, Jagodina', false, true, null, 94, 'Stefan','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066240610', 'Milosevic', 'stefan.milosevic.e14@gmail.com');
 
+
 INSERT INTO public.user_table( address, is_deleted, is_enabled, last_password_reset_date, loyalty_points, name, password, phone_number, surname, username)
 VALUES ( 'Ulica retarda 1, Zrenjanin', false, true, null, 0, 'Vanja','$2a$10$cc2TaFZx.pg3N8q3qNGhee252A/1YKth3KwywXrrGhRMLdD0baknC' , '066222333', 'Serfeze', 'serfezev@gmail.com');
 
@@ -256,6 +257,7 @@ INSERT INTO public.registration_request(
 VALUES ('Veoma sam posvecen i voleo bih da dobijem posao', false, 6);
 
 INSERT INTO public.registration_request(
+
      description, is_answered, client_id)
 VALUES ( 'Zelim da zaradim paree', false, 7);
 
@@ -267,3 +269,26 @@ INSERT INTO public.loyalty_program(
     id, gold_discount, gold_limit, platinum_discount, platinum_limit, points_for_business, points_per_reservation, silver_discount, silver_limit)
 VALUES (1, 10, 60, 15, 100, 3, 6, 5, 30);
 
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (1, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 2);
+
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (2, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 4);
+INSERT INTO public.account_cancellation_request(
+    id, is_answered, text, user_id)
+VALUES (3, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 3);
+
+
+INSERT INTO public.reservation_report(
+    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES (1, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 1, 2, 7);
+
+INSERT INTO public.reservation_report(
+    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES (2, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 7, 2, 7);
+
+INSERT INTO public.reservation_report(
+    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES (3, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 8, 2, 7);

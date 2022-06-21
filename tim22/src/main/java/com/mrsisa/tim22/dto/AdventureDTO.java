@@ -1,14 +1,15 @@
 package com.mrsisa.tim22.dto;
 
-import com.mrsisa.tim22.model.*;
+import com.mrsisa.tim22.model.Adventure;
+import com.mrsisa.tim22.model.Amenity;
+import com.mrsisa.tim22.model.AvailabilityPeriod;
+import com.mrsisa.tim22.model.FishingEquipement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

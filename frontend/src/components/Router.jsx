@@ -29,6 +29,9 @@ import ClientSubscriptions from "./client_components/ClientSubscriptions";
 import { Toaster } from "react-hot-toast";
 import LoyaltyProgram from "./admin/LoyaltyProgram";
 import ReportsPage from "./reports/ReportsPage";
+import AccountCancelationRequest from "./admin/AccountCancellationRequest";
+import ReservationReport from "./admin/ReservationReport";
+
 import BussinessPromoPage from "./business/PromoPage";
 
 export default function Router() {
@@ -88,6 +91,11 @@ export default function Router() {
               path="registration-request"
               element={<RegistrationRequest />}
             />
+            <Route
+              path="cancellation-request"
+              element={<AccountCancelationRequest />}
+            />
+            <Route path="reservation-report" element={<ReservationReport />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="registerAdmin" element={<AdminRegistration />} />
             <Route

@@ -6,11 +6,9 @@ import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.repository.PromoRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class PromoService {
