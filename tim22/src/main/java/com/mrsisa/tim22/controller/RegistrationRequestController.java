@@ -20,10 +20,10 @@ public class RegistrationRequestController {
         @Autowired
         private RegistrationRequestService registrationRequestService;
 
-        @RequestMapping(value = "/getAllRegistrationRequests", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<ArrayList<RegistrationRequestDTO>> getAllRegistrationRequests(){
-            return new ResponseEntity<ArrayList<RegistrationRequestDTO>>(registrationRequestService.getAllRegistrationRequests(), HttpStatus.OK);
-        }
+    @GetMapping(value = "/getAllRegistrationRequests")
+    public ResponseEntity<ArrayList<RegistrationRequestDTO>> getAllRegistrationRequests(){
+        return new ResponseEntity<ArrayList<RegistrationRequestDTO>>(registrationRequestService.getAllRegistrationRequests(), HttpStatus.OK);
+    }
      @PostMapping(value = "/acceptRegistrationRequest")
     public boolean makeReservation(@RequestBody RegistrationRequestDTO dto){
          return registrationRequestService.acceptRegistrationRequest(dto);

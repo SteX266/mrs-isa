@@ -17,12 +17,12 @@ public class LoyaltyProgramController {
     @Autowired
     private LoyaltyProgramService loyaltyProgramService;
 
-    @RequestMapping(value = "/getLoyalty", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getLoyalty")
     public ResponseEntity<LoyaltyProgram> getLoyalty(){
         return new ResponseEntity<>(loyaltyProgramService.getLoyalty(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/editLoyalty", method = RequestMethod.GET)
+    @GetMapping(value = "/editLoyalty")
     public void editLoyalty(@RequestParam int id, @RequestParam int platinumLimit, @RequestParam int pointsForBusiness, @RequestParam int pointsPerReservation, @RequestParam int silverLimit,@RequestParam int goldLimit,@RequestParam int goldDiscount,@RequestParam int silverDiscount,@RequestParam int platinumDiscount){
         loyaltyProgramService.save(new LoyaltyProgram(id,pointsPerReservation,pointsForBusiness,silverLimit,silverDiscount,goldLimit,goldDiscount,platinumLimit,platinumDiscount));
     }

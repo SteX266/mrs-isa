@@ -19,7 +19,7 @@ public class PromoController {
     @Autowired
     private PromoService promoService;
 
-    @RequestMapping(value = "/getEntityPromos", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getEntityPromos")
     public ResponseEntity<ArrayList<PromoDTO>> getEntityPromos(@RequestParam int id){
         return new ResponseEntity<ArrayList<PromoDTO>>(promoService.getEntityPromos(id), HttpStatus.OK);
     }

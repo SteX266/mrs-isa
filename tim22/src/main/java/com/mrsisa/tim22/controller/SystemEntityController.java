@@ -21,19 +21,19 @@ public class SystemEntityController {
     @Autowired
     private SystemEntityService systemEntityService;
 
-    @RequestMapping(value = "/getAllEntities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getAllEntities")
     public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(1,3), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="getEntityById", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getEntityById")
     public ResponseEntity<SystemEntityDTO> getEntityById(@RequestParam int id){
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getEntityById(id), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value ="/search", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/search")
     public ResponseEntity<SystemEntityDTO> search(@RequestBody SearchDTO searchDTO){
         System.out.println(searchDTO.getSearchField());
         return new ResponseEntity<SystemEntityDTO>(new SystemEntityDTO(), HttpStatus.OK);
@@ -41,62 +41,63 @@ public class SystemEntityController {
 
 
 
-    @RequestMapping(value ="getCurrentUserEntities", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getCurrentUserEntities")
     public ResponseEntity<ArrayList<SystemEntityDTO>> getCurrentUserEntities(){
 
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getCurrentUserEntities(), HttpStatus.OK);
     }
-    @RequestMapping(value = "/getEntityAvailabilityPeriods", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getEntityAvailabilityPeriods")
     public ResponseEntity<ArrayList<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
         return new ResponseEntity<ArrayList<AvailabilityPeriodDTO>>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="createSubscription", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="createSubscription")
     public void createSubscription(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.createSubscribtion(entityId, username);
     }
 
-    @RequestMapping(value ="unsubscribe", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="unsubscribe")
     public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.unsubscribe(entityId, username);
     }
-    @RequestMapping(value ="getDetailVessel", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getDetailVessel")
     public ResponseEntity<VesselDTO> getDetailVessel(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getDetailVessel(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="getAverageRating", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getAverageRating")
     public double getAverageRating(){
         return systemEntityService.getAverageRating();
     }
-    @RequestMapping(value ="getBestRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value ="getBestRated")
     public  ResponseEntity<SystemEntityDTO> getBestRated(){
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getBestRated(), HttpStatus.OK);
     }
-    @RequestMapping(value ="getDetailAdventure", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getDetailAdventure")
     public ResponseEntity<AdventureDTO> getDetailAdventure(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getDetailAdventures(id), HttpStatus.OK);
     }
-    @RequestMapping(value ="getDetailVacation", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getDetailVacation")
     public ResponseEntity<ListingDTO> getDetailVacation(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getDetailVacation(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="getWorstRated", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getWorstRated")
     public  ResponseEntity<SystemEntityDTO> getWorstRated(){
         return new ResponseEntity<SystemEntityDTO>(systemEntityService.getWorstRated(), HttpStatus.OK);
     }
 
-    @RequestMapping(value ="getReservationsAmountMonthly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getReservationsAmountMonthly")
     public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountMonthly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountMonthly(), HttpStatus.OK);
     }
-    @RequestMapping(value ="getReservationsAmountYearly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getReservationsAmountYearly")
     public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountYearly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountYearly(), HttpStatus.OK);
     }
-    @RequestMapping(value ="getReservationsAmountWeekly", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getReservationsAmountWeekly")
     public  ResponseEntity<ArrayList<ReservationsReportDTO>> getReservationsAmountWeekly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountWeekly(), HttpStatus.OK);
     }
@@ -231,11 +232,11 @@ public class SystemEntityController {
 
         return new ResponseEntity<List<Utility>>(utilities, HttpStatus.OK);
     }
-    @RequestMapping(value ="getRevenueReportData", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getRevenueReportData")
     public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportData(startDate,endDate), HttpStatus.OK);
     }
-    @RequestMapping(value ="getRevenueReportDataAdmin", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="getRevenueReportDataAdmin")
     public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
     }

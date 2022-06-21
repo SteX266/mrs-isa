@@ -17,7 +17,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @RequestMapping(value = "/createReview", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/createReview")
     public ResponseEntity<String> createReview(@RequestParam int reservationId, @RequestParam String username, @RequestParam String text, @RequestParam int rating){
         boolean isSuccessful = reviewService.createReview(reservationId, username, text, rating);
 

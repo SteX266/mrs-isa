@@ -18,38 +18,38 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/editUserData", method = RequestMethod.GET)
+    @GetMapping(value = "/editUserData")
     public void editUserData(@RequestParam String email, @RequestParam String name, @RequestParam String surname, @RequestParam String phoneNumber, @RequestParam String addressLine){
         userService.editUserData(email,name,surname,phoneNumber,addressLine);
     }
 
 
-    @RequestMapping(value = "/getUserByUsername", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getUserByUsername")
     public ResponseEntity<UserDTO> getCurrentUser(@RequestParam String username){
 
         return new ResponseEntity<UserDTO>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value ="/change-password", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="/change-password")
     public ResponseEntity<Integer> changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
         return new  ResponseEntity<Integer>(userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getSubscribeState", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getSubscribeState")
     public ResponseEntity<Boolean> getSubscribeState(@RequestParam String username, @RequestParam int entityId){
 
         return new ResponseEntity<Boolean>(userService.getSubscribeState(username, entityId), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/getClientSubscriptions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getClientSubscriptions")
     public ResponseEntity<ArrayList<SystemEntityDTO>> getClientSubscriptions(@RequestParam String username){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(userService.getClientSubscriptions(username), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/isAdminActive", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/isAdminActive")
     public ResponseEntity<Integer> isAdminActive(){
 
         return new ResponseEntity<Integer>(userService.isAdminActive(), HttpStatus.OK);

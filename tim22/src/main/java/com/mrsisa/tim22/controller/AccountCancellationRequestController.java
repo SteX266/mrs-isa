@@ -18,13 +18,13 @@ public class AccountCancellationRequestController {
     @Autowired
     private AccountCancellationRequestService accountCancellationRequestService;
 
-    @RequestMapping(value = "/createCancellationRequest", method = RequestMethod.GET)
+    @GetMapping("/createCancellationRequest")
     public void createCancellationRequest(@RequestParam String username, @RequestParam String text){
 
         accountCancellationRequestService.createNewCancellationRequest(username, text);
     }
 
-    @RequestMapping(value = "/getCancellationRequest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getCancellationRequest")
     public ResponseEntity<ArrayList<CancellationRequestDTO>> getCancellationRequest(){
 
        return  new ResponseEntity<ArrayList<CancellationRequestDTO>> (accountCancellationRequestService.getCancellationRequest(), HttpStatus.OK);

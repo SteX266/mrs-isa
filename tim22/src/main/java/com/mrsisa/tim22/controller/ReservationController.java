@@ -19,19 +19,19 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @RequestMapping(value = "/getClientReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getClientReservations")
     public ResponseEntity<ArrayList<ReservationDTO>> getClientReservations(@RequestParam String email){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getClientReservations(email), HttpStatus.OK);
     }
-    @RequestMapping(value = "/getEntityReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getEntityReservations")
     public ResponseEntity<ArrayList<ReservationDTO>> getEntityReservations(@RequestParam int id){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getEntityReservations(id), HttpStatus.OK);
     }
-    @RequestMapping(value = "/getOwnerReservations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getOwnerReservations")
     public ResponseEntity<ArrayList<ReservationDTO>> getOwnerReservations(@RequestParam String email){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getOwnerReservations(email), HttpStatus.OK);
     }
-    @RequestMapping(value = "/cancelReservation", method=RequestMethod.GET)
+    @GetMapping(value = "/cancelReservation")
     public ResponseEntity<String>cancelReservation(@RequestParam int entityId){
 
 
@@ -45,12 +45,12 @@ public class ReservationController {
 
     }
 
-    @RequestMapping(value = "/approveReservation", method=RequestMethod.GET)
+    @GetMapping(value = "/approveReservation")
     public void approveReservation(@RequestParam int entityId){
         reservationService.approveReservation(entityId);
     }
 
-    @RequestMapping(value = "/createPromoReservation", method=RequestMethod.GET)
+    @GetMapping(value = "/createPromoReservation")
     public ResponseEntity<String> createPromoReservation(@RequestParam int promoId, @RequestParam String username){
 
         if(reservationService.createPromoReservation(promoId, username)){

@@ -21,7 +21,7 @@ public class ReservationReportController {
     @Autowired
     private ReservationReportService reservationReportService;
 
-    @RequestMapping(value = "/getAllReservationReports", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getAllReservationReports")
     public ResponseEntity<ArrayList<ReservationReportDTO>> getAllReservationReports(){
         return new ResponseEntity<ArrayList<ReservationReportDTO>>(reservationReportService.getAllReservationReports(), HttpStatus.OK);
     }
