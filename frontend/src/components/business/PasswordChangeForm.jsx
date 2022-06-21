@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 export default function PasswordChangeForm() {
   let navigate = useNavigate();
   const [passwords, setPasswords] = useState({ old: "", new: "", repeat: "" });
-  const [successfull, setSuccessfull] = useState(false);
 
   const [errors, setErrors] = useState({
     repeatedPassword: "",
@@ -37,9 +36,8 @@ export default function PasswordChangeForm() {
     axios
       .get("http://localhost:8080/user/change-password", requestOptions)
       .then((res) => {
-        alert(res.data);
         if (res.data == 1) {
-          toast.success("Password successfully changed");
+          toast.success("Password successfully changed.Pleas login again");
           navigate("/login");
         } else toast.error("Wrong Password");
       });
