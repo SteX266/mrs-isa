@@ -270,15 +270,15 @@ INSERT INTO public.loyalty_program(
 VALUES (1, 10, 60, 15, 100, 3, 6, 5, 30);
 
 INSERT INTO public.account_cancellation_request(
-    id, is_answered, text, user_id)
-VALUES (1, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 2);
+     is_answered, text, user_id)
+VALUES ( false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 2);
 
 INSERT INTO public.account_cancellation_request(
-    id, is_answered, text, user_id)
-VALUES (2, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 4);
+   is_answered, text, user_id)
+VALUES ( false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 4);
 INSERT INTO public.account_cancellation_request(
-    id, is_answered, text, user_id)
-VALUES (3, false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 3);
+     is_answered, text, user_id)
+VALUES ( false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 3);
 
 
 INSERT INTO public.reservation_report(
