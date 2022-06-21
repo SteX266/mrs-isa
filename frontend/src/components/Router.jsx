@@ -33,6 +33,7 @@ import ReservationReport from "./admin/ReservationReport";
 
 import BussinessPromoPage from "./business/PromoPage";
 import BussinessUserReservation from "./reservation/BussinessUserReservation";
+import HomePageAdmin from "./admin/HomePageAdmin";
 
 export default function Router() {
   function Nested(type) {
@@ -98,10 +99,7 @@ export default function Router() {
           </Route>
 
           <Route path="/admin/*" element={<AdminNavbar></AdminNavbar>}>
-            <Route
-              path="home"
-              element={<EntityList type="ALL_ENTITIES" userType="admin" />}
-            />
+            <Route path="home" element={<HomePageAdmin />} />
             <Route
               path="registration-request"
               element={<RegistrationRequest />}
