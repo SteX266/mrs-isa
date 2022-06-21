@@ -132,7 +132,12 @@ public class TokenUtils {
             username = claims.getSubject();
         } catch (ExpiredJwtException ex) {
             throw ex;
-        } catch (Exception e) {
+        }
+        catch(NullPointerException np){
+            System.out.println("NULL POINTER!");
+            username = null;
+        }
+        catch (Exception e) {
             username = null;
         }
 
@@ -151,7 +156,12 @@ public class TokenUtils {
             issueAt = claims.getIssuedAt();
         } catch (ExpiredJwtException ex) {
             throw ex;
-        } catch (Exception e) {
+        }
+        catch(NullPointerException np){
+            System.out.println("NULL POINTER!");
+            issueAt = null;
+        }
+        catch (Exception e) {
             issueAt = null;
         }
         return issueAt;
@@ -170,7 +180,12 @@ public class TokenUtils {
             audience = claims.getAudience();
         } catch (ExpiredJwtException ex) {
             throw ex;
-        } catch (Exception e) {
+        }
+        catch(NullPointerException np){
+            System.out.println("NULL POINTER!");
+            audience = null;
+        }
+        catch (Exception e) {
             audience = null;
         }
         return audience;
@@ -189,7 +204,12 @@ public class TokenUtils {
             expiration = claims.getExpiration();
         } catch (ExpiredJwtException ex) {
             throw ex;
-        } catch (Exception e) {
+        }
+        catch(NullPointerException np){
+            System.out.println("NULL POINTER!");
+            expiration = null;
+        }
+        catch (Exception e) {
             expiration = null;
         }
 

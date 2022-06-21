@@ -12,23 +12,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReservationDTO {
-    public int id;
-    public String location;
-    public String startDate;
-    public String endDate;
-    public int visitors;
-    public double fee;
-    public String owner;
-    public String client;
-    public String status;
-    public String entityName;
-    public String entityType;
-    public double ownerPrice;
+    private int id;
+    private String location;
+    private String startDate;
+    private String endDate;
+    private int visitors;
+    private double fee;
+    private String owner;
+    private String client;
+    private String status;
+    private String entityName;
+    private String entityType;
+    private double ownerPrice;
 
 
     public ReservationDTO(Reservation r) {
         String address = createAddressString(r.getSystemEntity().getAddress());
-        String status = createStatusString(r.isCanceled(), r.isApproved());
+        String statusString = createStatusString(r.isCanceled(), r.isApproved());
         this.setId(r.getId());
         this.setLocation(address);
         this.setStartDate(String.valueOf(r.getDateFrom()));
@@ -37,7 +37,7 @@ public class ReservationDTO {
         this.setFee(r.getClientPrice());
         this.setOwner(r.getSystemEntity().getOwner().getName() + " " + r.getSystemEntity().getOwner().getSurname());
         this.setClient(r.getClient().getName() + " " + r.getClient().getSurname());
-        this.setStatus(status);
+        this.setStatus(statusString);
         this.setEntityName(r.getSystemEntity().getName());
         this.setEntityType(String.valueOf(r.getSystemEntity().getEntityType()));
         this.setOwnerPrice(r.getOwnerPrice());

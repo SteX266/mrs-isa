@@ -76,12 +76,12 @@ public class SystemEntityService {
         List<SystemEntity> filteredList = new ArrayList<>();
 
         for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(filters.type) || filters.type.equals("SHOW_ALL")){
-                if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
+            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
                     if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
-                        if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
+                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
                             Address address = entity.getAddress();
-                            if (address.getStreetName().contains(filters.street) && address.getCity().contains(filters.city) && address.getCountry().contains(filters.country)){
+                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
                                 filteredList.add(entity);
                             }
                         }
@@ -96,12 +96,12 @@ public class SystemEntityService {
         List<SystemEntity> filteredList = new ArrayList<>();
 
         for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(filters.type) || filters.type.equals("SHOW_ALL")){
-                if(entity.getPrice() > filters.rentalFeeFrom && entity.getPrice() < filters.rentalFeeTo){
+            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
                     if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
-                        if(entity.getCapacity() > filters.guestsFrom && entity.getCapacity() < filters.guestsTo){
+                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
                             Address address = entity.getAddress();
-                            if (address.getStreetName().contains(filters.street) && address.getCity().contains(filters.city) && address.getCountry().contains(filters.country)){
+                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
                                 filteredList.add(entity);
                             }
                         }
@@ -114,7 +114,7 @@ public class SystemEntityService {
         int count = 0;
         for (SystemEntity entity:filteredList){
             count++;
-            if(count >= filters.startIndex && count <= filters.endIndex){
+            if(count >= filters.getStartIndex() && count <= filters.getEndIndex()){
                 systemEntityDTOS.add(new SystemEntityDTO(entity));
             }
         }

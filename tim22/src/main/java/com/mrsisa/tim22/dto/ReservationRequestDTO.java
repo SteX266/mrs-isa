@@ -12,9 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReservationRequestDTO {
-    public String dateFrom;
-    public String dateTo;
-    public String username;
-    public int entityId;
+    private String dateFrom;
+    private String dateTo;
+    private int entityId;
+    private String username;
 
 }

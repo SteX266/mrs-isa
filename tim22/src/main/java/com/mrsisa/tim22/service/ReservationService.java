@@ -158,22 +158,22 @@ public class ReservationService {
         if(u.getUserPenalties() >=3){
             return false;
         }
-        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.entityId);
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequest.getEntityId());
         SystemEntity entityToReserve;
         if(entity.getEntityType().equals(SystemEntityType.ADVENTURE)){
-            entityToReserve = adventureRepository.getLockedEntity(reservationRequest.entityId);
+            entityToReserve = adventureRepository.getLockedEntity(reservationRequest.getEntityId());
         }
         else if (entity.getEntityType().equals(SystemEntityType.VACATION)){
-            entityToReserve = vacationRepository.getLockedEntity(reservationRequest.entityId);
+            entityToReserve = vacationRepository.getLockedEntity(reservationRequest.getEntityId());
         }
         else{
-            entityToReserve = vesselRepository.getLockedEntity(reservationRequest.entityId);
+            entityToReserve = vesselRepository.getLockedEntity(reservationRequest.getEntityId());
         }
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.dateFrom.replace("T"," ").substring(0,16), formatter);
-        LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.dateTo.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequest.getDateFrom().replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(reservationRequest.getDateTo().replace("T"," ").substring(0,16), formatter);
 
         if (isEntityAvailable(entityToReserve, dateFrom, dateTo)){
             return createReservation(u, entityToReserve, dateFrom, dateTo);
@@ -192,22 +192,22 @@ public class ReservationService {
         if(u == null) return false;
         if(!u.getRoles().get(0).getName().equals("CLIENT")) return false;
         if(u.getUserPenalties() >=3) return false;
-        SystemEntity entity = systemEntityRepository.findOneById(reservationRequestDTO.entityId);
+        SystemEntity entity = systemEntityRepository.findOneById(reservationRequestDTO.getEntityId());
         SystemEntity entityToReserve;
         if(entity.getEntityType().equals(SystemEntityType.ADVENTURE)){
-            entityToReserve = adventureRepository.getLockedEntity(reservationRequestDTO.entityId);
+            entityToReserve = adventureRepository.getLockedEntity(reservationRequestDTO.getEntityId());
         }
         else if (entity.getEntityType().equals(SystemEntityType.VACATION)){
-            entityToReserve = vacationRepository.getLockedEntity(reservationRequestDTO.entityId);
+            entityToReserve = vacationRepository.getLockedEntity(reservationRequestDTO.getEntityId());
         }
         else{
-            entityToReserve = vesselRepository.getLockedEntity(reservationRequestDTO.entityId);
+            entityToReserve = vesselRepository.getLockedEntity(reservationRequestDTO.getEntityId());
         }
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequestDTO.dateFrom.replace("T"," ").substring(0,16), formatter);
-        LocalDateTime dateTo = LocalDateTime.parse(reservationRequestDTO.dateTo.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateFrom = LocalDateTime.parse(reservationRequestDTO.getDateFrom().replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(reservationRequestDTO.getDateTo().replace("T"," ").substring(0,16), formatter);
 
         if (isEntityAvailable(entityToReserve, dateFrom, dateTo)){
             return createReservation(u, entityToReserve, dateFrom, dateTo);

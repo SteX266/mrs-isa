@@ -11,18 +11,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FilterDTO {
-    public int rentalFeeFrom;
-    public int rentalFeeTo;
-    public int cancellationFeeFrom;
-    public int cancellationFeeTo;
-    public int guestsFrom;
-    public int guestsTo;
-    public String street;
-    public String city;
-    public String country;
+    private int rentalFeeFrom;
+    private int rentalFeeTo;
+    private int cancellationFeeFrom;
+    private int cancellationFeeTo;
+    private int guestsFrom;
+    private int guestsTo;
+    private String street;
+    private String city;
+    private String country;
 
-    public int startIndex;
-    public int endIndex;
+    private int startIndex;
+    private int endIndex;
 
-    public String type;
+    private String type;
 }
