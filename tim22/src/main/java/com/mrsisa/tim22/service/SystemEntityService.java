@@ -326,8 +326,6 @@ public class SystemEntityService {
             }
         }
         id++;
-        System.out.println("ALOOOO BAAAA");
-        System.out.println(id);
         return id;
     }
     public boolean saveVessel(VesselDTO vesselDTO) {
@@ -339,6 +337,7 @@ public class SystemEntityService {
         vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
         address.addSystemEntity(vessel);
         vessel.setId(generateNextId());
+
         List<String> photos;
         try {
             photos = createImages(vesselDTO.getPhotoStrings());
@@ -348,7 +347,6 @@ public class SystemEntityService {
         }
         vessel.setPhotos(photos);
 
-
         addressRepository.save(address);
         vesselRepository.save(vessel);
         return true;
@@ -356,6 +354,7 @@ public class SystemEntityService {
 
     private List<String> createImages(List<String> photos) throws IOException {
         List<String> images = new ArrayList<>();
+        int imageNumber = getNextImageNumber();
         for (String photo:photos){
             byte[]data;
             try{
@@ -365,13 +364,17 @@ public class SystemEntityService {
 
                 continue;
             }
-            int imageNumber = getNextImageNumber();
+
             String imageName = "" + imageNumber + ".jpg";
+
             String imagePath = "src\\main\\resources\\images\\"+imageName;
+
+            System.out.println(imagePath);
             try(OutputStream stream = new FileOutputStream(new File(imagePath).getCanonicalFile())){
                 stream.write(data);
             }
             images.add(imageName);
+            imageNumber++;
 
         }
         return images;
@@ -382,7 +385,7 @@ public class SystemEntityService {
         List<Integer> numbers = new ArrayList<>();
         List<String> photos = getAllPhotos();
         for (String photo:photos){
-            String[] tokens = photo.split(".");
+            String[] tokens = photo.split("\\.");
             numbers.add(Integer.parseInt(tokens[0]));
         }
         int max = 0;
@@ -421,7 +424,12 @@ public class SystemEntityService {
 
     public boolean deleteEntity(Integer id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
+        if(entity.hasActiveReservations()) {
+            return false;
+
+        }
         entity.setDeleted(true);
+        systemEntityRepository.save(entity);
         return true;
     }
 
@@ -448,6 +456,7 @@ public class SystemEntityService {
         vacationRepository.save(vacation);
         return true;
     }
+
     public boolean deleteListing(Long id) {
         vacationRepository.deleteById(id);
         return true;

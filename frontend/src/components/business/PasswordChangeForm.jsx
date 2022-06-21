@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function PasswordChangeForm() {
+  let navigate = useNavigate();
   const [passwords, setPasswords] = useState({ old: "", new: "", repeat: "" });
-  const [successfull, setSuccessfull] = useState(false);
 
   const [errors, setErrors] = useState({
     repeatedPassword: "",
@@ -12,11 +14,8 @@ export default function PasswordChangeForm() {
   });
 
   function onButtonClicked() {
-    if (passwords.new === passwords.repeat) {
+    if (isValidForm()) {
       sendChangeRequest();
-    } else {
-      alert("Neisravne lozinke");
-      setSuccessfull(false);
     }
   }
   function sendChangeRequest() {
@@ -34,7 +33,15 @@ export default function PasswordChangeForm() {
         repeat: passwords.repeat,
       },
     };
-    axios.get("http://localhost:8080/user/change-password", requestOptions);
+    axios
+      .get("http://localhost:8080/user/change-password", requestOptions)
+      .then((res) => {
+        alert(res.data);
+        if (res.data == 1) {
+          toast.success("Password successfully changed");
+          navigate("/login");
+        } else toast.error("Wrong Password");
+      });
   }
   function handleChange(event) {
     setPasswords((prevPasswords) => {
@@ -50,22 +57,21 @@ export default function PasswordChangeForm() {
 
     let valid = true;
 
-    if (passwords.new === "" || passwords.length < 5) {
-      currentErrors.password = "Password must be at least 5 characters long";
+    if (passwords.new === "" || passwords.new.length < 5) {
+      toast.error("Password must be at least 5 characters long");
       valid = false;
     } else {
       currentErrors.password = "";
     }
 
     if (passwords.new !== passwords.repeat) {
-      currentErrors.repeatedPassword = "Passwords do not match";
+      toast.error("Passwords do not match");
       valid = false;
     }
     setErrors({
       password: currentErrors.password,
       repeatedPassword: currentErrors.repeatedPassword,
     });
-    alert(valid);
     return valid;
   }
   return (
@@ -78,9 +84,6 @@ export default function PasswordChangeForm() {
             name="old"
             onChange={handleChange}
           ></Form.Control>
-          {errors.repeatedPassword.length > 0 && (
-            <span className="error">{errors.repeatedPassword}</span>
-          )}
         </div>
         <div className="mb-6">
           <Form.Label>New password</Form.Label>
@@ -89,9 +92,6 @@ export default function PasswordChangeForm() {
             name="new"
             onChange={handleChange}
           ></Form.Control>
-          {errors.repeatedPassword.length > 0 && (
-            <span className="error">{errors.repeatedPassword}</span>
-          )}
         </div>
         <div className="mb-6">
           <Form.Label>Repeat password </Form.Label>
@@ -100,9 +100,6 @@ export default function PasswordChangeForm() {
             name="repeat"
             onChange={handleChange}
           ></Form.Control>
-          {errors.repeatedPassword.length > 0 && (
-            <span className="error">{errors.repeatedPassword}</span>
-          )}
         </div>
 
         <Button
@@ -112,18 +109,7 @@ export default function PasswordChangeForm() {
         >
           Change password
         </Button>
-        {successfull && <PasswordAlert />}
       </Form.Group>
     </Form>
-  );
-}
-
-
-function PasswordAlert() {
-  return (
-    <Alert variant="success">
-      <Alert.Heading>Successfully changed password</Alert.Heading>
-      <p>The password was successfully changed.</p>
-    </Alert>
   );
 }

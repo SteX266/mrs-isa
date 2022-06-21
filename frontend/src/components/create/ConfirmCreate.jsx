@@ -101,7 +101,7 @@ export default function ConfirmCreate({ serviceDTO, back, type }) {
         <Card.Body>
           <Card.Title>Are you sure this is everything?</Card.Title>
           <Stack direction="horizontal" gap={3}>
-            <Button onClick={createVessel} variant="outline-dark" href={path}>
+            <Button onClick={createVessel} variant="outline-dark" >
               Create
             </Button>
             <Button variant="outline-dark" href={path}>

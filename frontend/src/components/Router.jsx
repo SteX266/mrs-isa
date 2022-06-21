@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BusinessUserHomePage from "./business/BusinessUserHomePage";
 import BusinessUserViewServicesPage from "./business/BusinesUserViewPage";
 import BusinessUserEditPage from "./business/BusinessUserEditPage";
 import BusinessUserReservationPage from "./business/BusinessUserReservationPage";
@@ -33,12 +32,17 @@ import AccountCancelationRequest from "./admin/AccountCancellationRequest";
 import ReservationReport from "./admin/ReservationReport";
 
 import BussinessPromoPage from "./business/PromoPage";
+import BussinessUserReservation from "./reservation/BussinessUserReservation";
+import HomePageAdmin from "./admin/HomePageAdmin";
 
 export default function Router() {
   function Nested(type) {
     return (
       <>
-        <Route path="home" element={<BusinessUserHomePage type={type} />} />
+        <Route
+          path="home"
+          element={<BusinessUserViewServicesPage type={type} />}
+        />
         <Route
           path="services"
           element={<BusinessUserViewServicesPage type={type} />}
@@ -54,18 +58,8 @@ export default function Router() {
           path="reservations"
           element={<BusinessUserReservationPage type={type} />}
         />
-        <Route
-          path="profile"
-          element={<ClientProfile />}
-        />
-        <Route
-          path="calendar/:id"
-          element={
-            <>
-              <ClientCalendar></ClientCalendar>
-            </>
-          }
-        />
+        <Route path="calendar/:id" element={<BussinessUserReservation />} />
+        <Route path="profile" element={<ClientProfile />} />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
         <Route
@@ -97,6 +91,7 @@ export default function Router() {
           </Route>
 
           <Route path="/admin/*" element={<AdminNavbar></AdminNavbar>}>
+            <Route path="home" element={<HomePageAdmin />} />
             <Route
               path="registration-request"
               element={<RegistrationRequest />}
@@ -114,7 +109,7 @@ export default function Router() {
             <Route path="registerAdmin" element={<AdminRegistration />} />
             <Route
               path="viewEntities"
-              element={<EntityList type="ALL_ENTITIES" />}
+              element={<EntityList type="ALL_ENTITIES" userType="admin" />}
             />
             <Route path="change-password" element={<ChangePasswordPage />} />
             <Route path="loyalty" element={<LoyaltyProgram />} />
@@ -127,7 +122,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <EntityList type="ALL_ENTITIES" />
+                <EntityList type="ALL_ENTITIES" userType="client" />
               </>
             }
           />
@@ -147,7 +142,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <EntityList type="VACATION" />
+                <EntityList type="VACATION" userType="client" />
               </>
             }
           />
@@ -157,7 +152,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <EntityList type="VESSEL" />
+                <EntityList type="VESSEL" userType="client" />
               </>
             }
           />
@@ -167,7 +162,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <EntityList type="ADVENTURE" />
+                <EntityList type="ADVENTURE" userType="client" />
               </>
             }
           />
@@ -252,7 +247,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBar />
-                <EntityList type="ALL_ENTITIES" />
+                <EntityList type="ALL_ENTITIES" userType="unregistered" />
               </>
             }
           />
@@ -282,7 +277,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBar />
-                <EntityList type="VACATION" />
+                <EntityList type="VACATION" userType="unregistered" />
               </>
             }
           />
@@ -292,7 +287,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBar />
-                <EntityList type="VESSEL" />
+                <EntityList type="VESSEL" userType="unregistered" />
               </>
             }
           />
@@ -323,7 +318,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBar />
-                <EntityList type="ADVENTURE" />
+                <EntityList type="ADVENTURE" userType="unregistered" />
               </>
             }
           />
