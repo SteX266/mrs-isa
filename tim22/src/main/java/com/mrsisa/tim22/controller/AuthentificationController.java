@@ -26,6 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -123,15 +124,15 @@ public class AuthentificationController {
     }
 
     @GetMapping(value = "/getAllEntities")
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
+    public ResponseEntity<List<SystemEntityDTO>> getAllEntitites(@RequestParam int startId, @RequestParam int endId){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
+        return new ResponseEntity<List<SystemEntityDTO>>(systemEntityService.getEntities(startId, endId), HttpStatus.OK);
     }
 
     @PostMapping(value = "/getFilteredEntities")
-    public ResponseEntity<ArrayList<SystemEntityDTO>> getFilteredEntities(@RequestBody FilterDTO filters){
+    public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FilterDTO filters){
 
-        return new ResponseEntity<ArrayList<SystemEntityDTO>>(systemEntityService.getFilteredEntities(filters), HttpStatus.OK);
+        return new ResponseEntity<List<SystemEntityDTO>>(systemEntityService.getFilteredEntities(filters), HttpStatus.OK);
     }
 
 

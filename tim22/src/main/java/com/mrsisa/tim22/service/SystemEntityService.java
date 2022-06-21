@@ -10,6 +10,7 @@ import com.mrsisa.tim22.repository.*;
 import com.mrsisa.tim22.repository.ReservationRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,7 +51,7 @@ public class SystemEntityService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public  ArrayList<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
+    public  List<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
         for ( AvailabilityPeriod ap : availabilityPeriodRepository.findAvailabilityPeriodBySystemEntity_Id(id)){
             dtos.add(new AvailabilityPeriodDTO(ap));
@@ -60,8 +61,7 @@ public class SystemEntityService {
     }
 
 
-    public ArrayList<SystemEntityDTO> getEntities(int startId, int endId){
-        System.out.println("Prosao zahtev");
+    public List<SystemEntityDTO> getEntities(int startId, int endId){
         ArrayList<SystemEntityDTO> entities = new ArrayList<>();
         List<SystemEntity> allEntities = systemEntityRepository.entitiesBetweenIds(startId, endId);
         for (SystemEntity entity : allEntities){
@@ -73,42 +73,14 @@ public class SystemEntityService {
     }
 
     public Integer getFilteredEntitiesTotalNumber(FilterDTO filters) {
-        List<SystemEntity> filteredList = new ArrayList<>();
-
-        for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
-                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
-                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
-                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
-                            Address address = entity.getAddress();
-                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
-                                filteredList.add(entity);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        List<SystemEntity> filteredList = getFilteredList(filters);
         return filteredList.size();
-
     }
-    public ArrayList<SystemEntityDTO> getFilteredEntities(FilterDTO filters) {
-        List<SystemEntity> filteredList = new ArrayList<>();
 
-        for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
-                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
-                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
-                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
-                            Address address = entity.getAddress();
-                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
-                                filteredList.add(entity);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
+
+    public List<SystemEntityDTO> getFilteredEntities(FilterDTO filters) {
+        List<SystemEntity> filteredList = getFilteredList(filters);
         ArrayList<SystemEntityDTO> systemEntityDTOS = new ArrayList<>();
 
         int count = 0;
@@ -121,13 +93,34 @@ public class SystemEntityService {
         return systemEntityDTOS;
     }
 
+
+    private List<SystemEntity> getFilteredList(FilterDTO filters) {
+        List<SystemEntity> filteredList = new ArrayList<>();
+
+        for(SystemEntity entity:systemEntityRepository.findAll()){
+            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
+                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
+                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
+                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
+                            Address address = entity.getAddress();
+                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
+                                filteredList.add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return filteredList;
+    }
+
     public SystemEntityDTO getEntityById(int id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
         return new SystemEntityDTO(entity);
 
     }
 
-    public ArrayList<SystemEntityDTO> getCurrentUserEntities() {
+    public List<SystemEntityDTO> getCurrentUserEntities() {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
@@ -215,7 +208,7 @@ public class SystemEntityService {
         return new SystemEntityDTO(id);
     }
 
-    public ArrayList<ReservationsReportDTO> getReservationsAmountMonthly() {
+    public List<ReservationsReportDTO> getReservationsAmountMonthly() {
         LocalDateTime start = LocalDateTime.now().minusYears(1);
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
@@ -244,7 +237,7 @@ public class SystemEntityService {
         return dtos;
     }
 
-    public ArrayList<ReservationsReportDTO> getReservationsAmountYearly() {
+    public List<ReservationsReportDTO> getReservationsAmountYearly() {
         LocalDateTime start = LocalDateTime.now().minusYears(10);
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
@@ -275,7 +268,7 @@ public class SystemEntityService {
 
 
 
-    public ArrayList<ReservationsReportDTO> getReservationsAmountWeekly() {
+    public List<ReservationsReportDTO> getReservationsAmountWeekly() {
         LocalDateTime start = LocalDateTime.now().minusWeeks(10);
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
@@ -548,7 +541,7 @@ public class SystemEntityService {
     }
 
 
-    public ArrayList<RevenurReportDTO> getRevenueReportData(String startDate, String endDate) {
+    public List<RevenurReportDTO> getRevenueReportData(String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateFrom = LocalDateTime.parse(startDate.replace("T"," ").substring(0,16), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(endDate.replace("T"," ").substring(0,16), formatter);
@@ -570,7 +563,7 @@ public class SystemEntityService {
         return dtos;
     }
 
-    public ArrayList<RevenurReportDTO> getRevenueReportDataAdmin(String startDate, String endDate) {
+    public List<RevenurReportDTO> getRevenueReportDataAdmin(String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateFrom = LocalDateTime.parse(startDate.replace("T"," ").substring(0,16), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(endDate.replace("T"," ").substring(0,16), formatter);
