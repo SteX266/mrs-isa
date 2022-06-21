@@ -14,7 +14,7 @@ function ClientCalendar() {
   const [events, setEvents] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const[showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [lastavailableDate, setLastAvailableDate] = useState(
     new Date("2034/02/08")
   );
@@ -36,25 +36,23 @@ function ClientCalendar() {
       Authorization: "Bearer " + token.accessToken,
     };
 
-  axios.post(
-    "http://localhost:8080/reservation/makeReservation",
-    { dateFrom: startDate,
-      dateTo: endDate,
-      entityId: params.id
-    },
-    {headers}
-  ).then(async result=>{
-    if(result.data =="OK"){
-      toast.success("Reservation created successfully!");
-
-    }
-
-
-  }).catch(() =>{
-    toast.error("You are not eligible to make reservations because you have 3 or more penalties this month");
-  });
-  closeModal();
-
+    axios
+      .post(
+        "http://localhost:8080/reservation/makeReservation",
+        { dateFrom: startDate, dateTo: endDate, entityId: params.id },
+        { headers }
+      )
+      .then(async (result) => {
+        if (result.data == "OK") {
+          toast.success("Reservation created successfully!");
+        }
+      })
+      .catch(() => {
+        toast.error(
+          "You are not eligible to make reservations because you have 3 or more penalties this month"
+        );
+      });
+    closeModal();
   }
   async function getReservations(entityId) {
     const token = JSON.parse(localStorage.getItem("userToken"));
@@ -200,11 +198,11 @@ function ClientCalendar() {
     return isFree;
   };
 
-  function closeModal(){
+  function closeModal() {
     setShowModal(false);
   }
 
-  function openModal(){
+  function openModal() {
     setShowModal(true);
   }
 
@@ -253,12 +251,9 @@ function ClientCalendar() {
         <BigCalendar />
       </div>
       <ReservationDialog
-      showModal={showModal}
-      confirmed={Reserve}
-      canceled={closeModal}
-
-      
-      
+        showModal={showModal}
+        confirmed={Reserve}
+        canceled={closeModal}
       />
     </>
   );
