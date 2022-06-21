@@ -49,9 +49,7 @@ export default function Router() {
           element={<BusinessUserCreatePage type={type} />}
         />
         <Route path="edit/:id" element={<BusinessUserEditPage type={type} />} />
-
         <Route path="reports" element={<ReportsPage type={type} />} />
-
         <Route path="promos/:id" element={<BussinessPromoPage />} />
         <Route
           path="reservations"
@@ -61,8 +59,20 @@ export default function Router() {
           path="profile"
           element={<BusinessUserProfilePage type={type} />}
         />
+        <Route
+          path="calendar/:id"
+          element={
+            <>
+              <ClientCalendar></ClientCalendar>
+            </>
+          }
+        />
         <Route path="change-password" element={<ChangePasswordPage />} />
         <Route path="edit" element={<h1>Account</h1>} />
+        <Route
+          path="profile/:id"
+          element={<ListingProfilePage type={type} />}
+        />
       </>
     );
   }
@@ -95,6 +105,10 @@ export default function Router() {
             <Route
               path="cancellation-request"
               element={<AccountCancelationRequest />}
+            />
+            <Route
+              path="profile/:id"
+              element={<ListingProfilePage type="admin" />}
             />
             <Route path="reservation-report" element={<ReservationReport />} />
             <Route path="profile" element={<AdminProfile />} />
@@ -202,7 +216,7 @@ export default function Router() {
               <>
                 <Header></Header>
                 <NavigationBarClient />
-                <ListingProfilePage></ListingProfilePage>
+                <ListingProfilePage type="client"></ListingProfilePage>
               </>
             }
           />
@@ -281,7 +295,16 @@ export default function Router() {
               </>
             }
           />
-
+          <Route
+            path="/profile/:id"
+            element={
+              <>
+                <Header></Header>
+                <NavigationBar />
+                <ListingProfilePage type="unregistered" />{" "}
+              </>
+            }
+          />
           <Route
             path="/adventures"
             element={

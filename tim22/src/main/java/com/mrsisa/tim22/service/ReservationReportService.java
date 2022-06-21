@@ -1,6 +1,5 @@
 package com.mrsisa.tim22.service;
 
-import com.mrsisa.tim22.dto.RegistrationRequestDTO;
 import com.mrsisa.tim22.dto.ReservationReportDTO;
 import com.mrsisa.tim22.model.*;
 import com.mrsisa.tim22.repository.ReservationReportRepository;

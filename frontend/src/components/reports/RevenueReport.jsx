@@ -56,15 +56,16 @@ export default function RevenueReport() {
     const token = JSON.parse(localStorage.getItem("userToken"));
     let path = "http://localhost:8080/entity/getRevenueReportData";
     let values;
+
     const requestOptions = {
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
         Authorization: "Bearer " + token.accessToken,
-        params: {
-          startDate: startDate,
-          endDate: endDate,
-        },
+      },
+      params: {
+        startDate: startDate,
+        endDate: endDate,
       },
     };
     axios.get(path, requestOptions).then((res) => {

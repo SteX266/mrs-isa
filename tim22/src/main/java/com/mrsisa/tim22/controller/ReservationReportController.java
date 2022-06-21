@@ -1,7 +1,6 @@
 package com.mrsisa.tim22.controller;
 
 
-import com.mrsisa.tim22.dto.RegistrationRequestDTO;
 import com.mrsisa.tim22.dto.ReservationReportDTO;
 import com.mrsisa.tim22.service.ReservationReportService;
 import org.springframework.beans.factory.annotation.Autowired;

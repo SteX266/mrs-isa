@@ -5,7 +5,6 @@ import com.mrsisa.tim22.dto.PasswordChangeDTO;
 import com.mrsisa.tim22.dto.SystemEntityDTO;
 import com.mrsisa.tim22.dto.UserDTO;
 import com.mrsisa.tim22.dto.UserRequest;
-import com.mrsisa.tim22.model.Penalty;
 import com.mrsisa.tim22.model.Role;
 import com.mrsisa.tim22.model.SystemEntity;
 import com.mrsisa.tim22.model.User;
@@ -20,10 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserService {

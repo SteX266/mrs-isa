@@ -225,5 +225,10 @@ public class SystemEntityController {
 
         return new ResponseEntity<List<Utility>>(utilities, HttpStatus.OK);
     }
+    @RequestMapping(value ="getRevenueReportData", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<ArrayList<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
+        return new ResponseEntity<>(systemEntityService.getRevenueReportData(startDate,endDate), HttpStatus.OK);
+    }
+
 
 }

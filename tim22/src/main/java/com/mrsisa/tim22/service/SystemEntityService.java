@@ -445,4 +445,27 @@ public class SystemEntityService {
     }
 
 
-}
+    public ArrayList<RevenurReportDTO> getRevenueReportData(String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(startDate.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(endDate.replace("T"," ").substring(0,16), formatter);
+
+        ArrayList<RevenurReportDTO> dtos = new ArrayList<>();
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                    .getPrincipal();
+        String email = user.getUsername();
+        for (SystemEntity entity : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
+            int profit = 0;
+            for (Reservation r : entity.getReservations()) {
+                if (r.getDateFrom().isAfter(dateFrom) && r.getDateFrom().isBefore(dateTo)) {
+                    profit += r.getOwnerPrice();
+
+                }
+            }
+            dtos.add(new RevenurReportDTO(entity.getName(), profit));
+        }
+        return dtos;
+    }
+ }
+
+
