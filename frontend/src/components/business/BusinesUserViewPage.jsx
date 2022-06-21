@@ -86,7 +86,7 @@ export default function BusinessUserViewServicesPage(props) {
             </Nav>
           </Container>
         </Navbar>
-        <BusinessUserEntityList services={services} />
+        <BusinessUserEntityList services={services} userType={props.type} />
       </Container>
     </div>
   );

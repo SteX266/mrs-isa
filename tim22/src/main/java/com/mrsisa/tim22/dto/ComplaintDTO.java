@@ -11,10 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ReservationRequestDTO {
-    public String dateFrom;
-    public String dateTo;
-    public String username;
-    public int entityId;
-
+public class ComplaintDTO {
+    int reservationId;
+    String text;
+    boolean userShowedUp;
 }

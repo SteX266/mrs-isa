@@ -15,6 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -322,8 +326,6 @@ public class SystemEntityService {
             }
         }
         id++;
-        System.out.println("ALOOOO BAAAA");
-        System.out.println(id);
         return id;
     }
     public boolean saveVessel(VesselDTO vesselDTO) {
@@ -335,12 +337,77 @@ public class SystemEntityService {
         vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
         address.addSystemEntity(vessel);
         vessel.setId(generateNextId());
-        System.out.println("ALOOOOOO");
-        System.out.println(vessel.getId());
+
+        List<String> photos;
+        try {
+            photos = createImages(vesselDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        vessel.setPhotos(photos);
+
         addressRepository.save(address);
         vesselRepository.save(vessel);
         return true;
     }
+
+    private List<String> createImages(List<String> photos) throws IOException {
+        List<String> images = new ArrayList<>();
+        int imageNumber = getNextImageNumber();
+        for (String photo:photos){
+            byte[]data;
+            try{
+                data = Base64.getDecoder().decode(photo.split(",")[1]);
+            }
+            catch(Exception e){
+
+                continue;
+            }
+
+            String imageName = "" + imageNumber + ".jpg";
+
+            String imagePath = "src\\main\\resources\\images\\"+imageName;
+
+            System.out.println(imagePath);
+            try(OutputStream stream = new FileOutputStream(new File(imagePath).getCanonicalFile())){
+                stream.write(data);
+            }
+            images.add(imageName);
+            imageNumber++;
+
+        }
+        return images;
+
+    }
+
+    private int getNextImageNumber() {
+        List<Integer> numbers = new ArrayList<>();
+        List<String> photos = getAllPhotos();
+        for (String photo:photos){
+            String[] tokens = photo.split("\\.");
+            numbers.add(Integer.parseInt(tokens[0]));
+        }
+        int max = 0;
+        for(Integer number:numbers){
+            if(number > max){
+                max = number;
+            }
+        }
+        max++;
+
+        return max;
+    }
+
+    private List<String> getAllPhotos() {
+        List<SystemEntity> entities = systemEntityRepository.findAll();
+        List<String> allPhotos = new ArrayList<>();
+        for(SystemEntity entity:entities){
+            allPhotos.addAll(entity.getPhotos());
+        }
+        return allPhotos;
+    }
+
     private Set<AvailabilityPeriod> createAvailabilityPeriods(List<AvailabilityPeriodDTO> availabilityPeriodDTOS) {
         HashSet<AvailabilityPeriod> availabilityPeriods = new HashSet<>();
         for (AvailabilityPeriodDTO availabilityPeriodDTO:availabilityPeriodDTOS) {
@@ -357,7 +424,12 @@ public class SystemEntityService {
 
     public boolean deleteEntity(Integer id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
+        if(entity.hasActiveReservations()) {
+            return false;
+
+        }
         entity.setDeleted(true);
+        systemEntityRepository.save(entity);
         return true;
     }
 
@@ -370,10 +442,21 @@ public class SystemEntityService {
         vacation.setAddress(address);
         vacation.setAvailabilityPeriod(createAvailabilityPeriods(listingDTO.getAvailabilityPeriod()));
         address.addSystemEntity(vacation);
+
+        vacation.setId(generateNextId());
+        List<String> photos;
+        try {
+            photos = createImages(listingDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        vacation.setPhotos(photos);
         addressRepository.save(address);
         vacationRepository.save(vacation);
         return true;
     }
+
     public boolean deleteListing(Long id) {
         vacationRepository.deleteById(id);
         return true;
@@ -388,6 +471,18 @@ public class SystemEntityService {
         adventure.setAddress(address);
         adventure.setAvailabilityPeriod(createAvailabilityPeriods(adventureDTO.getAvailabilityPeriod()));
         address.addSystemEntity(adventure);
+
+        adventure.setId(generateNextId());
+        List<String> photos;
+        try {
+            photos = createImages(adventureDTO.getPhotoStrings());
+        }
+        catch(Exception e){
+            photos = new ArrayList<>();
+        }
+        adventure.setPhotos(photos);
+
+
         addressRepository.save(address);
         adventureRepositry.save(adventure);
         return true;

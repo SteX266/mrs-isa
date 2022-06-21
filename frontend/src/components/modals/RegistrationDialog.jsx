@@ -12,10 +12,6 @@ export default function RegistrationDialog({showModal, confirmed, canceled}) {
     setText(e.target.value);
   }
 
-  function createRegistrationRequest(){
-    confirmed(text);
-  }
-
 
   if(!showModal){
     return <></>;
@@ -37,7 +33,7 @@ else{
           <Button variant="secondary" onClick={canceled}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={createRegistrationRequest}>
+          <Button variant="primary" onClick={() => confirmed(text)}>
             Submit request
           </Button>
         </Modal.Footer>

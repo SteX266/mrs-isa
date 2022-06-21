@@ -10,7 +10,6 @@ export default function BussinessComplaintDialog({showModal,reservationId, confi
 
   const [text, setText] = useState("");
   const [userShowedUp, setUserShowedUp] = useState(true);
-  const[isChecked, setChecked] = useState(false);
 
   function textChanged(e){
     setText(e.target.value);
@@ -18,35 +17,42 @@ export default function BussinessComplaintDialog({showModal,reservationId, confi
 
 
 
-  function createReview(){
+  function createComplaint(){
     const token = JSON.parse(localStorage.getItem("userToken"));
-    const username = localStorage.getItem("username");
-    toast.success('Complaint successfully submited!');
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        reservationId: reservationId,
-        username:username,
-        text:text,
-        userShowedUp:userShowedUp
-        
-      },
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + token.accessToken,
     };
 
-    axios.get(
+
+    axios.post(
       "http://localhost:8080/complaint/createBussinessComplaint",
-      requestOptions
-    );
+      {reservationId:reservationId,
+        text:text,
+        userShowedUp:userShowedUp
+      },
+      {headers}
+    ).then(async result=>{
+      if(result.data =="OK"){
+    toast.success('Complaint successfully submited!');
+
+  
+      }
+  
+  
+    }).catch(() =>{
+      toast.error("Complaint couldn't be made");
+    });
     confirmed();
   }
-  function setUserShowedUpp(event){
-    console.log(event.target.value);
-    setUserShowedUp(event.target.value);
+
+
+  function handleChange(){
+    console.log(!userShowedUp);
+    setUserShowedUp(!userShowedUp);
   }
 
 
@@ -68,8 +74,7 @@ else{
 
 
           <Form.Check 
-          checked={isChecked}
-          
+          checked={!userShowedUp}
           onChange={handleChange}
         type="checkbox"
         label="User didn't show up"
@@ -79,7 +84,7 @@ else{
           <Button variant="secondary" onClick={canceled}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={createReview}>
+          <Button variant="primary" onClick={createComplaint}>
             Submit complaint
           </Button>
         </Modal.Footer>

@@ -6,7 +6,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import Dialog from "../modals/Dialog";
 import Map from "./Map";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Modal, Stack } from "react-bootstrap";
+import toast from "react-hot-toast";
 
 export default function ListingProfilePage(props) {
   const params = useParams();
@@ -27,6 +28,7 @@ export default function ListingProfilePage(props) {
     ownersPhoneNumber: "",
     amenities: "",
   });
+  const [show, setShow] = useState(false);
 
   const [calendar, setCalendar] = useState("");
   const [promos, setPromos] = useState([]);
@@ -199,6 +201,44 @@ export default function ListingProfilePage(props) {
       </button>
     );
   }
+  function openDeleteModal() {
+    setShow(true);
+  }
+
+  function closeDeleteModal() {
+    setShow(false);
+  }
+  function deleteEntity() {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const requestOptions = {
+      headers: { Authorization: "Bearer " + token.accessToken },
+      params: { id: listing.id },
+    };
+    let path = "http://localhost:8080/entity/deleteVessel";
+    switch (listing.type) {
+      case "vessel":
+        path = "http://localhost:8080/entity/deleteVessel";
+        break;
+      case "listing":
+        path = "http://localhost:8080/entity/deleteListing";
+        break;
+      case "adventure":
+        path = "http://localhost:8080/entity/deleteAdventure";
+        break;
+      default:
+        break;
+    }
+    axios
+      .delete(path, requestOptions)
+      .then((res) => {
+        if (res.status == 200) toast.success(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+        toast.error("Couldn't delete listing.");
+      });
+    closeDeleteModal();
+  }
 
   return (
     <>
@@ -350,14 +390,13 @@ export default function ListingProfilePage(props) {
                             Edit
                           </a>
                         )}
-                        <Link to={"/" + props.type + "/calendar/" + listing.id}>
-                          <button
-                            className="btn btn-danger "
-                            style={{ marginLeft: "20px" }}
-                          >
-                            Delete
-                          </button>
-                        </Link>
+                        <button
+                          className="btn btn-danger "
+                          style={{ marginLeft: "20px" }}
+                          onClick={openDeleteModal}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
                   )}
@@ -396,6 +435,30 @@ export default function ListingProfilePage(props) {
           </div>
         </div>
       </div>
+      <Modal show={show} onHide={closeDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete entity?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Are you sure you want to delete this listing? Delete is permanent.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Stack direction="horizontal" gap={3}>
+            <Button variant="outline-dark" onClick={closeDeleteModal}>
+              Cancel
+            </Button>
+            <Button
+              variant="outline-dark"
+              onClick={deleteEntity}
+              href={"/" + props.type + "/services"}
+            >
+              Confirm
+            </Button>
+          </Stack>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

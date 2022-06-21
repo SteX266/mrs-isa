@@ -27,6 +27,7 @@ function CreateAdventure() {
       country: "",
     },
     photos: [],
+    photoStrings:[],
     amenities: [],
   });
   const components = [

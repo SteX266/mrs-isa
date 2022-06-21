@@ -19,7 +19,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -100,7 +104,7 @@ public class UserService {
             roles = roleService.findByName("INSTRUCTOR");
         }
         else{
-            roles = roleService.findByName("CLIENT");
+            roles = roleService.findByName("ADMIN");
 
         }
         u.setRoles(roles);
@@ -114,15 +118,18 @@ public class UserService {
     }
 
 
-    public void changePassword(PasswordChangeDTO passwordChange) {
+    public int changePassword(PasswordChangeDTO passwordChange) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String current = user.getPassword();
         if (passwordEncoder.matches(passwordChange.getOldPassword(), current) && passwordChange.getNewPassword().equals(passwordChange.getRepeatPassword())) {
             User u = this.userRepository.findOneByUsername(user.getUsername());
             u.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
+            u.setLastPasswordResetDate(new Timestamp(new Date().getTime()));
             this.saveUser(u);
+            return 1;
         }
+        return 0;
 
     }
         public Boolean getSubscribeState (String username,int entityId){
@@ -155,4 +162,15 @@ public class UserService {
 
 
         }
+
+    public int isAdminActive() {
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        User u = userRepository.findOneByUsername(user.getUsername());
+        if (u.getLastPasswordResetDate()== null){
+            return 0;
+        }
+        return 1;
+
     }
+}

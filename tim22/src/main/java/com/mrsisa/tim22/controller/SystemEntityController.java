@@ -105,7 +105,6 @@ public class SystemEntityController {
 
     @PostMapping("/createVessel")
     public ResponseEntity<String> createVessel(@RequestBody VesselDTO vesselDTO) {
-        System.out.println("AAAAAAAAA");
         if(systemEntityService.saveVessel(vesselDTO)) {
             return new ResponseEntity<>("Successfully created vessel.", HttpStatus.OK);
         } else {

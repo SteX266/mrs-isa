@@ -6,19 +6,16 @@ import EntityCardTest from "./EntityCardTest";
 import SearchBar from "../business/SearchBar";
 
 function EntityList(props) {
-
   const [currentEntities, setCurrentEntities] = useState([]);
   const postsPerPage = 6;
 
-  const [indexOfLastPost, setIndexOfLastPost] = useState(1*postsPerPage);
+  const [indexOfLastPost, setIndexOfLastPost] = useState(1 * postsPerPage);
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(1);
 
-
   const [entityType, setEntityType] = useState("SHOW_ALL");
-  const[currentEntityType, setCurrentEntityType] = useState("SHOW_ALL");
-  const[postsNumber, setPostsNumber] = useState(0);
-
-
+  const [currentEntityType, setCurrentEntityType] = useState("SHOW_ALL");
+  const [postsNumber, setPostsNumber] = useState(0);
+  let userType = props.userType;
   const [searchFilters, setSearchFilters] = useState({
     rentalFeeFrom: 0,
     rentalFeeTo: 500,
@@ -42,21 +39,16 @@ function EntityList(props) {
     country: "",
   });
 
-
-  function setPageNumber(pageNumber){
+  function setPageNumber(pageNumber) {
     setIndexOfLastPost(pageNumber * postsPerPage);
-    setIndexOfFirstPost((pageNumber-1) * postsPerPage + 1);
-
+    setIndexOfFirstPost((pageNumber - 1) * postsPerPage + 1);
   }
 
   useEffect(() => {
     filtering();
-  }, [props.type,indexOfFirstPost,currentFilters, currentEntityType]);
-
-
+  }, [props.type, indexOfFirstPost, currentFilters, currentEntityType]);
 
   function renderAllEntities(entity) {
-
     return (
       <EntityCardTest
         id={entity.id}
@@ -65,6 +57,7 @@ function EntityList(props) {
         price={entity.price}
         rating={entity.averageScore}
         image={entity.firstImage}
+        type={userType}
       />
     );
   }
@@ -73,17 +66,16 @@ function EntityList(props) {
     console.log(currentFilters);
     console.log(currentEntityType);
 
-
-     const headers = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      };
-
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    };
 
     let res = await axios.post(
       "http://localhost:8080/auth/getFilteredEntities",
-      {    rentalFeeFrom: currentFilters.rentalFeeFrom,
+      {
+        rentalFeeFrom: currentFilters.rentalFeeFrom,
         rentalFeeTo: currentFilters.rentalFeeTo,
         cancellationFeeFrom: currentFilters.cancellationFeeFrom,
         cancellationFeeTo: currentFilters.cancellationFeeTo,
@@ -92,18 +84,19 @@ function EntityList(props) {
         street: currentFilters.street,
         city: currentFilters.city,
         country: currentFilters.country,
-        type:currentEntityType,
-        startIndex:indexOfFirstPost,
-        endIndex:indexOfLastPost
+        type: currentEntityType,
+        startIndex: indexOfFirstPost,
+        endIndex: indexOfLastPost,
       },
-      {headers}
+      { headers }
     );
     setCurrentEntities(res.data);
     console.log(res.data);
-    
+
     let size = await axios.post(
       "http://localhost:8080/auth/getFilteredEntitiesTotalNumber",
-      {    rentalFeeFrom: currentFilters.rentalFeeFrom,
+      {
+        rentalFeeFrom: currentFilters.rentalFeeFrom,
         rentalFeeTo: currentFilters.rentalFeeTo,
         cancellationFeeFrom: currentFilters.cancellationFeeFrom,
         cancellationFeeTo: currentFilters.cancellationFeeTo,
@@ -112,27 +105,25 @@ function EntityList(props) {
         street: currentFilters.street,
         city: currentFilters.city,
         country: currentFilters.country,
-        type:currentEntityType,
-        startIndex:indexOfFirstPost,
-        endIndex:indexOfLastPost
+        type: currentEntityType,
+        startIndex: indexOfFirstPost,
+        endIndex: indexOfLastPost,
       },
-      {headers}
+      { headers }
     );
 
     setPostsNumber(size.data);
-
-
   }
-  function setFilters(filters){
+  function setFilters(filters) {
     setSearchFilters(filters);
   }
 
-  function searchEntities(){
+  function searchEntities() {
     setCurrentEntityType(entityType);
     setCurrentFilters(searchFilters);
   }
 
-  function setType(type){
+  function setType(type) {
     console.log("ALOOOOO");
     console.log(type);
     setEntityType(type);
@@ -143,14 +134,18 @@ function EntityList(props) {
       <div className="album py-5 ">
         <div className="container">
           <MDBCol md="12">
-            <SearchBar setSearchFilters={setFilters} search = {searchEntities} setEntityType = {setType}/>
+            <SearchBar
+              setSearchFilters={setFilters}
+              search={searchEntities}
+              setEntityType={setType}
+            />
           </MDBCol>
           <div className="row" id="entities">
             {currentEntities.map(renderAllEntities)}
-            <Pagination 
-            postsPerPage={postsPerPage}
-            totalPosts ={postsNumber}
-            paginate={setPageNumber}
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={postsNumber}
+              paginate={setPageNumber}
             />
           </div>
         </div>
