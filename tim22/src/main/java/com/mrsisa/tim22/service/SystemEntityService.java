@@ -334,9 +334,9 @@ public class SystemEntityService {
         Vessel vessel = new Vessel(vesselDTO);
         vessel.setOwner(u);
         vessel.setAddress(address);
-        vessel.setAvailabilityPeriod(createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod()));
-        address.addSystemEntity(vessel);
         vessel.setId(generateNextId());
+        Set<AvailabilityPeriod> availabilityPeriods = createAvailabilityPeriods(vesselDTO.getAvailabilityPeriod(), vessel);
+        address.addSystemEntity(vessel);
 
         List<String> photos;
         try {
@@ -349,6 +349,7 @@ public class SystemEntityService {
 
         addressRepository.save(address);
         vesselRepository.save(vessel);
+        availabilityPeriodRepository.saveAll(availabilityPeriods);
         return true;
     }
 
@@ -408,25 +409,26 @@ public class SystemEntityService {
         return allPhotos;
     }
 
-    private Set<AvailabilityPeriod> createAvailabilityPeriods(List<AvailabilityPeriodDTO> availabilityPeriodDTOS) {
+    private Set<AvailabilityPeriod> createAvailabilityPeriods(List<AvailabilityPeriodDTO> availabilityPeriodDTOS, SystemEntity entity) {
         HashSet<AvailabilityPeriod> availabilityPeriods = new HashSet<>();
         for (AvailabilityPeriodDTO availabilityPeriodDTO:availabilityPeriodDTOS) {
-            availabilityPeriods.add(createAvailabilityPeriod(availabilityPeriodDTO));
+            availabilityPeriods.add(createAvailabilityPeriod(availabilityPeriodDTO, entity));
         }
         return availabilityPeriods;
     }
-    private AvailabilityPeriod createAvailabilityPeriod(AvailabilityPeriodDTO availabilityPeriodDTO) {
+    private AvailabilityPeriod createAvailabilityPeriod(AvailabilityPeriodDTO availabilityPeriodDTO, SystemEntity entity) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateFrom = LocalDateTime.parse(availabilityPeriodDTO.getDateFrom().replace("T"," ").substring(0,16), formatter);
         LocalDateTime dateTo = LocalDateTime.parse(availabilityPeriodDTO.getDateTo().replace("T"," ").substring(0,16), formatter);
-        return new AvailabilityPeriod(dateFrom, dateTo);
+        AvailabilityPeriod availabilityPeriod = new AvailabilityPeriod(dateFrom, dateTo);
+        availabilityPeriod.setSystemEntity(entity);
+        return availabilityPeriod;
     }
 
     public boolean deleteEntity(Integer id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
         if(entity.hasActiveReservations()) {
             return false;
-
         }
         entity.setDeleted(true);
         systemEntityRepository.save(entity);
@@ -440,7 +442,8 @@ public class SystemEntityService {
         Vacation vacation = new Vacation(listingDTO);
         vacation.setOwner(u);
         vacation.setAddress(address);
-        vacation.setAvailabilityPeriod(createAvailabilityPeriods(listingDTO.getAvailabilityPeriod()));
+        vacation.setId(generateNextId());
+        vacation.setAvailabilityPeriod(createAvailabilityPeriods(listingDTO.getAvailabilityPeriod(), vacation));
         address.addSystemEntity(vacation);
 
         vacation.setId(generateNextId());
@@ -469,7 +472,8 @@ public class SystemEntityService {
         Adventure adventure = new Adventure(adventureDTO);
         adventure.setOwner(u);
         adventure.setAddress(address);
-        adventure.setAvailabilityPeriod(createAvailabilityPeriods(adventureDTO.getAvailabilityPeriod()));
+        adventure.setId(generateNextId());
+        adventure.setAvailabilityPeriod(createAvailabilityPeriods(adventureDTO.getAvailabilityPeriod(), adventure));
         address.addSystemEntity(adventure);
 
         adventure.setId(generateNextId());
@@ -513,7 +517,11 @@ public class SystemEntityService {
 
     public boolean editAvailabilityPeriod(PeriodsDTO periodsDTO) {
         SystemEntity entity = systemEntityRepository.findOneById(periodsDTO.getServiceID());
-        entity.setAvailabilityPeriod(createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS()));
+
+        Set<AvailabilityPeriod> availabilityPeriods = entity.getAvailabilityPeriod();
+        availabilityPeriodRepository.deleteAll(availabilityPeriods);
+        Set<AvailabilityPeriod> newAvailabilityPeriods = createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS(), entity);
+        availabilityPeriodRepository.saveAll(newAvailabilityPeriods);
         systemEntityRepository.save(entity);
         return true;
     }

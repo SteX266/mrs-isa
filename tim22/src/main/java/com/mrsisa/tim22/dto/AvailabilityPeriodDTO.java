@@ -13,6 +13,7 @@ import lombok.Setter;
 public class AvailabilityPeriodDTO {
     private String dateFrom;
     private String dateTo;
+    private Integer id;
 
     public AvailabilityPeriodDTO(AvailabilityPeriod a) {
         this.dateFrom = String.valueOf(a.getDateFrom());

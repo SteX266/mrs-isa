@@ -181,6 +181,13 @@ public class SystemEntityController {
     }
     @PostMapping("/editAvailabilityPeriod")
     public ResponseEntity<String> editAvailabilityPeriod(@RequestBody PeriodsDTO periodsDTO) {
+        for (AvailabilityPeriodDTO dto:
+             periodsDTO.getAvailabilityPeriodDTOS()) {
+            System.out.println(dto.getDateFrom());
+            System.out.println(dto.getDateTo());
+            System.out.println("AAAAAAAAAAAAAA");
+
+        }
         if(systemEntityService.editAvailabilityPeriod(periodsDTO)) {
             return new ResponseEntity<>("Successfully edited availability period.", HttpStatus.OK);
         } else {
