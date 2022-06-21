@@ -14,7 +14,7 @@ import javax.persistence.*;
     @Entity
     public class ReservationReport {
         @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
         @Column
@@ -35,8 +35,12 @@ import javax.persistence.*;
         private Reservation reservation;
 
 
-
-
-
-
+        public ReservationReport(String text, boolean userShowedUp, User u, Reservation reservation) {
+            this.text = text;
+            this.automaticPenalty = !userShowedUp;
+            this.isAnswered = false;
+            this.client = u;
+            this.owner = reservation.getSystemEntity().getOwner();
+            this.reservation = reservation;
+        }
     }

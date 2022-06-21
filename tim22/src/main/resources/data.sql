@@ -282,13 +282,13 @@ VALUES ( false, 'Molim vas muka mi je od ove aplikacije hocu da je obrisem', 3);
 
 
 INSERT INTO public.reservation_report(
-    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
-VALUES (1, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 1, 2, 7);
+     automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES ( false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 1, 2, 7);
 
 INSERT INTO public.reservation_report(
-    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
-VALUES (2, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 7, 2, 7);
+    automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES ( false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 7, 2, 7);
 
 INSERT INTO public.reservation_report(
-    id, automatic_penalty, is_answered, text, client_id, owner_id, reservation)
-VALUES (3, false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 8, 2, 7);
+     automatic_penalty, is_answered, text, client_id, owner_id, reservation)
+VALUES ( false, false, 'Decko je haos glup i ucistio mi je celu vikendicu zasluzuje kaznu', 8, 2, 7);
