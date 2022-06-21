@@ -362,8 +362,6 @@ confirmed={closeComplaintDialog}
 canceled={closeComplaintDialog}
 />
 
-
-
 </>
   );
 

@@ -6,7 +6,6 @@ import BusinessUserViewServicesPage from "./business/BusinesUserViewPage";
 import BusinessUserEditPage from "./business/BusinessUserEditPage";
 import BusinessUserReservationPage from "./business/BusinessUserReservationPage";
 import BusinessUserCreatePage from "./business/BusinessUserCreatePage";
-import BusinessUserProfilePage from "./business/BusinessUserProfilePage";
 import ChangePasswordPage from "./business/ChangePasswordPage";
 import BusinessUserNavbar from "./business/BusinessUserNavbar";
 import Header from "./client_components/Header";
@@ -57,7 +56,7 @@ export default function Router() {
         />
         <Route
           path="profile"
-          element={<BusinessUserProfilePage type={type} />}
+          element={<ClientProfile />}
         />
         <Route
           path="calendar/:id"
