@@ -16,29 +16,34 @@ export default function ComplaintDialog({showModal,reservationId, confirmed, can
 
 
 
-  function createReview(){
+  function createComplaint(){
     const token = JSON.parse(localStorage.getItem("userToken"));
-    const username = localStorage.getItem("username");
-    toast.success('Complaint successfully submited!');
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + token.accessToken,
-      },
-      params: {
-        reservationId: reservationId,
-        username:username,
-        text:text,
-        
-      },
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + token.accessToken,
     };
 
-    axios.get(
+
+    axios.post(
       "http://localhost:8080/complaint/createComplaint",
-      requestOptions
-    );
+      {reservationId:reservationId,
+        text:text
+      },
+      {headers}
+    ).then(async result=>{
+      if(result.data =="OK"){
+    toast.success('Complaint successfully submited!');
+
+  
+      }
+  
+  
+    }).catch(() =>{
+      toast.error("Complaint couldn't be made");
+    });
     confirmed();
   }
 
@@ -63,7 +68,7 @@ else{
           <Button variant="secondary" onClick={canceled}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={createReview}>
+          <Button variant="primary" onClick={createComplaint}>
             Submit complaint
           </Button>
         </Modal.Footer>
