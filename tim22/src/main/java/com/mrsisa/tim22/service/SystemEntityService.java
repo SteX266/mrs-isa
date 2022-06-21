@@ -138,7 +138,6 @@ public class SystemEntityService {
 
     public void createSubscribtion(int entityId, String username) {
         SystemEntity e = systemEntityRepository.findOneById(entityId);
-        System.out.println(username);
         User u = userRepository.findOneByUsername(username);
         e.addSubscriber(u);
         u.addSubscribtion(e);
@@ -213,7 +212,7 @@ public class SystemEntityService {
         LocalDateTime now = LocalDateTime.now();
         ArrayList<ReservationsReportDTO> dtos = new ArrayList<>();
         while (!start.isAfter(now)){
-            String k = String.valueOf(start.getMonth()) +" - " + String.valueOf(start.getYear());
+            String k = start.getMonth() +" - " + start.getYear();
             dtos.add(new ReservationsReportDTO(k, 0));
             start =start.plusMonths(1);
         }
@@ -224,7 +223,7 @@ public class SystemEntityService {
         for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             for (Reservation r : e.getReservations()) {
                 if(r.getDateFrom().isBefore(now) && r.getDateFrom().isAfter(start)) {
-                    String k = String.valueOf(r.getDateFrom().getMonth()) + " - " + String.valueOf(r.getDateFrom().getYear());
+                    String k = r.getDateFrom().getMonth() + " - " + r.getDateFrom().getYear();
                     for (ReservationsReportDTO report : dtos) {
                         if (report.getName().equals(k)) {
                             report.increaseAmount();
@@ -363,7 +362,6 @@ public class SystemEntityService {
 
             String imagePath = "src\\main\\resources\\images\\"+imageName;
 
-            System.out.println(imagePath);
             try(OutputStream stream = new FileOutputStream(new File(imagePath).getCanonicalFile())){
                 stream.write(data);
             }
