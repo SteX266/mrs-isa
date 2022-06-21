@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 
 export default function PhotoUpload({ photosDTO, save, next, back }) {
+  const [photoStrings,setPhotoStrings] = useState([]);
   const [photos, setPhotos] = useState(photosDTO);
   const [photoGallery, setPhotoGallery] = useState(<></>);
 
@@ -32,14 +33,33 @@ export default function PhotoUpload({ photosDTO, save, next, back }) {
   }
   function onUpload(event) {
     const selectedFiles = [];
+    var photoStringsList = [];
     const targetFiles = event.target.files;
     const targetFilesObject = [...targetFiles];
     targetFilesObject.map((file) => {
+
+      console.log(file);
+      var picturePath = new FileReader();
+
+      picturePath.readAsDataURL(file);
+      picturePath.onload = e => {
+
+
+        photoStringsList.push(e.target.result);
+      }
+      
+
       return selectedFiles.push(URL.createObjectURL(file));
     });
     setPhotos(selectedFiles);
+    console.log("NA CREATE");
+
+    console.log(photoStringsList);
+    setPhotoStrings(photoStringsList);
     event.target.value = "";
   }
+
+
 
   function removeImage(event) {
     const allPhotos = photos;
@@ -53,6 +73,9 @@ export default function PhotoUpload({ photosDTO, save, next, back }) {
 
   function onNext() {
     save(photos, "photos");
+    console.log("NA SAVEE");
+    console.log(photoStrings);
+    save(photoStrings,"photoStrings");
     next();
   }
   function disabled() {
