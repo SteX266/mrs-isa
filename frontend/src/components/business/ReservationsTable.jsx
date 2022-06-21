@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Table, Form, FormControl, Button } from 'react-bootstrap';
+import BussinessComplaintDialog from "../modals/BussinessComplaintDialog"
 
 export default function ReservationTable() {
     const [upcomingReservations, setUpcomingReservations] = useState([]);
@@ -41,9 +42,13 @@ export default function ReservationTable() {
             var startDate = new Date(element.startDate);
             if (startDate < todayDate){
                 element.status = "EXPIRED";
+                element.startDate = element.startDate.replace("T", " ");
+                element.endDate = element.endDate.replace("T", " ");
                 past.push(element);
             }
             else{
+                element.startDate = element.startDate.replace("T", " ");
+                element.endDate = element.endDate.replace("T", " ");
                 future.push(element);
             }
         });
@@ -130,6 +135,7 @@ function TableBody(props) {
 function Reservation(props) {
     const [reservation, setReservation] = useState(props.reservation);
     const [button, setButton] = useState(getButton());
+    const [showComplaintDialog,setShowComplaintDialog] = useState(false);
 
     function cancelReservation() {
         let newReservation = reservation;
@@ -154,12 +160,21 @@ function Reservation(props) {
     function getButton() {
         if(reservation.status == "APPROVED") {
             return <Button onClick={cancelReservation} variant="outline-dark">Cancel reservation</Button>;
-        } else {
+        } else if(reservation.status == "EXPIRED") {
+           return (<>
+            <Button onClick={() => {setShowComplaintDialog(true);}} variant="outline-dark">
+              Complaint
+            </Button>
+          </>);
+
+        }
+        else{
             return <></>;
         }
     }
     
     return (
+        <>
         <tr id={reservation.id}>
             <td> {reservation.entityName}</td>
             <td>{reservation.location}</td>
@@ -171,5 +186,13 @@ function Reservation(props) {
             <td>{reservation.status}</td>
             <td>{button}</td>
         </tr>
+
+    <BussinessComplaintDialog
+    showModal={showComplaintDialog}
+    reservationId={reservation.id}
+    confirmed={() => setShowComplaintDialog(false)}
+    canceled={() => setShowComplaintDialog(false)}
+    />
+    </>
     );
 }

@@ -2,6 +2,7 @@ import Dialog from "../modals/Dialog";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../style/Errors.css";
+import toast from "react-hot-toast";
 function ClientProfile() {
   const [showTaskDialog, setShowTaskDialog] = useState(false);
   const[showEditDialog, setShowEditDialog] = useState(false);
@@ -42,9 +43,9 @@ function ClientProfile() {
         },
       };
       axios.get("http://localhost:8080/user/editUserData", requestOptions);
-      console.log("Podaci uspesno izmenjeni!");
+      toast.success("Profile changed successfully!");
     } else {
-      console.log("Invalid Form");
+      toast.error("Form is not valid!");
     }
   };
 
