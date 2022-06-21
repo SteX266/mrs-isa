@@ -561,6 +561,36 @@ public class SystemEntityService {
         }
         return dtos;
     }
- }
+
+    public ArrayList<RevenurReportDTO> getRevenueReportDataAdmin(String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(startDate.replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(endDate.replace("T"," ").substring(0,16), formatter);
+
+        ArrayList<RevenurReportDTO> dtos = new ArrayList<>();
+        int profit_adventures = 0;
+        int profit_vessels = 0;
+        int profit_vacations = 0;
+        for (SystemEntity entity : systemEntityRepository.findAll()) {
+
+            for (Reservation r : entity.getReservations()) {
+                if (r.getDateFrom().isAfter(dateFrom) && r.getDateFrom().isBefore(dateTo)) {
+                    if (r.getSystemEntity().getEntityType() == SystemEntityType.ADVENTURE) {
+                        profit_adventures += r.getClientPrice() - r.getOwnerPrice();
+                    } else if (r.getSystemEntity().getEntityType() == SystemEntityType.VACATION) {
+                        profit_vacations += r.getClientPrice() - r.getOwnerPrice();
+                    } else {
+                        profit_vessels += r.getClientPrice() - r.getOwnerPrice();
+                    }
+                }
+            }
+        }
+        dtos.add(new RevenurReportDTO("Adventures", profit_adventures));
+        dtos.add(new RevenurReportDTO("Vessels", profit_vessels));
+        dtos.add(new RevenurReportDTO("Houses", profit_vacations));
+        return dtos;
+    }
+
+}
 
 
