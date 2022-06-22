@@ -23,7 +23,7 @@ public class ComplaintController {
 
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
-    @PostMapping(value="createComplaint")
+    @PostMapping(value="/createComplaint")
     public ResponseEntity<String> createComplaint(@RequestBody ComplaintDTO complaintRequest){
         if(complaintService.createComplaint( complaintRequest.getReservationId(), complaintRequest.getText())){
             return new ResponseEntity<>("OK", HttpStatus.OK);
@@ -33,7 +33,7 @@ public class ComplaintController {
         }
     }
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
-    @PostMapping(value="createBussinessComplaint")
+    @PostMapping(value="/createBussinessComplaint")
     public ResponseEntity<String> createBussinessComplaint(@RequestBody ComplaintDTO complaintRequest){
         if(complaintService.createBussinessComplaint( complaintRequest.getReservationId(), complaintRequest.getText(), complaintRequest.isUserShowedUp())){
             return new ResponseEntity<>("OK", HttpStatus.OK);
