@@ -24,7 +24,7 @@ export default function ClientComplaint() {
       headers: { Authorization: "Bearer " + token.accessToken },
     };
     axios
-      .get("http://localhost:8080/complaint/getAllComplaints", requestOptions)
+      .get("http://localhost:8080/complaint/getAllComplaint", requestOptions)
       .then((res) => {
         console.log(res.data);
         setRequests(res.data);
@@ -91,6 +91,7 @@ export default function ClientComplaint() {
         confirmed={() => setShowTaskDialog(false)}
         canceled={() => setShowTaskDialog(false)}
         get={getRequests}
+        reservationId={report.id}
       />
     </>
   );

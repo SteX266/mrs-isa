@@ -171,7 +171,7 @@ public class SystemEntityController {
         if(systemEntityService.editGeneral(generalDTO)) {
             return new ResponseEntity<>("Successfully edited general information.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edited general information.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edited general information.", HttpStatus.BAD_REQUEST);
         }
     }
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
@@ -180,7 +180,7 @@ public class SystemEntityController {
         if(systemEntityService.editAmenities(amenitiesDTO)) {
             return new ResponseEntity<>("Successfully edited amenities.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edit amenities.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edit amenities.", HttpStatus.BAD_REQUEST);
         }
     }
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
@@ -247,6 +247,8 @@ public class SystemEntityController {
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/getFilteredEntities")
     public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FiltersDTO filtersDTO) {
+        System.out.println(filtersDTO.getDateFrom());
+        System.out.println("AAAAAAAAAAAAAAAAAAAA");
         List<SystemEntityDTO> entityDTOList = systemEntityService.getFilteredEntitiesForCurrentUser(filtersDTO);
         return new ResponseEntity<>(entityDTOList, HttpStatus.OK);
     }
