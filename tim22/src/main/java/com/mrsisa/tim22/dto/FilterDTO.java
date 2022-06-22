@@ -20,6 +20,8 @@ public class FilterDTO {
     private String street;
     private String city;
     private String country;
+    private String dateFrom;
+    private String dateTo;
 
     private int startIndex;
     private int endIndex;

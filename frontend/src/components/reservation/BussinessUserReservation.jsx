@@ -56,7 +56,7 @@ export default function BussinessUserReservation() {
       })
       .catch(() => {
         toast.error(
-          "You are not eligible to make reservations because you have 3 or more penalties this month"
+          "Reservation couldn't be made, either email was invalid or the selected period is reserved."
         );
       });
     closeModal();

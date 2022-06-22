@@ -232,5 +232,10 @@ public class SystemEntityController {
     public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
     }
+    @PostMapping("/getFilteredEntities")
+    public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FiltersDTO filtersDTO) {
+        List<SystemEntityDTO> entityDTOList = systemEntityService.getFilteredEntitiesForCurrentUser(filtersDTO);
+        return new ResponseEntity<>(entityDTOList, HttpStatus.OK);
+    }
 
 }
