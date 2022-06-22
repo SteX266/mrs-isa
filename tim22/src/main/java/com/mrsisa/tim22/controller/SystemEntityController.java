@@ -244,6 +244,7 @@ public class SystemEntityController {
     public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/getFilteredEntities")
     public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FiltersDTO filtersDTO) {
         List<SystemEntityDTO> entityDTOList = systemEntityService.getFilteredEntitiesForCurrentUser(filtersDTO);
