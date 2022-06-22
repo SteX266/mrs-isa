@@ -328,7 +328,7 @@ public class SystemEntityService {
         id++;
         return id;
     }
-    public boolean saveVessel(VesselDTO vesselDTO) {
+    public Vessel saveVessel(VesselDTO vesselDTO) {
         User u = getCurrentUser();
         Address address = new Address(vesselDTO.getCity(), vesselDTO.getCountry(), vesselDTO.getStreetName(), vesselDTO.getStreetNumber());
         Vessel vessel = new Vessel(vesselDTO);
@@ -348,9 +348,9 @@ public class SystemEntityService {
         vessel.setPhotos(photos);
 
         addressRepository.save(address);
-        vesselRepository.save(vessel);
+        Vessel vessel1 = vesselRepository.save(vessel);
         availabilityPeriodRepository.saveAll(availabilityPeriods);
-        return true;
+        return vessel1;
     }
 
     private List<String> createImages(List<String> photos) throws IOException {
@@ -502,7 +502,7 @@ public class SystemEntityService {
         systemEntityRepository.save(entity);
         return true;
     }
-    public boolean editGeneral(GeneralDTO generalDTO) {
+    public SystemEntity editGeneral(GeneralDTO generalDTO) {
         SystemEntity entity = systemEntityRepository.findOneById(generalDTO.getServiceID());
         entity.setName(generalDTO.getName());
         entity.setDescription(generalDTO.getDescription());
@@ -510,8 +510,7 @@ public class SystemEntityService {
         entity.setPrice(generalDTO.getPrice());
         entity.setCancellationFee(generalDTO.getCancellationFee());
         entity.setCapacity(generalDTO.getCapacity());
-        systemEntityRepository.save(entity);
-        return true;
+        return systemEntityRepository.save(entity);
     }
 
     public boolean editAvailabilityPeriod(PeriodsDTO periodsDTO) {
@@ -524,7 +523,7 @@ public class SystemEntityService {
         systemEntityRepository.save(entity);
         return true;
     }
-    public boolean editAddress(AddressDTO addressDTO) {
+    public SystemEntity editAddress(AddressDTO addressDTO) {
         SystemEntity entity = systemEntityRepository.findOneById(addressDTO.getServiceID());
         Address oldAddress = addressRepository.getOne(entity.getAddress().getId());
         oldAddress.removeSystemEntity(entity);
@@ -534,16 +533,14 @@ public class SystemEntityService {
         entity.setAddress(newAddress);
         newAddress.addSystemEntity(entity);
         addressRepository.save(newAddress);
-        systemEntityRepository.save(entity);
-        return true;
+        return systemEntityRepository.save(entity);
     }
-    public boolean editVesselDetails(VesselDetailsDTO detailsDTO) {
+    public Vessel editVesselDetails(VesselDetailsDTO detailsDTO) {
         Vessel vessel = vesselRepository.findVesselById(detailsDTO.getServiceID());
         vessel.setMaxSpeed(detailsDTO.getMaxSpeed());
         vessel.setEngineNumber(detailsDTO.getEngineNumber());
         vessel.setEnginePower(detailsDTO.getEnginePower());
-        vesselRepository.save(vessel);
-        return true;
+        return vesselRepository.save(vessel);
     }
 
 
