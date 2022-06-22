@@ -53,6 +53,7 @@ public class AccountCancellationRequestService {
                 accountCancellationRequestRepository.save(acr);
             }
             u.setDeleted(true);
+            u.setEnabled(false);
             userRepository.save(u);
             emailService.deleteRequestApprovedEmail(dto.getClient());
             return true;

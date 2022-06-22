@@ -190,7 +190,7 @@ public class ReservationService {
         String email = reservationRequestDTO.getUsername();
         User u = userRepository.findOneByUsername(email);
         if(u == null) return false;
-        if(!u.getRoles().get(0).getName().equals("CLIENT")) return false;
+        if(!u.getRoles().get(0).getName().equals("ROLE_CLIENT")) return false;
         if(u.getUserPenalties() >=3) return false;
         SystemEntity entity = systemEntityRepository.findOneById(reservationRequestDTO.getEntityId());
         SystemEntity entityToReserve;
