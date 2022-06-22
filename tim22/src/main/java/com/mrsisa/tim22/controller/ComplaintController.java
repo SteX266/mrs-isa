@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ComplaintController {
     @Autowired
     ComplaintService complaintService;
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping(value="createComplaint")
     public ResponseEntity<String> createComplaint(@RequestBody ComplaintDTO complaintRequest){
         if(complaintService.createComplaint( complaintRequest.getReservationId(), complaintRequest.getText())){
@@ -25,7 +26,7 @@ public class ComplaintController {
             return new ResponseEntity<>("Can't write complaint", HttpStatus.FORBIDDEN);
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping(value="createBussinessComplaint")
     public ResponseEntity<String> createBussinessComplaint(@RequestBody ComplaintDTO complaintRequest){
         if(complaintService.createBussinessComplaint( complaintRequest.getReservationId(), complaintRequest.getText(), complaintRequest.isUserShowedUp())){

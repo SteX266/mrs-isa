@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
@@ -35,20 +36,21 @@ public class UserController {
     public ResponseEntity<Integer> changePassword(@RequestParam String oldEmail,@RequestParam String newEmail,@RequestParam String repeat  ){
         return new  ResponseEntity<Integer>(userService.changePassword(new PasswordChangeDTO(oldEmail,newEmail,repeat)), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value = "/getSubscribeState")
     public ResponseEntity<Boolean> getSubscribeState(@RequestParam String username, @RequestParam int entityId){
 
         return new ResponseEntity<Boolean>(userService.getSubscribeState(username, entityId), HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value = "/getClientSubscriptions")
     public ResponseEntity<ArrayList<SystemEntityDTO>> getClientSubscriptions(@RequestParam String username){
 
         return new ResponseEntity<ArrayList<SystemEntityDTO>>(userService.getClientSubscriptions(username), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/isAdminActive")
     public ResponseEntity<Integer> isAdminActive(){
 

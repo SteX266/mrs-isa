@@ -60,8 +60,11 @@ export default function BusinessUserNavbar(props) {
           </Nav>
         </Container>
         <Container>
-          <Nav  className="ms-auto">
-            <NavDropdown style={{marginRight:"120px"}} title={<ProfileImage />}>
+          <Nav className="ms-auto">
+            <NavDropdown
+              style={{ marginRight: "120px" }}
+              title={<ProfileImage />}
+            >
               <NavDropdown.Item href={`/${props.type}/profile`}>
                 Profile
               </NavDropdown.Item>
@@ -97,5 +100,3 @@ function ProfileImage() {
     ></Image>
   );
 }
-
-

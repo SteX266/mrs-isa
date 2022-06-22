@@ -1,14 +1,14 @@
 
 INSERT INTO public.role(id, name)
-VALUES (1, 'ADMIN');
+VALUES (1, 'ROLE_ADMIN');
 INSERT INTO public.role(id, name)
-VALUES (2, 'CLIENT');
+VALUES (2, 'ROLE_CLIENT');
 INSERT INTO public.role(id, name)
-VALUES (3, 'VACATION_OWNER');
+VALUES (3, 'ROLE_VACATION_OWNER');
 INSERT INTO public.role(id, name)
-VALUES (4, 'SHIP_OWNER');
+VALUES (4, 'ROLE_SHIP_OWNER');
 INSERT INTO public.role(id, name)
-VALUES (5, 'INSTRUCTOR');
+VALUES (5, 'ROLE_INSTRUCTOR');
 
 INSERT INTO public.address(city, country, street_name, street_number)
 VALUES ('Novi Sad', 'Serbia ', 'Alekse Santica', 4);

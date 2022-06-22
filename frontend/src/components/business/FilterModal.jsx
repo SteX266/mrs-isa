@@ -4,6 +4,7 @@ import RentalFeeRange from "./RentalFeeRange";
 import CancelationFeeRange from "./CancelationFeeRange";
 import GuestsRange from "./GuestsRange";
 import AddressFilter from "./AddressFilter";
+import DateFilter from "./DateFilter";
 
 function FilterModal({ setState, show, toggleModal }) {
   const [filters, setFilters] = useState({
@@ -16,9 +17,15 @@ function FilterModal({ setState, show, toggleModal }) {
     street: "",
     city: "",
     country: "",
+    dateFrom: new Date(),
+    dateTo: new Date("2034/02/08"),
   });
   function onChange(event) {
     setFilters({ ...filters, [event.target.name]: event.target.value });
+  }
+  function onSelectDate(type, date) {
+    setFilters({ ...filters, [type]: date });
+    console.log(filters);
   }
 
   return (
@@ -31,6 +38,7 @@ function FilterModal({ setState, show, toggleModal }) {
         <CancelationFeeRange state={filters} onChange={onChange} />
         <GuestsRange state={filters} onChange={onChange} />
         <AddressFilter state={filters} onChange={onChange} />
+        <DateFilter state={filters} onSelectDate={onSelectDate} />
       </Modal.Body>
       <Modal.Footer>
         <Button

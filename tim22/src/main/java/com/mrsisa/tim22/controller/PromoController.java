@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class PromoController {
     public ResponseEntity<ArrayList<PromoDTO>> getEntityPromos(@RequestParam int id){
         return new ResponseEntity<ArrayList<PromoDTO>>(promoService.getEntityPromos(id), HttpStatus.OK);
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody PromoDTO newPromo){
         if(promoService.createPromoFromDTO(newPromo)) {
@@ -31,6 +33,7 @@ public class PromoController {
             return new ResponseEntity<>("Promo couldn't be created.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePromo(@PathVariable int id) {
         if(promoService.deleteById(id)) {
