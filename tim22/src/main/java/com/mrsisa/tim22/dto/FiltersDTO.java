@@ -16,6 +16,8 @@ public class FiltersDTO {
     private int cancellationFeeTo;
     private int guestsFrom;
     private int guestsTo;
+    private String dateFrom;
+    private String dateTo;
     private String street;
     private String city;
     private String country;

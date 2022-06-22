@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -50,12 +51,12 @@ public class SystemEntityController {
     public ResponseEntity<List<AvailabilityPeriodDTO>> getEntityAvailabilityPeriods(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getEntityAvailabilityPeriods(id), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value ="createSubscription")
     public void createSubscription(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.createSubscribtion(entityId, username);
     }
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value ="unsubscribe")
     public void unsubscribe(@RequestParam String username, @RequestParam int entityId){
         systemEntityService.unsubscribe(entityId, username);
@@ -82,27 +83,29 @@ public class SystemEntityController {
     public ResponseEntity<ListingDTO> getDetailVacation(@RequestParam int id){
         return new ResponseEntity<>(systemEntityService.getDetailVacation(id), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping(value ="getWorstRated")
     public  ResponseEntity<SystemEntityDTO> getWorstRated(){
         return new ResponseEntity<>(systemEntityService.getWorstRated(), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping(value ="getReservationsAmountMonthly")
     public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountMonthly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountMonthly(), HttpStatus.OK);
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping(value ="getReservationsAmountYearly")
     public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountYearly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountYearly(), HttpStatus.OK);
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping(value ="getReservationsAmountWeekly")
     public  ResponseEntity<List<ReservationsReportDTO>> getReservationsAmountWeekly(){
         return new ResponseEntity<>(systemEntityService.getReservationsAmountWeekly(), HttpStatus.OK);
     }
 
     // CREATE AND EDIT VESSEL
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/createVessel")
     public ResponseEntity<String> createVessel(@RequestBody VesselDTO vesselDTO) {
         if(systemEntityService.saveVessel(vesselDTO) != null) {
@@ -111,7 +114,7 @@ public class SystemEntityController {
             return new ResponseEntity<>("Couldn't create vessel.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @DeleteMapping("/deleteVessel")
     public ResponseEntity<String> deleteVessel(@RequestParam Integer id) {
         if(systemEntityService.deleteEntity(id)) {
@@ -122,7 +125,7 @@ public class SystemEntityController {
     }
 
     // CREATE AND EDIT LISTING
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/createListing")
     public ResponseEntity<String> createListing(@RequestBody ListingDTO listingDTO) {
         if(systemEntityService.saveListing(listingDTO)) {
@@ -131,7 +134,7 @@ public class SystemEntityController {
             return new ResponseEntity<>("Couldn't create listing.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @DeleteMapping("/deleteListing")
     public ResponseEntity<String> deleteListing(@RequestParam Integer id) {
         if(systemEntityService.deleteEntity(id)) {
@@ -142,7 +145,7 @@ public class SystemEntityController {
     }
 
     // CREATE AND EDIT ADVENTURE
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/createAdventure")
     public ResponseEntity<String> createAdventure(@RequestBody AdventureDTO adventureDTO) {
         if(systemEntityService.saveAdventure(adventureDTO)) {
@@ -151,7 +154,7 @@ public class SystemEntityController {
             return new ResponseEntity<>("Couldn't create listing.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @DeleteMapping("/deleteAdventure")
     public ResponseEntity<String> deleteAdventure(@RequestParam Long id) {
         if(systemEntityService.deleteAdventure(id)) {
@@ -162,31 +165,34 @@ public class SystemEntityController {
     }
 
     //  HERE LIES THE EDIT
-
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/editGeneral")
     public ResponseEntity<String> editGeneral(@RequestBody GeneralDTO generalDTO) {
         if(systemEntityService.editGeneral(generalDTO) != null) {
             return new ResponseEntity<>("Successfully edited general information.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edited general information.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edited general information.", HttpStatus.BAD_REQUEST);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/editAmenities")
     public ResponseEntity<String> editAmenities(@RequestBody AmenitiesDTO amenitiesDTO) {
         if(systemEntityService.editAmenities(amenitiesDTO)) {
             return new ResponseEntity<>("Successfully edited amenities.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edit amenities.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edit amenities.", HttpStatus.BAD_REQUEST);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/editAvailabilityPeriod")
     public ResponseEntity<String> editAvailabilityPeriod(@RequestBody PeriodsDTO periodsDTO) {
         if(systemEntityService.editAvailabilityPeriod(periodsDTO)) {
             return new ResponseEntity<>("Successfully edited availability period.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edited availability period.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edit availability period.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/editAddress")
     public ResponseEntity<String> editAddress(@RequestBody AddressDTO addressDTO) {
         if(systemEntityService.editAddress(addressDTO) != null) {
@@ -195,6 +201,7 @@ public class SystemEntityController {
             return new ResponseEntity<>("Couldn't edited address.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/editVesselDetails")
     public ResponseEntity<String> editVesselDetails(@RequestBody VesselDetailsDTO detailsDTO) {
         if(systemEntityService.editVesselDetails(detailsDTO) != null) {
@@ -224,13 +231,26 @@ public class SystemEntityController {
 
         return new ResponseEntity<>(utilities, HttpStatus.OK);
     }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping(value ="getRevenueReportData")
     public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportData(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportData(startDate,endDate), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value ="getRevenueReportDataAdmin")
     public  ResponseEntity<List<RevenurReportDTO>> getRevenueReportDataAdmin(@RequestParam String startDate,@RequestParam String endDate){
         return new ResponseEntity<>(systemEntityService.getRevenueReportDataAdmin(startDate,endDate), HttpStatus.OK);
+    }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
+    @PostMapping("/getFilteredEntities")
+    public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FiltersDTO filtersDTO) {
+        System.out.println(filtersDTO.getDateFrom());
+        System.out.println("AAAAAAAAAAAAAAAAAAAA");
+        List<SystemEntityDTO> entityDTOList = systemEntityService.getFilteredEntitiesForCurrentUser(filtersDTO);
+        return new ResponseEntity<>(entityDTOList, HttpStatus.OK);
     }
 
 }

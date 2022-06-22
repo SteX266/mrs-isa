@@ -23,10 +23,16 @@ export default function AdminNavbar() {
               Registration Requests
             </Nav.Link>
             <Nav.Link href={`/admin/cancellation-request`}>
-              Cancellation Requests
+              Account cancelations
             </Nav.Link>
             <Nav.Link href={`/admin/reservation-report`}>
-              Reservation reports
+              Owner complains
+            </Nav.Link>
+            <Nav.Link href={`/admin/reservation-report-client`}>
+              Client reviews
+            </Nav.Link>
+            <Nav.Link href={`/admin/reservation-complain`}>
+              Client complains
             </Nav.Link>
             <Nav.Link href={`/admin/registerAdmin`}>Register Admin</Nav.Link>
             <Nav.Link href={`/admin/loyalty`}>Loyalty Program</Nav.Link>
@@ -35,7 +41,10 @@ export default function AdminNavbar() {
         </Container>
         <Container>
           <Nav className="ms-auto">
-            <NavDropdown style={{marginRight:"120px"}} title={<ProfileImage />}>
+            <NavDropdown
+              style={{ marginRight: "120px" }}
+              title={<ProfileImage />}
+            >
               <NavDropdown.Item href={"/admin/profile"}>
                 Profile
               </NavDropdown.Item>

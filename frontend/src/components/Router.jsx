@@ -34,6 +34,8 @@ import AdminReport from "./reports/AdminReport";
 import BussinessPromoPage from "./business/PromoPage";
 import BussinessUserReservation from "./reservation/BussinessUserReservation";
 import HomePageAdmin from "./admin/HomePageAdmin";
+import ReviwRequest from "./admin/ReviewRequest";
+import ClientComplaint from "./admin/ClienetComplains";
 
 export default function Router() {
   function Nested(type) {
@@ -103,6 +105,12 @@ export default function Router() {
               path="cancellation-request"
               element={<AccountCancelationRequest />}
             />
+            <Route
+              path="reservation-report-client"
+              element={<ReviwRequest />}
+            />
+            <Route path="reservation-complain" element={<ClientComplaint />} />
+
             <Route
               path="profile/:id"
               element={<ListingProfilePage type="admin" />}

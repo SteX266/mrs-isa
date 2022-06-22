@@ -1,7 +1,7 @@
 import "../../style/Errors.css";
 import axios from "axios";
 import React from "react";
-import EntityList from "../client_components/ListingProfilePage";
+import EntityList from "../client_components/EntityList";
 import ChangePasswordPage from "../business/ChangePasswordPage";
 
 export default function HomePageAdmin() {

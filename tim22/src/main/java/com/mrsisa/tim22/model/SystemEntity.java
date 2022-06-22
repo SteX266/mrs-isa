@@ -100,4 +100,20 @@ public abstract class SystemEntity {
         }
         return false;
     }
+    public boolean isAvailable(LocalDateTime from, LocalDateTime to) {
+        for (AvailabilityPeriod period :
+                availabilityPeriod) {
+            if(period.getDateFrom().isBefore(LocalDateTime.now())) {
+                if(period.getDateTo().isBefore(to)) {
+                    return true;
+                }
+            }
+            else {
+                if (period.getDateFrom().isAfter(from) && period.getDateTo().isBefore(to)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

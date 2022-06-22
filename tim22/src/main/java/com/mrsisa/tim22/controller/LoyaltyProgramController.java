@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,7 +22,7 @@ public class LoyaltyProgramController {
     public ResponseEntity<LoyaltyProgram> getLoyalty(){
         return new ResponseEntity<>(loyaltyProgramService.getLoyalty(), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/editLoyalty")
     public void editLoyalty(@RequestParam int id, @RequestParam int platinumLimit, @RequestParam int pointsForBusiness, @RequestParam int pointsPerReservation, @RequestParam int silverLimit,@RequestParam int goldLimit,@RequestParam int goldDiscount,@RequestParam int silverDiscount,@RequestParam int platinumDiscount){
         loyaltyProgramService.save(new LoyaltyProgram(id,pointsPerReservation,pointsForBusiness,silverLimit,silverDiscount,goldLimit,goldDiscount,platinumLimit,platinumDiscount));

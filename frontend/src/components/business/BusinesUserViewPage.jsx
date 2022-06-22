@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import BusinessUserEntityList from "./BusinessUserEntityList";
-import SearchBar from "./SearchBar";
+import BussinessSearchBar from "./BussinessSearchBar";
 
 export default function BusinessUserViewServicesPage(props) {
   const [user, setUser] = React.useState({ type: "" });
   const [services, setServices] = React.useState([]);
 
-  const [searchServices, setSearchServices] = React.useState([]);
+  const [servicesTable, setServicesTable] = useState(
+    <BusinessUserEntityList services={services} userType={props.type} />
+  );
+  const [searchFilters, setSearchFilters] = useState({
+    rentalFeeFrom: 0,
+    rentalFeeTo: 500,
+    cancellationFeeFrom: 0,
+    cancellationFeeTo: 500,
+    guestsFrom: 1,
+    guestsTo: 10,
+    street: "",
+    city: "",
+    country: "",
+    dateFrom: new Date(),
+    dateTo: new Date("2034/02/08"),
+  });
+
+  useEffect(() => {
+    setServicesTable(createServicesTable());
+  }, [services]);
+
+  function createServicesTable() {
+    return <BusinessUserEntityList services={services} userType={props.type} />;
+  }
+
   React.useEffect(() => {
     switch (props.type) {
       case "host":
@@ -29,6 +53,7 @@ export default function BusinessUserViewServicesPage(props) {
         });
     }
     getServiceData();
+    console.log(searchFilters);
   }, []);
 
   function getServiceData() {
@@ -49,16 +74,27 @@ export default function BusinessUserViewServicesPage(props) {
       })
       .then((res) => {
         setServices(res.data);
-        setSearchServices(res.data);
       });
   }
-  function del() {
-    let new_services = services;
-    new_services.pop();
-    console.log(new_services);
-    setServices(new_services);
-  }
+  function search() {
+    const token = JSON.parse(localStorage.getItem("userToken"));
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token.accessToken,
+    };
+    console.log(searchFilters);
 
+    axios
+      .post("http://localhost:8080/entity/getFilteredEntities", searchFilters, {
+        headers,
+      })
+      .then((res) => {
+        setServices(res.data);
+        console.log(res.data);
+      });
+    console.log("ALOO KOJI KURAAC");
+  }
   return (
     <div style={{ padding: "55px" }}>
       <Container
@@ -68,12 +104,15 @@ export default function BusinessUserViewServicesPage(props) {
         <Navbar collapseOnSelect className="rounded border border-dark">
           <Container>
             <Navbar.Text className="text-dark">
-              {searchServices.length + " " + user.type}
+              {services.length + " " + user.type}
             </Navbar.Text>
           </Container>
 
           <Container>
-            <SearchBar del={del} setServices={setServices} />
+            <BussinessSearchBar
+              setSearchFilters={setSearchFilters}
+              search={search}
+            />
           </Container>
 
           <Container>
@@ -86,7 +125,7 @@ export default function BusinessUserViewServicesPage(props) {
             </Nav>
           </Container>
         </Navbar>
-        <BusinessUserEntityList services={services} userType={props.type} />
+        {servicesTable}
       </Container>
     </div>
   );

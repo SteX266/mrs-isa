@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,6 +53,8 @@ public class SystemEntityService {
 
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private ReservationService reservationService;
 
     public  List<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
@@ -94,17 +98,31 @@ public class SystemEntityService {
         return systemEntityDTOS;
     }
 
+    public List<SystemEntityDTO> getFilteredEntitiesForCurrentUser(FiltersDTO filterDTO) {
+        List<SystemEntityDTO> filteredEntities = new ArrayList<>();
+        List<SystemEntity> entities = getFilteredListForCurrentUser(filterDTO);
+        System.out.println();
+        for(SystemEntity entity: entities) {
+            filteredEntities.add(new SystemEntityDTO(entity));
+        }
+        return filteredEntities;
+    }
 
-    private List<SystemEntity> getFilteredList(FilterDTO filters) {
+    private List<SystemEntity> getFilteredListForCurrentUser(FiltersDTO filtersDTO) {
         List<SystemEntity> filteredList = new ArrayList<>();
-
-        for(SystemEntity entity:systemEntityRepository.findAll()){
-            if (entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL")){
-                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
-                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
-                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
-                            Address address = entity.getAddress();
-                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
+        UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String email = user.getUsername();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom = LocalDateTime.parse(filtersDTO.getDateFrom().replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateTo = LocalDateTime.parse(filtersDTO.getDateTo().replace("T"," ").substring(0,16), formatter);
+        for(SystemEntity entity:systemEntityRepository.findSystemEntitiesByOwner_Username(email)){
+            if(entity.getPrice() > filtersDTO.getRentalFeeFrom() && entity.getPrice() < filtersDTO.getRentalFeeTo()){
+                if(entity.getCancellationFee() > filtersDTO.getCancellationFeeFrom() && entity.getCancellationFee() < filtersDTO.getCancellationFeeTo()) {
+                    if (entity.getCapacity() > filtersDTO.getGuestsFrom() && entity.getCapacity() < filtersDTO.getGuestsTo()) {
+                        Address address = entity.getAddress();
+                        if (address.getStreetName().contains(filtersDTO.getStreet()) && address.getCity().contains(filtersDTO.getCity()) && address.getCountry().contains(filtersDTO.getCountry())) {
+                            if(reservationService.isEntityAvailable(entity,dateFrom, dateTo)) {
                                 filteredList.add(entity);
                             }
                         }
@@ -114,6 +132,45 @@ public class SystemEntityService {
         }
         return filteredList;
     }
+
+
+    private List<SystemEntity> getFilteredList(FilterDTO filters) {
+        List<SystemEntity> filteredList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateFrom;
+        LocalDateTime dateTo;
+        if(filters.getDateFrom() == null || filters.getDateTo() == null){
+            dateFrom = null;
+            dateTo = null;
+        }
+        else{
+            dateFrom= LocalDateTime.parse(filters.getDateFrom().replace("T"," ").substring(0,16), formatter);
+            dateTo = LocalDateTime.parse(filters.getDateTo().replace("T"," ").substring(0,16), formatter);
+        }
+
+        for(SystemEntity entity:systemEntityRepository.findAll()){
+            if(entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL"))
+                if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
+                    if(entity.getCancellationFee() > filters.getCancellationFeeFrom() && entity.getCancellationFee() < filters.getCancellationFeeTo()){
+                        if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
+                            Address address = entity.getAddress();
+                            if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
+                                if(dateFrom == null) {
+                                    filteredList.add(entity);
+                                }
+                                else if(reservationService.isEntityAvailable(entity,dateFrom, dateTo)){
+                                    filteredList.add(entity);
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        return filteredList;
+    }
+
 
     public SystemEntityDTO getEntityById(int id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);
@@ -513,10 +570,16 @@ public class SystemEntityService {
         return systemEntityRepository.save(entity);
     }
 
+    @Transactional
     public boolean editAvailabilityPeriod(PeriodsDTO periodsDTO) {
-        SystemEntity entity = systemEntityRepository.findOneById(periodsDTO.getServiceID());
+        SystemEntity entity = systemEntityRepository.getLockedEntity(periodsDTO.getServiceID());
 
         Set<AvailabilityPeriod> availabilityPeriods = entity.getAvailabilityPeriod();
+        for(AvailabilityPeriod period: availabilityPeriods) {
+            if(!reservationService.isEntityAvailable(entity, period.getDateFrom(), period.getDateTo())) {
+                return false;
+            }
+        }
         availabilityPeriodRepository.deleteAll(availabilityPeriods);
         Set<AvailabilityPeriod> newAvailabilityPeriods = createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS(), entity);
         availabilityPeriodRepository.saveAll(newAvailabilityPeriods);
@@ -535,7 +598,9 @@ public class SystemEntityService {
         addressRepository.save(newAddress);
         return systemEntityRepository.save(entity);
     }
-    public Vessel editVesselDetails(VesselDetailsDTO detailsDTO) {
+
+    public boolean editVesselDetails(VesselDetailsDTO detailsDTO) {
+        if(detailsDTO.getServiceID() == null) return false;
         Vessel vessel = vesselRepository.findVesselById(detailsDTO.getServiceID());
         vessel.setMaxSpeed(detailsDTO.getMaxSpeed());
         vessel.setEngineNumber(detailsDTO.getEngineNumber());
