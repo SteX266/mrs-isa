@@ -42,7 +42,6 @@ export default function RegistrationRequest() {
       "Access-Control-Allow-Origin": "*",
       Authorization: "Bearer " + token.accessToken,
     };
-
     await axios
       .post(
         "http://localhost:8080/cancellationRequest/acceptCancellationRequest",

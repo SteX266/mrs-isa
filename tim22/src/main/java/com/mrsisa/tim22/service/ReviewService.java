@@ -73,17 +73,18 @@ public class ReviewService {
             }
             return reportDTOs;
         }
-
+    @Transactional
     public boolean acceptReviw(ReviewDTO dto) {
-        Review rr = reviewRepository.findReviewById(dto.getId());
+        Review rr = reviewRepository.getLockedReview(dto.getId());
         rr.setApproved(true);
         reviewRepository.save(rr);
         emailService.sendReviewEmail(rr.getSystemEntity().getOwner().getUsername(),rr.getText(),rr.getClient().getUsername(),rr.getScore(),rr.getSystemEntity().getName());
         return true;
     }
 
+    @Transactional
     public boolean declineReviw(ReviewDTO dto) {
-        Review rr = reviewRepository.findReviewById(dto.getId());
+        Review rr = reviewRepository.getLockedReview(dto.getId());
         reviewRepository.delete(rr);
         emailService.sendReservationReportDeclined(dto.getClient(),dto.getOwner(),rr.getText(),dto.getText());
         return true;

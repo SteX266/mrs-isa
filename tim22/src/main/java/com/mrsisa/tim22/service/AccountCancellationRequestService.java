@@ -8,6 +8,7 @@ import com.mrsisa.tim22.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 @Service
@@ -41,37 +42,41 @@ public class AccountCancellationRequestService {
         }
         return requests;
     }
-
+    @Transactional
     public boolean acceptCancellationReques(CancellationRequestDTO dto) {
             User u =  userRepository.findOneByUsername(dto.getClient());
 
             if(u == null){
                 return false;
             }
-            for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestByUserUsername(u.getUsername())) {
-                acr.setAnswered(true);
-                accountCancellationRequestRepository.save(acr);
-            }
-            u.setDeleted(true);
-            u.setEnabled(false);
-            userRepository.save(u);
-            emailService.deleteRequestApprovedEmail(dto.getClient());
+            System.out.println( u.getUsername());
+             AccountCancellationRequest acr = accountCancellationRequestRepository.getLockedCancellationRequest(u.getUsername());
+                if(!acr.isAnswered()){
+                    acr.setAnswered(true);
+                    accountCancellationRequestRepository.save(acr);
+                    u.setDeleted(true);
+                    u.setEnabled(false);
+                    userRepository.save(u);
+                    emailService.deleteRequestApprovedEmail(dto.getClient());
+                }
+
+
             return true;
 
     }
-
+    @Transactional
     public boolean declineCancellationRequest(CancellationRequestDTO dto) {
         User u =  userRepository.findOneByUsername(dto.getClient());
 
         if(u == null){
             return false;
         }
-        for (AccountCancellationRequest acr: accountCancellationRequestRepository.findAccountCancellationRequestByUserUsername(u.getUsername())) {
-            acr.setAnswered(true);
-            accountCancellationRequestRepository.save(acr);
+        AccountCancellationRequest acr  = accountCancellationRequestRepository.getLockedCancellationRequest(u.getUsername());
+            if(!acr.isAnswered()) {
+                acr.setAnswered(true);
+                accountCancellationRequestRepository.save(acr);
+                emailService.sendEmail(dto.getClient(),"Account Cancellation Request Declined",dto.getText());
         }
-
-        emailService.sendEmail(dto.getClient(),"Account Cancellation Request Declined",dto.getText());
         return true;
     }
 }
