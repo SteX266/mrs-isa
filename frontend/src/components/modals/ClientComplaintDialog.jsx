@@ -9,6 +9,7 @@ export default function ClientComplaintDialog({
   reservationId,
   confirmed,
   canceled,
+  get,
 }) {
   const [text, setText] = useState("");
 
@@ -18,7 +19,6 @@ export default function ClientComplaintDialog({
 
   function createComplaint() {
     const token = JSON.parse(localStorage.getItem("userToken"));
-
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -29,12 +29,13 @@ export default function ClientComplaintDialog({
     axios
       .post(
         "http://localhost:8080/complaint/answerComplaint",
-        { reservationId: reservationId, text: text },
+        { id: reservationId, text: text },
         { headers }
       )
       .then(async (result) => {
-        if (result.data == "OK") {
+        if (result.data == true) {
           toast.success("Answer successfully submited!");
+          get();
         }
       })
       .catch(() => {
