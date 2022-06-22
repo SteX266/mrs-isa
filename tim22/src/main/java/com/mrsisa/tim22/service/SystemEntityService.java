@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -562,17 +563,25 @@ public class SystemEntityService {
         return true;
     }
 
+    @Transactional
     public boolean editAvailabilityPeriod(PeriodsDTO periodsDTO) {
-        SystemEntity entity = systemEntityRepository.findOneById(periodsDTO.getServiceID());
+        SystemEntity entity = systemEntityRepository.getLockedEntity(periodsDTO.getServiceID());
 
         Set<AvailabilityPeriod> availabilityPeriods = entity.getAvailabilityPeriod();
+        for(AvailabilityPeriod period: availabilityPeriods) {
+            if(!reservationService.isEntityAvailable(entity, period.getDateFrom(), period.getDateTo())) {
+                return false;
+            }
+        }
         availabilityPeriodRepository.deleteAll(availabilityPeriods);
         Set<AvailabilityPeriod> newAvailabilityPeriods = createAvailabilityPeriods(periodsDTO.getAvailabilityPeriodDTOS(), entity);
         availabilityPeriodRepository.saveAll(newAvailabilityPeriods);
         systemEntityRepository.save(entity);
         return true;
     }
+
     public boolean editAddress(AddressDTO addressDTO) {
+
         SystemEntity entity = systemEntityRepository.findOneById(addressDTO.getServiceID());
         Address oldAddress = addressRepository.getOne(entity.getAddress().getId());
         oldAddress.removeSystemEntity(entity);

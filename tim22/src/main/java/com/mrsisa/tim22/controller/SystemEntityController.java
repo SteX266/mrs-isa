@@ -189,7 +189,7 @@ public class SystemEntityController {
         if(systemEntityService.editAvailabilityPeriod(periodsDTO)) {
             return new ResponseEntity<>("Successfully edited availability period.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Couldn't edited availability period.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Couldn't edit availability period.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
