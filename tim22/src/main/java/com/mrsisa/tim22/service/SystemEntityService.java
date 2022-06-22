@@ -51,6 +51,8 @@ public class SystemEntityService {
 
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private ReservationService reservationService;
 
     public  List<AvailabilityPeriodDTO> getEntityAvailabilityPeriods(int id) {
         ArrayList<AvailabilityPeriodDTO> dtos = new  ArrayList<>();
@@ -118,7 +120,7 @@ public class SystemEntityService {
                     if (entity.getCapacity() > filtersDTO.getGuestsFrom() && entity.getCapacity() < filtersDTO.getGuestsTo()) {
                         Address address = entity.getAddress();
                         if (address.getStreetName().contains(filtersDTO.getStreet()) && address.getCity().contains(filtersDTO.getCity()) && address.getCountry().contains(filtersDTO.getCountry())) {
-                            if(entity.isAvailable(dateFrom, dateTo)) {
+                            if(reservationService.isEntityAvailable(entity,dateFrom, dateTo)) {
                                 filteredList.add(entity);
                             }
                         }
@@ -133,8 +135,17 @@ public class SystemEntityService {
     private List<SystemEntity> getFilteredList(FilterDTO filters) {
         List<SystemEntity> filteredList = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateFrom = LocalDateTime.parse(filters.getDateFrom().replace("T"," ").substring(0,16), formatter);
-        LocalDateTime dateTo = LocalDateTime.parse(filters.getDateTo().replace("T"," ").substring(0,16), formatter);
+        LocalDateTime dateFrom;
+        LocalDateTime dateTo;
+        if(filters.getDateFrom() == null || filters.getDateTo() == null){
+            dateFrom = null;
+            dateTo = null;
+        }
+        else{
+            dateFrom= LocalDateTime.parse(filters.getDateFrom().replace("T"," ").substring(0,16), formatter);
+            dateTo = LocalDateTime.parse(filters.getDateTo().replace("T"," ").substring(0,16), formatter);
+        }
+
         for(SystemEntity entity:systemEntityRepository.findAll()){
             if(entity.getEntityType().toString().equals(filters.getType()) || filters.getType().equals("SHOW_ALL"))
                 if(entity.getPrice() > filters.getRentalFeeFrom() && entity.getPrice() < filters.getRentalFeeTo()){
@@ -142,8 +153,12 @@ public class SystemEntityService {
                         if(entity.getCapacity() > filters.getGuestsFrom() && entity.getCapacity() < filters.getGuestsTo()){
                             Address address = entity.getAddress();
                             if (address.getStreetName().contains(filters.getStreet()) && address.getCity().contains(filters.getCity()) && address.getCountry().contains(filters.getCountry())){
-                                if(entity.isAvailable(dateFrom, dateTo)) {
+                                if(dateFrom == null) {
                                     filteredList.add(entity);
+                                }
+                                else if(reservationService.isEntityAvailable(entity,dateFrom, dateTo)){
+                                    filteredList.add(entity);
+
                                 }
 
                             }
@@ -154,13 +169,6 @@ public class SystemEntityService {
         return filteredList;
     }
 
-    private boolean isInFilter(SystemEntity e, FiltersDTO f) {
-        Address address = e.getAddress();
-        return e.getPrice() > f.getRentalFeeFrom() && e.getPrice() < f.getRentalFeeTo()
-                && e.getCancellationFee() > f.getCancellationFeeFrom() && e.getCancellationFee() < f.getCancellationFeeTo()
-                && e.getCapacity() > f.getGuestsFrom() && e.getCapacity() < f.getGuestsTo() &&
-                address.getStreetName().contains(f.getStreet()) && address.getCity().contains(f.getCity()) && address.getCountry().contains(f.getCountry());
-    }
 
     public SystemEntityDTO getEntityById(int id) {
         SystemEntity entity = systemEntityRepository.findOneById(id);

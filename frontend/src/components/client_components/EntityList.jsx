@@ -27,7 +27,7 @@ function EntityList(props) {
     city: "",
     country: "",
     dateFrom: new Date(),
-    dateTo: new Date("2034/02/08"),
+    dateTo: null,
   });
   const [currentFilters, setCurrentFilters] = useState({
     rentalFeeFrom: 0,
@@ -40,7 +40,7 @@ function EntityList(props) {
     city: "",
     country: "",
     dateFrom: new Date(),
-    dateTo: new Date("2034/02/08"),
+    dateTo: null,
   });
 
   function setPageNumber(pageNumber) {
