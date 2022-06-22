@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class ReservationController {
     public ResponseEntity<ArrayList<ReservationDTO>> getOwnerReservations(@RequestParam String email){
         return new ResponseEntity<ArrayList<ReservationDTO>>(reservationService.getOwnerReservations(email), HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value = "/cancelReservation")
     public ResponseEntity<String>cancelReservation(@RequestParam int entityId){
 
@@ -50,6 +52,7 @@ public class ReservationController {
         reservationService.approveReservation(entityId);
     }
 
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @GetMapping(value = "/createPromoReservation")
     public ResponseEntity<String> createPromoReservation(@RequestParam int promoId, @RequestParam String username){
 
@@ -60,7 +63,7 @@ public class ReservationController {
             return new ResponseEntity<>("Can't make reservation", HttpStatus.FORBIDDEN);
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping(value = "/makeReservation")
     public ResponseEntity<String> makeReservation(@RequestBody ReservationRequestDTO reservationRequest){
         if(reservationService.makeReservation(reservationRequest)){
@@ -70,6 +73,7 @@ public class ReservationController {
             return new ResponseEntity<>("Can't make reservation", HttpStatus.FORBIDDEN);
         }
     }
+    @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/makeReservationForClient")
     public ResponseEntity<String> makeReservationForClient(@RequestBody ReservationRequestDTO reservationRequestDTO) {
         if(reservationService.makeReservationForClient(reservationRequestDTO)) {

@@ -52,6 +52,7 @@ function RegisterForm() {
         phoneNumber,
         addressLine,
         password,
+        userType,
       }),
     };
 

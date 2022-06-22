@@ -3,7 +3,7 @@ import axios from "axios";
 import { MDBCol } from "mdbreact";
 import Pagination from "./Pagination";
 import EntityCardTest from "./EntityCardTest";
-import SearchBar from "../business/SearchBar";
+import ClientSearchBar from "../business/ClientSearchBar";
 
 function EntityList(props) {
   const [currentEntities, setCurrentEntities] = useState([]);
@@ -26,6 +26,8 @@ function EntityList(props) {
     street: "",
     city: "",
     country: "",
+    dateFrom: new Date(),
+    dateTo: new Date("2034/02/08"),
   });
   const [currentFilters, setCurrentFilters] = useState({
     rentalFeeFrom: 0,
@@ -37,6 +39,8 @@ function EntityList(props) {
     street: "",
     city: "",
     country: "",
+    dateFrom: new Date(),
+    dateTo: new Date("2034/02/08"),
   });
 
   function setPageNumber(pageNumber) {
@@ -87,6 +91,8 @@ function EntityList(props) {
         type: currentEntityType,
         startIndex: indexOfFirstPost,
         endIndex: indexOfLastPost,
+        dateFrom: currentFilters.dateFrom,
+        dateTo: currentFilters.dateTo,
       },
       { headers }
     );
@@ -108,6 +114,8 @@ function EntityList(props) {
         type: currentEntityType,
         startIndex: indexOfFirstPost,
         endIndex: indexOfLastPost,
+        dateFrom: currentFilters.dateFrom,
+        dateTo: currentFilters.dateTo,
       },
       { headers }
     );
@@ -134,7 +142,7 @@ function EntityList(props) {
       <div className="album py-5 ">
         <div className="container">
           <MDBCol md="12">
-            <SearchBar
+            <ClientSearchBar
               setSearchFilters={setFilters}
               search={searchEntities}
               setEntityType={setType}

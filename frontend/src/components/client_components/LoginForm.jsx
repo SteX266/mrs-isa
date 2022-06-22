@@ -35,15 +35,15 @@ function LoginForm() {
             localStorage.setItem("username", username);
             let role = data.userRole;
 
-            if (role == "CLIENT") {
+            if (role == "ROLE_CLIENT") {
               setLink("/client");
-            } else if (role === "ADMIN") {
+            } else if (role === "ROLE_ADMIN") {
               setLink("/admin/home");
-            } else if (role === "VACATION_OWNER") {
+            } else if (role === "ROLE_VACATION_OWNER") {
               setLink("/host/home");
-            } else if (role === "SHIP_OWNER") {
+            } else if (role === "ROLE_SHIP_OWNER") {
               setLink("/captain/home");
-            } else if (role === "INSTRUCTOR") {
+            } else if (role === "ROLE_INSTRUCTOR") {
               setLink("/instructor/home");
             }
           } else {
