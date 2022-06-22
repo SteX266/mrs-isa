@@ -247,8 +247,6 @@ public class SystemEntityController {
     @PreAuthorize("hasAnyRole('ROLE_VACATION_OWNER','ROLE_SHIP_OWNER','ROLE_INSTRUCTOR')")
     @PostMapping("/getFilteredEntities")
     public ResponseEntity<List<SystemEntityDTO>> getFilteredEntities(@RequestBody FiltersDTO filtersDTO) {
-        System.out.println(filtersDTO.getDateFrom());
-        System.out.println("AAAAAAAAAAAAAAAAAAAA");
         List<SystemEntityDTO> entityDTOList = systemEntityService.getFilteredEntitiesForCurrentUser(filtersDTO);
         return new ResponseEntity<>(entityDTOList, HttpStatus.OK);
     }
