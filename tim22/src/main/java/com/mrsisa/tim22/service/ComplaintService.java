@@ -11,9 +11,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 @Service
+
 public class ComplaintService {
 
     @Autowired
@@ -60,13 +62,14 @@ public class ComplaintService {
         }
         return reportDTOs;
     }
-
+    @Transactional
     public boolean answerComplaint(ReservationReportDTO dto) {
-
-        Complaint rr = complaintRepository.findComplaintById(dto.getId());
-        rr.setAnswered(true);
-        complaintRepository.save(rr);
-        emailService.sendComplaintEmail(rr.getSender().getUsername(),rr.getSystemEntity().getOwner().getUsername(), rr.getText(),dto.getText());
+        Complaint rr = complaintRepository.getLockedComplaint(dto.getId());
+        if(!rr.isAnswered()) {
+           rr.setAnswered(true);
+           complaintRepository.save(rr);
+           emailService.sendComplaintEmail(rr.getSender().getUsername(), rr.getSystemEntity().getOwner().getUsername(), rr.getText(), dto.getText());
+       }
         return true;
 
     }

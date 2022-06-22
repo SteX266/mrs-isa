@@ -59,7 +59,7 @@ export default function ReviwRequest() {
       });
   }
 
-  async function DeclineRequest(client) {
+  async function DeclineRequest(report) {
     const token = JSON.parse(localStorage.getItem("userToken"));
     const headers = {
       Accept: "application/json",
@@ -71,12 +71,19 @@ export default function ReviwRequest() {
     axios
       .post(
         "http://localhost:8080/review/declineReviw",
-        { id: client },
+        {
+          client: report.client,
+          owner: report.owner,
+          id: report.id,
+          text: report.text,
+        },
         { headers }
       )
       .then(async () => {
         toast.success(
-          "Registration request from user " + client + " successfully accepted "
+          "Registration request from user " +
+            report.client +
+            " successfully accepted "
         );
         getRequests();
       })

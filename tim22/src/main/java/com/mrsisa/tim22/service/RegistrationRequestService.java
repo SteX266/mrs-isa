@@ -54,11 +54,13 @@ public class RegistrationRequestService {
             return false;
         }
         for (RegistrationRequest r: registrationRequestRepository.findRegistrationRequestsByClient(u)) {
-            r.setIsAnswered(true);
-            registrationRequestRepository.save(r);
+            if (!r.getIsAnswered()) {
+                r.setIsAnswered(true);
+                registrationRequestRepository.save(r);
+                emailService.sendEmail(dto.getClient(),"Reqistration Request Declined",dto.getDescription());
+            }
         }
 
-        emailService.sendEmail(dto.getClient(),"Reqistration Request Declined",dto.getDescription());
         return true;
     }
 }
