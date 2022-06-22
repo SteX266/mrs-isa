@@ -4,7 +4,7 @@ import axios from "axios";
 import EntityCardTest from "../client_components/EntityCardTest";
 import { Container } from "react-bootstrap";
 
-function RatingsReport({ type }) {
+function RatingsReport({ type, userType }) {
   const [averageRating, setAverageRating] = useState(0);
   const [bestVacation, setBestVacation] = useState({
     id: "",
@@ -84,6 +84,7 @@ function RatingsReport({ type }) {
         price={data.price}
         rating={data.rating}
         image={data.photo}
+        type={userType}
       />
     );
   }

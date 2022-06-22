@@ -12,7 +12,9 @@ const types = {
 
 function ReportsPage({ type }) {
   const serviceType = types[type];
-  const [report, setReport] = useState(<RatingsReport type={serviceType} />);
+  const [report, setReport] = useState(
+    <RatingsReport type={serviceType} userType={type} />
+  );
   function changeReport(reportType) {
     switch (reportType) {
       case "score":

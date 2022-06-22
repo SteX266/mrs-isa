@@ -35,7 +35,10 @@ export default function AdminNavbar() {
         </Container>
         <Container>
           <Nav className="ms-auto">
-            <NavDropdown style={{marginRight:"120px"}} title={<ProfileImage />}>
+            <NavDropdown
+              style={{ marginRight: "120px" }}
+              title={<ProfileImage />}
+            >
               <NavDropdown.Item href={"/admin/profile"}>
                 Profile
               </NavDropdown.Item>

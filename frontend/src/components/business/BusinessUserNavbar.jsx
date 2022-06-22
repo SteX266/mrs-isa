@@ -1,11 +1,8 @@
-import axios from "axios";
 import React from "react";
 import { Container, NavDropdown, Nav, Navbar, Image } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
-import Dialog from "../modals/Dialog";
 
 export default function BusinessUserNavbar(props) {
-  const [showDeleteDialogue, setshowDialogue] = React.useState(false);
   var serv;
   switch (props.type) {
     case "host":
@@ -18,32 +15,6 @@ export default function BusinessUserNavbar(props) {
       serv = "vessels";
   }
 
-  function clickDelete() {
-    setshowDialogue(true);
-  }
-
-  function confirmDeleteProfile() {
-    const requestOptions = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      params: {
-        user: "stex",
-      },
-    };
-
-    axios.get(
-      "http://localhost:8080/api/user/createCancellationRequest",
-      requestOptions
-    );
-    this.setState({ showDeleteDialogue: false });
-  }
-
-  function cancelDeleteProfile() {
-    setshowDialogue(false);
-  }
   var name = "Fish & Ships";
   return (
     <>
@@ -57,6 +28,7 @@ export default function BusinessUserNavbar(props) {
             <Nav.Link href={`/${props.type}/reservations`}>
               Reservations
             </Nav.Link>
+            <Nav.Link href={`/${props.type}/reports`}>Reports</Nav.Link>
           </Nav>
         </Container>
         <Container>
@@ -72,21 +44,11 @@ export default function BusinessUserNavbar(props) {
                 Change password
               </NavDropdown.Item>
               <NavDropdown.Item href="/">Log Out</NavDropdown.Item>
-              <NavDropdown.Item onClick={clickDelete}>
-                Delete profile
-              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Container>
       </Navbar>
       <Outlet></Outlet>
-      <Dialog
-        show={showDeleteDialogue}
-        title="Delete profile?"
-        description="Are you sure you want to delete your profile?"
-        confirmed={confirmDeleteProfile}
-        canceled={cancelDeleteProfile}
-      />
     </>
   );
 }
