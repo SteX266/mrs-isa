@@ -18,7 +18,7 @@ function FilterModal({ setState, show, toggleModal }) {
     city: "",
     country: "",
     dateFrom: new Date(),
-    dateTo: new Date("2034/02/08"),
+    dateTo: new Date(),
   });
   function onChange(event) {
     setFilters({ ...filters, [event.target.name]: event.target.value });
