@@ -586,6 +586,7 @@ public class SystemEntityService {
         return true;
     }
     public boolean editVesselDetails(VesselDetailsDTO detailsDTO) {
+        if(detailsDTO.getServiceID() == null) return false;
         Vessel vessel = vesselRepository.findVesselById(detailsDTO.getServiceID());
         vessel.setMaxSpeed(detailsDTO.getMaxSpeed());
         vessel.setEngineNumber(detailsDTO.getEngineNumber());
