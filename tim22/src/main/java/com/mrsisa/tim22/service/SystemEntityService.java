@@ -11,6 +11,7 @@ import com.mrsisa.tim22.repository.ReservationRepository;
 import com.mrsisa.tim22.repository.SystemEntityRepository;
 import com.mrsisa.tim22.repository.UserRepository;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -192,19 +193,26 @@ public class SystemEntityService {
     }
 
     public SystemEntityDTO getWorstRated() {
-        SystemEntity id = null;
-        double worst = 5;
+
         UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String email = user.getUsername();
+        SystemEntity id = getWorstRatedUsersEntity(email);
+
+        return new SystemEntityDTO(id);
+    }
+
+
+    public SystemEntity getWorstRatedUsersEntity(String email) {
+        SystemEntity id = null;
+        double worst = 5;
         for (SystemEntity e : systemEntityRepository.findSystemEntitiesByOwner_Username(email)) {
             if (e.getAverageScore() < worst) {
                 worst = e.getAverageScore();
                 id = e;
             }
         }
-
-        return new SystemEntityDTO(id);
+        return id;
     }
 
     public List<ReservationsReportDTO> getReservationsAmountMonthly() {
