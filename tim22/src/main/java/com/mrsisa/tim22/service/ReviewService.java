@@ -37,7 +37,6 @@ public class ReviewService {
         System.out.println("Duzina: " + e.getComplaints().size() );
         for (Review r:e.getReviews()){
             if (r.getClient().getUsername().equals(username)){
-                //TODO ODGOVOR NESTO NA FRONT
                 return false;
             }
         }

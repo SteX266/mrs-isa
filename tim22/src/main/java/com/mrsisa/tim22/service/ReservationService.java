@@ -83,8 +83,8 @@ public class ReservationService {
         return reservations;
     }
 
-    public boolean cancelReservation(int entityId) {
-        Reservation r = reservationRepository.findOneById(entityId);
+    public boolean cancelReservation(int reservationId) {
+        Reservation r = reservationRepository.findOneById(reservationId);
         if (LocalDateTime.now().plusDays(3).isAfter(r.getDateFrom())){
             return false;
 
@@ -233,7 +233,7 @@ public class ReservationService {
         return true;
     }
 
-    private boolean isEntityAvailable(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo) {
+    public boolean isEntityAvailable(SystemEntity entity, LocalDateTime dateFrom, LocalDateTime dateTo) {
         if(!dateFrom.isBefore(dateTo)){
             return false;
         }
