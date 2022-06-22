@@ -105,7 +105,7 @@ public class SystemEntityController {
 
     @PostMapping("/createVessel")
     public ResponseEntity<String> createVessel(@RequestBody VesselDTO vesselDTO) {
-        if(systemEntityService.saveVessel(vesselDTO)) {
+        if(systemEntityService.saveVessel(vesselDTO) != null) {
             return new ResponseEntity<>("Successfully created vessel.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't create vessel.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -165,7 +165,7 @@ public class SystemEntityController {
 
     @PostMapping("/editGeneral")
     public ResponseEntity<String> editGeneral(@RequestBody GeneralDTO generalDTO) {
-        if(systemEntityService.editGeneral(generalDTO)) {
+        if(systemEntityService.editGeneral(generalDTO) != null) {
             return new ResponseEntity<>("Successfully edited general information.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't edited general information.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -189,7 +189,7 @@ public class SystemEntityController {
     }
     @PostMapping("/editAddress")
     public ResponseEntity<String> editAddress(@RequestBody AddressDTO addressDTO) {
-        if(systemEntityService.editAddress(addressDTO)) {
+        if(systemEntityService.editAddress(addressDTO) != null) {
             return new ResponseEntity<>("Successfully edited address.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't edited address.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -197,7 +197,7 @@ public class SystemEntityController {
     }
     @PostMapping("/editVesselDetails")
     public ResponseEntity<String> editVesselDetails(@RequestBody VesselDetailsDTO detailsDTO) {
-        if(systemEntityService.editVesselDetails(detailsDTO)) {
+        if(systemEntityService.editVesselDetails(detailsDTO) != null) {
             return new ResponseEntity<>("Successfully edited details.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Couldn't edited details.", HttpStatus.INTERNAL_SERVER_ERROR);
